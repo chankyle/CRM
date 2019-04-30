@@ -14,7 +14,11 @@ var db = monk('localhost:27017/CRM');
 
 var indexRouter = require('./routes/index');
 var dataEntryRouter = require('./routes/data-entry');
-var customerEntryRouter = require('./routes/customer-entry');
+var clientEntryRouter = require('./routes/client-entry');
+var contactEntryRouter = require('./routes/contact-entry');
+var eventEntryRouter = require('./routes/event-entry');
+var agentEntryRouter = require('./routes/agent-entry');
+
 
 var app = express();
 
@@ -39,7 +43,10 @@ app.use(function(req,res,next){
 //handle routers to various page
 app.use('/', indexRouter);
 app.use('/data-entry', dataEntryRouter);
-app.use('/customer-entry', customerEntryRouter);
+app.use('/client-entry', clientEntryRouter);
+app.use('/contact-entry', contactEntryRouter);
+app.use('/event-entry', eventEntryRouter);
+app.use('/agent-entry', agentEntryRouter);
 
 
 // catch 404 and forward to error handler

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css">
+  </head>
+  <body class="app">
+    <h1>Welcome to the Agent Data Entry Page</h1>
+
+<!--Refer to "https://coreui.io/docs/components/forms/" for instruction on how to change form-->
+<main class="main">
+
+<form id="formAddAgent" name="addAgent" method="post" action="/addAgent">>
+
+<!--
+[TODO]
+We need to implement the following fields: - Are we not going to keep any contact info?
+(/) Agent Abbreviation  (text)
+(/) Agent Name          (text)            - Are we only doing 1 field for name?
+(/) Agent Position      (text)
+    Created By                             - Have to see if this is critical. Will we ask them to authenticate themselves first?
+(/) Create Date         (DateTime)
+    lastModified        (DateTime)         - How do we end up modifying this? We currently don't have any means to modify items
+    Agent Active      (Boolean)          - How do we end up changing this ever? Do we need a modify field?
+--> 
+
+  <div class="form-group">
+    <label for="agentAbbrev">Agent Abbreviation</label>
+    <textarea class="form-control" id="agentAbbrev" name="agentAbbrev" rows="1"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="agentName">Agent Name</label>
+    <textarea class="form-control" id="agentName" name="agentName" rows="1"></textarea>
+  </div>
+
+    <div class="form-group">
+    <label for="agentPosition">Agent Position</label>
+    <textarea class="form-control" id="agentPosition" name="agentPosition" rows="1"></textarea>
+  </div>
+
+<input class="btn btn-primary" type="submit" value="Submit">
+</form>
+
+</main>
+
+
+
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
+</body>
+</html>
