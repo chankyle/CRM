@@ -23,20 +23,41 @@ We need to implement the following fields: - Are we not going to keep any contac
     Agent Active      (Boolean)          - How do we end up changing this ever? Do we need a modify field?
 --> 
 
-  <div class="form-group">
-    <label for="agentAbbrev">Agent Abbreviation</label>
-    <textarea class="form-control" id="agentAbbrev" name="agentAbbrev" rows="1"></textarea>
-  </div>
 
-  <div class="form-group">
-    <label for="agentName">Agent Name</label>
-    <textarea class="form-control" id="agentName" name="agentName" rows="1"></textarea>
-  </div>
+<!-- Agent Abbreviation-->
+<div class="form-group">
+  <label for="agentAbbrev">Agent Abbreviation</label>
+    <div class="form-row">
+			<div class="col-auto">
+			  <input type="text" class="form-control" id="agentAbbrev" name="agentAbbrev" placeholder="Use All Caps">
+			</div>
+	</div>
+</div>
 
-    <div class="form-group">
-    <label for="agentPosition">Agent Position</label>
-    <textarea class="form-control" id="agentPosition" name="agentPosition" rows="1"></textarea>
-  </div>
+<!-- Agent Name-->
+<div class="form-group">
+  <label for="agentName">Agent Name</label>
+    <div class="form-row">
+			<div class="col-auto">
+			  <input type="text" class="form-control" id="agentFirstName" name="agentFirstName" placeholder="First Name">
+			</div>
+			<div class="col-auto">
+			  <input type="text" class="form-control" id="agentLastName" name="agentLastName" placeholder="Last Name">
+			</div>
+	</div>
+</div>
+
+<!-- Agent Position-->
+<div class="form-row">
+    <div class="form-group col-md-6-auto">
+      <label for="agentPosition">Position</label>
+      <select class="form-control" id="agentPosition" name="agentPosition">
+		  <option>Sales Executive</option>
+		  <option>Office</option>
+		  <option>Sales Manager</option>
+	  </select>
+    </div>
+</div>
 
 <input class="btn btn-primary" type="submit" value="Submit">
 </form>

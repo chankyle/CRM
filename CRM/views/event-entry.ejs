@@ -10,34 +10,110 @@
 <main class="main">
 
 <form id="formAddEvent" name="addEvent" method="post" action="/addEvent">> 
-  <div class="form-group">
-    <label for="exampleFormControlInput1">Email address</label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" name="useremail" placeholder="name@example.com">
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Example select</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect2">Example multiple select</label>
-    <select multiple class="form-control" id="exampleFormControlSelect2">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlTextarea1">Example textarea</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" name="username" rows="3"></textarea>
-  </div>
+ 
+<!-- Event Date-->
+<!-- I don't know if I should be referring to the agentID when what I actually want to show up is the agentAbbrev -->
+<div class="form-row">
+    <div class="form-group col-md-6-auto">
+      <label for="clientName">Date</label>
+      <input type="date" class="form-control" id="eventDate" name="eventDate">
+    </div>
+    <div class="form-group col-md-6-auto">
+      <label for="agentID">Agent</label>
+      <select class="form-control" id="agentID">
+		  <option>JV</option>
+		  <option>OFC</option>
+		  <option>FB</option>
+		  <option>DG</option>
+		  <option>LA</option>
+		  <option>RPL</option>
+		  <option>JP</option>
+		  <option>KJ</option>
+		  <option>DC</option>
+	  </select>
+    </div>
+</div>
+
+<!-- Event Time In & Out-->
+<div class="form-row">
+    <div class="form-group col-md-6-auto">
+      <label for="eventTimeIn">Time In</label>
+      <input type="time" class="form-control" id="eventTimeIn" name="eventTimeIn">
+    </div>
+    <div class="form-group col-md-6-auto">
+      <label for="eventTimeOut">Time Out</label>
+      <input type="time" class="form-control" id="eventTimeOut" name="eventTimeOut">
+    </div>
+</div>
+
+<!-- Client Visited-->
+<!-- I don't know if I should be referring to the clientID when what I actually want to show up is the clientName -->
+<div class="form-row">
+    <div class="form-group col-md-6-auto">
+      <label for="clientID">Client</label>
+      <select class="form-control" id="clientID">
+		  <option>Customer 1</option>
+		  <option>Customer 2</option>
+		  <option>Customer 3</option>
+		  <option>Customer 4</option>
+		  <option>Customer 5</option>
+	  </select>
+    </div>
+    <div class="form-group col-md-6-auto">
+      <label for="eventType">Visit Type</label>
+      <select class="form-control" id="clientID">
+		  <option>Collection</option>
+		  <option>Courtesy Visit</option>
+		  <option>Technical Service</option>
+		  <option>Delivery</option>
+	  </select>
+    </div>	
+</div>
+
+<!-- Contact Visited-->
+<!-- I don't know if I should be referring to the contactID when what I actually want to show up is the contactName.
+Also, the contacts available as choices should be filtered based on which client was chosen in the above section, is that possible/hard to do? -->
+
+<div class="form-group">
+  <label for="inputAddress">Contact/s Visited</label>
+    <div class="form-row">
+		<div class="form-group col-md-6-auto">
+			<select class="form-control" id="contactID">
+				<option>Contact 1</option>
+				<option>Contact 2</option>
+				<option>Contact 3</option>
+			</select>
+		</div>
+		<div class="form-group col-md-6-auto">
+			<select class="form-control" id="contactID">
+				<option>Contact 1</option>
+				<option>Contact 2</option>
+				<option>Contact 3</option>
+			</select>
+		</div>
+	</div>
+</div>
+
+<!-- Event Location/Branch-->
+<div class="form-group">
+  <label for="eventBranch">Event Location (If Applicable)</label>
+    <div class="form-row">
+			<div class="col-auto">
+			  <input type="text" class="form-control" id="eventBranch" name="eventBranch" placeholder="Location">
+			</div>
+	</div>
+</div>
+
+<!-- Event Notes-->
+<div class="form-group">
+  <label for="inputAddress2">Event Notes</label>
+    <div class="form-row">
+		<div class="col-md-4">
+			<textarea class="form-control" id="eventRemarks" rows="3" placeholder="Remarks"></textarea>
+		</div>
+	</div>
+</div>
+
 <input class="btn btn-primary" type="submit" value="Submit">
 </form>
 

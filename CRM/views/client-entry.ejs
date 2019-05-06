@@ -10,35 +10,100 @@
 <main class="main">
 
 <form id="formAddClient" name="addClient" method="post" action="/addClient">> 
-  <div class="form-group">
-    <label for="exampleFormControlInput1">Email address</label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" name="useremail" placeholder="name@example.com">
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Example select</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect2">Example multiple select</label>
-    <select multiple class="form-control" id="exampleFormControlSelect2">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlTextarea1">Example textarea</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" name="username" rows="3"></textarea>
-  </div>
-<input class="btn btn-primary" type="submit" value="Submit">
+
+<!-- Client Name & Agent Assignment--> 
+<div class="form-row">
+    <div class="form-group col-md-6-auto">
+      <label for="clientName">Client Name</label>
+      <input type="name" class="form-control" id="clientName" name="clientName" placeholder="Company Name">
+    </div>
+    <div class="form-group col-md-6-auto">
+      <label for="agentName">Agent Assignment</label>
+      <select class="form-control" id="agentAbbrev">
+		  <option>JV</option>
+		  <option>OFC</option>
+		  <option>FB</option>
+		  <option>DG</option>
+		  <option>LA</option>
+		  <option>RPL</option>
+		  <option>JP</option>
+		  <option>KJ</option>
+		  <option>DC</option>
+	  </select>
+    </div>
+</div>
+
+<!-- Client Contact Numbers-->
+<div class="form-group">
+  <label for="clientPhone">Client Contact Numbers</label>
+    <div class="form-row">
+			<div class="col-auto">
+			  <input type="text" class="form-control" id="clientPhone" name="clientPhone" placeholder="Phone Number">
+			</div>
+			<div class="col-auto">
+			  <input type="text" class="form-control" id="clientFax" name="clientFax" placeholder="Fax Number">
+			</div>
+	</div>
+</div>
+
+<!-- Client Addresses-->  
+<div class="form-group">
+  
+  <label for="clientPhone">Client Addresses</label>
+    <div class="form-row">
+			<div class="col-md-2">
+			  <textarea class="form-control" id="clientAddress" name="clientAddress" placeholder="Company Address" rows="3"></textarea>
+			</div>
+			<div class="col-md-2">
+			  <textarea class="form-control" id="clientDelivAddress" name="clientDelivAddress" placeholder="Delivery Address" rows="3"></textarea>
+			</div>
+	</div>
+</div>
+
+<!-- Client Email Address-->
+<div class="form-group">
+  <label for="inputAddress">Client Email Addresses</label>
+    <div class="form-row">
+			<div class="col-auto">
+			  <input type="email" class="form-control" id="clientEmail1" name="clientEmail1" placeholder="user1@email.com">
+			</div>
+			<div class="col-auto">
+			  <input type="email" class="form-control" id="clientEmail2" name="clientEmail2" placeholder="user2@email.com">
+			</div>
+	</div>
+</div>
+
+<!-- Client Products-->
+<div class="form-group">
+  <label for="inputAddress">Client Products</label>
+	<div class="form-row">
+		<div class="form-check form-check-inline">
+		  <input class="form-check-input" type="checkbox" id="clientProdOX" value="option1">
+		  <label class="form-check-label" for="clientProdOX">OX</label>
+		</div>
+		<div class="form-check form-check-inline">
+		  <input class="form-check-input" type="checkbox" id="clientProdPP" value="option2">
+		  <label class="form-check-label" for="clientProdPP">PP</label>
+		</div>
+		<div class="form-check form-check-inline">
+		  <input class="form-check-input" type="checkbox" id="clientProdTP" value="option2">
+		  <label class="form-check-label" for="clientProdTP">TP</label>
+		</div>
+	</div>	
+</div>
+
+<!-- Client Notes-->
+<div class="form-group">
+  <label for="inputAddress2">Client Notes</label>
+    <div class="form-row">
+		<div class="col-md-4">
+			<textarea class="form-control" id="clientNotes" rows="3" placeholder="Remarks"></textarea>
+		</div>
+	</div>
+</div>
+ 
+<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+
 </form>
 
 </main>
