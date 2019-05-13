@@ -20,15 +20,13 @@
     <div class="form-group col-md-6-auto">
       <label for="agentName">Agent Assignment</label>
       <select class="form-control" id="agentAbbrev">
-		  <option>JV</option>
-		  <option>OFC</option>
-		  <option>FB</option>
-		  <option>DG</option>
-		  <option>LA</option>
-		  <option>RPL</option>
-		  <option>JP</option>
-		  <option>KJ</option>
-		  <option>DC</option>
+  		<%
+        	var list = '';
+        	for (i = 0; i < agentList.length; i++) {
+        		list += '<option>' + agentList[i].agentAbbrev + '</option>';
+        	}
+  		%>
+      	<%- list %>
 	  </select>
     </div>
 </div>

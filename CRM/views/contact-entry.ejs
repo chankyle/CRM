@@ -14,7 +14,7 @@
 <!--
 [TODO]
 We need to implement the following fields
-    Client              (lookup-Client)   - Autocomplete form based on all clients. Do we want to have it auto complete (could be slow in the future if many clients), or validate at time of submission. Or have a popup to search and select?
+    Client              (lookup-Client)
 (/) Contact Name        (text)            - Are we only doing 1 field for name?
 (/) Contact Position    (text)
 (/) Contact Phone       (text)
@@ -26,7 +26,25 @@ We need to implement the following fields
     lastModified        (DateTime)         - How do we end up modifying this? We currently don't have any means to modify items
     Contact Active      (Boolean)          - How do we end up changing this ever? Do we need a modify field?
 --> 
-  
+
+
+<!-- Client Visited-->
+<!-- I don't know if I should be referring to the clientID when what I actually want to show up is the clientName -->
+<div class="form-group col-md-6-auto">
+      <label for="clientID">Client</label>
+      <select class="form-control" name="clientID">
+  		<%
+        	var list = '';
+        	for (i = 0; i < clientList.length; i++) {
+        		list += '<option>' + clientList[i].clientName + '</option>';
+        	}
+  		%>
+      	<%- list %>
+	  </select>
+</div>
+
+
+
 <!-- Contact Name-->
 <div class="form-group">
   <label for="clientPhone">Contact Name</label>

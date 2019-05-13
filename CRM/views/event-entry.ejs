@@ -21,15 +21,12 @@
     <div class="form-group col-md-6-auto">
       <label for="agentID">Agent</label>
       <select class="form-control" name="agentID">
-		  <option>JV</option>
-		  <option>OFC</option>
-		  <option>FB</option>
-		  <option>DG</option>
-		  <option>LA</option>
-		  <option>RPL</option>
-		  <option>JP</option>
-		  <option>KJ</option>
-		  <option>DC</option>
+  		<%
+        	var list = '';
+        		list += '<option>' + agentList[i].agentAbbrev + '</option>';
+        	}
+  		%>
+      	<%- list %>
 	  </select>
     </div>
 </div>
@@ -52,14 +49,16 @@
     <div class="form-group col-md-6-auto">
       <label for="clientID">Client</label>
       <select class="form-control" name="clientID">
-		  <option>Customer 1</option>
-		  <option>Customer 2</option>
-		  <option>Customer 3</option>
-		  <option>Customer 4</option>
-		  <option>Customer 5</option>
+  		<%
+        	var list = '';
+        	for (i = 0; i < clientList.length; i++) {
+        		list += '<option>' + clientList[i].clientName + '</option>';
+        	}
+  		%>
+      	<%- list %>
 	  </select>
-    </div>
-    <div class="form-group col-md-6-auto">
+</div>
+<div class="form-group col-md-6-auto">
       <label for="eventType">Visit Type</label>
       <select class="form-control" name="eventType">
 		  <option>Collection</option>

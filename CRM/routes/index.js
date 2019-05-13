@@ -8,6 +8,56 @@ router.get('/', function(req, res, next) {
 
 module.exports = router;
 
+/* GET Agents for Client Entry Form. */
+router.get('/client-entry', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+    
+    // Set our collection
+    var collection = db.get('Agents');
+
+    collection.find({},{},function(e,docs){
+        res.render('client-entry', {
+            "agentList" : docs
+        });
+    });
+});
+
+
+/* GET Clients for Contact Entry Form. */
+router.get('/contact-entry', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+    
+    // Set our collection
+    var collection = db.get('Clients');
+
+    collection.find({},{},function(e,docs){
+        res.render('contact-entry', {
+            "clientList" : docs
+        });
+    });
+});
+
+
+
+/* GET Clients for Event Entry Form. */
+router.get('/event-entry', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+    
+    // Set our collection
+    var collection = db.get('Clients');
+
+    collection.find({},{},function(e,docs){
+        res.render('contact-entry', {
+            "clientList" : docs
+        });
+    });
+});
 
 
 
