@@ -18,6 +18,12 @@ var clientEntryRouter = require('./routes/client-entry');
 var contactEntryRouter = require('./routes/contact-entry');
 var eventEntryRouter = require('./routes/event-entry');
 var agentEntryRouter = require('./routes/agent-entry');
+var reportsRouter = require('./routes/reports');
+var clientReportRouter = require('./routes/client-report');
+var contactReportRouter = require('./routes/contact-report');
+var eventReportRouter = require('./routes/event-report');
+var agentReportRouter = require('./routes/agent-report');
+
 
 
 var app = express();
@@ -47,7 +53,11 @@ app.use('/client-entry', clientEntryRouter);
 app.use('/contact-entry', contactEntryRouter);
 app.use('/event-entry', eventEntryRouter);
 app.use('/agent-entry', agentEntryRouter);
-
+app.use('/reports', reportsRouter);
+app.use('/client-report', clientReportRouter);
+app.use('/contact-report', contactReportRouter);
+app.use('/event-report', eventReportRouter);
+app.use('/agent-report', agentReportRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

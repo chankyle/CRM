@@ -153,3 +153,72 @@ router.post('/addEvent', function(req, res) {
 
 });
 
+
+
+/* GET list of Clients. */
+router.get('/client-report', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+    
+    // Set our collection
+    var collection = db.get('Clients');
+
+    collection.find({},{},function(e,docs){
+        res.render('client-report', {
+            "clientList" : docs
+        });
+    });
+});
+
+/* GET list of Contact. */
+router.get('/contact-report', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+    
+    // Set our collection
+    var collection = db.get('Contacts');
+
+    collection.find({},{},function(e,docs){
+        res.render('contact-report', {
+            "contactList" : docs
+        });
+    });
+});
+
+
+/* GET list of Agents. */
+router.get('/agent-report', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+    
+    // Set our collection
+    var collection = db.get('Agents');
+
+    collection.find({},{},function(e,docs){
+        res.render('agent-report', {
+            "agentList" : docs
+        });
+    });
+});
+
+/* GET list of Event. */
+router.get('/event-report', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+    
+    // Set our collection
+    var collection = db.get('Events');
+
+    collection.find({},{},function(e,docs){
+        res.render('event-report', {
+            "eventList" : docs
+        });
+    });
+});
+
+
+
