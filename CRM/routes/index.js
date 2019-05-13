@@ -53,7 +53,7 @@ router.get('/event-entry', function(req, res) {
     var collection = db.get('Clients');
 
     collection.find({},{},function(e,docs){
-        res.render('contact-entry', {
+        res.render('event-entry', {
             "clientList" : docs
         });
     });
