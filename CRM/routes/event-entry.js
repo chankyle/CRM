@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-/* Render event-enter view */
+/* Render Event Entery view */
 router.get('/', function(req, res, next) {
   res.render('event-entry');
 });
