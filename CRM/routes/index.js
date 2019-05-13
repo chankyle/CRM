@@ -18,16 +18,49 @@ router.post('/addClient', function(req, res) {
     var db = req.db;
 
     // Get our form values. These rely on the "name" attributes
-    var userName = req.body.username;
-    var userEmail = req.body.useremail;
+    var clientName = req.body.clientName;
+    var clientPhone = req.body.clientPhone;
+    var clientFax = req.body.clientFax;
+    var clientAddress = req.body.clientAddress;
+    var clientDelivAddress = req.body.clientDelivAddress;
+    var clientEmail1 = req.body.clientEmail1;
+    var clientEmail2 = req.body.clientEmail2;
+    var clientProdOX = req.body.clientProdOX;
+        if (clientProdOX != "true") {
+            clientProdOX = "false";
+        }
+    var clientProdPP = req.body.clientProdPP;
+        if (clientProdPP != "true") {
+            clientProdPP = "false";
+        }
+    var clientProdTP = req.body.clientProdTP;
+        if (clientProdTP != "true") {
+            clientProdTP = "false";
+        }
+    var clientNotes = req.body.clientNotes;
+    var currentDateTime = new Date();
+    var defaultStatus = true;
 
     // Set our collection
     var collection = db.get('Clients');
 
     // Submit to the DB
     collection.insert({
-        "username" : userName,
-        "email" : userEmail
+        "clientName" : clientName,
+        "clientPhone" : clientPhone,
+        "clientFax" : clientFax,
+        "clientAddress" : clientAddress,
+        "clientDelivAddress" : clientDelivAddress,
+        "clientEmail1" : clientEmail1,
+        "clientEmail2" : clientEmail2,
+        "clientProdOX" : clientProdOX,
+        "clientProdPP" : clientProdPP,
+        "clientProdTP" : clientProdTP,
+        "clientNotes" : clientNotes,
+        "createDate" : currentDateTime,
+        "clientActive" : defaultStatus
+
+
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
@@ -50,7 +83,8 @@ router.post('/addContact', function(req, res) {
     var db = req.db;
 
     // Get our form values. These rely on the "name" attributes
-    var contactName = req.body.contactName;
+    var contactFirstName = req.body.contactFirstName;
+    var contactLastName = req.body.contactLastName;
     var contactPosition = req.body.contactPosition;
     var contactPhone = req.body.contactPhone;
     var contactMobile = req.body.contactMobile;
@@ -64,14 +98,15 @@ router.post('/addContact', function(req, res) {
 
     // Submit to the DB
     collection.insert({
-        "Contact Name" : contactName,
-        "Contact Position" : contactPosition,
-        "Contact Phone" : contactPhone,
-        "Contact Mobile" : contactMobile,
-        "Contact Email" : contactEmail,
-        "Contact Notes" : contactNotes,
-        "Created On" : currentDateTime,
-        "Contact Active" : defaultStatus
+        "contactFirstName" : contactFirstName,
+        "contactLastName" : contactLastName,
+        "contactPosition" : contactPosition,
+        "contactPhone" : contactPhone,
+        "contactMobile" : contactMobile,
+        "contactEmail" : contactEmail,
+        "contactNotes" : contactNotes,
+        "createDate" : currentDateTime,
+        "contactActive" : defaultStatus
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
@@ -94,8 +129,10 @@ router.post('/addAgent', function(req, res) {
 
     // Get our form values. These rely on the "name" attributes
     var agentAbbrev = req.body.agentAbbrev;
-    var agentName = req.body.agentName;
+    var agentFirstName = req.body.agentFirstName;
+    var agentLastName = req.body.agentLastName;
     var agentPosition = req.body.agentPosition;
+    var agentPhone = req.body.agentPhone;
     var currentDateTime = new Date();
     var defaultStatus = true;
 
@@ -104,11 +141,13 @@ router.post('/addAgent', function(req, res) {
 
     // Submit to the DB
     collection.insert({
-        "Agent Abbreviation" : agentAbbrev,
-        "Agent Name" : agentName,
-        "Agent Position" : agentPosition,
-        "Created On" : currentDateTime,
-        "Agent Active" : defaultStatus
+        "agentAbbrev" : agentAbbrev,
+        "agentFirstName" : agentFirstName,
+        "agentLastName" : agentLastName,
+        "agentPosition" : agentPosition,
+        "agentPhone" : agentPhone,
+        "createDate" : currentDateTime,
+        "agentActive" : defaultStatus
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
@@ -130,16 +169,26 @@ router.post('/addEvent', function(req, res) {
     var db = req.db;
 
     // Get our form values. These rely on the "name" attributes
-    var userName = req.body.username;
-    var userEmail = req.body.useremail;
+    var eventType = req.body.eventType;
+    var eventBranch = req.body.eventBranch;
+    var eventDate = req.body.eventDate;
+    var eventTimeIn = req.body.eventTimeIn;
+    var eventTimeOut = req.body.eventTimeOut;
+    var eventRemarks = req.body.eventRemarks;
 
     // Set our collection
     var collection = db.get('Events');
 
     // Submit to the DB
     collection.insert({
-        "username" : userName,
-        "email" : userEmail
+        "eventType" : eventType,
+        "eventBranch" : eventBranch,
+        "eventDate" : eventDate,
+        "eventTimeIn" : eventTimeIn,
+        "eventTimeOut" : eventTimeOut,
+        "eventRemarks" : eventRemarks
+
+
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
