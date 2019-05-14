@@ -13,6 +13,7 @@ var monk = require('monk');
 var db = monk('localhost:27017/CRM');
 
 var indexRouter = require('./routes/index');
+var homeRouter = require('./routes/home');
 var dataEntryRouter = require('./routes/data-entry');
 var clientEntryRouter = require('./routes/client-entry');
 var contactEntryRouter = require('./routes/contact-entry');
@@ -48,6 +49,7 @@ app.use(function(req,res,next){
 
 //handle routers to various page
 app.use('/', indexRouter);
+app.use('/home', homeRouter);
 app.use('/data-entry', dataEntryRouter);
 app.use('/client-entry', clientEntryRouter);
 app.use('/contact-entry', contactEntryRouter);
