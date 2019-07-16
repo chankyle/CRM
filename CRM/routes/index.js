@@ -69,6 +69,7 @@ router.post('/addClient', function(req, res) {
 
     // Get our form values. These rely on the "name" attributes
     var clientName = req.body.clientName;
+    var assignedAgent = req.body.agentAbbrev;
     var clientPhone = req.body.clientPhone;
     var clientFax = req.body.clientFax;
     var clientAddress = req.body.clientAddress;
@@ -97,6 +98,7 @@ router.post('/addClient', function(req, res) {
     // Submit to the DB
     collection.insert({
         "clientName" : clientName,
+        "assignedAgent" : assignedAgent,
         "clientPhone" : clientPhone,
         "clientFax" : clientFax,
         "clientAddress" : clientAddress,
@@ -133,6 +135,7 @@ router.post('/addContact', function(req, res) {
     var db = req.db;
 
     // Get our form values. These rely on the "name" attributes
+    var clientID = req.body.clientID;
     var contactFirstName = req.body.contactFirstName;
     var contactLastName = req.body.contactLastName;
     var contactPosition = req.body.contactPosition;
@@ -148,6 +151,7 @@ router.post('/addContact', function(req, res) {
 
     // Submit to the DB
     collection.insert({
+        "contactClientID" : clientID,
         "contactFirstName" : contactFirstName,
         "contactLastName" : contactLastName,
         "contactPosition" : contactPosition,
@@ -225,6 +229,7 @@ router.post('/addEvent', function(req, res) {
     var eventTimeIn = req.body.eventTimeIn;
     var eventTimeOut = req.body.eventTimeOut;
     var eventRemarks = req.body.eventRemarks;
+    var eventDuration = eventTimeOut - eventTimeIn;
 
     // Set our collection
     var collection = db.get('Events');
@@ -236,6 +241,7 @@ router.post('/addEvent', function(req, res) {
         "eventDate" : eventDate,
         "eventTimeIn" : eventTimeIn,
         "eventTimeOut" : eventTimeOut,
+        "eventDuration" : eventDuration,
         "eventRemarks" : eventRemarks
 
 
