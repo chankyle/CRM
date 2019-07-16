@@ -1,129 +1,147 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css">
+    <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css' />
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/coreui-icons.min.css">
   </head>
-  <body class="app">
-    <h1>Welcome to the Events Data Entry Page</h1>
 
-<!--Refer to "https://coreui.io/docs/components/forms/" for instruction on how to change form-->
-<main class="main">
+<body class="app sidebar-show aside-menu-show">
 
-<form id="formAddEvent" name="addEvent" method="post" action="/addEvent">> 
- 
-<!-- Event Date-->
-<!-- [TODO] I don't know if I should be referring to the agentID when what I actually want to show up is the agentAbbrev -->
-<div class="form-row">
-    <div class="form-group col-md-6-auto">
-      <label for="clientName">Date</label>
-      <input type="date" class="form-control" id="eventDate" name="eventDate">
+  <header class="app-header navbar">
+    <% include partials/header %>
+  </header>
+
+  <div class="app-body">
+
+    <div class="sidebar">
+      <% include partials/sidebar %>
     </div>
-    <div class="form-group col-md-6-auto">
-      <label for="agentID">Agent</label>
-      <select class="form-control" name="agentID">
-      	<option>JV</option>
-      	<option>OFC</option>
-      	<option>FB</option>
-      	<option>DG</option>
-      	<option>LA</option>
-      	<option>RPL</option>
-      	<option>JP</option>
-      	<option>KJ</option>
-      	<option>DC</option>
-	  </select>
-    </div>
-</div>
 
-<!-- Event Time In & Out-->
-<div class="form-row">
-    <div class="form-group col-md-6-auto">
-      <label for="eventTimeIn">Time In</label>
-      <input type="time" class="form-control" id="eventTimeIn" name="eventTimeIn">
-    </div>
-    <div class="form-group col-md-6-auto">
-      <label for="eventTimeOut">Time Out</label>
-      <input type="time" class="form-control" id="eventTimeOut" name="eventTimeOut">
-    </div>
-</div>
+    <main class="main mt-2 ml-3">
+      <h1> EVENT ENTRY FORM </h1>      
+      <form id="formAddEvent" name="addEvent" method="post" action="/addEvent">
 
-<!-- Client Visited-->
-<div class="form-row">
-    <div class="form-group col-md-6-auto">
-      <label for="clientID">Client</label>
-      <select class="form-control" name="clientID">
-  		<%
-        	var list = '';
-        	for (i = 0; i < clientList.length; i++) {
-        		list += '<option>' + clientList[i].clientName + '</option>';
-        	}
-  		%>
-      	<%- list %>
-	  </select>
-</div>
-<div class="form-group col-md-6-auto">
-      <label for="eventType">Visit Type</label>
-      <select class="form-control" name="eventType">
-		  <option>Collection</option>
-		  <option>Courtesy Visit</option>
-		  <option>Technical Service</option>
-		  <option>Delivery</option>
-	  </select>
-    </div>	
-</div>
+      <!-- Event Date-->
+      <!-- [TODO] I don't know if I should be referring to the agentID when what I actually want to show up is the agentAbbrev -->
+      <div class="form-row">
+          <div class="form-group col-md-6-auto">
+            <label for="clientName">Date</label>
+            <input type="date" class="form-control" id="eventDate" name="eventDate">
+          </div>
+          <div class="form-group col-md-6-auto">
+            <label for="agentID">Agent</label>
+            <select class="form-control" name="agentID">
+            	<option>JV</option>
+            	<option>OFC</option>
+            	<option>FB</option>
+            	<option>DG</option>
+            	<option>LA</option>
+            	<option>RPL</option>
+            	<option>JP</option>
+            	<option>KJ</option>
+            	<option>DC</option>
+      	  </select>
+          </div>
+      </div>
 
-<!-- Contact Visited-->
-<!-- [TODO] I don't know if I should be referring to the contactID when what I actually want to show up is the contactName. Create a button for Contact(s) visited to pull all contacts with Client = ClientID Above -->
+      <!-- Event Time In & Out-->
+      <div class="form-row">
+          <div class="form-group col-md-6-auto">
+            <label for="eventTimeIn">Time In</label>
+            <input type="time" class="form-control" id="eventTimeIn" name="eventTimeIn">
+          </div>
+          <div class="form-group col-md-6-auto">
+            <label for="eventTimeOut">Time Out</label>
+            <input type="time" class="form-control" id="eventTimeOut" name="eventTimeOut">
+          </div>
+      </div>
 
-<div class="form-group">
-  <label for="inputAddress">Contact(s) Visited</label>
-    <div class="form-row">
-		<div class="form-group col-md-6-auto">
-			<select class="form-control" name="contactID">
-				<option>Contact 1</option>
-				<option>Contact 2</option>
-				<option>Contact 3</option>
-			</select>
-		</div>
-		<div class="form-group col-md-6-auto">
-			<select class="form-control" name="contactID">
-				<option>Contact 1</option>
-				<option>Contact 2</option>
-				<option>Contact 3</option>
-			</select>
-		</div>
-	</div>
-</div>
+      <!-- Client Visited-->
+      <div class="form-row">
+          <div class="form-group col-md-6-auto">
+            <label for="clientID">Client</label>
+            <select class="form-control" name="clientID">
+        		<%
+              	var list = '';
+              	for (i = 0; i < clientList.length; i++) {
+              		list += '<option>' + clientList[i].clientName + '</option>';
+              	}
+        		%>
+            	<%- list %>
+      	  </select>
+      </div>
+      <div class="form-group col-md-6-auto">
+            <label for="eventType">Visit Type</label>
+            <select class="form-control" name="eventType">
+      		  <option>Collection</option>
+      		  <option>Courtesy Visit</option>
+      		  <option>Technical Service</option>
+      		  <option>Delivery</option>
+      	  </select>
+          </div>
+      </div>
 
-<!-- Event Location/Branch-->
-<div class="form-group">
-  <label for="eventBranch">Branch Location (If Applicable)</label>
-    <div class="form-row">
-			<div class="col-auto">
-			  <input type="text" class="form-control" id="eventBranch" name="eventBranch" placeholder="Location">
-			</div>
-	</div>
-</div>
+      <!-- Contact Visited-->
+      <!-- [TODO] I don't know if I should be referring to the contactID when what I actually want to show up is the contactName. Create a button for Contact(s) visited to pull all contacts with Client = ClientID Above -->
 
-<!-- Event Notes-->
-<div class="form-group">
-  <label for="inputAddress2">Event Notes</label>
-    <div class="form-row">
-		<div class="col-md-4">
-			<textarea class="form-control" name="eventRemarks" rows="3" placeholder="Remarks"></textarea>
-		</div>
-	</div>
-</div>
+      <div class="form-group">
+        <label for="inputAddress">Contact(s) Visited</label>
+          <div class="form-row">
+      		<div class="form-group col-md-6-auto">
+      			<select class="form-control" name="contactID">
+      				<option>Contact 1</option>
+      				<option>Contact 2</option>
+      				<option>Contact 3</option>
+      			</select>
+      		</div>
+      		<div class="form-group col-md-6-auto">
+      			<select class="form-control" name="contactID">
+      				<option>Contact 1</option>
+      				<option>Contact 2</option>
+      				<option>Contact 3</option>
+      			</select>
+      		</div>
+      	</div>
+      </div>
 
-<input class="btn btn-primary" type="submit" value="Submit">
-</form>
+      <!-- Event Location/Branch-->
+      <div class="form-group">
+        <label for="eventBranch">Branch Location (If Applicable)</label>
+          <div class="form-row">
+      			<div class="col-auto">
+      			  <input type="text" class="form-control" id="eventBranch" name="eventBranch" placeholder="Location">
+      			</div>
+      	</div>
+      </div>
 
-</main>
+      <!-- Event Notes-->
+      <div class="form-group">
+        <label for="inputAddress2">Event Notes</label>
+          <div class="form-row">
+      		<div class="col-md-4">
+      			<textarea class="form-control" name="eventRemarks" rows="3" placeholder="Remarks"></textarea>
+      		</div>
+      	</div>
+      </div>
 
+      <input class="btn btn-primary" type="submit" value="Submit">
+      </form>
+    </main>
 
+    <aside class="aside-menu-hidden">
+      <!-- Aside menu content here -->
+    </aside>
+
+  </div>
+  <footer class="app-footer">
+    <% include partials/footer %>
+  </footer>
 
   <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
 </body>
+
 </html>

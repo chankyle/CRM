@@ -1,11 +1,42 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css' />
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/coreui-icons.min.css">
   </head>
-  <body>
+  <!-- <body>
     <h1>Welcome to the New CRM</h1>
     <h3><a href="/data-entry">Data Entry</a></h3>
     <h3><a href="/reports">Reports</a></h3>
-  </body>
+  </body> -->
+
+
+<body class="app sidebar-show aside-menu-show">
+
+  <header class="app-header navbar">
+    <% include partials/header %>
+  </header>
+
+  <div class="app-body">
+
+    <div class="sidebar">
+      <% include partials/sidebar %>
+    </div>
+
+    <main class="main mt-2 ml-3">
+      <h1> WELCOME TO THE CRM HOME PAGE </h1>
+      <h3 class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Magna fermentum iaculis eu non diam. Maecenas accumsan lacus vel facilisis volutpat. Fusce ut placerat orci nulla pellentesque dignissim. Nibh tellus molestie nunc non. Arcu cursus euismod quis viverra nibh. Commodo sed egestas egestas fringilla. Vitae nunc sed velit dignissim sodales ut eu sem. Magna ac placerat vestibulum lectus. Vitae auctor eu augue ut. Ultricies lacus sed turpis tincidunt id aliquet. Ipsum dolor sit amet consectetur adipiscing elit.</h3>
+    </main>
+
+    <aside class="aside-menu-hidden">
+      <!-- Aside menu content here -->
+    </aside>
+
+  </div>
+  <footer class="app-footer">
+    <% include partials/footer %>
+  </footer>
+</body>
+
 </html>

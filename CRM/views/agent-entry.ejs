@@ -1,85 +1,103 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css">
+    <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css' />
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/coreui-icons.min.css">
   </head>
-  <body class="app">
-    <h1>Welcome to the Agent Data Entry Page</h1>
 
-<!--Refer to "https://coreui.io/docs/components/forms/" for instruction on how to change form-->
-<main class="main">
+<body class="app sidebar-show aside-menu-show">
 
-<form id="formAddAgent" name="addAgent" method="post" action="/addAgent">>
+  <header class="app-header navbar">
+    <% include partials/header %>
+  </header>
 
-<!--
-[TODO]
-We need to implement the following fields: - Are we not going to keep any contact info?
-(/) Agent Abbreviation  (text)
-(/) Agent Name          (text)            - Are we only doing 1 field for name?
-(/) Agent Position      (text)
-    Created By                             - Have to see if this is critical. Will we ask them to authenticate themselves first?
-(/) Create Date         (DateTime)
-    lastModified        (DateTime)         - How do we end up modifying this? We currently don't have any means to modify items
-    Agent Active      (Boolean)          - How do we end up changing this ever? Do we need a modify field?
---> 
+  <div class="app-body">
 
-
-<!-- Agent Abbreviation-->
-<div class="form-group">
-  <label for="agentAbbrev">Agent Abbreviation</label>
-    <div class="form-row">
-			<div class="col-auto">
-			  <input type="text" class="form-control" id="agentAbbrev" name="agentAbbrev" placeholder="Use All Caps">
-			</div>
-	</div>
-</div>
-
-<!-- Agent Name-->
-<div class="form-group">
-  <label for="agentName">Agent Name</label>
-    <div class="form-row">
-			<div class="col-auto">
-			  <input type="text" class="form-control" id="agentFirstName" name="agentFirstName" placeholder="First Name">
-			</div>
-			<div class="col-auto">
-			  <input type="text" class="form-control" id="agentLastName" name="agentLastName" placeholder="Last Name">
-			</div>
-	</div>
-</div>
-
-<!-- Agent Position-->
-<div class="form-row">
-    <div class="form-group col-md-6-auto">
-      <label for="agentPosition">Position</label>
-      <select class="form-control" id="agentPosition" name="agentPosition">
-		  <option>Sales Executive</option>
-		  <option>Office</option>
-		  <option>Sales Manager</option>
-	  </select>
+    <div class="sidebar">
+      <% include partials/sidebar %>
     </div>
-</div>
+
+    <main class="main mt-2 ml-3">
+      <h1> AGENT ENTRY FORM </h1>
+      <form id="formAddAgent" name="addAgent" method="post" action="/addAgent">
+
+      <!--
+      [TODO]
+      We need to implement the following fields: - Are we not going to keep any contact info?
+      (/) Agent Abbreviation  (text)
+      (/) Agent Name          (text)            - Are we only doing 1 field for name?
+      (/) Agent Position      (text)
+          Created By                             - Have to see if this is critical. Will we ask them to authenticate themselves first?
+      (/) Create Date         (DateTime)
+          lastModified        (DateTime)         - How do we end up modifying this? We currently don't have any means to modify items
+          Agent Active      (Boolean)          - How do we end up changing this ever? Do we need a modify field?
+      -->
 
 
-<!-- Agent Phone Number-->
-<div class="form-group">
-  <label for="agentAbbrev">Agent Phone Number</label>
-    <div class="form-row">
-			<div class="col-auto">
-			  <input type="text" class="form-control" id="agentPhone" name="agentPhone" placeholder="Contact Number">
-			</div>
-	</div>
-</div>
+      <!-- Agent Abbreviation-->
+      <div class="form-group">
+        <label for="agentAbbrev">Agent Abbreviation</label>
+          <div class="form-row">
+      			<div class="col-auto">
+      			  <input type="text" class="form-control" id="agentAbbrev" name="agentAbbrev" placeholder="Use All Caps">
+      			</div>
+      	</div>
+      </div>
 
-<input class="btn btn-primary" type="submit" value="Submit">
-</form>
+      <!-- Agent Name-->
+      <div class="form-group">
+        <label for="agentName">Agent Name</label>
+          <div class="form-row">
+      			<div class="col-auto">
+      			  <input type="text" class="form-control" id="agentFirstName" name="agentFirstName" placeholder="First Name">
+      			</div>
+      			<div class="col-auto">
+      			  <input type="text" class="form-control" id="agentLastName" name="agentLastName" placeholder="Last Name">
+      			</div>
+      	</div>
+      </div>
 
-</main>
+      <!-- Agent Position-->
+      <div class="form-row">
+          <div class="form-group col-md-6-auto">
+            <label for="agentPosition">Position</label>
+            <select class="form-control" id="agentPosition" name="agentPosition">
+      		  <option>Sales Executive</option>
+      		  <option>Office</option>
+      		  <option>Sales Manager</option>
+      	  </select>
+          </div>
+      </div>
 
 
+      <!-- Agent Phone Number-->
+      <div class="form-group">
+        <label for="agentAbbrev">Agent Phone Number</label>
+          <div class="form-row">
+      			<div class="col-auto">
+      			  <input type="text" class="form-control" id="agentPhone" name="agentPhone" placeholder="Contact Number">
+      			</div>
+      	</div>
+      </div>
+
+      <input class="btn btn-primary" type="submit" value="Submit">
+      </form>
+    </main>
+
+    <aside class="aside-menu-hidden">
+      <!-- Aside menu content here -->
+    </aside>
+
+  </div>
+  <footer class="app-footer">
+    <% include partials/footer %>
+  </footer>
 
   <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
 </body>
+
 </html>
