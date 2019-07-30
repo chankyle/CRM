@@ -1,12 +1,55 @@
 var express = require('express');
+var passport = require('passport');
+var Account = require('../models/account');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index');
+router.get('/', function (req, res) {
+    res.render('index', { user : req.user });
 });
 
-module.exports = router;
+/* GET login page. */
+router.get('/login', function(req, res) {
+    res.render('login', { user : req.user });
+});
+
+/* Reroute after Login Successful. */
+router.post('/login', passport.authenticate('local'), function(req, res) {
+    res.redirect('/home');
+});
+
+/* GET Register page. */
+router.get('/register', function(req, res) {
+    res.render('register', { });
+});
+
+
+/* Register User */
+router.post('/register', function(req, res) {
+    console.log(req.body.username);
+    console.log(req.body.password);
+    Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+        if (err) {
+            return res.render('register', { account : account });
+        }
+
+        passport.authenticate('local')(req, res, function () {
+            res.redirect('/');
+        });
+    });
+});
+
+/* Reroute after Logout Successful. */
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
+/* Test page */
+router.get('/ping', function(req, res){
+    res.status(200).send("pong!");
+});
+
 
 /* GET Agents for Client Entry Form. */
 router.get('/client-entry', function(req, res) {
@@ -327,3 +370,4 @@ router.get('/event-report', function(req, res) {
 
 
 
+module.exports = router;
