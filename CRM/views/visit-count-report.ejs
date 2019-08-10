@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css' />
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/coreui-icons.min.css">
+  </head>
+
+<body class="app sidebar-show aside-menu-show">
+
+  <header class="app-header navbar">
+    <% include partials/header %>
+  </header>
+
+  <div class="app-body">
+
+    <div class="sidebar">
+      <% include partials/sidebar %>
+    </div>
+
+        <main class="main mt-2 ml-3">
+          <h1>Visit Count Report</h1>
+
+            <div class="card w-25">
+            <div class="card-body">
+    <!-- Select Date Range for Data -->
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label for="inputEmail4">Date Start</label>
+                <input type="date" class="form-control" id="date-start-input" placeholder="Email">
+              </div>
+              <div class="form-group col-6">
+                <label for="inputPassword4">Date End</label>
+                <input type="date" class="form-control" id="date-end-input" placeholder="Password">
+              </div>
+            </div>
+
+    <!-- Select Agent from Prepopulated list of options -->
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label for="agentSelect">Agent</label>
+                <select class="form-control" id="agent-select">
+                  <%
+                      var list = '';
+                      for (i = 0; i < agentList.length; i++) {
+                        list += '<option>' + agentList[i].agentAbbrev + '</option>';
+                      }
+                  %>
+                    <%- list %>
+                </select>
+              </div>
+            </div>
+
+    <!-- Submit Button to execute -->
+            <div class="form-row">
+              <div class="form-group col">
+                <button type="button" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </main>
+    <aside class="aside-menu-hidden">
+      <!-- Aside menu content here -->
+    </aside>
+
+  </div>
+  <footer class="app-footer">
+    <% include partials/footer %>
+  </footer>
+</body>
+</html>

@@ -1,13 +1,39 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css' />
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/coreui-icons.min.css">
   </head>
-  <body>
-    <h1>Welcom to the Reports Page</h1>
-    <li><a href="/client-report">Client Reports</a></li>
-    <li><a href="/contact-report">Contact Reports</a></li>
-    <li><a href="/event-report">Events Reports</a></li>
-    <li><a href="/agent-report">Agent Reports</a></li>
-  </body>
+
+<body class="app sidebar-show aside-menu-show">
+
+  <header class="app-header navbar">
+    <% include partials/header %>
+  </header>
+
+  <div class="app-body">
+
+    <div class="sidebar">
+      <% include partials/sidebar %>
+    </div>
+
+    <main class="main mt-2 ml-3">
+      <h1>Welcome to the Reports Page</h1>
+      <li><a href="/client-report">Client Reports</a></li>
+      <li><a href="/contact-report">Contact Reports</a></li>
+      <li><a href="/event-report">Events Reports</a></li>
+      <li><a href="/agent-report">Agent Reports</a></li>
+    </main>
+
+    <aside class="aside-menu-hidden">
+      <!-- Aside menu content here -->
+    </aside>
+
+  </div>
+  <footer class="app-footer">
+    <% include partials/footer %>
+  </footer>
+</body>
+
 </html>

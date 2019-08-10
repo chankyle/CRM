@@ -30,7 +30,11 @@ var clientReportRouter = require('./routes/client-report');
 var contactReportRouter = require('./routes/contact-report');
 var eventReportRouter = require('./routes/event-report');
 var agentReportRouter = require('./routes/agent-report');
-
+var activityReportRouter = require('./routes/activity-report');
+var visitCountReportRouter = require('./routes/visit-count-report');
+var clientListReportRouter = require('./routes/client-list-report');
+var clientHistoryReportRouter = require('./routes/client-history-report');
+var contactHistoryReportRouter = require('./routes/contact-history-report');
 
 var app = express();
 
@@ -76,6 +80,11 @@ app.use('/client-report', clientReportRouter);
 app.use('/contact-report', contactReportRouter);
 app.use('/event-report', eventReportRouter);
 app.use('/agent-report', agentReportRouter);
+app.use('/activity-report', activityReportRouter);
+app.use('/visit-count-report', visitCountReportRouter);
+app.use('/client-list-report', clientListReportRouter);
+app.use('/client-history-report', clientHistoryReportRouter);
+app.use('/contact-history-report', contactHistoryReportRouter);
 
 
 // passport config
