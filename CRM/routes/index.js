@@ -26,8 +26,6 @@ router.get('/register', function(req, res) {
 
 /* Register User */
 router.post('/register', function(req, res) {
-    console.log(req.body.username);
-    console.log(req.body.password);
     Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
         if (err) {
             return res.render('register', { account : account });
@@ -188,8 +186,8 @@ router.post('/addClient', function(req, res) {
 
     // Set our internal DB variable
     var db = req.db;
-
     // Get our form values. These rely on the "name" attributes
+    var username = req.user.username;
     var clientName = req.body.clientName;
     var assignedAgent = req.body.agentAbbrev;
     var clientPhone = req.body.clientPhone;
@@ -231,6 +229,7 @@ router.post('/addClient', function(req, res) {
         "clientProdPP" : clientProdPP,
         "clientProdTP" : clientProdTP,
         "clientNotes" : clientNotes,
+        "createdBy" : username,
         "createDate" : currentDateTime,
         "clientActive" : defaultStatus
 
@@ -242,7 +241,7 @@ router.post('/addClient', function(req, res) {
         }
         else {
             // And forward to success page
-            res.redirect("/");
+            res.redirect("/home");
         }
     });
 
@@ -258,6 +257,7 @@ router.post('/addContact', function(req, res) {
 
     // Get our form values. These rely on the "name" attributes
     var clientID = req.body.clientID;
+    var username = req.user.username;
     var contactFirstName = req.body.contactFirstName;
     var contactLastName = req.body.contactLastName;
     var contactPosition = req.body.contactPosition;
@@ -281,6 +281,7 @@ router.post('/addContact', function(req, res) {
         "contactMobile" : contactMobile,
         "contactEmail" : contactEmail,
         "contactNotes" : contactNotes,
+        "createdBy" : username,
         "createDate" : currentDateTime,
         "contactActive" : defaultStatus
     }, function (err, doc) {
@@ -290,7 +291,7 @@ router.post('/addContact', function(req, res) {
         }
         else {
             // And forward to success page
-            res.redirect("/");
+            res.redirect("/home");
         }
     });
 
@@ -305,6 +306,7 @@ router.post('/addAgent', function(req, res) {
 
     // Get our form values. These rely on the "name" attributes
     var agentAbbrev = req.body.agentAbbrev;
+    var username = req.user.username;
     var agentFirstName = req.body.agentFirstName;
     var agentLastName = req.body.agentLastName;
     var agentPosition = req.body.agentPosition;
@@ -322,6 +324,7 @@ router.post('/addAgent', function(req, res) {
         "agentLastName" : agentLastName,
         "agentPosition" : agentPosition,
         "agentPhone" : agentPhone,
+        "createdBy" : username,
         "createDate" : currentDateTime,
         "agentActive" : defaultStatus
     }, function (err, doc) {
@@ -331,7 +334,7 @@ router.post('/addAgent', function(req, res) {
         }
         else {
             // And forward to success page
-            res.redirect("/");
+            res.redirect("/home");
         }
     });
 
@@ -346,13 +349,14 @@ router.post('/addEvent', function(req, res) {
 
     // Get our form values. These rely on the "name" attributes
     var eventType = req.body.eventType;
+    var username = req.user.username;
     var eventBranch = req.body.eventBranch;
     var eventDate = req.body.eventDate;
     var eventTimeIn = req.body.eventTimeIn;
     var eventTimeOut = req.body.eventTimeOut;
     var eventRemarks = req.body.eventRemarks;
     var eventDuration = eventTimeOut - eventTimeIn;
-
+    var currentDateTime = new Date();
     // Set our collection
     var collection = db.get('Events');
 
@@ -364,9 +368,9 @@ router.post('/addEvent', function(req, res) {
         "eventTimeIn" : eventTimeIn,
         "eventTimeOut" : eventTimeOut,
         "eventDuration" : eventDuration,
-        "eventRemarks" : eventRemarks
-
-
+        "eventRemarks" : eventRemarks,
+        "createdBy" : username,
+        "createDate" : currentDateTime,
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
@@ -374,7 +378,7 @@ router.post('/addEvent', function(req, res) {
         }
         else {
             // And forward to success page
-            res.redirect("/");
+            res.redirect("/home");
         }
     });
 
