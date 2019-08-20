@@ -1,6 +1,7 @@
 var express = require('express');
 var passport = require('passport');
 var Account = require('../models/account');
+var moment = require('moment');
 var router = express.Router();
 
 /* GET home page. */
@@ -83,7 +84,6 @@ router.get('/contact-entry', function(req, res) {
         });
     });
 });
-
 
 
 /* GET Clients for Event Entry Form. */
@@ -217,7 +217,7 @@ router.post('/addClient', function(req, res) {
             clientProdTP = "false";
         }
     var clientNotes = req.body.clientNotes;
-    var currentDateTime = new Date();
+    var currentDateTime = moment();
     var defaultStatus = true;
 
     // Set our collection
@@ -273,7 +273,7 @@ router.post('/addContact', function(req, res) {
     var contactMobile = req.body.contactMobile;
     var contactEmail = req.body.contactEmail;
     var contactNotes = req.body.contactNotes;
-    var currentDateTime = new Date();
+    var currentDateTime = moment();
     var defaultStatus = true;
 
     // Set our collection
@@ -319,7 +319,7 @@ router.post('/addAgent', function(req, res) {
     var agentLastName = req.body.agentLastName;
     var agentPosition = req.body.agentPosition;
     var agentPhone = req.body.agentPhone;
-    var currentDateTime = new Date();
+    var currentDateTime = moment();
     var defaultStatus = true;
 
     // Set our collection
@@ -360,11 +360,12 @@ router.post('/addEvent', function(req, res) {
     var username = req.user.username;
     var eventBranch = req.body.eventBranch;
     var eventDate = req.body.eventDate;
-    var eventTimeIn = req.body.eventTimeIn;
-    var eventTimeOut = req.body.eventTimeOut;
+    var eventDateTimeIn = moment(eventDate.concat(' ', req.body.eventTimeIn), 'YYYY-MM-DD HH-mm');
+    var eventDateTimeOut = moment(eventDate.concat(' ', req.body.eventTimeOut), 'YYYY-MM-DD HH-mm');  
+    var eventDuration = parseInt(moment.duration(eventDateTimeOut.diff(eventDateTimeIn)).asMinutes());
+    console.log(eventDuration);
     var eventRemarks = req.body.eventRemarks;
-    var eventDuration = eventTimeOut - eventTimeIn;
-    var currentDateTime = new Date();
+    var currentDateTime = moment();
     // Set our collection
     var collection = db.get('Events');
 
@@ -372,9 +373,8 @@ router.post('/addEvent', function(req, res) {
     collection.insert({
         "eventType" : eventType,
         "eventBranch" : eventBranch,
-        "eventDate" : eventDate,
-        "eventTimeIn" : eventTimeIn,
-        "eventTimeOut" : eventTimeOut,
+        "eventTimeIn" : eventDateTimeIn,
+        "eventTimeOut" : eventDateTimeOut,
         "eventDuration" : eventDuration,
         "eventRemarks" : eventRemarks,
         "createdBy" : username,
