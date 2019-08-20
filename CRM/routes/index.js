@@ -60,7 +60,8 @@ router.get('/client-entry', function(req, res) {
 
     collection.find({},{},function(e,docs){
         res.render('client-entry', {
-            "agentList" : docs
+            "agentList" : docs,
+            user : req.user.username
         });
     });
 });
@@ -77,7 +78,8 @@ router.get('/contact-entry', function(req, res) {
 
     collection.find({},{},function(e,docs){
         res.render('contact-entry', {
-            "clientList" : docs
+            "clientList" : docs,
+            user:req.user.username
         });
     });
 });
@@ -95,7 +97,8 @@ router.get('/event-entry', function(req, res) {
 
     collection.find({},{},function(e,docs){
         res.render('event-entry', {
-            "clientList" : docs
+            "clientList" : docs,
+            user:req.user.username
         });
     });
 });
@@ -111,7 +114,8 @@ router.get('/activity-report', function(req, res) {
 
     collection.find({},{},function(e,docs){
         res.render('activity-report', {
-            "agentList" : docs
+            "agentList" : docs,
+            user:req.user.username
         });
     });
 });
@@ -127,7 +131,8 @@ router.get('/visit-count-report', function(req, res) {
 
     collection.find({},{},function(e,docs){
         res.render('visit-count-report', {
-            "agentList" : docs
+            "agentList" : docs,
+            user:req.user.username
         });
     });
 });
@@ -143,7 +148,8 @@ router.get('/client-list-report', function(req, res) {
 
     collection.find({},{},function(e,docs){
         res.render('client-list-report', {
-            "agentList" : docs
+            "agentList" : docs,
+            user:req.user.username
         });
     });
 });
@@ -159,7 +165,8 @@ router.get('/contact-history-report', function(req, res) {
 
     collection.find({},{},function(e,docs){
         res.render('contact-history-report', {
-            "clientList" : docs
+            "clientList" : docs,
+            user:req.user.username
         });
     });
 });
@@ -175,7 +182,8 @@ router.get('/client-history-report', function(req, res) {
 
     collection.find({},{},function(e,docs){
         res.render('client-history-report', {
-            "clientList" : docs
+            "clientList" : docs,
+            user:req.user.username
         });
     });
 });
@@ -397,7 +405,8 @@ router.get('/client-report', function(req, res) {
 
     collection.find({},{},function(e,docs){
         res.render('client-report', {
-            "clientList" : docs
+            "clientList" : docs,
+            user:req.user.username
         });
     });
 });
@@ -413,7 +422,8 @@ router.get('/contact-report', function(req, res) {
 
     collection.find({},{},function(e,docs){
         res.render('contact-report', {
-            "contactList" : docs
+            "contactList" : docs,
+            user:req.user.username
         });
     });
 });
@@ -430,7 +440,8 @@ router.get('/agent-report', function(req, res) {
 
     collection.find({},{},function(e,docs){
         res.render('agent-report', {
-            "agentList" : docs
+            "agentList" : docs,
+            user:req.user.username
         });
     });
 });
@@ -446,7 +457,8 @@ router.get('/event-report', function(req, res) {
 
     collection.find({},{},function(e,docs){
         res.render('event-report', {
-            "eventList" : docs
+            "eventList" : docs,
+            user:req.user.username
         });
     });
 });
