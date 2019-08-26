@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css' />
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/coreui-icons.min.css">
+  </head>
+
+<body class="app sidebar-show aside-menu-show">
+
+  <header class="app-header navbar">
+
+<% include partials/header %>
+
+  </header>
+
+  <div class="app-body">
+
+    <div class="sidebar">
+      <% include partials/sidebar %>
+    </div>
+
+    <main class="main mt-2 ml-3">
+
+      <div class="card w-75">
+        <div class="card-body">
+
+<h3> <strong>Client History Report</strong></h3>
+<h4><small class="text">Client: <u>Diversys Spectrum Products, Inc.</u></small></h4>
+<h4><small class="text">Date Range: <u>8/24/2019-8/25/2019</u></small></h4>
+
+  <!-- Extracted data in Table Form -->
+
+<div class="table-responsive">
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">DATE</th>
+        <th scope="col">AGENT</th>
+        <th scope="col">CONTACT</th>
+        <th scope="col">VISIT TYPE</th>
+        <th scope="col">REMARKS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>8/24/2019</td>
+        <td>KJ</td>
+        <td>Royce Collin Sy</td>
+        <td>Courtesy Visit</td>
+        <td>Visited to ask how production has progressed, if he needed anything from our side. So far no problems, customer requirements slowing down</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>8/24/2019</td>
+        <td>DG</td>
+        <td>Charlie Sy</td>
+        <td>Collection</td>
+        <td>Countered and collected payment for SI 49225</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>8/24/2019</td>
+        <td>KJ</td>
+        <td>Nicole Sy</td>
+        <td>Technical Service</td>
+        <td>Inspected reported defects from batch #19B-14, performed free oven testing to rule out under or overcuring, will report results from testing once analyzed at the office.</td>
+      </tr>
+      <tr>
+        <th scope="row">4</th>
+        <td>8/25/2019</td>
+        <td>KJ</td>
+        <td>Royce Sy</td>
+        <td>Courtesy Visit</td>
+        <td>Brought snacks for purchasing team, talked for a bit regarding future projects</td>
+      </tr>
+      <tr>
+        <th scope="row">5</th>
+        <td>8/25/2019</td>
+        <td>KJ</td>
+        <td>Royce Sy</td>
+        <td>Delivery</td>
+        <td>Delivered lacking 100kg promised to customer, which they need for rush production</td>
+      </tr>
+      <tr>
+        <th scope="row">6</th>
+        <td>8/25/2019</td>
+        <td>DG</td>
+        <td>Nicole Sy</td>
+        <td>Technical Service</td>
+        <td>Royce showed me current item they are producing, metal frame bed. They need textured black finish for this project, I suggested D9197 for this product.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- Submit Button to execute -->
+        <div class="form-row">
+          <div class="form-group col">
+            <button type="button" class="btn btn-primary">Back</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    </main>
+
+    <aside class="aside-menu-hidden">
+      <!-- Aside menu content here -->
+    </aside>
+
+  </div>
+  <footer class="app-footer">
+    <% include partials/footer %>
+  </footer>
+</body>
+
+</html>

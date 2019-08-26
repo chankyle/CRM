@@ -22,14 +22,17 @@
       <h1> EVENT ENTRY FORM </h1>
       <form id="formAddEvent" name="addEvent" method="post" action="/addEvent">
 
+
+        <div class="card w-25">
+          <div class="card-body">
       <!-- Event Date-->
       <!-- [TODO] I don't know if I should be referring to the agentID when what I actually want to show up is the agentAbbrev -->
       <div class="form-row">
-          <div class="form-group col-md-6-auto">
+          <div class="form-group col">
             <label for="clientName">Date</label>
             <input type="date" class="form-control" id="eventDate" name="eventDate">
           </div>
-          <div class="form-group col-md-6-auto">
+          <div class="form-group col">
             <label for="agentID">Agent</label>
             <select class="form-control" name="agentID">
             	<option>JV</option>
@@ -47,11 +50,11 @@
 
       <!-- Event Time In & Out-->
       <div class="form-row">
-          <div class="form-group col-md-6-auto">
+          <div class="form-group col">
             <label for="eventTimeIn">Time In</label>
             <input type="time" class="form-control" id="eventTimeIn" name="eventTimeIn">
           </div>
-          <div class="form-group col-md-6-auto">
+          <div class="form-group col">
             <label for="eventTimeOut">Time Out</label>
             <input type="time" class="form-control" id="eventTimeOut" name="eventTimeOut">
           </div>
@@ -59,7 +62,7 @@
 
       <!-- Client Visited-->
       <div class="form-row">
-          <div class="form-group col-md-6-auto">
+          <div class="form-group col">
             <label for="clientID">Client</label>
             <select class="form-control" name="clientID">
         		<%
@@ -71,7 +74,9 @@
             	<%- list %>
       	  </select>
       </div>
-      <div class="form-group col-md-6-auto">
+
+      <div class="form-row">
+      <div class="form-group col">
             <label for="eventType">Visit Type</label>
             <select class="form-control" name="eventType">
       		  <option>Collection</option>
@@ -80,6 +85,7 @@
       		  <option>Delivery</option>
       	  </select>
           </div>
+        </div>
       </div>
 
       <!-- Contact Visited-->
@@ -88,14 +94,14 @@
       <div class="form-group">
         <label for="inputAddress">Contact(s) Visited</label>
           <div class="form-row">
-      		<div class="form-group col-md-6-auto">
+      		<div class="form-group col">
       			<select class="form-control" name="contactID">
       				<option>Contact 1</option>
       				<option>Contact 2</option>
       				<option>Contact 3</option>
       			</select>
       		</div>
-      		<div class="form-group col-md-6-auto">
+      		<div class="form-group col">
       			<select class="form-control" name="contactID">
       				<option>Contact 1</option>
       				<option>Contact 2</option>
@@ -109,7 +115,7 @@
       <div class="form-group">
         <label for="eventBranch">Branch Location (If Applicable)</label>
           <div class="form-row">
-      			<div class="col-auto">
+      			<div class="col">
       			  <input type="text" class="form-control" id="eventBranch" name="eventBranch" placeholder="Location">
       			</div>
       	</div>
@@ -119,7 +125,7 @@
       <div class="form-group">
         <label for="inputAddress2">Event Notes</label>
           <div class="form-row">
-      		<div class="col-md-4">
+      		<div class="col">
       			<textarea class="form-control" name="eventRemarks" rows="3" placeholder="Remarks"></textarea>
       		</div>
       	</div>
@@ -127,6 +133,9 @@
 
       <input class="btn btn-primary" type="submit" value="Submit">
       </form>
+
+    </div>
+  </div>
     </main>
 
     <aside class="aside-menu-hidden">

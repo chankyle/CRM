@@ -33,7 +33,8 @@
           lastModified        (DateTime)         - How do we end up modifying this? We currently don't have any means to modify items
           Agent Active      (Boolean)          - How do we end up changing this ever? Do we need a modify field?
       -->
-
+      <div class="card w-25">
+        <div class="card-body">
 
       <!-- Agent Abbreviation-->
       <div class="form-group">
@@ -49,10 +50,10 @@
       <div class="form-group">
         <label for="agentName">Agent Name</label>
           <div class="form-row">
-      			<div class="col-auto">
+      			<div class="col">
       			  <input type="text" class="form-control" id="agentFirstName" name="agentFirstName" placeholder="First Name">
       			</div>
-      			<div class="col-auto">
+      			<div class="col">
       			  <input type="text" class="form-control" id="agentLastName" name="agentLastName" placeholder="Last Name">
       			</div>
       	</div>
@@ -60,7 +61,7 @@
 
       <!-- Agent Position-->
       <div class="form-row">
-          <div class="form-group col-md-6-auto">
+          <div class="form-group col">
             <label for="agentPosition">Position</label>
             <select class="form-control" id="agentPosition" name="agentPosition">
       		  <option>Sales Executive</option>
@@ -75,7 +76,7 @@
       <div class="form-group">
         <label for="agentAbbrev">Agent Phone Number</label>
           <div class="form-row">
-      			<div class="col-auto">
+      			<div class="col">
       			  <input type="text" class="form-control" id="agentPhone" name="agentPhone" placeholder="Contact Number">
       			</div>
       	</div>
@@ -83,6 +84,9 @@
 
       <input class="btn btn-primary" type="submit" value="Submit">
       </form>
+
+    </div>
+  </div>
     </main>
 
     <aside class="aside-menu-hidden">

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css' />
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/coreui-icons.min.css">
+  </head>
+
+<body class="app sidebar-show aside-menu-show">
+
+  <header class="app-header navbar">
+
+<% include partials/header %>
+
+  </header>
+
+  <div class="app-body">
+
+    <div class="sidebar">
+      <% include partials/sidebar %>
+    </div>
+
+    <main class="main mt-2 ml-3">
+
+      <div class="card w-25">
+        <div class="card-body">
+
+<h3> <strong>Client List Report</strong></h3>
+<h4><small class="text">Agent: <u>KJ</u></small></h4>
+
+  <!-- Extracted data in Table Form -->
+
+<div class="table-responsive">
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">CLIENT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Diversys Spectrum Products, Inc.</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Felport International Marketing</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Koten Enterprises Co. Inc.</td>
+      </tr>
+      <tr>
+        <th scope="row">4</th>
+        <td>Superpower Metalwood Corporation</td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+
+<!-- Submit Button to execute -->
+        <div class="form-row">
+          <div class="form-group col">
+            <button type="button" class="btn btn-primary">Back</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    </main>
+
+    <aside class="aside-menu-hidden">
+      <!-- Aside menu content here -->
+    </aside>
+
+  </div>
+  <footer class="app-footer">
+    <% include partials/footer %>
+  </footer>
+</body>
+
+</html>
