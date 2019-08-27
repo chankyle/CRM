@@ -3,6 +3,7 @@ var passport = require('passport');
 var Account = require('../models/account');
 var moment = require('moment');
 var router = express.Router();
+var async = require('async');
 
 /* GET home page. */
 router.get('/', function (req, res) {
@@ -92,14 +93,37 @@ router.get('/event-entry', function(req, res) {
     // Set our internal DB variable
     var db = req.db;
 
-    // Set our collection
-    var collection = db.get('Clients');
+    var locals = {};
+    locals.user = req.user.username;
+    var tasks = [
+        // Load clients
+        function(callback) {
+            var collection1 = db.get('Clients');
 
-    collection.find({},{},function(e,docs){
-        res.render('event-entry', {
-            "clientList" : docs,
-            user:req.user.username
-        });
+            collection1.find({},{},function(e,clients){
+                if (e) return callback(err);
+                locals.clients = clients;
+                callback();
+            })
+        },
+        // Load agents
+        function(callback) {
+            var collection2 = db.get('Agents');
+
+            collection2.find({},{},function(e,agents){
+                if (e) return callback(err);
+                locals.agents = agents;
+                callback();
+            })
+        }
+    ];
+
+    async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+        if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+        // Here `locals` will be an object with `users` and `colors` keys
+        // Example: `locals = {users: [...], colors: [...]}`
+        db.close();
+        res.render('event-entry', locals);
     });
 });
 
