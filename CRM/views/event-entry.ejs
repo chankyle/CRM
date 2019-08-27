@@ -62,16 +62,34 @@
       <div class="form-row">
           <div class="form-group col">
             <label for="clientID">Client</label>
-            <select class="form-control" name="clientID">
+            <select class="form-control" name="clientID" onChange="changeAgent(this.value);">
         		<%
               	var list = '';
               	for (i = 0; i < locals.clients.length; i++) {
-              		list += '<option>' + locals.clients[i].clientName + '</option>';
+              		list += '<option value="' + locals.clients[i].clientName + '">' + locals.clients[i].clientName + '</option>';
               	}
         		%>
             	<%- list %>
       	  </select>
       </div>
+      <span id='variableJSON' hidden>
+        <%= JSON.stringify(locals.contacts); %>
+      </span>
+      <script>
+        function changeAgent(value){
+          var contacts = JSON.parse($('#variableJSON').text());
+          console.log(contacts.length);
+          var contactOptions = "";
+          contactOptions += "<option></option>";
+          for (j = 0; j < contacts.length; j++) {
+            if(contacts[j].contactClientID === value) {
+              contactOptions += "<option>" + contacts[j].contactFirstName + " " + contacts[j].contactLastName + "</option>";
+            }
+          }
+          document.getElementById("contactID1").innerHTML = contactOptions;
+          document.getElementById("contactID2").innerHTML = contactOptions;
+        }
+      </script>
 
       <div class="form-row">
       <div class="form-group col">
@@ -93,18 +111,14 @@
         <label for="inputAddress">Contact(s) Visited</label>
           <div class="form-row">
       		<div class="form-group col">
-      			<select class="form-control" name="contactID">
-      				<option>Contact 1</option>
-      				<option>Contact 2</option>
-      				<option>Contact 3</option>
-      			</select>
+      			<select class="form-control" name="contactID1" id="contactID1">
+              <option value="" disabled selected>Select</option>      			
+            </select>
       		</div>
       		<div class="form-group col">
-      			<select class="form-control" name="contactID">
-      				<option>Contact 1</option>
-      				<option>Contact 2</option>
-      				<option>Contact 3</option>
-      			</select>
+      			<select class="form-control" name="contactID2" id="contactID2">
+              <option value="" disabled selected>Select</option>            
+            </select>
       		</div>
       	</div>
       </div>

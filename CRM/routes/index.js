@@ -96,26 +96,37 @@ router.get('/event-entry', function(req, res) {
     var locals = {};
     locals.user = req.user.username;
     var tasks = [
+        // Load agents
+        function(callback) {
+            var collection1 = db.get('Agents');
+
+            collection1.find({},{},function(e,agents){
+                if (e) return callback(err);
+                locals.agents = agents;
+                callback();
+            })
+        },
         // Load clients
         function(callback) {
-            var collection1 = db.get('Clients');
+            var collection2 = db.get('Clients');
 
-            collection1.find({},{},function(e,clients){
+            collection2.find({},{},function(e,clients){
                 if (e) return callback(err);
                 locals.clients = clients;
                 callback();
             })
         },
-        // Load agents
+        // Load clientContacts
         function(callback) {
-            var collection2 = db.get('Agents');
+            var collection3 = db.get('Contacts');
 
-            collection2.find({},{},function(e,agents){
+            collection3.find({},{},function(e,contacts){
                 if (e) return callback(err);
-                locals.agents = agents;
+                locals.contacts = contacts;
                 callback();
             })
         }
+
     ];
 
     async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
