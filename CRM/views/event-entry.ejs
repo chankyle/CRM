@@ -80,7 +80,7 @@
           var contacts = JSON.parse($('#variableJSON').text());
           console.log(contacts.length);
           var contactOptions = "";
-          contactOptions += "<option></option>";
+          contactOptions += "<option>N/A</option>";
           for (j = 0; j < contacts.length; j++) {
             if(contacts[j].contactClientID === value) {
               contactOptions += "<option>" + contacts[j].contactFirstName + " " + contacts[j].contactLastName + "</option>";

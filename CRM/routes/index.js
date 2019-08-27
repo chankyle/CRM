@@ -391,29 +391,43 @@ router.post('/addEvent', function(req, res) {
     var db = req.db;
 
     // Get our form values. These rely on the "name" attributes
-    var eventType = req.body.eventType;
-    var username = req.user.username;
-    var eventBranch = req.body.eventBranch;
+    var clientName = req.body.clientID;
+    var agentAbbrev = req.body.agentID;
     var eventDate = req.body.eventDate;
     var eventDateTimeIn = moment(eventDate.concat(' ', req.body.eventTimeIn), 'YYYY-MM-DD HH-mm');
     var eventDateTimeOut = moment(eventDate.concat(' ', req.body.eventTimeOut), 'YYYY-MM-DD HH-mm');  
     var eventDuration = parseInt(moment.duration(eventDateTimeOut.diff(eventDateTimeIn)).asMinutes());
-    console.log(eventDuration);
+    var eventType = req.body.eventType;
+    var contact1 = req.body.contactID1;
+    if (contact1.valueOf() === "N/A"){
+        contact1 = "";
+    }
+    var contact2 = req.body.contactID2;
+    if (contact2.valueOf() === "N/A"){
+        contact2 = "";
+    }
+    var eventBranch = req.body.eventBranch;
     var eventRemarks = req.body.eventRemarks;
+    var username = req.user.username;
     var currentDateTime = moment();
+
     // Set our collection
     var collection = db.get('Events');
 
     // Submit to the DB
     collection.insert({
-        "eventType" : eventType,
-        "eventBranch" : eventBranch,
+        "clientName" : clientName,
+        "agentAbbrev" : agentAbbrev,
         "eventTimeIn" : eventDateTimeIn,
         "eventTimeOut" : eventDateTimeOut,
         "eventDuration" : eventDuration,
+        "eventType" : eventType,
+        "contact1" : contact1,
+        "contact2" : contact2,
+        "eventBranch" : eventBranch,
         "eventRemarks" : eventRemarks,
         "createdBy" : username,
-        "createDate" : currentDateTime,
+        "createDate" : currentDateTime
     }, function (err, doc) {
         if (err) {
             // If it failed, return error
