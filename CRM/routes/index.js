@@ -223,6 +223,81 @@ router.get('/client-history-report', function(req, res) {
     });
 });
 
+/* GET Clients for View Client Page. */
+router.get('/view-client-search', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+
+    // Set our collection
+    var collection = db.get('Clients');
+
+    collection.find({},{},function(e,docs){
+        res.render('view-client-search', {
+            "clientList" : docs,
+            user:req.user.username
+        });
+    });
+});
+
+/* GET Clients for View Contact Page. */
+router.get('/view-contact-search', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+
+    // Set our collection
+    var collection = db.get('Clients');
+
+    collection.find({},{},function(e,docs){
+        res.render('view-contact-search', {
+            "clientList" : docs,
+            user:req.user.username
+        });
+    });
+});
+
+/* GET Clients for View Event Page. */
+router.get('/view-event-search', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+
+    var locals = {};
+    locals.user = req.user.username;
+    var tasks = [
+        // Load clients
+        function(callback) {
+            var collection2 = db.get('Clients');
+
+            collection2.find({},{},function(e,clients){
+                if (e) return callback(err);
+                locals.clients = clients;
+                callback();
+            })
+        },
+        // Load clientContacts
+        function(callback) {
+            var collection3 = db.get('Contacts');
+
+            collection3.find({},{},function(e,contacts){
+                if (e) return callback(err);
+                locals.contacts = contacts;
+                callback();
+            })
+        }
+
+    ];
+
+    async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+        if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+        // Here `locals` will be an object with `users` and `colors` keys
+        // Example: `locals = {users: [...], colors: [...]}`
+        db.close();
+        res.render('view-event-search', locals);
+    });
+});
+
 
 /* POST to Add Clients */
 router.post('/addClient', function(req, res) {
@@ -395,7 +470,7 @@ router.post('/addEvent', function(req, res) {
     var agentAbbrev = req.body.agentID;
     var eventDate = req.body.eventDate;
     var eventDateTimeIn = moment(eventDate.concat(' ', req.body.eventTimeIn), 'YYYY-MM-DD HH-mm');
-    var eventDateTimeOut = moment(eventDate.concat(' ', req.body.eventTimeOut), 'YYYY-MM-DD HH-mm');  
+    var eventDateTimeOut = moment(eventDate.concat(' ', req.body.eventTimeOut), 'YYYY-MM-DD HH-mm');
     var eventDuration = parseInt(moment.duration(eventDateTimeOut.diff(eventDateTimeIn)).asMinutes());
     var eventType = req.body.eventType;
     var contact1 = req.body.contactID1;
