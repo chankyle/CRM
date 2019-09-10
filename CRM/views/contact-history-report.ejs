@@ -3,6 +3,7 @@
   <head>
     <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css' />
     <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/coreui-icons.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
   </head>
 
 <body class="app sidebar-show aside-menu-show">
@@ -24,32 +25,42 @@
       <div class="card w-25">
         <div class="card-body">
 <!-- Select Contact from Prepopulated list of options -->
-            <div class="form-row">
-              <div class="form-group col-12">
-                  <label for="agentSelect">Client</label>
-                    <select class="form-control" id="client-select">
-                      <%
-                          var list = '';
-                          for (i = 0; i < clientList.length; i++) {
-                            list += '<option>' + clientList[i].clientName + '</option>';
-                          }
-                      %>
-                        <%- list %>
-                    </select>
-              </div>
-            </div>
-
-
+          <div class="form-row">
+            <div class="form-group col">
+              <label for="clientID">Client</label>
+              <select class="form-control" name="clientID" onChange="changeAgent(this.value);">
+              <%
+                  var list = '';
+                  for (i = 0; i < locals.clients.length; i++) {
+                    list += '<option value="' + locals.clients[i].clientName + '">' + locals.clients[i].clientName + '</option>';
+                  }
+              %>
+                <%- list %>
+            </select>
+          </div>
+          <span id="variableJSON" hidden>
+          <%= JSON.stringify(locals.contacts); %>
+          </span>
+        <script>
+          function changeAgent(value){
+            var contacts = JSON.parse($('#variableJSON').text());
+            var contactOptions = "";
+            contactOptions += "<option>N/A</option>";
+            for (j = 0; j < contacts.length; j++) {
+              if(contacts[j].contactClientID === value) {
+                contactOptions += "<option>" + contacts[j].contactFirstName + " " + contacts[j].contactLastName + "</option>";
+              }
+            }
+            document.getElementById("contactID1").innerHTML = contactOptions;
+          }
+        </script>
+      </div>
   <!-- Select Contact from Prepopulated list of options -->
             <div class="form-row">
               <div class="form-group col-6">
-                  <label for="agentSelect">Contact</label>
-                    <select class="form-control" id="client-select">
-                        <option>Contact 1</option>
-                        <option>Contact 2</option>
-                        <option>Contact 3</option>
-                        <option>Contact 4</option>
-                        <option>Contact 5</option>
+                  <label for="agentContact">Contact</label>
+                    <select class="form-control" name="contactID1" id="contactID1">
+                      <option value="" disabled selected>Select</option>   
                     </select>
               </div>
             </div>
@@ -59,12 +70,12 @@
   <!-- Select Date Range for Data -->
         <div class="form-row">
           <div class="form-group col-6">
-            <label for="inputEmail4">Date Start</label>
-            <input type="date" class="form-control" id="date-start-input" placeholder="Email">
+            <label for="inputDateStart">Date Start</label>
+            <input type="date" class="form-control" id="date-start-input">
           </div>
           <div class="form-group col-6">
-            <label for="inputPassword4">Date End</label>
-            <input type="date" class="form-control" id="date-end-input" placeholder="Password">
+            <label for="inputDateEnd">Date End</label>
+            <input type="date" class="form-control" id="date-end-input">
           </div>
         </div>
 
