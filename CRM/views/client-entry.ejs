@@ -29,11 +29,11 @@
       <div class="form-row">
           <div class="form-group col-auto">
             <label for="clientName">Client Name</label>
-            <input type="name" class="form-control" id="clientName" name="clientName" placeholder="Company Name">
+            <input type="name" class="form-control" id="clientName" name="clientName" placeholder="Company Name" required>
           </div>
           <div class="form-group col-auto">
             <label for="agentName">Agent Assignment</label>
-            <select class="form-control" id="agentAbbrev">
+            <select class="form-control" id="agentAbbrev" required>
         		<%
               	var list = '';
               	for (i = 0; i < agentList.length; i++) {
@@ -50,7 +50,7 @@
         <label for="clientPhone">Client Contact Numbers</label>
           <div class="form-row">
       			<div class="col-auto">
-      			  <input type="text" class="form-control" id="clientPhone" name="clientPhone" placeholder="Phone Number">
+      			  <input type="text" class="form-control" id="clientPhone" name="clientPhone" placeholder="Phone Number" required>
       			</div>
       			<div class="col-auto">
       			  <input type="text" class="form-control" id="clientFax" name="clientFax" placeholder="Fax Number">
@@ -64,7 +64,7 @@
         <label for="clientPhone">Client Addresses</label>
           <div class="form-row">
       			<div class="col-auto">
-      			  <textarea class="form-control" id="clientAddress" name="clientAddress" placeholder="Company Address" rows="3"></textarea>
+      			  <textarea class="form-control" id="clientAddress" name="clientAddress" placeholder="Company Address" rows="3" required></textarea>
       			</div>
       			<div class="col-auto">
       			  <textarea class="form-control" id="clientDelivAddress" name="clientDelivAddress" placeholder="Delivery Address" rows="3"></textarea>

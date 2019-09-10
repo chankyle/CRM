@@ -40,6 +40,9 @@ var resultVisitCountReportRouter = require('./routes/result-visit-count-report')
 var resultClientListReportRouter = require('./routes/result-client-list-report');
 var resultContactHistoryReportRouter = require('./routes/result-contact-history-report');
 var resultClientHistoryReportRouter = require('./routes/result-client-history-report');
+var viewClientSearchRouter = require('./routes/view-client-search');
+var viewContactSearchRouter = require('./routes/view-contact-search');
+var viewEventSearchRouter = require('./routes/view-event-search');
 
 var app = express();
 
@@ -95,6 +98,9 @@ app.use('/result-visit-count-report', resultVisitCountReportRouter);
 app.use('/result-client-list-report', resultClientListReportRouter);
 app.use('/result-contact-history-report', resultContactHistoryReportRouter);
 app.use('/result-client-history-report', resultClientHistoryReportRouter);
+app.use('/view-client-search', viewClientSearchRouter);
+app.use('/view-contact-search', viewContactSearchRouter);
+app.use('/view-event-search', viewEventSearchRouter);
 
 // passport config
 var Account = require('./models/account');
