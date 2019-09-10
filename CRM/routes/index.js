@@ -4,6 +4,9 @@ var Account = require('../models/account');
 var moment = require('moment');
 var router = express.Router();
 var async = require('async');
+var bodyParser = require('body-parser')
+var jsonParser = bodyParser.json()
+var urlencoderParser = bodyParser.urlencoded({ extended: false })
 
 /* GET home page. */
 router.get('/', function (req, res) {
@@ -153,6 +156,36 @@ router.get('/activity-report', function(req, res) {
             user:req.user.username
         });
     });
+});
+
+/* GET Activity Report Results*/
+router.get('/result-activity-report', function(req, res) {
+    res.render('result-activity-report');
+});
+
+/* POST Query to MongoDB and return Activity Report Results. */
+router.post('/resultActivityReport', function(req, res) {
+    // Set our internal DB variable
+    var dateStartInput = moment(req.body.dateStartInput.concat(' ', req.body.eventTimeIn), 'YYYY-MM-DD HH-mm');
+    var dateEndInput = moment(req.body.dateEndInput.concat(' ', req.body.eventTimeOut), 'YYYY-MM-DD HH-mm');
+    var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput
+    var db = req.db;
+    var collection = db.get('Events');
+
+    var query = { "agentAbbrev": req.body.agentSelect, "eventTimeOut._d": { $lte: dateEndInput._d}, "eventTimeIn._d": { $gte: dateStartInput._d} };
+    console.log(query);
+
+    collection.find(query,{},function(err, result){
+        if (err) throw err;
+        db.close();
+        res.render('result-activity-report', {
+            user:req.user.username,
+            "result":result,
+            "agent":req.body.agentSelect,
+            "dateRange": dateRange
+        });
+    });
+   
 });
 
 /* GET Agents for Visit Count Report Form. */
