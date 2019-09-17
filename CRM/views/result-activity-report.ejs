@@ -50,9 +50,10 @@
     <tbody>
         <%
           var list = '';
+          var k = 1;
           for (i = 0; i < result.length; i++) {
             list += '<tr>';
-            list += '<th scope="row">' + i + '</th>';
+            list += '<th scope="row">' + k + '</th>';
             list += '<td>' + result[i].eventTimeIn._d + '</td>';
             list += '<td>' + result[i].clientName + '</td>';
             list += '<td>' + result[i].contact1 + '</td>';
@@ -62,6 +63,7 @@
             list += '<td>' + result[i].eventDuration + '</td>';
             list += '<td>' + result[i].eventRemarks + '</td>';
             list += '</tr>';
+            k++;
         }
         %>
         <%- list %>
