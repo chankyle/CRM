@@ -19,6 +19,7 @@
 
     <main class="main mt-2 ml-3">
       <h1>Customer List Report</h1>
+      <form id="formClientList" name="formClientList" method="post" action="/result-client-list-report">
 
         <div class="card w-25">
           <div class="card-body">
@@ -27,7 +28,7 @@
               <div class="form-row">
                 <div class="form-group col-6">
                   <label for="agentSelect">Agent</label>
-                  <select class="form-control" id="agentAbbrev">
+                  <select class="form-control" name ="agentAbbrev" id="agentAbbrev">
                     <%
                         var list = '';
                         for (i = 0; i < agentList.length; i++) {
@@ -42,7 +43,8 @@
       <!-- Submit Button to execute -->
               <div class="form-row">
                 <div class="form-group col">
-                  <button type="button" class="btn btn-primary">Submit</button>
+                  <input class="btn btn-primary" type="submit" value="Submit">
+                </form>
                 </div>
               </div>
 

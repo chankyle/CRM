@@ -26,7 +26,7 @@
         <div class="card-body">
 
 <h3> <strong>Client List Report</strong></h3>
-<h4><small class="text">Agent: <u>KJ</u></small></h4>
+<h4><small class="text">Agent: <u><%- agent %></u></small></h4>
 
   <!-- Extracted data in Table Form -->
 
@@ -39,23 +39,18 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Diversys Spectrum Products, Inc.</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Felport International Marketing</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Koten Enterprises Co. Inc.</td>
-      </tr>
-      <tr>
-        <th scope="row">4</th>
-        <td>Superpower Metalwood Corporation</td>
-      </tr>
-
+      <%
+          var list = '';
+          var k = 1
+          for (i = 0; i < result.length; i++) {
+            list += '<tr>';
+            list += '<th scope="row">' + k + '</th>';
+            list += '<td>' + result[i].clientName + '</td>';
+            list += '</tr>';
+            k++;
+        }
+        %>
+      <%- list %>
     </tbody>
   </table>
 </div>
@@ -64,10 +59,14 @@
 <!-- Submit Button to execute -->
         <div class="form-row">
           <div class="form-group col">
-            <button type="button" class="btn btn-primary">Back</button>
+            <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
           </div>
         </div>
-
+        <script>
+          function goBack() {
+            window.history.back();
+          }
+        </script>
       </div>
     </div>
 

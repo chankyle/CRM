@@ -188,6 +188,33 @@ router.post('/resultActivityReport', function(req, res) {
    
 });
 
+/* GET Client List Report Results*/
+router.get('/result-client-list-report', function(req, res) {
+    res.render('result-client-list-report');
+});
+
+/* POST Query to MongoDB and return Activity Report Results. */
+router.post('/result-client-list-report', function(req, res) {
+    // Set our internal DB variable
+
+    var db = req.db;
+    var collection = db.get('Clients');
+
+    var query = { "assignedAgent": req.body.agentAbbrev };
+    console.log(query);
+
+    collection.find(query,{},function(err, result){
+        if (err) throw err;
+        db.close();
+        res.render('result-client-list-report', {
+            user:req.user.username,
+            "result":result,
+            "agent":req.body.agentAbbrev,
+        });
+    });
+   
+});
+
 /* GET Agents for Visit Count Report Form. */
 router.get('/visit-count-report', function(req, res) {
 
