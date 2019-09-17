@@ -166,8 +166,10 @@ router.get('/result-activity-report', function(req, res) {
 /* POST Query to MongoDB and return Activity Report Results. */
 router.post('/resultActivityReport', function(req, res) {
     // Set our internal DB variable
-    var dateStartInput = moment(req.body.dateStartInput.concat(' ', req.body.eventTimeIn), 'YYYY-MM-DD HH-mm');
-    var dateEndInput = moment(req.body.dateEndInput.concat(' ', req.body.eventTimeOut), 'YYYY-MM-DD HH-mm');
+    var dateStartInput = moment(req.body.dateStartInput.concat(' 00:00:00'), 'YYYY-MM-DD HH-mm-ss');
+    console.log(req.body.dateStartInput);
+    console.log(req.body.eventTimeIn);
+    var dateEndInput = moment(req.body.dateEndInput.concat(' 23:59:59'), 'YYYY-MM-DD HH-mm-ss');
     var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput
     var db = req.db;
     var collection = db.get('Events');
@@ -223,8 +225,8 @@ router.get('/result-client-history-report', function(req, res) {
 /* POST Query to MongoDB and return Activity Report Results. */
 router.post('/result-client-history-report', function(req, res) {
     // Set our internal DB variable
-    var dateStartInput = moment(req.body.dateStartInput.concat(' ', req.body.eventTimeIn), 'YYYY-MM-DD HH-mm');
-    var dateEndInput = moment(req.body.dateEndInput.concat(' ', req.body.eventTimeOut), 'YYYY-MM-DD HH-mm');
+    var dateStartInput = moment(req.body.dateStartInput.concat(' 00:00:00'), 'YYYY-MM-DD HH-mm-ss');
+    var dateEndInput = moment(req.body.dateEndInput.concat(' 23:59:59'), 'YYYY-MM-DD HH-mm-ss');
     var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput
     var db = req.db;
     var collection = db.get('Events');
@@ -253,8 +255,8 @@ router.get('/result-contact-history-report', function(req, res) {
 /* POST Query to MongoDB and return Activity Report Results. */
 router.post('/result-contact-history-report', function(req, res) {
     // Set our internal DB variable
-    var dateStartInput = moment(req.body.dateStartInput.concat(' ', req.body.eventTimeIn), 'YYYY-MM-DD HH-mm');
-    var dateEndInput = moment(req.body.dateEndInput.concat(' ', req.body.eventTimeOut), 'YYYY-MM-DD HH-mm');
+    var dateStartInput = moment(req.body.dateStartInput.concat(' 00:00:00'), 'YYYY-MM-DD HH-mm-ss');
+    var dateEndInput = moment(req.body.dateEndInput.concat(' 23:59:59'), 'YYYY-MM-DD HH-mm-ss');
     var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput
     var db = req.db;
     var collection = db.get('Events');

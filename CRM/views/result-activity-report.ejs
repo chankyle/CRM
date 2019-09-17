@@ -67,7 +67,9 @@
             var timeOutString = result[i].eventTimeOut._d.toString();
             var eventTimeOut = str.substr(16, timeOutString.length);
             list += '<td>' + eventTimeOut + '</td>';
-            list += '<td>' + result[i].eventDuration + '</td>';
+            var hours = Math.floor(result[i].eventDuration / 60);          
+            var minutes = result[i].eventDuration % 60;
+            list += '<td>' + hours + ' hours ' + minutes + ' minutes' + '</td>';
             list += '<td>' + result[i].eventRemarks + '</td>';
             list += '</tr>';
             k++;
