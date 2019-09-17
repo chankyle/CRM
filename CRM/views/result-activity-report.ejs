@@ -54,13 +54,19 @@
           for (i = 0; i < result.length; i++) {
             list += '<tr>';
             list += '<th scope="row">' + k + '</th>';
-            list += '<td>' + result[i].eventTimeIn._d + '</td>';
+            var str = result[i].eventTimeIn._d.toString();
+            var eventDate = str.substr(0, 15);
+            list += '<td>' + eventDate + '</td>';
             list += '<td>' + result[i].clientName + '</td>';
             list += '<td>' + result[i].contact1 + '</td>';
             list += '<td>' + result[i].contact2 + '</td>';
             list += '<td>' + result[i].eventType + '</td>';
-            list += '<td>' + result[i].eventTimeIn._d + '</td>';
-            list += '<td>' + result[i].eventTimeOut._d + '</td>';
+            var timeInString = result[i].eventTimeIn._d.toString();
+            var eventTimeIn = str.substr(16, timeInString.length);
+            list += '<td>' + eventTimeIn + '</td>';
+            var timeOutString = result[i].eventTimeOut._d.toString();
+            var eventTimeOut = str.substr(16, timeOutString.length);
+            list += '<td>' + eventTimeOut + '</td>';
             list += '<td>' + result[i].eventDuration + '</td>';
             list += '<td>' + result[i].eventRemarks + '</td>';
             list += '</tr>';
