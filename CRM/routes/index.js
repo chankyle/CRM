@@ -245,6 +245,37 @@ router.post('/result-client-history-report', function(req, res) {
    
 });
 
+/* GET Client List Report Results*/
+router.get('/result-contact-history-report', function(req, res) {
+    res.render('result-contact-history-report');
+});
+
+/* POST Query to MongoDB and return Activity Report Results. */
+router.post('/result-contact-history-report', function(req, res) {
+    // Set our internal DB variable
+    var dateStartInput = moment(req.body.dateStartInput.concat(' ', req.body.eventTimeIn), 'YYYY-MM-DD HH-mm');
+    var dateEndInput = moment(req.body.dateEndInput.concat(' ', req.body.eventTimeOut), 'YYYY-MM-DD HH-mm');
+    var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput
+    var db = req.db;
+    var collection = db.get('Events');
+
+    var query = { $or: [ { "clientName": req.body.clientSelect, "contact1": req.body.ContactID, "eventTimeOut._d": { $lte: dateEndInput._d}, "eventTimeIn._d": { $gte: dateStartInput._d} }, { "clientName": req.body.clientSelect, "contact2": req.body.ContactID, "eventTimeOut._d": { $lte: dateEndInput._d}, "eventTimeIn._d": { $gte: dateStartInput._d} } ] };
+    console.log(query);
+
+    collection.find(query,{},function(err, result){
+        if (err) throw err;
+        db.close();
+        res.render('result-contact-history-report', {
+            user:req.user.username,
+            "result":result,
+            "clientName":req.body.clientSelect,
+            "contactName":req.body.contactID,
+            "dateRange": dateRange
+        });
+    });
+   
+});
+
 /* GET Agents for Visit Count Report Form. */
 router.get('/visit-count-report', function(req, res) {
 
