@@ -48,10 +48,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
         <%
           var list = '';
           for (i = 0; i < result.length; i++) {
+            list += '<tr>';
             list += '<th scope="row">' + i + '</th>';
             list += '<td>' + result[i].eventTimeIn._d + '</td>';
             list += '<td>' + result[i].clientName + '</td>';
@@ -61,10 +61,10 @@
             list += '<td>' + result[i].eventTimeOut._d + '</td>';
             list += '<td>' + result[i].eventDuration + '</td>';
             list += '<td>' + result[i].eventRemarks + '</td>';
+            list += '</tr>';
         }
         %>
         <%- list %>
-      </tr>
     </tbody>
   </table>
 </div>
