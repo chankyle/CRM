@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-/* Render Client-Entry vieww */
+/* Render Event Entery view */
 router.get('/', function(req, res, next) {
-  res.render('client-entry');
+  res.render('search-client');
 });
 
 module.exports = router;
