@@ -20,29 +20,34 @@ var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var registerRouter = require('./routes/register');
 var homeRouter = require('./routes/home');
+
+var entryClientRouter = require('./routes/entry-client');
+var entryContactRouter = require('./routes/entry-contact');
+var entryEventRouter = require('./routes/entry-event');
+var entryAgentRouter = require('./routes/entry-agent');
+
 var dataEntryRouter = require('./routes/data-entry');
-var clientEntryRouter = require('./routes/client-entry');
-var contactEntryRouter = require('./routes/contact-entry');
-var eventEntryRouter = require('./routes/event-entry');
-var agentEntryRouter = require('./routes/agent-entry');
 var reportsRouter = require('./routes/reports');
 var clientReportRouter = require('./routes/client-report');
 var contactReportRouter = require('./routes/contact-report');
 var eventReportRouter = require('./routes/event-report');
 var agentReportRouter = require('./routes/agent-report');
-var activityReportRouter = require('./routes/activity-report');
-var visitCountReportRouter = require('./routes/visit-count-report');
-var clientListReportRouter = require('./routes/client-list-report');
-var clientHistoryReportRouter = require('./routes/client-history-report');
-var contactHistoryReportRouter = require('./routes/contact-history-report');
+
+var reportActivityRouter = require('./routes/report-activity');
+var reportVisitCountRouter = require('./routes/report-visit-count');
+var reportClientListRouter = require('./routes/report-client-list');
+var reportContactHistoryRouter = require('./routes/report-contact-history');
+var reportClientHistoryRouter = require('./routes/report-client-history');
+
 var resultActivityReportRouter = require('./routes/result-activity-report');
 var resultVisitCountReportRouter = require('./routes/result-visit-count-report');
 var resultClientListReportRouter = require('./routes/result-client-list-report');
 var resultContactHistoryReportRouter = require('./routes/result-contact-history-report');
 var resultClientHistoryReportRouter = require('./routes/result-client-history-report');
-var viewClientSearchRouter = require('./routes/view-client-search');
-var viewContactSearchRouter = require('./routes/view-contact-search');
-var viewEventSearchRouter = require('./routes/view-event-search');
+
+var searchClientRouter = require('./routes/search-client');
+var searchContactRouter = require('./routes/search-contact');
+var searchEventRouter = require('./routes/search-event');
 
 var app = express();
 
@@ -78,29 +83,34 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
 app.use('/home', homeRouter);
+
+app.use('/entry-client', entryClientRouter);
+app.use('/entry-contact', entryContactRouter);
+app.use('/entry-event', entryEventRouter);
+app.use('/entry-agent', entryAgentRouter);
+
 app.use('/data-entry', dataEntryRouter);
-app.use('/client-entry', clientEntryRouter);
-app.use('/contact-entry', contactEntryRouter);
-app.use('/event-entry', eventEntryRouter);
-app.use('/agent-entry', agentEntryRouter);
 app.use('/reports', reportsRouter);
 app.use('/client-report', clientReportRouter);
 app.use('/contact-report', contactReportRouter);
 app.use('/event-report', eventReportRouter);
 app.use('/agent-report', agentReportRouter);
-app.use('/activity-report', activityReportRouter);
-app.use('/visit-count-report', visitCountReportRouter);
-app.use('/client-list-report', clientListReportRouter);
-app.use('/client-history-report', clientHistoryReportRouter);
-app.use('/contact-history-report', contactHistoryReportRouter);
+
+app.use('/report-activity', reportActivityRouter);
+app.use('/report-visit-count', reportVisitCountRouter);
+app.use('/report-client-list', reportClientListRouter);
+app.use('/report-client-history', reportClientHistoryRouter);
+app.use('/report-contact-history', reportContactHistoryRouter);
+
 app.use('/result-activity-report', resultActivityReportRouter);
 app.use('/result-visit-count-report', resultVisitCountReportRouter);
 app.use('/result-client-list-report', resultClientListReportRouter);
 app.use('/result-contact-history-report', resultContactHistoryReportRouter);
 app.use('/result-client-history-report', resultClientHistoryReportRouter);
-app.use('/view-client-search', viewClientSearchRouter);
-app.use('/view-contact-search', viewContactSearchRouter);
-app.use('/view-event-search', viewEventSearchRouter);
+
+app.use('/search-client', searchClientRouter);
+app.use('/search-contact', searchContactRouter);
+app.use('/search-event', searchEventRouter);
 
 // passport config
 var Account = require('./models/account');
