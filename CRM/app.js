@@ -49,6 +49,10 @@ var searchClientRouter = require('./routes/search-client');
 var searchContactRouter = require('./routes/search-contact');
 var searchEventRouter = require('./routes/search-event');
 
+var viewClientRouter = require('./routes/view-client');
+var viewContactRouter = require('./routes/view-contact');
+var viewEventRouter = require('./routes/view-event');
+
 var app = express();
 
 
@@ -111,6 +115,10 @@ app.use('/result-client-history-report', resultClientHistoryReportRouter);
 app.use('/search-client', searchClientRouter);
 app.use('/search-contact', searchContactRouter);
 app.use('/search-event', searchEventRouter);
+
+app.use('/view-client', viewClientRouter);
+app.use('/view-contact', viewContactRouter);
+app.use('/view-event', viewEventRouter);
 
 // passport config
 var Account = require('./models/account');

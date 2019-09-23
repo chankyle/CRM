@@ -19,12 +19,11 @@
     </div>
 
     <main class="main mt-2 ml-3">
-      <h1>Contact History Report</h1>
       <form id="formContactHistoryReport" name="formContactHistoryReport" method="post" action="/result-contact-history-report">
-
-      <div class="card w-25">
+      <div class="card w-50">
+        <h3 class="card-header">Contact History Report</h3>
         <div class="card-body">
-<!-- Select Contact from Prepopulated list of options -->
+<!-- Select Client from Prepopulated list of options -->
           <div class="form-row">
             <div class="form-group col">
               <label for="clientID">Client</label>
@@ -59,7 +58,7 @@
             <div class="form-row">
               <div class="form-group col-6">
                   <label for="agentContact">Contact</label>
-                    <select class="form-control" name="contactID" id="contactID">
+                    <select class="form-control" name="contactID1" id="contactID1">
                       <option value="" disabled selected>Select</option>
                     </select>
               </div>
@@ -71,11 +70,11 @@
         <div class="form-row">
           <div class="form-group col-6">
             <label for="inputDateStart">Date Start</label>
-            <input type="date" class="form-control" name="dateStartInput" id="dateStartInput">
+            <input type="date" class="form-control" name="dateStartInput" id="dateStartInput" required>
           </div>
           <div class="form-group col-6">
             <label for="inputDateEnd">Date End</label>
-            <input type="date" class="form-control" name="dateEndInput" id="dateEndInput">
+            <input type="date" class="form-control" name="dateEndInput" id="dateEndInput" required>
           </div>
         </div>
 

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css' />
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/coreui-icons.min.css">
+  </head>
+
+<body class="app sidebar-show aside-menu-show">
+
+  <header class="app-header navbar">
+    <% include partials/header %>
+  </header>
+
+  <div class="app-body">
+
+    <div class="sidebar">
+      <% include partials/sidebar %>
+    </div>
+
+    <main class="main mt-2 ml-3">
+      <form id="formAddContact" name="addContact" method="post" action="/addContact">
+      <div class="card w-100">
+        <h3 class="card-header">View/Edit Contact</h3>
+        <div class="card-body">
+      <h4> Contact Information</h4>
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th style="width: 5%" scope="col">Name:</th>
+            <th style="width: 20%" scope="col">Shirley Bernardo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Client:</th>
+            <td>Diversys Spectrum Products, Inc.</td>
+          </tr>
+          <tr>
+            <th scope="row">Position:</th>
+            <td>Admin Manager</td>
+          </tr>
+          <tr>
+            <th scope="row">Contact Number/s:</th>
+            <td>786-7201<br>0917-1234567</td>
+          </tr>
+          <tr>
+            <th scope="row">Email Address/es:</th>
+            <td>shirley.bernado@diversysph.com<br>info@diversysph.com</td>
+          </tr>
+          <tr>
+            <th scope="row">Notes:</th>
+            <td>testing on long form remarks, how will the webpage react to a longer than expected entry in this section?</td>
+          </tr>
+        </tbody>
+      </table>
+
+<!-- Contact History Snapshot - thinking maybe last 5 entries -->
+
+      <h4> Communication History</h4>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th style="width: 2%" scope="col"></th>
+              <th style="width: 15%" scope="col">DATE</th>
+              <th style="width: 5%" scope="col">AGENT</th>
+              <th style="width: 10%" scope="col">VISIT TYPE</th>
+              <th style="width: 20%" scope="col">REMARKS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>1</th>
+              <td>Sunday, September 22, 2019</td>
+              <td>RC</td>
+              <td>Collection</td>
+              <td>Blabbity blahblah</td>
+            </tr>
+            <tr>
+              <th>2</th>
+              <td>Sunday, September 23, 2019</td>
+              <td>KC</td>
+              <td>Courtesy Visit</td>
+              <td>Blabbity blahblah 2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+<!-- BACK BUTTON -->
+      <div class="form-row">
+        <div class="form-group col">
+          <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
+        </div>
+        <script>
+          function goBack() {
+            window.history.back();
+          }
+        </script>
+      </div>
+    </div>
+  </div>
+
+    </main>
+
+    <aside class="aside-menu-hidden">
+      <!-- Aside menu content here -->
+    </aside>
+
+  </div>
+  <footer class="app-footer">
+    <% include partials/footer %>
+  </footer>
+
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
+</body>
+
+</html>

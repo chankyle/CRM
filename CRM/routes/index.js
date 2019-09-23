@@ -71,6 +71,23 @@ router.get('/entry-client', function(req, res) {
     });
 });
 
+/* GET Agents for View Client Page. */
+router.get('/view-client', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+
+    // Set our collection
+    var collection = db.get('Agents');
+
+    collection.find({},{},function(e,docs){
+        res.render('view-client', {
+            "agentList" : docs,
+            user : req.user.username
+        });
+    });
+});
+
 
 /* GET Clients for Contact Entry Form. */
 router.get('/entry-contact', function(req, res) {
@@ -83,6 +100,23 @@ router.get('/entry-contact', function(req, res) {
 
     collection.find({},{},function(e,docs){
         res.render('entry-contact', {
+            "clientList" : docs,
+            user:req.user.username
+        });
+    });
+});
+
+/* GET Clients for View Contact Page. */
+router.get('/view-contact', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+
+    // Set our collection
+    var collection = db.get('Clients');
+
+    collection.find({},{},function(e,docs){
+        res.render('view-contact', {
             "clientList" : docs,
             user:req.user.username
         });
@@ -217,12 +251,12 @@ router.post('/result-client-list-report', function(req, res) {
 
 });
 
-/* GET Client List Report Results*/
+/* GET Client History Report Results*/
 router.get('/result-client-history-report', function(req, res) {
     res.render('result-client-history-report');
 });
 
-/* POST Query to MongoDB and return Activity Report Results. */
+/* POST Query to MongoDB and return Client History Results. */
 router.post('/result-client-history-report', function(req, res) {
     // Set our internal DB variable
     var dateStartInput = moment(req.body.dateStartInput.concat(' 00:00:00'), 'YYYY-MM-DD HH-mm-ss');
@@ -247,12 +281,12 @@ router.post('/result-client-history-report', function(req, res) {
 
 });
 
-/* GET Client List Report Results*/
+/* GET Contact History Report Results*/
 router.get('/result-contact-history-report', function(req, res) {
     res.render('result-contact-history-report');
 });
 
-/* POST Query to MongoDB and return Activity Report Results. */
+/* POST Query to MongoDB and return Contact History Results. */
 router.post('/result-contact-history-report', function(req, res) {
     // Set our internal DB variable
     var dateStartInput = moment(req.body.dateStartInput.concat(' 00:00:00'), 'YYYY-MM-DD HH-mm-ss');
@@ -261,7 +295,7 @@ router.post('/result-contact-history-report', function(req, res) {
     var db = req.db;
     var collection = db.get('Events');
 
-    var query = { $or: [ { "clientName": req.body.clientSelect, "contact1": req.body.ContactID, "eventTimeOut._d": { $lte: dateEndInput._d}, "eventTimeIn._d": { $gte: dateStartInput._d} }, { "clientName": req.body.clientSelect, "contact2": req.body.ContactID, "eventTimeOut._d": { $lte: dateEndInput._d}, "eventTimeIn._d": { $gte: dateStartInput._d} } ] };
+    var query = { $or: [ { "clientName": req.body.clientSelect, "contact1": req.body.contactID1, "eventTimeOut._d": { $lte: dateEndInput._d}, "eventTimeIn._d": { $gte: dateStartInput._d} }] };
     console.log(query);
 
     collection.find(query,{},function(err, result){
@@ -271,8 +305,8 @@ router.post('/result-contact-history-report', function(req, res) {
             user:req.user.username,
             "result":result,
             "clientName":req.body.clientSelect,
-            "contactName":req.body.contactID,
-            "dateRange": dateRange
+            "contactName":req.body.contactID1,
+            "dateRange": dateRange,
         });
     });
 

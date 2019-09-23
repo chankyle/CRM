@@ -18,17 +18,16 @@
     </div>
 
     <main class="main mt-2 ml-3">
-      <h1>Client History Report</h1>
       <form id="formActivityReport" name="formActivityReport" method="post" action="/result-client-history-report">
-
-      <div class="card w-25">
+      <div class="card w-50">
+        <h3 class="card-header">Client History Report</h3>
         <div class="card-body">
 
   <!-- Select Agent from Prepopulated list of options -->
             <div class="form-row">
               <div class="form-group col-12">
                   <label for="agentSelect">Client</label>
-                    <select class="form-control" name="clientSelect" id="clientSelect">
+                    <select class="form-control" name="clientSelect" id="clientSelect" onChange="changeAgent(this.value);">
                       <%
                           var list = '';
                           for (i = 0; i < clientList.length; i++) {
@@ -45,11 +44,11 @@
   <!-- Select Date Range for Data -->
         <div class="form-row">
           <div class="form-group col-6">
-            <label for="inputdateStart">Date Start</label>
+            <label for="inputDateStart">Date Start</label>
             <input type="date" class="form-control" id="dateStartInput" name="dateStartInput" required>
           </div>
           <div class="form-group col-6">
-            <label for="inputdateEnd">Date End</label>
+            <label for="inputDateEnd">Date End</label>
             <input type="date" class="form-control" id="dateEndInput" name="dateEndInput" required>
           </div>
         </div>
