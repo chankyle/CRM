@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* Render Event Entery view */
 router.get('/', function(req, res, next) {
-  res.render('client-list-report');
+  res.render('report-visit-count');
 });
 
 module.exports = router;

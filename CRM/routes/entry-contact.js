@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-/* Render Event Entery view */
+/* Render Contact Entry view. */
 router.get('/', function(req, res, next) {
-  res.render('view-event-search');
+  res.render('entry-contact');
 });
 
 module.exports = router;

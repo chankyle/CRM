@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* Render Event Entery view */
 router.get('/', function(req, res, next) {
-  res.render('client-history-report');
+  res.render('search-contact');
 });
 
 module.exports = router;

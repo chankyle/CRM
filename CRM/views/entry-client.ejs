@@ -2,7 +2,7 @@
 <html>
 
   <head>
-    <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css' />
+    <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css'>
     <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/coreui-icons.min.css">
   </head>
 
@@ -19,10 +19,10 @@
     </div>
 
     <main class="main mt-2 ml-3">
-      <h1> CLIENT ENTRY FORM </h1>
       <form id="formAddClient" name="addClient" method="post" action="/addClient">
 
-        <div class="card w-25">
+        <div class="card w-75">
+          <h3 class="card-header">Client Information</h3>
           <div class="card-body">
 
       <!-- Client Name & Agent Assignment-->
@@ -64,10 +64,12 @@
         <label for="clientPhone">Client Addresses</label>
           <div class="form-row">
       			<div class="col-auto">
-      			  <textarea class="form-control" id="clientAddress" name="clientAddress" placeholder="Company Address" rows="3" required></textarea>
+      			  <textarea class="form-control" id="clientAddress" name="clientAddress" placeholder="Company Address" rows="1" required></textarea>
+              <br>
+              <textarea class="form-control" id="clientAddress1" name="clientAddress1" placeholder="Delivery Address" rows="1"></textarea>
       			</div>
       			<div class="col-auto">
-      			  <textarea class="form-control" id="clientDelivAddress" name="clientDelivAddress" placeholder="Delivery Address" rows="3"></textarea>
+      			  <textarea class="form-control" id="clientDelivAddress" name="clientDelivAddress" placeholder="Delivery Address" rows="1"></textarea>
       			</div>
       	</div>
       </div>
@@ -115,12 +117,10 @@
       </div>
 
       <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-
       </form>
 
     </div>
   </div>
-
     </main>
 
     <aside class="aside-menu-hidden">

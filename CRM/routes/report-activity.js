@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-/* Render Agent-Entry view */
+/* Render Event Entery view */
 router.get('/', function(req, res, next) {
-  res.render('agent-entry', {user:req.user.username});
+  res.render('report-activity');
 });
 
 module.exports = router;

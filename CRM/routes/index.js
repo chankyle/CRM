@@ -55,7 +55,7 @@ router.get('/ping', function(req, res){
 
 
 /* GET Agents for Client Entry Form. */
-router.get('/client-entry', function(req, res) {
+router.get('/entry-client', function(req, res) {
 
     // Set our internal DB variable
     var db = req.db;
@@ -64,7 +64,24 @@ router.get('/client-entry', function(req, res) {
     var collection = db.get('Agents');
 
     collection.find({},{},function(e,docs){
-        res.render('client-entry', {
+        res.render('entry-client', {
+            "agentList" : docs,
+            user : req.user.username
+        });
+    });
+});
+
+/* GET Agents for View Client Page. */
+router.get('/view-client', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+
+    // Set our collection
+    var collection = db.get('Agents');
+
+    collection.find({},{},function(e,docs){
+        res.render('view-client', {
             "agentList" : docs,
             user : req.user.username
         });
@@ -73,7 +90,7 @@ router.get('/client-entry', function(req, res) {
 
 
 /* GET Clients for Contact Entry Form. */
-router.get('/contact-entry', function(req, res) {
+router.get('/entry-contact', function(req, res) {
 
     // Set our internal DB variable
     var db = req.db;
@@ -82,7 +99,24 @@ router.get('/contact-entry', function(req, res) {
     var collection = db.get('Clients');
 
     collection.find({},{},function(e,docs){
-        res.render('contact-entry', {
+        res.render('entry-contact', {
+            "clientList" : docs,
+            user:req.user.username
+        });
+    });
+});
+
+/* GET Clients for View Contact Page. */
+router.get('/view-contact', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+
+    // Set our collection
+    var collection = db.get('Clients');
+
+    collection.find({},{},function(e,docs){
+        res.render('view-contact', {
             "clientList" : docs,
             user:req.user.username
         });
@@ -91,7 +125,7 @@ router.get('/contact-entry', function(req, res) {
 
 
 /* GET Clients for Event Entry Form. */
-router.get('/event-entry', function(req, res) {
+router.get('/entry-event', function(req, res) {
 
     // Set our internal DB variable
     var db = req.db;
@@ -137,12 +171,12 @@ router.get('/event-entry', function(req, res) {
         // Here `locals` will be an object with `users` and `colors` keys
         // Example: `locals = {users: [...], colors: [...]}`
         db.close();
-        res.render('event-entry', locals);
+        res.render('entry-event', locals);
     });
 });
 
 /* GET Agents for Activity Report Form. */
-router.get('/activity-report', function(req, res) {
+router.get('/report-activity', function(req, res) {
 
     // Set our internal DB variable
     var db = req.db;
@@ -151,7 +185,7 @@ router.get('/activity-report', function(req, res) {
     var collection = db.get('Agents');
 
     collection.find({},{},function(e,docs){
-        res.render('activity-report', {
+        res.render('report-activity', {
             "agentList" : docs,
             user:req.user.username
         });
@@ -187,7 +221,7 @@ router.post('/resultActivityReport', function(req, res) {
             "dateRange": dateRange
         });
     });
-   
+
 });
 
 /* GET Client List Report Results*/
@@ -214,7 +248,7 @@ router.post('/result-client-list-report', function(req, res) {
             "agent":req.body.agentAbbrev,
         });
     });
-   
+
 });
 
 /* GET Client History Report Results*/
@@ -222,7 +256,7 @@ router.get('/result-client-history-report', function(req, res) {
     res.render('result-client-history-report');
 });
 
-/* POST Query to MongoDB and return Activity Report Results. */
+/* POST Query to MongoDB and return Client History Results. */
 router.post('/result-client-history-report', function(req, res) {
     // Set our internal DB variable
     var dateStartInput = moment(req.body.dateStartInput.concat(' 00:00:00'), 'YYYY-MM-DD HH-mm-ss');
@@ -244,7 +278,7 @@ router.post('/result-client-history-report', function(req, res) {
             "dateRange": dateRange
         });
     });
-   
+
 });
 
 /* GET Contact History Report Results*/
@@ -252,7 +286,7 @@ router.get('/result-contact-history-report', function(req, res) {
     res.render('result-contact-history-report');
 });
 
-/* POST Query to MongoDB and return Activity Report Results. */
+/* POST Query to MongoDB and return Contact History Results. */
 router.post('/result-contact-history-report', function(req, res) {
     // Set our internal DB variable
     var dateStartInput = moment(req.body.dateStartInput.concat(' 00:00:00'), 'YYYY-MM-DD HH-mm-ss');
@@ -261,7 +295,7 @@ router.post('/result-contact-history-report', function(req, res) {
     var db = req.db;
     var collection = db.get('Events');
 
-    var query = { $or: [ { "clientName": req.body.clientSelect, "contact1": req.body.ContactID, "eventTimeOut._d": { $lte: dateEndInput._d}, "eventTimeIn._d": { $gte: dateStartInput._d} }, { "clientName": req.body.clientSelect, "contact2": req.body.ContactID, "eventTimeOut._d": { $lte: dateEndInput._d}, "eventTimeIn._d": { $gte: dateStartInput._d} } ] };
+    var query = { $or: [ { "clientName": req.body.clientSelect, "contact1": req.body.contactID1, "eventTimeOut._d": { $lte: dateEndInput._d}, "eventTimeIn._d": { $gte: dateStartInput._d} }] };
     console.log(query);
 
     collection.find(query,{},function(err, result){
@@ -271,11 +305,11 @@ router.post('/result-contact-history-report', function(req, res) {
             user:req.user.username,
             "result":result,
             "clientName":req.body.clientSelect,
-            "contactName":req.body.contactID,
-            "dateRange": dateRange
+            "contactName":req.body.contactID1,
+            "dateRange": dateRange,
         });
     });
-   
+
 });
 
 /* GET Visit Count Report Results*/
@@ -307,7 +341,7 @@ router.post('/result-visit-count-report', function(req, res) {
 });
 
 /* GET Agents for Visit Count Report Form. */
-router.get('/visit-count-report', function(req, res) {
+router.get('/report-visit-count', function(req, res) {
 
     // Set our internal DB variable
     var db = req.db;
@@ -316,7 +350,7 @@ router.get('/visit-count-report', function(req, res) {
     var collection = db.get('Agents');
 
     collection.find({},{},function(e,docs){
-        res.render('visit-count-report', {
+        res.render('report-visit-count', {
             "agentList" : docs,
             user:req.user.username
         });
@@ -324,7 +358,7 @@ router.get('/visit-count-report', function(req, res) {
 });
 
 /* GET Agents for Client List Report Form. */
-router.get('/client-list-report', function(req, res) {
+router.get('/report-client-list', function(req, res) {
 
     // Set our internal DB variable
     var db = req.db;
@@ -333,7 +367,7 @@ router.get('/client-list-report', function(req, res) {
     var collection = db.get('Agents');
 
     collection.find({},{},function(e,docs){
-        res.render('client-list-report', {
+        res.render('report-client-list', {
             "agentList" : docs,
             user:req.user.username
         });
@@ -341,7 +375,7 @@ router.get('/client-list-report', function(req, res) {
 });
 
 /* GET Clients for Contact History Report Form. */
-router.get('/contact-history-report', function(req, res) {
+router.get('/report-contact-history', function(req, res) {
 
 
 // Set our internal DB variable
@@ -377,13 +411,13 @@ router.get('/contact-history-report', function(req, res) {
         // Here `locals` will be an object with `users` and `colors` keys
         // Example: `locals = {users: [...], colors: [...]}`
         db.close();
-        res.render('contact-history-report', locals);
+        res.render('report-contact-history', locals);
     });
 
 });
 
 /* GET Clients for Client History Report Form. */
-router.get('/client-history-report', function(req, res) {
+router.get('/report-client-history', function(req, res) {
 
     // Set our internal DB variable
     var db = req.db;
@@ -392,7 +426,7 @@ router.get('/client-history-report', function(req, res) {
     var collection = db.get('Clients');
 
     collection.find({},{},function(e,docs){
-        res.render('client-history-report', {
+        res.render('report-client-history', {
             "clientList" : docs,
             user:req.user.username
         });
@@ -400,7 +434,7 @@ router.get('/client-history-report', function(req, res) {
 });
 
 /* GET Clients for View Client Page. */
-router.get('/view-client-search', function(req, res) {
+router.get('/search-client', function(req, res) {
 
     // Set our internal DB variable
     var db = req.db;
@@ -409,7 +443,7 @@ router.get('/view-client-search', function(req, res) {
     var collection = db.get('Clients');
 
     collection.find({},{},function(e,docs){
-        res.render('view-client-search', {
+        res.render('search-client', {
             "clientList" : docs,
             user:req.user.username
         });
@@ -417,7 +451,7 @@ router.get('/view-client-search', function(req, res) {
 });
 
 /* GET Clients for View Contact Page. */
-router.get('/view-contact-search', function(req, res) {
+router.get('/search-contact', function(req, res) {
 
     // Set our internal DB variable
     var db = req.db;
@@ -426,7 +460,7 @@ router.get('/view-contact-search', function(req, res) {
     var collection = db.get('Clients');
 
     collection.find({},{},function(e,docs){
-        res.render('view-contact-search', {
+        res.render('search-contact', {
             "clientList" : docs,
             user:req.user.username
         });
@@ -434,7 +468,7 @@ router.get('/view-contact-search', function(req, res) {
 });
 
 /* GET Clients for View Event Page. */
-router.get('/view-event-search', function(req, res) {
+router.get('/search-event', function(req, res) {
 
     // Set our internal DB variable
     var db = req.db;
@@ -470,7 +504,7 @@ router.get('/view-event-search', function(req, res) {
         // Here `locals` will be an object with `users` and `colors` keys
         // Example: `locals = {users: [...], colors: [...]}`
         db.close();
-        res.render('view-event-search', locals);
+        res.render('search-event', locals);
     });
 });
 

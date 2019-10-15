@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css'>
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/coreui-icons.min.css">
+  </head>
+
+<body class="app header-fixed footer sidebar-show sidebar-nav">
+
+  <header class="app-header navbar">
+    <% include partials/header %>
+  </header>
+
+  <div class="app-body">
+
+    <div class="sidebar">
+      <% include partials/sidebar %>
+    </div>
+
+    <main class="main mt-2 ml-3">
+      <form id="formAddClient" name="addClient" method="post" action="/addClient">
+        <div class="card w-100">
+          <h3 class="card-header">View/Edit Client</h3>
+          <div class="card-body">
+            <h4> Client Information</h4>
+            <table class="table table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th style="width: 5%" scope="col">Name</th>
+                  <th style="width: 20%" scope="col">Diversys Spectrum Products, Inc.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Agent Assigment:</th>
+                  <td>RC</td>
+                </tr>
+                <tr>
+                  <th scope="row">Contacts:</th>
+                  <td>Shirley Bernardo - Admin Manager<br>Anne Reyes - Purchaser</td>
+                </tr>
+                <tr>
+                  <th scope="row">Contact Number/s:</th>
+                  <td>786-7201<br>786-7212</td>
+                </tr>
+                <tr>
+                  <th scope="row">Company Address:</th>
+                  <td>111 N. Main Avenue, Laguna Technopark, Binan, Laguna, Philippines 4024<br>5 Flicker St, Greenmeadows Subd., Quezon City, Philippines 1100<br>1148 R. Bernal St. Rosario, Pasig City, Philippines</td>
+                </tr>
+                <tr>
+                  <th scope="row">Delivery Address:</th>
+                  <td>111 N. Main Avenue, Laguna Technopark, Binan, Laguna, Philippines 4024</td>
+                </tr>
+                <tr>
+                  <th scope="row">Email Address:</th>
+                  <td>info@diversysph.com <br>sales@diversysph.com</td>
+                </tr>
+                <tr>
+                  <th scope="row">Client Products:</th>
+                  <td>OX<br>PP</td>
+                </tr>
+                <tr>
+                  <th scope="row">Notes:</th>
+                  <td colspan="3">testing on long form remarks, how will the webpage react to a longer than expected entry in this section?</td>
+                </tr>
+              </tbody>
+            </table>
+
+<!-- Contact History Snapshot - thinking maybe last 5 entries -->
+
+            <h4> Communication History</h4>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">DATE</th>
+                    <th scope="col">AGENT</th>
+                    <th scope="col">CONTACT 1</th>
+                    <th scope="col">CONTACT 2</th>
+                    <th scope="col">VISIT TYPE</th>
+                    <th scope="col">REMARKS</th>
+                  </tr>
+                </thead>
+                <tr>
+                  <th>1</th>
+                  <td>Sunday, September 22, 2019</td>
+                  <td>RC</td>
+                  <td>Shirley Bernardo</td>
+                  <td></td>
+                  <td>Collection</td>
+                  <td>Remarks here to detail what happened during the event</td>
+                <tbody>
+
+                </tbody>
+              </table>
+            </div>
+<!-- BACK BUTTON -->
+            <div class="form-row">
+              <div class="form-group col">
+                <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
+              </div>
+              <script>
+                function goBack() {
+                  window.history.back();
+                }
+              </script>
+            </div>
+          </div>
+        </div>
+    </main>
+
+    <aside class="aside-menu-hidden">
+      <!-- Aside menu content here -->
+    </aside>
+
+  </div>
+  <footer class="app-footer">
+    <% include partials/footer %>
+  </footer>
+
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
+</body>
+
+</html>

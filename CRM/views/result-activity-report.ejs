@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/coreui-icons.min.css">
   </head>
 
-<body class="app sidebar-show aside-menu-show">
+<body class="app header-fixed sidebar-show sidebar-fixed">
 
   <header class="app-header navbar">
 
@@ -20,9 +20,9 @@
       <% include partials/sidebar %>
     </div>
 
-    <main class="main mt-2 ml-3">
+    <main class="main">
 
-      <div class="card w-75">
+      <div class="card w-100">
         <div class="card-body">
 
 <h3> <strong>Activity Report</strong></h3>
@@ -55,6 +55,7 @@
             list += '<tr>';
             list += '<th scope="row">' + k + '</th>';
             var str = result[i].eventTimeIn._d.toString();
+            var str2 = result[i].eventTimeOut._d.toString();
             var eventDate = str.substr(0, 15);
             list += '<td>' + eventDate + '</td>';
             list += '<td>' + result[i].clientName + '</td>';
@@ -65,9 +66,9 @@
             var eventTimeIn = str.substr(16, timeInString.length);
             list += '<td>' + eventTimeIn + '</td>';
             var timeOutString = result[i].eventTimeOut._d.toString();
-            var eventTimeOut = str.substr(16, timeOutString.length);
+            var eventTimeOut = str2.substr(16, timeOutString.length);
             list += '<td>' + eventTimeOut + '</td>';
-            var hours = Math.floor(result[i].eventDuration / 60);          
+            var hours = Math.floor(result[i].eventDuration / 60);
             var minutes = result[i].eventDuration % 60;
             list += '<td>' + hours + ' hours ' + minutes + ' minutes' + '</td>';
             list += '<td>' + result[i].eventRemarks + '</td>';
