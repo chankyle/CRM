@@ -26,8 +26,8 @@
         <div class="card-body">
 
 <h3> <strong>Visit Count Report</strong></h3>
-<h4><small class="text">Agent: <u>KJ</u></small></h4>
-<h4><small class="text">Date Range: <u>8/24/2019-8/25/2019</u></small></h4>
+<h4><small class="text">Agent: <u><%- agentAbbrev %></u></small></h4>
+<h4><small class="text">Date Range: <u><%- dateRange %></u></small></h4>
 
   <!-- Extracted data in Table Form -->
 
@@ -44,33 +44,31 @@
     </thead>
     <tbody>
       <tr>
-        <th scope="row">1</th>
-        <td>Diversys Spectrum Products, Inc.</td>
-        <td>2</td>
-        <td>8/24/19, 8/25/19</td>
-        <td> <i>0.50 hours</i></td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Felport International Marketing</td>
-        <td>1</td>
-        <td>8/24/19</td>
-        <td> <i>0.50 hours</i></td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Koten Enterprises Co. Inc.</td>
-        <td>1</td>
-        <td> 8/25/19</td>
-        <td> <i>1.50 hours</i></td>
-      </tr>
-      <tr>
-        <th scope="row">4</th>
-        <td>Superpower Metalwood Corporation</td>
-        <td>3</td>
-        <td>8/24/19, 8/25/19, 8/25/19</td>
-        <td> <i>0.50 hours</i></td>
-      </tr>
+        <%
+          console.log(result);
+          var list = '';
+          var k = 1;
+          for (i = 0; i < result.length; i++) {
+            list += '<tr>';
+            list += '<th scope="row">' + k + '</th>';
+            list += '<td>' + result[i]._id + '</td>';
+            list += '<td>' + result[i].visitCount + '</td>';
+            var eventsDateList = '';
+            for (x = 0; x < result[i].eventDates.length; x++) {
+              var str = result[i].eventDates[x].toString();
+              var str = str.substr(0, 15);
+              eventsDateList += str;
+              eventsDateList += '<br>';
+            }
+            list += '<td>' + eventsDateList + '</td>';
+            var hours = Math.floor(result[i].totalDuration / 60);          
+            var minutes = result[i].totalDuration % 60;
+            list += '<td>' + hours + ' hours ' + minutes + ' minutes' + '</td>';
+            list += '</tr>';
+            k++;
+        }
+        %>
+        <%- list %>  
 
     </tbody>
   </table>

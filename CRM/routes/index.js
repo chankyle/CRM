@@ -217,7 +217,7 @@ router.post('/result-client-list-report', function(req, res) {
    
 });
 
-/* GET Client List Report Results*/
+/* GET Client History Report Results*/
 router.get('/result-client-history-report', function(req, res) {
     res.render('result-client-history-report');
 });
@@ -247,7 +247,7 @@ router.post('/result-client-history-report', function(req, res) {
    
 });
 
-/* GET Client List Report Results*/
+/* GET Contact History Report Results*/
 router.get('/result-contact-history-report', function(req, res) {
     res.render('result-contact-history-report');
 });
@@ -276,6 +276,34 @@ router.post('/result-contact-history-report', function(req, res) {
         });
     });
    
+});
+
+/* GET Visit Count Report Results*/
+router.get('/result-visit-count-report', function(req, res) {
+    res.render('result-visit-count-report');
+});
+
+/* POST Query to MongoDB and return Activity Report Results. */
+router.post('/result-visit-count-report', function(req, res) {
+    // Set our internal DB variable
+    var dateStartInput = moment(req.body.dateStartInput.concat(' 00:00:00'), 'YYYY-MM-DD HH-mm-ss');
+    var dateEndInput = moment(req.body.dateEndInput.concat(' 23:59:59'), 'YYYY-MM-DD HH-mm-ss');
+    var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput;
+    var agentSelect = req.body.agentSelect;
+    var db = req.db;
+    var collection = db.get('Events');
+    var query = ([ { $group : {_id : "$clientName", visitCount : { $sum : 1}, totalDuration : { $sum : "$eventDuration"}, eventDates : { $push : "$eventTimeIn._d"} } } ] );
+    console.log(query);
+    collection.aggregate(query,{},function(err, result){
+        if (err) throw err;
+        db.close();
+        res.render('result-visit-count-report', {
+            user:req.user.username,
+            "result":result,
+            "agentAbbrev":req.body.agentSelect,
+            "dateRange": dateRange
+        });
+    });
 });
 
 /* GET Agents for Visit Count Report Form. */
