@@ -45,7 +45,6 @@
     <tbody>
       <tr>
         <%
-          console.log(result);
           var list = '';
           var k = 1;
           for (i = 0; i < result.length; i++) {
@@ -63,6 +62,7 @@
             list += '<td>' + eventsDateList + '</td>';
             var hours = Math.floor(result[i].totalDuration / 60);          
             var minutes = result[i].totalDuration % 60;
+            minutes = Math.round(minutes * 100) / 100;
             list += '<td>' + hours + ' hours ' + minutes + ' minutes' + '</td>';
             list += '</tr>';
             k++;

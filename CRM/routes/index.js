@@ -326,8 +326,8 @@ router.post('/result-visit-count-report', function(req, res) {
     var agentSelect = req.body.agentSelect;
     var db = req.db;
     var collection = db.get('Events');
-    var query = ([ { $group : {_id : "$clientName", visitCount : { $sum : 1}, totalDuration : { $sum : "$eventDuration"}, eventDates : { $push : "$eventTimeIn._d"} } } ] );
-    console.log(query);
+    var query = ([ { $group : {_id : "$clientName", visitCount : { $sum : 1}, totalDuration : { $avg : "$eventDuration"}, eventDates : { $push : "$eventTimeIn._d"} } } ] );
+
     collection.aggregate(query,{},function(err, result){
         if (err) throw err;
         db.close();
@@ -507,7 +507,6 @@ router.get('/search-event', function(req, res) {
         res.render('search-event', locals);
     });
 });
-
 
 /* POST to Add Clients */
 router.post('/addClient', function(req, res) {
