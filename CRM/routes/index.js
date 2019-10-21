@@ -519,8 +519,10 @@ router.post('/addClient', function(req, res) {
     var assignedAgent = req.body.agentAbbrev;
     var clientPhone = req.body.clientPhone;
     var clientFax = req.body.clientFax;
-    var clientAddress = req.body.clientAddress;
-    var clientDelivAddress = req.body.clientDelivAddress;
+    var clientAddress1 = req.body.clientAddress1;
+    var clientAddress2 = req.body.clientAddress2;
+    var clientAddress3 = req.body.clientAddress3;
+    var clientAddress4 = req.body.clientAddress4;
     var clientEmail1 = req.body.clientEmail1;
     var clientEmail2 = req.body.clientEmail2;
     var clientProdOX = req.body.clientProdOX;
@@ -548,8 +550,10 @@ router.post('/addClient', function(req, res) {
         "assignedAgent" : assignedAgent,
         "clientPhone" : clientPhone,
         "clientFax" : clientFax,
-        "clientAddress" : clientAddress,
-        "clientDelivAddress" : clientDelivAddress,
+        "clientAddress1" : clientAddress1,
+        "clientAddress2" : clientAddress2,
+        "clientAddress3" : clientAddress3,
+        "clientAddress4" : clientAddress4,
         "clientEmail1" : clientEmail1,
         "clientEmail2" : clientEmail2,
         "clientProdOX" : clientProdOX,
