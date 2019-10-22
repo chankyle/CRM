@@ -34,40 +34,108 @@
               <tbody>
                 <tr>
                   <th scope="row">Agent Assigment:</th>
-                  <td>RC</td>
+                  <td> <input type="name" class="form-control" id="agentAbbrev" name="agentAbbrev" value = "<%= result.client[0].agentAbbrev %>" readonly> </td>
                 </tr>
                 <tr>
                   <th scope="row">Contacts:</th>
-                  <td>Shirley Bernardo - Admin Manager<br>Anne Reyes - Purchaser</td>
+                  <td> 
+                  <% 
+                    var contactList ='';
+                    for (i = 0; i < result.contact.length; i++) {
+                      contactList += result.contact[i].contactFirstName + ' ' + result.contact[i].contactLastName;
+                      if (i < (result.contact.length - 1)){
+                        contactList += '<br>';
+                      }
+                    }
+                  %>
+                  <%- contactList -%>
+                  </td>
                 </tr>
                 <tr>
-                  <th scope="row">Contact Number/s:</th>
-                  <td>786-7201<br>786-7212</td>
+                  <th scope="row">Phone Number/s:</th>
+                  <td> <input type="name" class="form-control" id="clientPhone" name="clientPhone" value = "<%= result.client[0].clientPhone %>" readonly> </td>
                 </tr>
                 <tr>
-                  <th scope="row">Company Address:</th>
-                  <td>111 N. Main Avenue, Laguna Technopark, Binan, Laguna, Philippines 4024<br>5 Flicker St, Greenmeadows Subd., Quezon City, Philippines 1100<br>1148 R. Bernal St. Rosario, Pasig City, Philippines</td>
+                  <th scope="row">Fax Number/s:</th>
+                  <td> <input type="name" class="form-control" id="clientFax" name="clientFax" value = "<%= result.client[0].clientFax %>" readonly> </td>
                 </tr>
                 <tr>
-                  <th scope="row">Delivery Address:</th>
-                  <td>111 N. Main Avenue, Laguna Technopark, Binan, Laguna, Philippines 4024</td>
+                  <th scope="row">Client Address 1:</th>
+                  <td> <input type="name" class="form-control" id="clientAddress1" name="clientAddress1" value = "<%= result.client[0].clientAddress1.addr %>" readonly> </td>
                 </tr>
                 <tr>
-                  <th scope="row">Email Address:</th>
-                  <td>info@diversysph.com <br>sales@diversysph.com</td>
+                  <th scope="row">Client Address 1 Type:</th>
+                  <td> <input type="name" class="form-control" id="clientAddress1type" name="clientAddress1type" value = "<%= result.client[0].clientAddress1.type %>" readonly> </td>
+                </tr>                <tr>
+                  <th scope="row">Client Address 2:</th>
+                  <td> <input type="name" class="form-control" id="clientAddress2" name="clientAddress2" value = "<%= result.client[0].clientAddress2.addr %>" readonly> </td>
+                </tr>
+                <tr>
+                  <th scope="row">Client Address 2 Type:</th>
+                  <td> <input type="name" class="form-control" id="clientAddress2type" name="clientAddress2type" value = "<%= result.client[0].clientAddress2.type %>" readonly> </td>
+                </tr>
+                <tr>
+                  <th scope="row">Client Address 3:</th>
+                  <td> <input type="name" class="form-control" id="clientAddress3" name="clientAddress3" value = "<%= result.client[0].clientAddress3.addr %>" readonly> </td>
+                </tr>
+                <tr>
+                  <th scope="row">Client Address 3 Type:</th>
+                  <td> <input type="name" class="form-control" id="clientAddress3type" name="clientAddress3type" value = "<%= result.client[0].clientAddress3.type %>" readonly> </td>
+                </tr>
+                <tr>
+                  <th scope="row">Client Address 4:</th>
+                  <td> <input type="name" class="form-control" id="clientAddress4" name="clientAddress4" value = "<%= result.client[0].clientAddress4.addr %>" readonly> </td>
+                </tr>
+                <tr>
+                  <th scope="row">Client Address 4 Type:</th>
+                  <td> <input type="name" class="form-control" id="clientAddress4type" name="clientAddress4type" value = "<%= result.client[0].clientAddress4.type %>" readonly> </td>
+                </tr>
+                <tr>
+                  <th scope="row">Email Address 1:</th>
+                  <td> <input type="name" class="form-control" id="clientEmail1" name="clientEmail1" value = "<%= result.client[0].clientEmail1 %>" readonly> </td>
+                </tr>
+                <tr>
+                  <th scope="row">Email Address 2:</th>
+                  <td> <input type="name" class="form-control" id="clientEmail2" name="clientEmail2" value = "<%= result.client[0].clientEmail2 %>" readonly> </td>
                 </tr>
                 <tr>
                   <th scope="row">Client Products:</th>
-                  <td>OX<br>PP</td>
+                  <td>
+                    <%
+                      var productList = '';
+                      if(result.client[0].clientProdOX == "true"){
+                        productList += '<input class="form-check-input" type="checkbox" name="clientProdOX" checked readonly>';
+                      }else{
+                        productList += '<input class="form-check-input" type="checkbox" name="clientProdOX" readonly>';
+                      }
+                      productList += '<label class="form-check-label" for="clientProdOX">OX</label>';
+                      productList += '<br>';
+                      if(result.client[0].clientProdPP == "true"){
+                        productList += '<input class="form-check-input" type="checkbox" name="clientProdPP" checked readonly>';
+                      }else{
+                        productList += '<input class="form-check-input" type="checkbox" name="clientProdPP" readonly>';
+                      }
+                      productList += '<label class="form-check-label" for="clientProdPP">PP</label>';
+                      productList += '<br>';
+                      if(result.client[0].clientProdTP == "true"){
+                        productList += '<input class="form-check-input" type="checkbox" name="clientProdTP" checked readonly>';
+                      }else{
+                        productList += '<input class="form-check-input" type="checkbox" name="clientProdTP" readonly>';
+                      }
+                      productList += '<label class="form-check-label" for="clientProdTP">TP</label>';
+                      console.log(productList);
+                    %>
+                    <%- productList %>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Notes:</th>
-                  <td colspan="3">testing on long form remarks, how will the webpage react to a longer than expected entry in this section?</td>
+                  <td colspan="3"> <%= result.client[0].clientNotes %> </td>
                 </tr>
               </tbody>
             </table>
 
-<!-- Contact History Snapshot - thinking maybe last 5 entries -->
+<!-- TODO Contact History Snapshot - thinking maybe last 5 entries -->
 
             <h4> Communication History</h4>
             <div class="table-responsive">
@@ -84,13 +152,23 @@
                   </tr>
                 </thead>
                 <tr>
-                  <th>1</th>
-                  <td>Sunday, September 22, 2019</td>
-                  <td>RC</td>
-                  <td>Shirley Bernardo</td>
-                  <td></td>
-                  <td>Collection</td>
-                  <td>Remarks here to detail what happened during the event</td>
+                  <%
+                    var eventsList ='';
+                    var k = 1;
+                    for (i = 0; i < result.events.length; i++) {
+                      eventsList += '<th scope="row">' + k + '</th>';
+                      var str = result.events[i].eventTimeIn._i.toString();
+                      var str = str.substr(0,10);
+                      eventsList += '<td>' + str + '</td>';
+                      eventsList += '<td>' + result.events[i].agentAbbrev + '</td>';
+                      eventsList += '<td>' + result.events[i].contact1 + '</td>';
+                      eventsList += '<td>' + result.events[i].contact2 + '</td>';
+                      eventsList += '<td>' + result.events[i].eventType + '</td>';
+                      eventsList += '<td>' + result.events[i].eventRemarks + '</td>';
+                      eventsList += '</tr>';
+                  }
+                  %>
+                  <%- eventsList %>
                 <tbody>
 
                 </tbody>

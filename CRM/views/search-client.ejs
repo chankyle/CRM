@@ -20,13 +20,14 @@
     <main class="main mt-2 ml-3">
         <div class="card w-50">
           <h3 class="card-header">View/Edit Client</h3>
+            <form id="search-client" name="search-client" method="post" action="/search-client">
           <div class="card-body">
 
       <!-- Select Agent from Prepopulated list of options -->
               <div class="form-row">
                 <div class="form-group col-12">
                   <label for="agentSelect">Select Client</label>
-                  <select class="form-control" id="client-select">
+                  <select class="form-control" id="clientSelect" name="clientSelect">
                     <%
                         var list = '';
                         for (i = 0; i < clientList.length; i++) {
@@ -41,7 +42,8 @@
       <!-- Submit Button to execute -->
               <div class="form-row">
                 <div class="form-group col">
-                  <button type="button" class="btn btn-primary">Submit</button>
+                <input class="btn btn-primary" type="submit" value="Submit">
+                  </form>
                 </div>
               </div>
 

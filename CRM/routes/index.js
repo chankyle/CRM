@@ -427,7 +427,8 @@ router.get('/report-client-history', function(req, res) {
     });
 });
 
-/* GET Clients for View Client Page. */
+
+/* GET Clients for Search Client Page. */
 router.get('/search-client', function(req, res) {
 
     // Set our internal DB variable
@@ -444,7 +445,59 @@ router.get('/search-client', function(req, res) {
     });
 });
 
-/* GET Clients for View Contact Page. */
+/* POST Query to MongoDB and return View Client Page Page. */
+router.post('/search-client', function(req, res) {
+    // Set our internal DB variable
+    var result = {};
+    var db = req.db;
+
+
+    var tasks = [
+        // Load Client
+        function(callback) {
+            var collection1 = db.get('Clients');
+
+            collection1.find({ "clientName" : req.body.clientSelect },{},function(e,client){
+                if (e) return callback(err);
+                result.client = client;
+                callback();
+            })
+        },
+        // Load Contact
+        function(callback) {
+            var collection2 = db.get('Contacts');
+
+            collection2.find({ "contactClientID" : req.body.clientSelect },{},function(e,contact){
+                if (e) return callback(err);
+                result.contact = contact;
+                callback();
+            })
+        },
+        // Load Contact
+        function(callback) {
+            var collection3 = db.get('Events');
+            collection3.find({ "clientName" : req.body.clientSelect },{sort: {'createDate._d' :-1}, limit: 5},function(e,events){
+                if (e) return callback(err);
+                result.events = events;
+                callback();
+            });
+        }
+
+    ];
+
+    async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+        if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+        // Here `locals` will be an object with `users` and `colors` keys
+        // Example: `locals = {users: [...], colors: [...]}`
+        db.close();
+        res.render('view-client', {
+            "result": result,
+            user:req.user.username
+        });
+    });
+});
+
+/* GET Clients for Search Contact Page. */
 router.get('/search-contact', function(req, res) {
 
     // Set our internal DB variable
@@ -461,7 +514,7 @@ router.get('/search-contact', function(req, res) {
     });
 });
 
-/* GET Clients for View Event Page. */
+/* GET Clients for Search Event Page. */
 router.get('/search-event', function(req, res) {
 
     // Set our internal DB variable
