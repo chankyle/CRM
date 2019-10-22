@@ -201,16 +201,12 @@ router.get('/result-activity-report', function(req, res) {
 router.post('/resultActivityReport', function(req, res) {
     // Set our internal DB variable
     var dateStartInput = moment(req.body.dateStartInput.concat(' 00:00:00'), 'YYYY-MM-DD HH-mm-ss');
-    console.log(req.body.dateStartInput);
-    console.log(req.body.eventTimeIn);
     var dateEndInput = moment(req.body.dateEndInput.concat(' 23:59:59'), 'YYYY-MM-DD HH-mm-ss');
     var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput
     var db = req.db;
     var collection = db.get('Events');
 
     var query = { "agentAbbrev": req.body.agentSelect, "eventTimeOut._d": { $lte: dateEndInput._d}, "eventTimeIn._d": { $gte: dateStartInput._d} };
-    console.log(query);
-
     collection.find(query,{},function(err, result){
         if (err) throw err;
         db.close();
@@ -237,7 +233,6 @@ router.post('/result-client-list-report', function(req, res) {
     var collection = db.get('Clients');
 
     var query = { "assignedAgent": req.body.agentAbbrev };
-    console.log(query);
 
     collection.find(query,{},function(err, result){
         if (err) throw err;
@@ -266,7 +261,7 @@ router.post('/result-client-history-report', function(req, res) {
     var collection = db.get('Events');
 
     var query = { "clientName": req.body.clientSelect, "eventTimeOut._d": { $lte: dateEndInput._d}, "eventTimeIn._d": { $gte: dateStartInput._d} };
-    console.log(query);
+
 
     collection.find(query,{},function(err, result){
         if (err) throw err;
@@ -296,7 +291,6 @@ router.post('/result-contact-history-report', function(req, res) {
     var collection = db.get('Events');
 
     var query = { $or: [ { "clientName": req.body.clientSelect, "contact1": req.body.contactID1, "eventTimeOut._d": { $lte: dateEndInput._d}, "eventTimeIn._d": { $gte: dateStartInput._d} }] };
-    console.log(query);
 
     collection.find(query,{},function(err, result){
         if (err) throw err;
@@ -516,13 +510,21 @@ router.post('/addClient', function(req, res) {
     // Get our form values. These rely on the "name" attributes
     var username = req.user.username;
     var clientName = req.body.clientName;
-    var assignedAgent = req.body.agentAbbrev;
+    var agentAbbrev = req.body.agentAbbrev;
     var clientPhone = req.body.clientPhone;
     var clientFax = req.body.clientFax;
-    var clientAddress1 = req.body.clientAddress1;
-    var clientAddress2 = req.body.clientAddress2;
-    var clientAddress3 = req.body.clientAddress3;
-    var clientAddress4 = req.body.clientAddress4;
+    var clientAddress1 = new Object();
+    var clientAddress2 = new Object();
+    var clientAddress3 = new Object();
+    var clientAddress4 = new Object();
+    clientAddress1.addr = req.body.clientAddress1;
+    clientAddress1.type = req.body.clientAddress1Type;
+    clientAddress2.addr = req.body.clientAddress2;
+    clientAddress2.type = req.body.clientAddress2Type;
+    clientAddress3.addr = req.body.clientAddress3;
+    clientAddress3.type = req.body.clientAddress3Type;
+    clientAddress4.addr = req.body.clientAddress4;
+    clientAddress4.type = req.body.clientAddress4Type;
     var clientEmail1 = req.body.clientEmail1;
     var clientEmail2 = req.body.clientEmail2;
     var clientProdOX = req.body.clientProdOX;
@@ -547,7 +549,7 @@ router.post('/addClient', function(req, res) {
     // Submit to the DB
     collection.insert({
         "clientName" : clientName,
-        "assignedAgent" : assignedAgent,
+        "agentAbbrev" : agentAbbrev,
         "clientPhone" : clientPhone,
         "clientFax" : clientFax,
         "clientAddress1" : clientAddress1,
