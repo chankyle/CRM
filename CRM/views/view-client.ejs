@@ -34,7 +34,24 @@
               <tbody>
                 <tr>
                   <th scope="row">Agent Assigment:</th>
-                  <td> <input type="name" class="form-control" id="agentAbbrev" name="agentAbbrev" value = "<%= result.client[0].agentAbbrev %>" readonly> </td>
+                  <td> 
+                      <input type="name" class="form-control" id="agentAbbrev" name="agentAbbrev" value = "<%= result.client[0].agentAbbrev %>" readonly> 
+                      <input type="button" id="editAgentAbbrev" value="edit"></input>
+                      <input type="hidden" id="updateAgentAbbrev" value="Save"></input>
+                      <script> 
+                        document.getElementById('editAgentAbbrev').onclick = function(){
+                          document.getElementById('agentAbbrev').readOnly = false;
+                          document.getElementById('updateAgentAbbrev').type = 'button';
+                          document.getElementById('editAgentAbbrev').type = 'hidden';
+                        }
+                        document.getElementById('updateAgentAbbrev').onclick = function(){
+                          document.getElementById('agentAbbrev').readOnly = true;
+                          document.getElementById('updateAgentAbbrev').type = 'hidden';
+                          document.getElementById('editAgentAbbrev').type = 'button';
+                          //To update mongoDB entry by posting and refreshing page
+                        }
+                      </script>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Contacts:</th>
