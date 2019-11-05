@@ -522,13 +522,13 @@ router.post('/viewClient', function(req, res) {
     var clientAddress3 = new Object();
     var clientAddress4 = new Object();
     clientAddress1.addr = req.body.clientAddress1;
-    clientAddress1.type = req.body.clientAddress1Type;
+    clientAddress1.type = req.body.clientAddress1type;
     clientAddress2.addr = req.body.clientAddress2;
-    clientAddress2.type = req.body.clientAddress2Type;
+    clientAddress2.type = req.body.clientAddress2type;
     clientAddress3.addr = req.body.clientAddress3;
-    clientAddress3.type = req.body.clientAddress3Type;
+    clientAddress3.type = req.body.clientAddress3type;
     clientAddress4.addr = req.body.clientAddress4;
-    clientAddress4.type = req.body.clientAddress4Type;
+    clientAddress4.type = req.body.clientAddress4type;
     var clientEmail1 = req.body.clientEmail1;
     var clientEmail2 = req.body.clientEmail2;
     var clientProdOX = req.body.clientProdOX;
@@ -545,7 +545,7 @@ router.post('/viewClient', function(req, res) {
         }
     var clientNotes = req.body.clientNotes;
     var currentDateTime = moment();
-    var defaultStatus = "Enabled";
+    var defaultStatus = req.body.clientStatus;
 
     // Set our collection
     var collection = db.get('Clients');

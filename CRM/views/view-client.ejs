@@ -52,11 +52,16 @@
                 <tr>
                   <th scope="row">Agent Assigment:</th>
                   <td> 
-                      <select class="form-control" id="agentAbbrev" name="agentAbbrev" value = "<%= result.client[0].agentAbbrev %>" disabled required>
+                      <select class="form-control" id="agentAbbrev" name="agentAbbrev" disabled required>
                         <%
                             var list = '';
                             for (i = 0; i < result.agents.length; i++) {
-                              list += '<option>' + result.agents[i].agentAbbrev + '</option>';
+                              if (result.agents[i].agentAbbrev == result.client[0].agentAbbrev){
+                                list += '<option selected>' + result.agents[i].agentAbbrev + '</option>';
+                              } else {
+                                list += '<option>' + result.agents[i].agentAbbrev + '</option>';
+                            }
+                              
                             }
                         %>
                           <%- list %>
@@ -140,17 +145,29 @@
                 <tr>
                   <th scope="row">Client Address 1 Type:</th>
                   <td> 
-                    <input type="name" class="form-control" id="clientAddress1type" name="clientAddress1type" value = "<%= result.client[0].clientAddress1.type %>" readonly>
+                    <select class="form-control" id="clientAddress1type" name="clientAddress1type" disabled required>
+                      <%
+                      var address1List = '';
+                        if(result.client[0].clientAddress1.type == "Contact Address"){
+                          address1List += '<option selected>Contact Address</option>';
+                          address1List += '<option>Delivery Address</option>';
+                      } else {
+                          address1List += '<option>Contact Address</option>';
+                          address1List += '<option selected>Delivery Address</option>';
+                      }
+                      %>
+                      <%- address1List %>
+                    </select>
                     <input type="button" id="editClientAddress1type" value="edit"></input>
                     <input type="hidden" id="updateClientAddress1type" value="Save"></input>
                     <script> 
                       document.getElementById('editClientAddress1type').onclick = function(){
-                        document.getElementById('clientAddress1type').readOnly = false;
+                        document.getElementById('clientAddress1type').disabled = false;
                         document.getElementById('updateClientAddress1type').type = 'button';
                         document.getElementById('editClientAddress1type').type = 'hidden';
                       }
                       document.getElementById('updateClientAddress1type').onclick = function(){
-                        document.getElementById('clientAddress1type').readOnly = true;
+                        document.getElementById('clientAddress1type').disabled = true;
                         document.getElementById('updateClientAddress1type').type = 'hidden';
                         document.getElementById('editClientAddress1type').type = 'button';
                       }
@@ -179,17 +196,35 @@
                 <tr>
                   <th scope="row">Client Address 2 Type:</th>
                   <td> 
-                    <input type="name" class="form-control" id="clientAddress2type" name="clientAddress2type" value = "<%= result.client[0].clientAddress2.type %>" readonly>
+                    <select class="form-control" id="clientAddress2type" name="clientAddress2type" disabled required>
+                      <%
+                      var address2List = '';
+                        if(result.client[0].clientAddress2.type == "Contact Address"){
+                          address2List += '<option selected>Contact Address</option>';
+                          address2List += '<option>Delivery Address</option>';
+                          address2List += '<option></option>';
+                      } else if (result.client[0].clientAddress2.type == "Delivery Address") {
+                          address2List += '<option>Contact Address</option>';
+                          address2List += '<option selected>Delivery Address</option>';
+                          address2List += '<option></option>';
+                      } else {
+                          address2List += '<option>Contact Address</option>';
+                          address2List += '<option>Delivery Address</option>';
+                          address2List += '<option selected></option>';
+                      }
+                      %>
+                      <%- address2List %>
+                    </select>
                     <input type="button" id="editClientAddress2type" value="edit"></input>
                     <input type="hidden" id="updateClientAddress2type" value="Save"></input>
                     <script> 
                       document.getElementById('editClientAddress2type').onclick = function(){
-                        document.getElementById('clientAddress2type').readOnly = false;
+                        document.getElementById('clientAddress2type').disabled = false;
                         document.getElementById('updateClientAddress2type').type = 'button';
                         document.getElementById('editClientAddress2type').type = 'hidden';
                       }
                       document.getElementById('updateClientAddress2type').onclick = function(){
-                        document.getElementById('clientAddress2type').readOnly = true;
+                        document.getElementById('clientAddress2type').disabled = true;
                         document.getElementById('updateClientAddress2type').type = 'hidden';
                         document.getElementById('editClientAddress2type').type = 'button';
                       }
@@ -219,17 +254,35 @@
                 <tr>
                   <th scope="row">Client Address 3 Type:</th>
                   <td> 
-                    <input type="name" class="form-control" id="clientAddress3type" name="clientAddress3type" value = "<%= result.client[0].clientAddress3.type %>" readonly>
+                    <select class="form-control" id="clientAddress3type" name="clientAddress3type" disabled required>
+                      <%
+                      var address3List = '';
+                        if(result.client[0].clientAddress3.type == "Contact Address"){
+                          address3List += '<option selected>Contact Address</option>';
+                          address3List += '<option>Delivery Address</option>';
+                          address3List += '<option></option>';
+                      } else if (result.client[0].clientAddress3.type == "Delivery Address") {
+                          address3List += '<option>Contact Address</option>';
+                          address3List += '<option selected>Delivery Address</option>';
+                          address3List += '<option></option>';
+                      } else {
+                          address3List += '<option>Contact Address</option>';
+                          address3List += '<option>Delivery Address</option>';
+                          address3List += '<option selected></option>';
+                      }
+                      %>
+                      <%- address3List %>
+                    </select>
                     <input type="button" id="editClientAddress3type" value="edit"></input>
                     <input type="hidden" id="updateClientAddress3type" value="Save"></input>
                     <script> 
                       document.getElementById('editClientAddress3type').onclick = function(){
-                        document.getElementById('clientAddress3type').readOnly = false;
+                        document.getElementById('clientAddress3type').disabled = false;
                         document.getElementById('updateClientAddress3type').type = 'button';
                         document.getElementById('editClientAddress3type').type = 'hidden';
                       }
                       document.getElementById('updateClientAddress3type').onclick = function(){
-                        document.getElementById('clientAddress3type').readOnly = true;
+                        document.getElementById('clientAddress3type').disabled = true;
                         document.getElementById('updateClientAddress3type').type = 'hidden';
                         document.getElementById('editClientAddress3type').type = 'button';
                       }
@@ -259,17 +312,35 @@
                 <tr>
                   <th scope="row">Client Address 4 Type:</th>
                   <td> 
-                    <input type="name" class="form-control" id="clientAddress4type" name="clientAddress4type" value = "<%= result.client[0].clientAddress4.type %>" readonly>
+                    <select class="form-control" id="clientAddress4type" name="clientAddress4type" disabled required>
+                      <%
+                      var address4List = '';
+                        if(result.client[0].clientAddress4.type == "Contact Address"){
+                          address4List += '<option selected>Contact Address</option>';
+                          address4List += '<option>Delivery Address</option>';
+                          address4List += '<option></option>';
+                      } else if (result.client[0].clientAddress4.type == "Delivery Address") {
+                          address4List += '<option>Contact Address</option>';
+                          address4List += '<option selected>Delivery Address</option>';
+                          address4List += '<option></option>';
+                      } else {
+                          address4List += '<option>Contact Address</option>';
+                          address4List += '<option>Delivery Address</option>';
+                          address4List += '<option selected></option>';
+                      }
+                      %>
+                      <%- address4List %>
+                    </select>
                     <input type="button" id="editClientAddress4type" value="edit"></input>
                     <input type="hidden" id="updateClientAddress4type" value="Save"></input>
                     <script> 
                       document.getElementById('editClientAddress4type').onclick = function(){
-                        document.getElementById('clientAddress4type').readOnly = false;
+                        document.getElementById('clientAddress4type').disabled = false;
                         document.getElementById('updateClientAddress4type').type = 'button';
                         document.getElementById('editClientAddress4type').type = 'hidden';
                       }
                       document.getElementById('updateClientAddress4type').onclick = function(){
-                        document.getElementById('clientAddress4type').readOnly = true;
+                        document.getElementById('clientAddress4type').disabled = true;
                         document.getElementById('updateClientAddress4type').type = 'hidden';
                         document.getElementById('editClientAddress4type').type = 'button';
                       }
@@ -322,23 +393,23 @@
                     <%
                       var productList = '';
                       if(result.client[0].clientProdOX == "true"){
-                        productList += '<input class="form-check-input" type="checkbox" id="clientProdOX" name="clientProdOX"  checked disabled>';
+                        productList += '<input class="form-check-input" type="checkbox" id="clientProdOX" name="clientProdOX" value="true"  checked disabled>';
                       }else{
-                        productList += '<input class="form-check-input" type="checkbox" id="clientProdOX" name="clientProdOX"  disabled>';
+                        productList += '<input class="form-check-input" type="checkbox" id="clientProdOX" name="clientProdOX" value="true"  disabled>';
                       }
                       productList += '<label class="form-check-label" for="clientProdOX">OX</label>';
                       productList += '<br>';
                       if(result.client[0].clientProdPP == "true"){
-                        productList += '<input class="form-check-input" type="checkbox" id="clientProdPP" name="clientProdPP" checked disabled>';
+                        productList += '<input class="form-check-input" type="checkbox" id="clientProdPP" name="clientProdPP" value="true" checked disabled>';
                       }else{
-                        productList += '<input class="form-check-input" type="checkbox" id="clientProdPP" name="clientProdPP" disabled>';
+                        productList += '<input class="form-check-input" type="checkbox" id="clientProdPP" name="clientProdPP" value="true" disabled>';
                       }
                       productList += '<label class="form-check-label" for="clientProdPP">PP</label>';
                       productList += '<br>';
                       if(result.client[0].clientProdTP == "true"){
-                        productList += '<input class="form-check-input" type="checkbox" id="clientProdTP" name="clientProdTP" checked disabled>';
+                        productList += '<input class="form-check-input" type="checkbox" id="clientProdTP" name="clientProdTP" value="true" checked disabled>';
                       }else{
-                        productList += '<input class="form-check-input" type="checkbox" id="clientProdTP" name="clientProdTP" disabled>';
+                        productList += '<input class="form-check-input" type="checkbox" id="clientProdTP" name="clientProdTP" value="true" disabled>';
                       }
                       productList += '<label class="form-check-label" for="clientProdTP">TP</label>';
                       console.log(productList);
@@ -367,7 +438,7 @@
                 <tr>
                   <th scope="row">Notes:</th>
                   <td colspan="3"> 
-                    <textarea class="form-control" id="clientNotes" name="clientNotes" rows="3" value="<%=result.client[0].clientNotes %>" readonly></textarea>
+                    <textarea class="form-control" id="clientNotes" name="clientNotes" rows="3" readonly><%=result.client[0].clientNotes %></textarea>
                     <input type="button" id="editClientNotes" value="edit"></input>
                     <input type="hidden" id="updateClientNotes" value="Save"></input>
                     <script> 
@@ -387,22 +458,31 @@
                 <tr>
                   <th scope="row">Status:</th>
                   <td colspan="3"> 
-                    <select class="form-control" id="clientActive" name="clientActive" value = "<%= result.client[0].clientActive %>" disabled required>
-                        <option>Enabled</option>
-                        <option>Disabled</option>
-                    </select>
-                    <input type="button" id="editClientActive" value="edit"></input>
-                    <input type="hidden" id="updateClientActive" value="Save"></input>
-                    <script> 
-                      document.getElementById('editClientActive').onclick = function(){
-                        document.getElementById('clientActive').disabled = false;
-                        document.getElementById('updateClientActive').type = 'button';
-                        document.getElementById('editClientActive').type = 'hidden';
+                    <select class="form-control" id="clientStatus" name="clientStatus" disabled required>
+                      <%
+                      var statusList = '';
+                        if(result.client[0].clientActive == "Enabled"){
+                          statusList += '<option selected>Enabled</option>';
+                          statusList += '<option>Disabled</option>';
+                      } else {
+                          statusList += '<option>Enabled</option>';
+                          statusList += '<option selected>Disabled</option>';
                       }
-                      document.getElementById('updateClientActive').onclick = function(){
-                        document.getElementById('clientActive').disabled = true;
-                        document.getElementById('updateClientActive').type = 'hidden';
-                        document.getElementById('editClientActive').type = 'button';
+                      %>
+                      <%- statusList %>
+                    </select>
+                    <input type="button" id="editClientStatus" value="edit"></input>
+                    <input type="hidden" id="updateClientStatus" value="Save"></input>
+                    <script> 
+                      document.getElementById('editClientStatus').onclick = function(){
+                        document.getElementById('clientStatus').disabled = false;
+                        document.getElementById('updateClientStatus').type = 'button';
+                        document.getElementById('editClientStatus').type = 'hidden';
+                      }
+                      document.getElementById('updateClientStatus').onclick = function(){
+                        document.getElementById('clientStatus').disabled = true;
+                        document.getElementById('updateClientStatus').type = 'hidden';
+                        document.getElementById('editClientStatus').type = 'button';
                       }
                     </script>
                   </td>
@@ -412,10 +492,15 @@
             <script>
               function enableFields() {
                 document.getElementById('agentAbbrev').disabled = false;
+                document.getElementById('clientAddress1type').disabled = false;
+                document.getElementById('clientAddress2type').disabled = false;
+                document.getElementById('clientAddress3type').disabled = false;
+                document.getElementById('clientAddress4type').disabled = false;
                 document.getElementById('clientProdOX').disabled = false;
                 document.getElementById('clientProdPP').disabled = false;
                 document.getElementById('clientProdTP').disabled = false;
                 document.getElementById('clientActive').disabled = false;
+                document.getElementById('clientStatus').disabled = false;
               }
             </script>
           <button type="submit" class="btn btn-primary btn-lg">Submit</button>
