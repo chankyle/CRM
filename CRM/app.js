@@ -120,6 +120,7 @@ app.use('/view-client', viewClientRouter);
 app.use('/view-contact', viewContactRouter);
 app.use('/view-event', viewEventRouter);
 
+
 // passport config
 var Account = require('./models/account');
 passport.use(new LocalStrategy(Account.authenticate()));
@@ -131,10 +132,6 @@ mongoose.connect("mongodb://localhost:27017/CRM", { useNewUrlParser: true });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-
-
-
 
 
 

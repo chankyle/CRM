@@ -481,8 +481,16 @@ router.post('/search-client', function(req, res) {
                 result.events = events;
                 callback();
             });
-        }
-
+        },
+        // Load Agents
+        function(callback) {
+            var collection4 = db.get('Agents');
+            collection4.find({},{},function(e,agents){
+                if (e) return callback(err);
+                result.agents = agents;
+                callback();
+            });
+        },
     ];
 
     async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
@@ -492,9 +500,90 @@ router.post('/search-client', function(req, res) {
         db.close();
         res.render('view-client', {
             "result": result,
+            clientName:req.body.clientSelect,
             user:req.user.username
         });
     });
+});
+
+/* POST to Add Clients */
+router.post('/viewClient', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+    // Get our form values. These rely on the "name" attributes
+    var username = req.user.username;
+    var clientName = req.body.clientName;
+    var agentAbbrev = req.body.agentAbbrev;
+    var clientPhone = req.body.clientPhone;
+    var clientFax = req.body.clientFax;
+    var clientAddress1 = new Object();
+    var clientAddress2 = new Object();
+    var clientAddress3 = new Object();
+    var clientAddress4 = new Object();
+    clientAddress1.addr = req.body.clientAddress1;
+    clientAddress1.type = req.body.clientAddress1Type;
+    clientAddress2.addr = req.body.clientAddress2;
+    clientAddress2.type = req.body.clientAddress2Type;
+    clientAddress3.addr = req.body.clientAddress3;
+    clientAddress3.type = req.body.clientAddress3Type;
+    clientAddress4.addr = req.body.clientAddress4;
+    clientAddress4.type = req.body.clientAddress4Type;
+    var clientEmail1 = req.body.clientEmail1;
+    var clientEmail2 = req.body.clientEmail2;
+    var clientProdOX = req.body.clientProdOX;
+        if (clientProdOX != "true") {
+            clientProdOX = "false";
+        }
+    var clientProdPP = req.body.clientProdPP;
+        if (clientProdPP != "true") {
+            clientProdPP = "false";
+        }
+    var clientProdTP = req.body.clientProdTP;
+        if (clientProdTP != "true") {
+            clientProdTP = "false";
+        }
+    var clientNotes = req.body.clientNotes;
+    var currentDateTime = moment();
+    var defaultStatus = "Enabled";
+
+    // Set our collection
+    var collection = db.get('Clients');
+
+    // Submit to the DB
+    collection.update(
+    {
+        "clientName" : req.body.clientName
+    },
+    {
+        "clientName" : clientName,
+        "agentAbbrev" : agentAbbrev,
+        "clientPhone" : clientPhone,
+        "clientFax" : clientFax,
+        "clientAddress1" : clientAddress1,
+        "clientAddress2" : clientAddress2,
+        "clientAddress3" : clientAddress3,
+        "clientAddress4" : clientAddress4,
+        "clientEmail1" : clientEmail1,
+        "clientEmail2" : clientEmail2,
+        "clientProdOX" : clientProdOX,
+        "clientProdPP" : clientProdPP,
+        "clientProdTP" : clientProdTP,
+        "clientNotes" : clientNotes,
+        "createdBy" : username,
+        "createDate" : currentDateTime,
+        "clientActive" : defaultStatus
+    }, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.send("There was a problem adding the information to the database.");
+        }
+        else {
+            // And forward to success page
+            res.redirect("/home");
+        }
+    });
+
 });
 
 /* GET Clients for Search Contact Page. */
@@ -594,7 +683,7 @@ router.post('/addClient', function(req, res) {
         }
     var clientNotes = req.body.clientNotes;
     var currentDateTime = moment();
-    var defaultStatus = true;
+    var defaultStatus = "Enabled";
 
     // Set our collection
     var collection = db.get('Clients');
@@ -652,7 +741,7 @@ router.post('/addContact', function(req, res) {
     var contactEmail = req.body.contactEmail;
     var contactNotes = req.body.contactNotes;
     var currentDateTime = moment();
-    var defaultStatus = true;
+    var defaultStatus = "Enabled";
 
     // Set our collection
     var collection = db.get('Contacts');
@@ -698,7 +787,7 @@ router.post('/addAgent', function(req, res) {
     var agentPosition = req.body.agentPosition;
     var agentPhone = req.body.agentPhone;
     var currentDateTime = moment();
-    var defaultStatus = true;
+    var defaultStatus = "Enabled";
 
     // Set our collection
     var collection = db.get('Agents');

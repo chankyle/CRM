@@ -19,7 +19,9 @@
     </div>
 
     <main class="main mt-2 ml-3">
-      <form id="formAddClient" name="addClient" method="post" action="/addClient">
+    <form id="formEditClient" name="viewClient" method="post" action="/viewClient" onsubmit="enableFields()">
+    <input type="name" class="form-control" id="clientName" name="clientName" value="<%= clientName %>" hidden>
+    <input type="name" class="form-control" id="user" name="user" value="<%- user %>" hidden>
         <div class="card w-100">
           <h3 class="card-header">View/Edit Client</h3>
           <div class="card-body">
@@ -28,31 +30,10 @@
               <thead class="thead-dark">
                 <tr>
                   <th style="width: 5%" scope="col">Name</th>
-                  <th style="width: 20%" scope="col">Diversys Spectrum Products, Inc.</th>
+                  <th style="width: 20%" scope="col"> <%= clientName %> </th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">Agent Assigment:</th>
-                  <td> 
-                      <input type="name" class="form-control" id="agentAbbrev" name="agentAbbrev" value = "<%= result.client[0].agentAbbrev %>" readonly> 
-                      <input type="button" id="editAgentAbbrev" value="edit"></input>
-                      <input type="hidden" id="updateAgentAbbrev" value="Save"></input>
-                      <script> 
-                        document.getElementById('editAgentAbbrev').onclick = function(){
-                          document.getElementById('agentAbbrev').readOnly = false;
-                          document.getElementById('updateAgentAbbrev').type = 'button';
-                          document.getElementById('editAgentAbbrev').type = 'hidden';
-                        }
-                        document.getElementById('updateAgentAbbrev').onclick = function(){
-                          document.getElementById('agentAbbrev').readOnly = true;
-                          document.getElementById('updateAgentAbbrev').type = 'hidden';
-                          document.getElementById('editAgentAbbrev').type = 'button';
-                          //To update mongoDB entry by posting and refreshing page
-                        }
-                      </script>
-                  </td>
-                </tr>
                 <tr>
                   <th scope="row">Contacts:</th>
                   <td> 
@@ -69,51 +50,271 @@
                   </td>
                 </tr>
                 <tr>
+                  <th scope="row">Agent Assigment:</th>
+                  <td> 
+                      <select class="form-control" id="agentAbbrev" name="agentAbbrev" value = "<%= result.client[0].agentAbbrev %>" disabled required>
+                        <%
+                            var list = '';
+                            for (i = 0; i < result.agents.length; i++) {
+                              list += '<option>' + result.agents[i].agentAbbrev + '</option>';
+                            }
+                        %>
+                          <%- list %>
+                      </select>
+                      <input type="button" id="editAgentAbbrev" value="edit"></input>
+                      <input type="hidden" id="updateAgentAbbrev" value="Save"></input>
+                      <script> 
+                        document.getElementById('editAgentAbbrev').onclick = function(){
+                          document.getElementById('agentAbbrev').disabled = false;
+                          document.getElementById('updateAgentAbbrev').type = 'button';
+                          document.getElementById('editAgentAbbrev').type = 'hidden';
+                        }
+                        document.getElementById('updateAgentAbbrev').onclick = function(){
+                          document.getElementById('agentAbbrev').disabled = true;
+                          document.getElementById('updateAgentAbbrev').type = 'hidden';
+                          document.getElementById('editAgentAbbrev').type = 'button';
+                        }
+                      </script>
+                  </td>
+                </tr>
+                <tr>
                   <th scope="row">Phone Number/s:</th>
-                  <td> <input type="name" class="form-control" id="clientPhone" name="clientPhone" value = "<%= result.client[0].clientPhone %>" readonly> </td>
+                  <td> 
+                      <input type="name" class="form-control" id="clientPhone" name="clientPhone" value = "<%= result.client[0].clientPhone %>" readonly>
+                      <input type="button" id="editClientPhone" value="edit"></input>
+                      <input type="hidden" id="updateClientPhone" value="Save"></input>
+                      <script> 
+                        document.getElementById('editClientPhone').onclick = function(){
+                          document.getElementById('clientPhone').readOnly = false;
+                          document.getElementById('updateClientPhone').type = 'button';
+                          document.getElementById('editClientPhone').type = 'hidden';
+                        }
+                        document.getElementById('updateClientPhone').onclick = function(){
+                          document.getElementById('clientPhone').readOnly = true;
+                          document.getElementById('updateClientPhone').type = 'hidden';
+                          document.getElementById('editClientPhone').type = 'button';
+                        }
+                      </script>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Fax Number/s:</th>
-                  <td> <input type="name" class="form-control" id="clientFax" name="clientFax" value = "<%= result.client[0].clientFax %>" readonly> </td>
+                  <td> 
+                    <input type="name" class="form-control" id="clientFax" name="clientFax" value = "<%= result.client[0].clientFax %>" readonly> 
+                    <input type="button" id="editClientFax" value="edit"></input>
+                    <input type="hidden" id="updateClientFax" value="Save"></input>
+                    <script> 
+                      document.getElementById('editClientFax').onclick = function(){
+                        document.getElementById('clientFax').readOnly = false;
+                        document.getElementById('updateClientFax').type = 'button';
+                        document.getElementById('editClientFax').type = 'hidden';
+                      }
+                      document.getElementById('updateClientFax').onclick = function(){
+                        document.getElementById('clientFax').readOnly = true;
+                        document.getElementById('updateClientFax').type = 'hidden';
+                        document.getElementById('editClientFax').type = 'button';
+                      }
+                    </script>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Client Address 1:</th>
-                  <td> <input type="name" class="form-control" id="clientAddress1" name="clientAddress1" value = "<%= result.client[0].clientAddress1.addr %>" readonly> </td>
+                  <td> 
+                    <input type="name" class="form-control" id="clientAddress1" name="clientAddress1" value = "<%= result.client[0].clientAddress1.addr %>" readonly>
+                    <input type="button" id="editClientAddress1" value="edit"></input>
+                    <input type="hidden" id="updateClientAddress1" value="Save"></input>
+                    <script> 
+                      document.getElementById('editClientAddress1').onclick = function(){
+                        document.getElementById('clientAddress1').readOnly = false;
+                        document.getElementById('updateClientAddress1').type = 'button';
+                        document.getElementById('editClientAddress1').type = 'hidden';
+                      }
+                      document.getElementById('updateClientAddress1').onclick = function(){
+                        document.getElementById('clientAddress1').readOnly = true;
+                        document.getElementById('updateClientAddress1').type = 'hidden';
+                        document.getElementById('editClientAddress1').type = 'button';
+                      }
+                    </script>
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Client Address 1 Type:</th>
-                  <td> <input type="name" class="form-control" id="clientAddress1type" name="clientAddress1type" value = "<%= result.client[0].clientAddress1.type %>" readonly> </td>
+                  <td> 
+                    <input type="name" class="form-control" id="clientAddress1type" name="clientAddress1type" value = "<%= result.client[0].clientAddress1.type %>" readonly>
+                    <input type="button" id="editClientAddress1type" value="edit"></input>
+                    <input type="hidden" id="updateClientAddress1type" value="Save"></input>
+                    <script> 
+                      document.getElementById('editClientAddress1type').onclick = function(){
+                        document.getElementById('clientAddress1type').readOnly = false;
+                        document.getElementById('updateClientAddress1type').type = 'button';
+                        document.getElementById('editClientAddress1type').type = 'hidden';
+                      }
+                      document.getElementById('updateClientAddress1type').onclick = function(){
+                        document.getElementById('clientAddress1type').readOnly = true;
+                        document.getElementById('updateClientAddress1type').type = 'hidden';
+                        document.getElementById('editClientAddress1type').type = 'button';
+                      }
+                    </script> 
+                  </td>
                 </tr>                <tr>
                   <th scope="row">Client Address 2:</th>
-                  <td> <input type="name" class="form-control" id="clientAddress2" name="clientAddress2" value = "<%= result.client[0].clientAddress2.addr %>" readonly> </td>
+                  <td> 
+                    <input type="name" class="form-control" id="clientAddress2" name="clientAddress2" value = "<%= result.client[0].clientAddress2.addr %>" readonly>
+                    <input type="button" id="editClientAddress2" value="edit"></input>
+                    <input type="hidden" id="updateClientAddress2" value="Save"></input>
+                    <script> 
+                      document.getElementById('editClientAddress2').onclick = function(){
+                        document.getElementById('clientAddress2').readOnly = false;
+                        document.getElementById('updateClientAddress2').type = 'button';
+                        document.getElementById('editClientAddress2').type = 'hidden';
+                      }
+                      document.getElementById('updateClientAddress2').onclick = function(){
+                        document.getElementById('clientAddress2').readOnly = true;
+                        document.getElementById('updateClientAddress2').type = 'hidden';
+                        document.getElementById('editClientAddress2').type = 'button';
+                      }
+                    </script> 
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Client Address 2 Type:</th>
-                  <td> <input type="name" class="form-control" id="clientAddress2type" name="clientAddress2type" value = "<%= result.client[0].clientAddress2.type %>" readonly> </td>
+                  <td> 
+                    <input type="name" class="form-control" id="clientAddress2type" name="clientAddress2type" value = "<%= result.client[0].clientAddress2.type %>" readonly>
+                    <input type="button" id="editClientAddress2type" value="edit"></input>
+                    <input type="hidden" id="updateClientAddress2type" value="Save"></input>
+                    <script> 
+                      document.getElementById('editClientAddress2type').onclick = function(){
+                        document.getElementById('clientAddress2type').readOnly = false;
+                        document.getElementById('updateClientAddress2type').type = 'button';
+                        document.getElementById('editClientAddress2type').type = 'hidden';
+                      }
+                      document.getElementById('updateClientAddress2type').onclick = function(){
+                        document.getElementById('clientAddress2type').readOnly = true;
+                        document.getElementById('updateClientAddress2type').type = 'hidden';
+                        document.getElementById('editClientAddress2type').type = 'button';
+                      }
+                    </script> 
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Client Address 3:</th>
-                  <td> <input type="name" class="form-control" id="clientAddress3" name="clientAddress3" value = "<%= result.client[0].clientAddress3.addr %>" readonly> </td>
+                  <td> 
+                    <input type="name" class="form-control" id="clientAddress3" name="clientAddress3" value = "<%= result.client[0].clientAddress3.addr %>" readonly>
+                    <input type="button" id="editClientAddress3" value="edit"></input>
+                    <input type="hidden" id="updateClientAddress3" value="Save"></input>
+                    <script> 
+                      document.getElementById('editClientAddress3').onclick = function(){
+                        document.getElementById('clientAddress3').readOnly = false;
+                        document.getElementById('updateClientAddress3').type = 'button';
+                        document.getElementById('editClientAddress3').type = 'hidden';
+                      }
+                      document.getElementById('updateClientAddress3').onclick = function(){
+                        document.getElementById('clientAddress3').readOnly = true;
+                        document.getElementById('updateClientAddress3').type = 'hidden';
+                        document.getElementById('editClientAddress3').type = 'button';
+                      }
+                    </script> 
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Client Address 3 Type:</th>
-                  <td> <input type="name" class="form-control" id="clientAddress3type" name="clientAddress3type" value = "<%= result.client[0].clientAddress3.type %>" readonly> </td>
+                  <td> 
+                    <input type="name" class="form-control" id="clientAddress3type" name="clientAddress3type" value = "<%= result.client[0].clientAddress3.type %>" readonly>
+                    <input type="button" id="editClientAddress3type" value="edit"></input>
+                    <input type="hidden" id="updateClientAddress3type" value="Save"></input>
+                    <script> 
+                      document.getElementById('editClientAddress3type').onclick = function(){
+                        document.getElementById('clientAddress3type').readOnly = false;
+                        document.getElementById('updateClientAddress3type').type = 'button';
+                        document.getElementById('editClientAddress3type').type = 'hidden';
+                      }
+                      document.getElementById('updateClientAddress3type').onclick = function(){
+                        document.getElementById('clientAddress3type').readOnly = true;
+                        document.getElementById('updateClientAddress3type').type = 'hidden';
+                        document.getElementById('editClientAddress3type').type = 'button';
+                      }
+                    </script> 
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Client Address 4:</th>
-                  <td> <input type="name" class="form-control" id="clientAddress4" name="clientAddress4" value = "<%= result.client[0].clientAddress4.addr %>" readonly> </td>
+                  <td> 
+                    <input type="name" class="form-control" id="clientAddress4" name="clientAddress4" value = "<%= result.client[0].clientAddress4.addr %>" readonly>
+                    <input type="button" id="editClientAddress4" value="edit"></input>
+                    <input type="hidden" id="updateClientAddress4" value="Save"></input>
+                    <script> 
+                      document.getElementById('editClientAddress4').onclick = function(){
+                        document.getElementById('clientAddress4').readOnly = false;
+                        document.getElementById('updateClientAddress4').type = 'button';
+                        document.getElementById('editClientAddress4').type = 'hidden';
+                      }
+                      document.getElementById('updateClientAddress4').onclick = function(){
+                        document.getElementById('clientAddress4').readOnly = true;
+                        document.getElementById('updateClientAddress4').type = 'hidden';
+                        document.getElementById('editClientAddress4').type = 'button';
+                      }
+                    </script> 
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Client Address 4 Type:</th>
-                  <td> <input type="name" class="form-control" id="clientAddress4type" name="clientAddress4type" value = "<%= result.client[0].clientAddress4.type %>" readonly> </td>
+                  <td> 
+                    <input type="name" class="form-control" id="clientAddress4type" name="clientAddress4type" value = "<%= result.client[0].clientAddress4.type %>" readonly>
+                    <input type="button" id="editClientAddress4type" value="edit"></input>
+                    <input type="hidden" id="updateClientAddress4type" value="Save"></input>
+                    <script> 
+                      document.getElementById('editClientAddress4type').onclick = function(){
+                        document.getElementById('clientAddress4type').readOnly = false;
+                        document.getElementById('updateClientAddress4type').type = 'button';
+                        document.getElementById('editClientAddress4type').type = 'hidden';
+                      }
+                      document.getElementById('updateClientAddress4type').onclick = function(){
+                        document.getElementById('clientAddress4type').readOnly = true;
+                        document.getElementById('updateClientAddress4type').type = 'hidden';
+                        document.getElementById('editClientAddress4type').type = 'button';
+                      }
+                    </script> 
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Email Address 1:</th>
-                  <td> <input type="name" class="form-control" id="clientEmail1" name="clientEmail1" value = "<%= result.client[0].clientEmail1 %>" readonly> </td>
+                  <td> 
+                    <input type="name" class="form-control" id="clientEmail1" name="clientEmail1" value = "<%= result.client[0].clientEmail1 %>" readonly>
+                    <input type="button" id="editClientEmail1" value="edit"></input>
+                    <input type="hidden" id="updateClientEmail1" value="Save"></input>
+                    <script> 
+                      document.getElementById('editClientEmail1').onclick = function(){
+                        document.getElementById('clientEmail1').readOnly = false;
+                        document.getElementById('updateClientEmail1').type = 'button';
+                        document.getElementById('editClientEmail1').type = 'hidden';
+                      }
+                      document.getElementById('updateClientEmail1').onclick = function(){
+                        document.getElementById('clientEmail1').readOnly = true;
+                        document.getElementById('updateClientEmail1').type = 'hidden';
+                        document.getElementById('editClientEmail1').type = 'button';
+                      }
+                    </script> 
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Email Address 2:</th>
-                  <td> <input type="name" class="form-control" id="clientEmail2" name="clientEmail2" value = "<%= result.client[0].clientEmail2 %>" readonly> </td>
+                  <td> 
+                    <input type="name" class="form-control" id="clientEmail2" name="clientEmail2" value = "<%= result.client[0].clientEmail2 %>" readonly>
+                    <input type="button" id="editClientEmail2" value="edit"></input>
+                    <input type="hidden" id="updateClientEmail2" value="Save"></input>
+                    <script> 
+                      document.getElementById('editClientEmail2').onclick = function(){
+                        document.getElementById('clientEmail2').readOnly = false;
+                        document.getElementById('updateClientEmail2').type = 'button';
+                        document.getElementById('editClientEmail2').type = 'hidden';
+                      }
+                      document.getElementById('updateClientEmail2').onclick = function(){
+                        document.getElementById('clientEmail2').readOnly = true;
+                        document.getElementById('updateClientEmail2').type = 'hidden';
+                        document.getElementById('editClientEmail2').type = 'button';
+                      }
+                    </script> 
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Client Products:</th>
@@ -121,36 +322,106 @@
                     <%
                       var productList = '';
                       if(result.client[0].clientProdOX == "true"){
-                        productList += '<input class="form-check-input" type="checkbox" name="clientProdOX" checked readonly>';
+                        productList += '<input class="form-check-input" type="checkbox" id="clientProdOX" name="clientProdOX"  checked disabled>';
                       }else{
-                        productList += '<input class="form-check-input" type="checkbox" name="clientProdOX" readonly>';
+                        productList += '<input class="form-check-input" type="checkbox" id="clientProdOX" name="clientProdOX"  disabled>';
                       }
                       productList += '<label class="form-check-label" for="clientProdOX">OX</label>';
                       productList += '<br>';
                       if(result.client[0].clientProdPP == "true"){
-                        productList += '<input class="form-check-input" type="checkbox" name="clientProdPP" checked readonly>';
+                        productList += '<input class="form-check-input" type="checkbox" id="clientProdPP" name="clientProdPP" checked disabled>';
                       }else{
-                        productList += '<input class="form-check-input" type="checkbox" name="clientProdPP" readonly>';
+                        productList += '<input class="form-check-input" type="checkbox" id="clientProdPP" name="clientProdPP" disabled>';
                       }
                       productList += '<label class="form-check-label" for="clientProdPP">PP</label>';
                       productList += '<br>';
                       if(result.client[0].clientProdTP == "true"){
-                        productList += '<input class="form-check-input" type="checkbox" name="clientProdTP" checked readonly>';
+                        productList += '<input class="form-check-input" type="checkbox" id="clientProdTP" name="clientProdTP" checked disabled>';
                       }else{
-                        productList += '<input class="form-check-input" type="checkbox" name="clientProdTP" readonly>';
+                        productList += '<input class="form-check-input" type="checkbox" id="clientProdTP" name="clientProdTP" disabled>';
                       }
                       productList += '<label class="form-check-label" for="clientProdTP">TP</label>';
                       console.log(productList);
                     %>
                     <%- productList %>
+                    <input type="button" id="editProducts" value="edit"></input>
+                    <input type="hidden" id="updateProducts" value="Save"></input>
+                    <script> 
+                      document.getElementById('editProducts').onclick = function(){
+                        document.getElementById('clientProdOX').disabled = false;
+                        document.getElementById('clientProdPP').disabled = false;
+                        document.getElementById('clientProdTP').disabled = false;
+                        document.getElementById('updateProducts').type = 'button';
+                        document.getElementById('editProducts').type = 'hidden';
+                      }
+                      document.getElementById('updateProducts').onclick = function(){
+                        document.getElementById('clientProdOX').disabled = true;
+                        document.getElementById('clientProdPP').disabled = true;
+                        document.getElementById('clientProdTP').disabled = true;
+                        document.getElementById('updateProducts').type = 'hidden';
+                        document.getElementById('editProducts').type = 'button';
+                      }
+                    </script> 
                   </td>
                 </tr>
                 <tr>
                   <th scope="row">Notes:</th>
-                  <td colspan="3"> <%= result.client[0].clientNotes %> </td>
+                  <td colspan="3"> 
+                    <textarea class="form-control" id="clientNotes" name="clientNotes" rows="3" value="<%=result.client[0].clientNotes %>" readonly></textarea>
+                    <input type="button" id="editClientNotes" value="edit"></input>
+                    <input type="hidden" id="updateClientNotes" value="Save"></input>
+                    <script> 
+                      document.getElementById('editClientNotes').onclick = function(){
+                        document.getElementById('clientNotes').readOnly = false;
+                        document.getElementById('updateClientNotes').type = 'button';
+                        document.getElementById('editClientNotes').type = 'hidden';
+                      }
+                      document.getElementById('updateClientNotes').onclick = function(){
+                        document.getElementById('clientNotes').readOnly = true;
+                        document.getElementById('updateClientNotes').type = 'hidden';
+                        document.getElementById('editClientNotes').type = 'button';
+                      }
+                    </script> 
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Status:</th>
+                  <td colspan="3"> 
+                    <select class="form-control" id="clientActive" name="clientActive" value = "<%= result.client[0].clientActive %>" disabled required>
+                        <option>Enabled</option>
+                        <option>Disabled</option>
+                    </select>
+                    <input type="button" id="editClientActive" value="edit"></input>
+                    <input type="hidden" id="updateClientActive" value="Save"></input>
+                    <script> 
+                      document.getElementById('editClientActive').onclick = function(){
+                        document.getElementById('clientActive').disabled = false;
+                        document.getElementById('updateClientActive').type = 'button';
+                        document.getElementById('editClientActive').type = 'hidden';
+                      }
+                      document.getElementById('updateClientActive').onclick = function(){
+                        document.getElementById('clientActive').disabled = true;
+                        document.getElementById('updateClientActive').type = 'hidden';
+                        document.getElementById('editClientActive').type = 'button';
+                      }
+                    </script>
+                  </td>
                 </tr>
               </tbody>
             </table>
+            <script>
+              function enableFields() {
+                document.getElementById('agentAbbrev').disabled = false;
+                document.getElementById('clientProdOX').disabled = false;
+                document.getElementById('clientProdPP').disabled = false;
+                document.getElementById('clientProdTP').disabled = false;
+                document.getElementById('clientActive').disabled = false;
+              }
+            </script>
+          <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+        </form>
+
+
 
 <!-- TODO Contact History Snapshot - thinking maybe last 5 entries -->
 
