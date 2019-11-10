@@ -588,21 +588,108 @@ router.post('/viewClient', function(req, res) {
 
 });
 
-/* GET Clients for Search Contact Page. */
+/* GET Contact for Search Contact Page. */
 router.get('/search-contact', function(req, res) {
 
     // Set our internal DB variable
     var db = req.db;
 
     // Set our collection
-    var collection = db.get('Clients');
+    var collection = db.get('Contacts');
 
-    collection.find({},{},function(e,docs){
+    collection.find({},{contactFirstName : 1, contactLastName : 1},function(e,docs){
         res.render('search-contact', {
-            "clientList" : docs,
+            "contactList" : docs,
             user:req.user.username
         });
     });
+});
+
+/* POST Query to MongoDB and return View Contact Page. */
+router.post('/search-contact', function(req, res) {
+    // Set our internal DB variable
+    var result = {};
+    var db = req.db;
+
+    var tasks = [
+        // Load Contact
+        function(callback) {
+            var collection1 = db.get('Contacts');
+
+            collection1.find({ "_id" : req.body.contactID },{},function(e,contact){
+                if (e) return callback(err);
+                result.contact = contact;
+                callback();
+            })
+        },
+        // Load Clients
+        function(callback) {
+            var collection2 = db.get('Clients');
+            collection2.find({},{clientName : 1},function(e,clients){
+                if (e) return callback(err);
+                result.clients = clients;
+                callback();
+            });
+        },
+    ];
+
+    async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+        if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+        // Here `locals` will be an object with `users` and `colors` keys
+        // Example: `locals = {users: [...], colors: [...]}`
+        db.close();
+        res.render('view-contact', {
+            "result": result,
+            contactID : req.body.contactID,
+            user:req.user.username
+        });
+    });
+});
+
+/* POST to Edit Contacts */
+router.post('/viewContact', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+    // Get our form values. These rely on the "name" attributes
+    var username = req.user.username;
+    var contactID = req.body.contactID;
+    var contactClientID = req.body.contactClientID;
+    var contactPosition = req.body.contactPosition;
+    var contactPhone = req.body.contactPhone;
+    var contactMobile = req.body.contactMobile;
+    var contactEmail = req.body.contactEmail;
+    var contactNotes = req.body.contactNotes;
+    var contactStatus = req.body.contactStatus;
+    // Set our collection
+    var collection = db.get('Contacts');
+
+    // Submit to the DB
+    collection.update(
+    {
+        "_id" : req.body.contactID
+    },
+    {
+        $set: {
+            "contactClientID" : contactClientID,
+            "contactPosition" : contactPosition,
+            "contactPhone" : contactPhone,
+            "contactMobile" : contactMobile,
+            "contactEmail" : contactEmail,
+            "contactNotes" : contactNotes,
+            "contactStatus" : contactStatus
+        }
+    }, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.send("There was a problem adding the information to the database.");
+        }
+        else {
+            // And forward to success page
+            res.redirect("/home");
+        }
+    });
+
 });
 
 /* GET Clients for Search Event Page. */

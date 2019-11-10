@@ -19,7 +19,8 @@
     </div>
 
     <main class="main mt-2 ml-3">
-      <form id="formAddContact" name="addContact" method="post" action="/addContact">
+      <form id="formEditContact" name="viewContact" method="post" action="/viewContact" onsubmit="enableFields()">
+      <input type="name" class="form-control" id="contactID" name="contactID" value="<%= contactID %>" hidden>
       <div class="card w-100">
         <h3 class="card-header">View/Edit Contact</h3>
         <div class="card-body">
@@ -28,32 +29,184 @@
         <thead class="thead-dark">
           <tr>
             <th style="width: 5%" scope="col">Name:</th>
-            <th style="width: 20%" scope="col">Shirley Bernardo</th>
+            <th style="width: 20%" scope="col"> <%= result.contact[0].contactFirstName %> <%= result.contact[0].contactLastName %> </th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th scope="row">Client:</th>
-            <td>Diversys Spectrum Products, Inc.</td>
+            <td colspan="3"> 
+              <select class="form-control" id="contactClientID" name="contactClientID" disabled required>
+                <%
+                    var list = '';
+                    for (i = 0; i < result.clients.length; i++) {
+                      if (result.clients[i].clientName == result.contact[0].contactClientID){
+                        list += '<option selected>' + result.clients[i].clientName + '</option>';
+                      } else {
+                        list += '<option>' + result.clients[i].clientName + '</option>';
+                      } 
+                    }
+                %>
+                  <%- list %>
+              </select>
+              <input type="button" id="editContactClientID" value="edit"></input>
+              <input type="hidden" id="updateContactClientID" value="Save"></input>
+              <script> 
+                document.getElementById('editContactClientID').onclick = function(){
+                  document.getElementById('contactClientID').disabled = false;
+                  document.getElementById('updateContactClientID').type = 'button';
+                  document.getElementById('editContactClientID').type = 'hidden';
+                }
+                document.getElementById('updateContactClientID').onclick = function(){
+                  document.getElementById('contactClientID').disabled = true;
+                  document.getElementById('updateContactClientID').type = 'hidden';
+                  document.getElementById('editContactClientID').type = 'button';
+                }
+              </script>
+          </td>
           </tr>
           <tr>
             <th scope="row">Position:</th>
-            <td>Admin Manager</td>
+            <td colspan="3"> 
+              <input type="text" class="form-control" id="contactPosition" name="contactPosition" value = "<%= result.contact[0].contactPosition %>" required readonly>
+              <input type="button" id="editContactPosition" value="edit"></input>
+              <input type="hidden" id="updateContactPosition" value="Save"></input>
+              <script> 
+                document.getElementById('editContactPosition').onclick = function(){
+                  document.getElementById('contactPosition').readOnly = false;
+                  document.getElementById('updateContactPosition').type = 'button';
+                  document.getElementById('editContactPosition').type = 'hidden';
+                }
+                document.getElementById('updateContactPosition').onclick = function(){
+                  document.getElementById('contactPosition').readOnly = true;
+                  document.getElementById('updateContactPosition').type = 'hidden';
+                  document.getElementById('editContactPosition').type = 'button';
+                }
+              </script>
+            </td>
           </tr>
           <tr>
-            <th scope="row">Contact Number/s:</th>
-            <td>786-7201<br>0917-1234567</td>
+            <th scope="row">Contact Phone Number:</th>
+            <td colspan="3"> 
+              <input type="text" class="form-control" id="contactPhone" name="contactPhone" value = "<%= result.contact[0].contactPhone %>" readonly>
+              <input type="button" id="editContactPhone" value="edit"></input>
+              <input type="hidden" id="updateContactPhone" value="Save"></input>
+              <script> 
+                document.getElementById('editContactPhone').onclick = function(){
+                  document.getElementById('contactPhone').readOnly = false;
+                  document.getElementById('updateContactPhone').type = 'button';
+                  document.getElementById('editContactPhone').type = 'hidden';
+                }
+                document.getElementById('updateContactPhone').onclick = function(){
+                  document.getElementById('contactPhone').readOnly = true;
+                  document.getElementById('updateContactPhone').type = 'hidden';
+                  document.getElementById('editContactPhone').type = 'button';
+                }
+              </script>
+            </td>
           </tr>
           <tr>
-            <th scope="row">Email Address/es:</th>
-            <td>shirley.bernado@diversysph.com<br>info@diversysph.com</td>
+            <th scope="row">Contact Mobile Number:</th>
+            <td colspan="3"> 
+              <input type="text" class="form-control" id="contactMobile" name="contactMobile" value = "<%= result.contact[0].contactMobile %>" readonly>
+              <input type="button" id="editContactMobile" value="edit"></input>
+              <input type="hidden" id="updateContactMobile" value="Save"></input>
+              <script> 
+                document.getElementById('editContactMobile').onclick = function(){
+                  document.getElementById('contactMobile').readOnly = false;
+                  document.getElementById('updateContactMobile').type = 'button';
+                  document.getElementById('editContactMobile').type = 'hidden';
+                }
+                document.getElementById('updateContactMobile').onclick = function(){
+                  document.getElementById('contactMobile').readOnly = true;
+                  document.getElementById('updateContactMobile').type = 'hidden';
+                  document.getElementById('editContactMobile').type = 'button';
+                }
+              </script>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Email Address:</th>
+            <td colspan="3"> 
+              <input type="email" class="form-control" id="contactEmail" name="contactEmail" value = "<%= result.contact[0].contactEmail %>" readonly>
+              <input type="button" id="editContactEmail" value="edit"></input>
+              <input type="hidden" id="updateContactEmail" value="Save"></input>
+              <script> 
+                document.getElementById('editContactEmail').onclick = function(){
+                  document.getElementById('contactEmail').readOnly = false;
+                  document.getElementById('updateContactEmail').type = 'button';
+                  document.getElementById('editContactEmail').type = 'hidden';
+                }
+                document.getElementById('updateContactEmail').onclick = function(){
+                  document.getElementById('contactEmail').readOnly = true;
+                  document.getElementById('updateContactEmail').type = 'hidden';
+                  document.getElementById('editContactEmail').type = 'button';
+                }
+              </script>
+            </td>
           </tr>
           <tr>
             <th scope="row">Notes:</th>
-            <td>testing on long form remarks, how will the webpage react to a longer than expected entry in this section?</td>
+            <td colspan="3"> 
+              <input type="text" class="form-control" id="contactNotes" name="contactNotes" value = "<%= result.contact[0].contactNotes %>" readonly>
+              <input type="button" id="editContactNotes" value="edit"></input>
+              <input type="hidden" id="updateContactNotes" value="Save"></input>
+              <script> 
+                document.getElementById('editContactNotes').onclick = function(){
+                  document.getElementById('contactNotes').readOnly = false;
+                  document.getElementById('updateContactNotes').type = 'button';
+                  document.getElementById('editContactNotes').type = 'hidden';
+                }
+                document.getElementById('updateContactNotes').onclick = function(){
+                  document.getElementById('contactNotes').readOnly = true;
+                  document.getElementById('updateContactNotes').type = 'hidden';
+                  document.getElementById('editContactNotes').type = 'button';
+                }
+              </script>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Status:</th>
+            <td colspan="3"> 
+              <select class="form-control" id="contactStatus" name="contactStatus" disabled required>
+                <%
+                var statusList = '';
+                  if(result.contact[0].contactStatus == "Enabled"){
+                    statusList += '<option selected>Enabled</option>';
+                    statusList += '<option>Disabled</option>';
+                } else {
+                    statusList += '<option>Enabled</option>';
+                    statusList += '<option selected>Disabled</option>';
+                }
+                %>
+                <%- statusList %>
+              </select>
+              <input type="button" id="editContactStatus" value="edit"></input>
+              <input type="hidden" id="updateContactStatus" value="Save"></input>
+              <script> 
+                document.getElementById('editContactStatus').onclick = function(){
+                  document.getElementById('contactStatus').disabled = false;
+                  document.getElementById('updateContactStatus').type = 'button';
+                  document.getElementById('editContactStatus').type = 'hidden';
+                }
+                document.getElementById('updateContactStatus').onclick = function(){
+                  document.getElementById('contactStatus').disabled = true;
+                  document.getElementById('updateContactStatus').type = 'hidden';
+                  document.getElementById('editContactStatus').type = 'button';
+                }
+              </script>
+            </td>
           </tr>
         </tbody>
       </table>
+      <script>
+        function enableFields() {
+          document.getElementById('contactClientID').disabled = false;
+          document.getElementById('contactStatus').disabled = false;
+        }
+      </script>
+      <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+      </form>
 
 <!-- Contact History Snapshot - thinking maybe last 5 entries -->
 

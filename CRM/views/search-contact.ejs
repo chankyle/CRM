@@ -20,43 +20,30 @@
     <main class="main mt-2 ml-3">
         <div class="card w-50">
           <h3 class="card-header">View/Edit Contact</h3>
+          <form id="search-contact" name="search-contact" method="post" action="/search-contact">
           <div class="card-body">
 
             <!-- Select Contact from Prepopulated list of options -->
-                        <div class="form-row">
-                          <div class="form-group col-12">
-                              <label for="agentSelect">Select Client</label>
-                                <select class="form-control" id="client-select">
-                                  <%
-                                      var list = '';
-                                      for (i = 0; i < clientList.length; i++) {
-                                        list += '<option>' + clientList[i].clientName + '</option>';
-                                      }
-                                  %>
-                                    <%- list %>
-                                </select>
-                          </div>
-                        </div>
-
-
-              <!-- Select Contact from Prepopulated list of options -->
-                        <div class="form-row">
-                          <div class="form-group col-6">
-                              <label for="agentSelect">Select Contact</label>
-                                <select class="form-control" id="client-select">
-                                    <option>Contact 1</option>
-                                    <option>Contact 2</option>
-                                    <option>Contact 3</option>
-                                    <option>Contact 4</option>
-                                    <option>Contact 5</option>
-                                </select>
-                          </div>
-                        </div>
+              <div class="form-row">
+                <div class="form-group col-12">
+                    <label for="agentSelect">Select Contact</label>
+                      <select class="form-control" id="contactID" name="contactID">
+                        <%
+                            var list = '';
+                            for (i = 0; i < contactList.length; i++) {
+                              list += '<option value="' + contactList[i]._id + '">' + contactList[i].contactFirstName + ' ' + contactList[i].contactLastName + '</option>';
+                            }
+                        %>
+                          <%- list %>
+                      </select>
+                </div>
+              </div>
 
       <!-- Submit Button to execute -->
               <div class="form-row">
                 <div class="form-group col">
-                  <button type="button" class="btn btn-primary">Submit</button>
+                  <input class="btn btn-primary" type="submit" value="Submit">
+                  </form>
                 </div>
               </div>
 
