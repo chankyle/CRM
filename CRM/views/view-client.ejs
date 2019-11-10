@@ -85,7 +85,7 @@
                 <tr>
                   <th scope="row">Phone Number/s:</th>
                   <td> 
-                      <input type="name" class="form-control" id="clientPhone" name="clientPhone" value = "<%= result.client[0].clientPhone %>" readonly>
+                      <input type="text" class="form-control" id="clientPhone" name="clientPhone" value = "<%= result.client[0].clientPhone %>" required readonly>
                       <input type="button" id="editClientPhone" value="edit"></input>
                       <input type="hidden" id="updateClientPhone" value="Save"></input>
                       <script> 
@@ -125,7 +125,7 @@
                 <tr>
                   <th scope="row">Client Address 1:</th>
                   <td> 
-                    <input type="name" class="form-control" id="clientAddress1" name="clientAddress1" value = "<%= result.client[0].clientAddress1.addr %>" readonly>
+                    <input type="name" class="form-control" id="clientAddress1" name="clientAddress1" value = "<%= result.client[0].clientAddress1.addr %>" required readonly>
                     <input type="button" id="editClientAddress1" value="edit"></input>
                     <input type="hidden" id="updateClientAddress1" value="Save"></input>
                     <script> 
@@ -196,7 +196,7 @@
                 <tr>
                   <th scope="row">Client Address 2 Type:</th>
                   <td> 
-                    <select class="form-control" id="clientAddress2type" name="clientAddress2type" disabled required>
+                    <select class="form-control" id="clientAddress2type" name="clientAddress2type" disabled>
                       <%
                       var address2List = '';
                         if(result.client[0].clientAddress2.type == "Contact Address"){
@@ -254,7 +254,7 @@
                 <tr>
                   <th scope="row">Client Address 3 Type:</th>
                   <td> 
-                    <select class="form-control" id="clientAddress3type" name="clientAddress3type" disabled required>
+                    <select class="form-control" id="clientAddress3type" name="clientAddress3type" disabled>
                       <%
                       var address3List = '';
                         if(result.client[0].clientAddress3.type == "Contact Address"){
@@ -312,7 +312,7 @@
                 <tr>
                   <th scope="row">Client Address 4 Type:</th>
                   <td> 
-                    <select class="form-control" id="clientAddress4type" name="clientAddress4type" disabled required>
+                    <select class="form-control" id="clientAddress4type" name="clientAddress4type" disabled>
                       <%
                       var address4List = '';
                         if(result.client[0].clientAddress4.type == "Contact Address"){
@@ -350,7 +350,7 @@
                 <tr>
                   <th scope="row">Email Address 1:</th>
                   <td> 
-                    <input type="name" class="form-control" id="clientEmail1" name="clientEmail1" value = "<%= result.client[0].clientEmail1 %>" readonly>
+                    <input type="email" class="form-control" id="clientEmail1" name="clientEmail1" value = "<%= result.client[0].clientEmail1 %>" readonly>
                     <input type="button" id="editClientEmail1" value="edit"></input>
                     <input type="hidden" id="updateClientEmail1" value="Save"></input>
                     <script> 
@@ -370,7 +370,7 @@
                 <tr>
                   <th scope="row">Email Address 2:</th>
                   <td> 
-                    <input type="name" class="form-control" id="clientEmail2" name="clientEmail2" value = "<%= result.client[0].clientEmail2 %>" readonly>
+                    <input type="email" class="form-control" id="clientEmail2" name="clientEmail2" value = "<%= result.client[0].clientEmail2 %>" readonly>
                     <input type="button" id="editClientEmail2" value="edit"></input>
                     <input type="hidden" id="updateClientEmail2" value="Save"></input>
                     <script> 
@@ -412,7 +412,6 @@
                         productList += '<input class="form-check-input" type="checkbox" id="clientProdTP" name="clientProdTP" value="true" disabled>';
                       }
                       productList += '<label class="form-check-label" for="clientProdTP">TP</label>';
-                      console.log(productList);
                     %>
                     <%- productList %>
                     <input type="button" id="editProducts" value="edit"></input>
@@ -508,7 +507,7 @@
 
 
 
-<!-- TODO Contact History Snapshot - thinking maybe last 5 entries -->
+<!-- Contact History Snapshot - thinking maybe last 5 entries -->
 
             <h4> Communication History</h4>
             <div class="table-responsive">

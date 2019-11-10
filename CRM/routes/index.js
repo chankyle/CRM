@@ -467,7 +467,7 @@ router.post('/search-client', function(req, res) {
         function(callback) {
             var collection2 = db.get('Contacts');
 
-            collection2.find({ "contactClientID" : req.body.clientSelect },{},function(e,contact){
+            collection2.find({ "contactClientID" : req.body.clientSelect },{contactFirstName : 1, contactLastName : 1},function(e,contact){
                 if (e) return callback(err);
                 result.contact = contact;
                 callback();
@@ -485,7 +485,7 @@ router.post('/search-client', function(req, res) {
         // Load Agents
         function(callback) {
             var collection4 = db.get('Agents');
-            collection4.find({},{},function(e,agents){
+            collection4.find({},{ agentAbbrev : 1},function(e,agents){
                 if (e) return callback(err);
                 result.agents = agents;
                 callback();
@@ -506,7 +506,7 @@ router.post('/search-client', function(req, res) {
     });
 });
 
-/* POST to Add Clients */
+/* POST to Edit Clients */
 router.post('/viewClient', function(req, res) {
 
     // Set our internal DB variable
@@ -545,7 +545,7 @@ router.post('/viewClient', function(req, res) {
         }
     var clientNotes = req.body.clientNotes;
     var currentDateTime = moment();
-    var defaultStatus = req.body.clientStatus;
+    var clientStatus = req.body.clientStatus;
 
     // Set our collection
     var collection = db.get('Clients');
@@ -556,23 +556,25 @@ router.post('/viewClient', function(req, res) {
         "clientName" : req.body.clientName
     },
     {
-        "clientName" : clientName,
-        "agentAbbrev" : agentAbbrev,
-        "clientPhone" : clientPhone,
-        "clientFax" : clientFax,
-        "clientAddress1" : clientAddress1,
-        "clientAddress2" : clientAddress2,
-        "clientAddress3" : clientAddress3,
-        "clientAddress4" : clientAddress4,
-        "clientEmail1" : clientEmail1,
-        "clientEmail2" : clientEmail2,
-        "clientProdOX" : clientProdOX,
-        "clientProdPP" : clientProdPP,
-        "clientProdTP" : clientProdTP,
-        "clientNotes" : clientNotes,
-        "createdBy" : username,
-        "createDate" : currentDateTime,
-        "clientActive" : defaultStatus
+        $set: {
+            "clientName" : clientName,
+            "agentAbbrev" : agentAbbrev,
+            "clientPhone" : clientPhone,
+            "clientFax" : clientFax,
+            "clientAddress1" : clientAddress1,
+            "clientAddress2" : clientAddress2,
+            "clientAddress3" : clientAddress3,
+            "clientAddress4" : clientAddress4,
+            "clientEmail1" : clientEmail1,
+            "clientEmail2" : clientEmail2,
+            "clientProdOX" : clientProdOX,
+            "clientProdPP" : clientProdPP,
+            "clientProdTP" : clientProdTP,
+            "clientNotes" : clientNotes,
+            "createdBy" : username,
+            "createDate" : currentDateTime,
+            "clientActive" : clientStatus
+        }
     }, function (err, doc) {
         if (err) {
             // If it failed, return error

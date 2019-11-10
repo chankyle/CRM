@@ -23,23 +23,23 @@
             <form id="search-client" name="search-client" method="post" action="/search-client">
           <div class="card-body">
 
-      <!-- Select Agent from Prepopulated list of options -->
-              <div class="form-row">
-                <div class="form-group col-12">
-                  <label for="agentSelect">Select Client</label>
-                  <select class="form-control" id="clientSelect" name="clientSelect">
-                    <%
-                        var list = '';
-                        for (i = 0; i < clientList.length; i++) {
-                          list += '<option>' + clientList[i].clientName + '</option>';
-                        }
-                    %>
-                      <%- list %>
-                  </select>
-                </div>
-              </div>
+      <!-- Select Client from Prepopulated list of options -->
+        <div class="form-row">
+          <div class="form-group col-12">
+            <label for="agentSelect">Select Client</label>
+            <select class="form-control" id="clientSelect" name="clientSelect">
+              <%
+                  var list = '';
+                  for (i = 0; i < clientList.length; i++) {
+                    list += '<option>' + clientList[i].clientName + '</option>';
+                  }
+              %>
+                <%- list %>
+            </select>
+          </div>
+        </div>
 
-      <!-- Submit Button to execute -->
+<!-- Submit Button to execute -->
               <div class="form-row">
                 <div class="form-group col">
                 <input class="btn btn-primary" type="submit" value="Submit">
