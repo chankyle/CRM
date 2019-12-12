@@ -205,8 +205,7 @@ router.post('/resultActivityReport', function(req, res) {
     var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput
     var db = req.db;
     var collection = db.get('Events');
-
-    var query = { "agentAbbrev": req.body.agentSelect, "eventTimeOut._d": { $lte: dateEndInput._d}, "eventTimeIn._d": { $gte: dateStartInput._d} };
+    var query = { "agentAbbrev": req.body.agentSelect, "eventTimeIn._d": { $lte: new Date(dateEndInput._d)}, "eventTimeIn._d": { $gte: new Date(dateStartInput._d)} };
     collection.find(query,{},function(err, result){
         if (err) throw err;
         db.close();
@@ -259,8 +258,7 @@ router.post('/result-client-history-report', function(req, res) {
     var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput
     var db = req.db;
     var collection = db.get('Events');
-
-    var query = { "clientName": req.body.clientSelect, "eventTimeOut._d": { $lte: dateEndInput._d}, "eventTimeIn._d": { $gte: dateStartInput._d} };
+    var query = { "clientName": req.body.clientSelect, "eventTimeIn._d": { $lte: new Date(dateEndInput._d)}, "eventTimeIn._d": { $gte: new Date(dateStartInput._d)} };
 
 
     collection.find(query,{},function(err, result){
@@ -289,8 +287,7 @@ router.post('/result-contact-history-report', function(req, res) {
     var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput
     var db = req.db;
     var collection = db.get('Events');
-
-    var query = { $or: [ { "clientName": req.body.clientSelect, "contact1": req.body.contactID1, "eventTimeOut._d": { $lte: dateEndInput._d}, "eventTimeIn._d": { $gte: dateStartInput._d} }] };
+    var query = { $or: [ { "clientName": req.body.clientSelect, "contact1": req.body.contactID1, "eventTimeIn._d": { $lte: new Date(dateEndInput._d)}, "eventTimeIn._d": { $gte: new Date (dateStartInput._d)} }] };
 
     collection.find(query,{},function(err, result){
         if (err) throw err;
@@ -473,7 +470,7 @@ router.post('/search-client', function(req, res) {
                 callback();
             })
         },
-        // Load Contact
+        // Load Events
         function(callback) {
             var collection3 = db.get('Events');
             collection3.find({ "clientName" : req.body.clientSelect },{sort: {'createDate._d' :-1}, limit: 5},function(e,events){
@@ -610,19 +607,23 @@ router.post('/search-contact', function(req, res) {
     // Set our internal DB variable
     var result = {};
     var db = req.db;
+    var contactName;
+    var clientName;
 
     var tasks = [
-        // Load Contact
+        // Load Contact information of contact searched
         function(callback) {
             var collection1 = db.get('Contacts');
 
             collection1.find({ "_id" : req.body.contactID },{},function(e,contact){
                 if (e) return callback(err);
                 result.contact = contact;
+                clientName = result.contact[0].contactClientID;
+                contactName = result.contact[0].contactFirstName + ' ' + result.contact[0].contactLastName;
                 callback();
             })
         },
-        // Load Clients
+        // Load Client associated with Contact searched
         function(callback) {
             var collection2 = db.get('Clients');
             collection2.find({},{clientName : 1},function(e,clients){
@@ -631,6 +632,20 @@ router.post('/search-contact', function(req, res) {
                 callback();
             });
         },
+        // Load Events that match Client and Contact searched
+        function(callback) {
+            var collection3 = db.get('Events');
+            collection3.find( {
+                $and : [
+                    { "clientName" : clientName },
+                    { $or : [ { "contact1" : contactName }, { "contact2" : contactName } ] }
+                ]
+            },{sort: {'createDate._d' :-1}, limit: 5},function(e,events){
+                if (e) return callback(err);
+                result.events = events;
+                callback();
+            });
+        }
     ];
 
     async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"

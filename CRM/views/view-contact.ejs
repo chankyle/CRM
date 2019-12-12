@@ -210,36 +210,43 @@
 
 <!-- Contact History Snapshot - thinking maybe last 5 entries -->
 
-      <h4> Communication History</h4>
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead class="thead-dark">
-            <tr>
-              <th style="width: 2%" scope="col"></th>
-              <th style="width: 15%" scope="col">DATE</th>
-              <th style="width: 5%" scope="col">AGENT</th>
-              <th style="width: 10%" scope="col">VISIT TYPE</th>
-              <th style="width: 20%" scope="col">REMARKS</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>1</th>
-              <td>Sunday, September 22, 2019</td>
-              <td>RC</td>
-              <td>Collection</td>
-              <td>Blabbity blahblah</td>
-            </tr>
-            <tr>
-              <th>2</th>
-              <td>Sunday, September 23, 2019</td>
-              <td>KC</td>
-              <td>Courtesy Visit</td>
-              <td>Blabbity blahblah 2</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+            <h4> Communication History</h4>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">DATE</th>
+                    <th scope="col">AGENT</th>
+                    <th scope="col">CONTACT 1</th>
+                    <th scope="col">CONTACT 2</th>
+                    <th scope="col">VISIT TYPE</th>
+                    <th scope="col">REMARKS</th>
+                  </tr>
+                </thead>
+                <tr>
+                  <%
+                    var eventsList ='';
+                    var k = 1;
+                    for (i = 0; i < result.events.length; i++) {
+                      eventsList += '<th scope="row">' + k + '</th>';
+                      var date = result.events[i].eventTimeIn._i;
+                      var str = date.toString();
+                      str = str.substr(0,10);
+                      eventsList += '<td>' + str + '</td>';
+                      eventsList += '<td>' + result.events[i].agentAbbrev + '</td>';
+                      eventsList += '<td>' + result.events[i].contact1 + '</td>';
+                      eventsList += '<td>' + result.events[i].contact2 + '</td>';
+                      eventsList += '<td>' + result.events[i].eventType + '</td>';
+                      eventsList += '<td>' + result.events[i].eventRemarks + '</td>';
+                      eventsList += '</tr>';
+                  }
+                  %>
+                  <%- eventsList %>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
 
 <!-- BACK BUTTON -->
       <div class="form-row">
