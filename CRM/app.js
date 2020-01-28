@@ -12,7 +12,7 @@ var path = require('path');
 
 
 //Set database
-var db = monk('localhost:27017/CRM');
+var db = monk('mongodb+srv://heroku-app:<password>@chansey-staging-qrkj1.mongodb.net/test?retryWrites=true&w=majority');
 
 
 //Create Route
@@ -128,7 +128,7 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-mongoose.connect("mongodb://localhost:27017/CRM", { useNewUrlParser: true });
+mongoose.connect("mongodb+srv://heroku-app:<password>@chansey-staging-qrkj1.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
