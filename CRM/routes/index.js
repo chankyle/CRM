@@ -42,6 +42,8 @@ router.post('/register', function(req, res) {
                 res.redirect('/');
             });
         });
+    } else {
+        res.status(500).send('Invalid Registration Code. Please Try again!');
     }
 });
 
