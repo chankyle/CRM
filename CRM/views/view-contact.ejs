@@ -199,6 +199,7 @@
           </tr>
         </tbody>
       </table>
+      <!--All drop down fields need to be set at enabled before they will be sent as part of the payload to mongo -->
       <script>
         function enableFields() {
           document.getElementById('contactClientID').disabled = false;
@@ -229,6 +230,7 @@
                     var eventsList ='';
                     var k = 1;
                     for (i = 0; i < result.events.length; i++) {
+                      k = i + 1;
                       eventsList += '<th scope="row">' + k + '</th>';
                       var date = result.events[i].eventTimeIn._i;
                       var str = date.toString();

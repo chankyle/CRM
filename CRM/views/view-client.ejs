@@ -528,6 +528,7 @@
                     var eventsList ='';
                     var k = 1;
                     for (i = 0; i < result.events.length; i++) {
+                    k = i + 1;
                       eventsList += '<th scope="row">' + k + '</th>';
                       var str = result.events[i].eventTimeIn._i.toString();
                       var str = str.substr(0,10);

@@ -6,6 +6,7 @@ var router = express.Router();
 var async = require('async');
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
+var ObjectID = require('MongoDB').ObjectID;
 var urlencoderParser = bodyParser.urlencoded({ extended: false })
 
 /* GET home page. */
@@ -473,7 +474,7 @@ router.post('/search-client', function(req, res) {
         // Load Events
         function(callback) {
             var collection3 = db.get('Events');
-            collection3.find({ "clientName" : req.body.clientSelect },{sort: {'createDate._d' :-1}, limit: 5},function(e,events){
+            collection3.find({ "clientName" : req.body.clientSelect },{sort: {'eventTimeIn._d' :-1}, limit: 5},function(e,events){
                 if (e) return callback(err);
                 result.events = events;
                 callback();
@@ -568,8 +569,8 @@ router.post('/viewClient', function(req, res) {
             "clientProdPP" : clientProdPP,
             "clientProdTP" : clientProdTP,
             "clientNotes" : clientNotes,
-            "createdBy" : username,
-            "createDate" : currentDateTime,
+            "modifiedBy" : username,
+            "lastModified" : currentDateTime,
             "clientActive" : clientStatus
         }
     }, function (err, doc) {
@@ -609,7 +610,6 @@ router.post('/search-contact', function(req, res) {
     var db = req.db;
     var contactName;
     var clientName;
-
     var tasks = [
         // Load Contact information of contact searched
         function(callback) {
@@ -631,20 +631,6 @@ router.post('/search-contact', function(req, res) {
                 result.clients = clients;
                 callback();
             });
-        },
-        // Load Events that match Client and Contact searched
-        function(callback) {
-            var collection3 = db.get('Events');
-            collection3.find( {
-                $and : [
-                    { "clientName" : clientName },
-                    { $or : [ { "contact1" : contactName }, { "contact2" : contactName } ] }
-                ]
-            },{sort: {'createDate._d' :-1}, limit: 5},function(e,events){
-                if (e) return callback(err);
-                result.events = events;
-                callback();
-            });
         }
     ];
 
@@ -652,11 +638,17 @@ router.post('/search-contact', function(req, res) {
         if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
         // Here `locals` will be an object with `users` and `colors` keys
         // Example: `locals = {users: [...], colors: [...]}`
-        db.close();
-        res.render('view-contact', {
-            "result": result,
-            contactID : req.body.contactID,
-            user:req.user.username
+        
+        // Load Events that match Client and Contact searched
+        var collection3 = db.get('Events');
+        collection3.find({$or:[{"contact1": contactName}, {"contact2": contactName}]},{sort: {'eventTimeIn._d' :-1} },function(e,events){
+            result.events = events;
+            db.close(); 
+            res.render('view-contact', {
+                "result": result,
+                contactID : req.body.contactID,
+                user:req.user.username
+            });
         });
     });
 });
@@ -676,9 +668,9 @@ router.post('/viewContact', function(req, res) {
     var contactEmail = req.body.contactEmail;
     var contactNotes = req.body.contactNotes;
     var contactStatus = req.body.contactStatus;
+    var currentDateTime = moment();
     // Set our collection
     var collection = db.get('Contacts');
-
     // Submit to the DB
     collection.update(
     {
@@ -692,7 +684,9 @@ router.post('/viewContact', function(req, res) {
             "contactMobile" : contactMobile,
             "contactEmail" : contactEmail,
             "contactNotes" : contactNotes,
-            "contactStatus" : contactStatus
+            "contactStatus" : contactStatus,
+            "modifiedBy" : username,
+            "lastModified" : currentDateTime
         }
     }, function (err, doc) {
         if (err) {
@@ -718,25 +712,14 @@ router.get('/search-event', function(req, res) {
     var tasks = [
         // Load clients
         function(callback) {
-            var collection2 = db.get('Clients');
+            var collection = db.get('Clients');
 
-            collection2.find({},{},function(e,clients){
+            collection.find({},{},function(e,clients){
                 if (e) return callback(err);
                 locals.clients = clients;
                 callback();
             })
-        },
-        // Load clientContacts
-        function(callback) {
-            var collection3 = db.get('Contacts');
-
-            collection3.find({},{},function(e,contacts){
-                if (e) return callback(err);
-                locals.contacts = contacts;
-                callback();
-            })
         }
-
     ];
 
     async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
@@ -747,6 +730,171 @@ router.get('/search-event', function(req, res) {
         res.render('search-event', locals);
     });
 });
+
+/* POST Query to MongoDB and return List Event Page. */
+router.post('/search-event', function(req, res) {
+    // Set our internal DB variable
+    var result = {};
+    var db = req.db;
+    var dateStartInput = moment(req.body.dateStartInput.concat(' 00:00:00'), 'YYYY-MM-DD HH-mm-ss');
+    var dateEndInput = moment(req.body.dateEndInput.concat(' 23:59:59'), 'YYYY-MM-DD HH-mm-ss');
+
+    var tasks = [
+        // Load Events
+        function(callback) {
+            var collection1 = db.get('Events');
+            collection1.find( {
+                $and : [
+                    { "clientName" : req.body.clientName },
+                    { "eventTimeIn._d": { $gte: new Date(dateStartInput)} },
+                    { "eventTimeIn._d": { $lte: new Date(dateEndInput)} }
+                ]
+            },{sort: {'eventTimeIn._d' :-1} },function(e,events){
+                if (e) return callback(err);
+                result.events = events;
+                callback();
+            });
+        }
+    ];
+
+    async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+        if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+        // Here `locals` will be an object with `users` and `colors` keys
+        // Example: `locals = {users: [...], colors: [...]}`
+        db.close();
+        res.render('list-event', {
+            "result": result,
+            clientName : req.body.clientName,
+            dateStartInput: req.body.dateStartInput,
+            dateEndInput: req.body.dateEndInput,
+            user:req.user.username
+        });
+    });
+});
+
+/* POST Query to MongoDB and return Edit Event Page. */
+router.post('/list-event', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+    var result = {};
+    var tasks = [
+        // Load agents
+        function(callback) {
+            var collection1 = db.get('Agents');
+            collection1.find({},{},function(e,agents){
+                if (e) return callback(err);
+                result.agents = agents;
+                callback();
+            })
+        },
+        // Load clients
+        function(callback) {
+            var collection2 = db.get('Clients');
+            collection2.find({},{},function(e,clients){
+                if (e) return callback(err);
+                result.clients = clients;
+                callback();
+            })
+        },
+        // Load clientContacts
+        function(callback) {
+            var collection3 = db.get('Contacts');
+            collection3.find({},{},function(e,contacts){
+                if (e) return callback(err);
+                result.contacts = contacts;
+                callback();
+            })
+        },
+        // Load Event Details
+        function(callback) {
+            var collection4 = db.get('Events');
+            collection4.find({"_id": new ObjectID(req.body.submit)},{},function(e,events){
+                if (e) return callback(err);
+                result.events = events;
+                callback();
+            })
+        }
+    ];
+
+    async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+        if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+        // Here `locals` will be an object with `users` and `colors` keys
+        // Example: `locals = {users: [...], colors: [...]}`
+        db.close();
+        res.render('view-event', {
+            "result": result,
+            user: req.user.username,
+            eventID: req.body.submit,
+            clientName : req.body.clientName
+        });
+    });
+
+});
+
+/* POST to Edit Clients */
+router.post('/viewEvent', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+
+    // Get our form values. These rely on the "name" attributes
+    var eventID = req.body.eventID
+    var clientName = req.body.eventClient;
+    var agentAbbrev = req.body.eventAgent;
+    var eventDate = req.body.eventDate;
+    var eventDateTimeIn = moment(eventDate.concat(' ', req.body.eventTimeIn), 'YYYY-MM-DD HH-mm');
+    var eventDateTimeOut = moment(eventDate.concat(' ', req.body.eventTimeOut), 'YYYY-MM-DD HH-mm');
+    var eventDuration = parseInt(moment.duration(eventDateTimeOut.diff(eventDateTimeIn)).asMinutes());
+    var eventType = req.body.eventType;
+    var contact1 = req.body.eventContactID1;
+    if (contact1 == "N/A"){
+        contact1 = "";
+    }
+    var contact2 = req.body.eventContactID2;
+    if (contact2 == "N/A"){
+        contact2 = "";
+    }
+    var eventBranch = req.body.eventBranch;
+    var eventRemarks = req.body.eventRemarks;
+    var username = req.user.username;
+    var currentDateTime = moment();
+
+    // Set our collection
+    var collection = db.get('Events');
+
+    // Submit to the DB
+    collection.update(
+    {
+        "_id" : eventID
+    },
+    {
+        $set: {
+            "clientName" : clientName,
+            "agentAbbrev" : agentAbbrev,
+            "eventTimeIn" : eventDateTimeIn,
+            "eventTimeOut" : eventDateTimeOut,
+            "eventDuration" : eventDuration,
+            "eventType" : eventType,
+            "contact1" : contact1,
+            "contact2" : contact2,
+            "eventBranch" : eventBranch,
+            "eventRemarks" : eventRemarks,
+            "modifiedBy" : username,
+            "lastModified" : currentDateTime
+        }
+    }, function (err, doc) {
+        if (err) {
+            // If it failed, return error
+            res.send("There was a problem adding the information to the database.");
+        }
+        else {
+            // And forward to success page
+            res.redirect("/home");
+        }
+    });
+});
+
 
 /* POST to Add Clients */
 router.post('/addClient', function(req, res) {
@@ -825,7 +973,6 @@ router.post('/addClient', function(req, res) {
     });
 
 });
-
 
 
 /* POST to Add Contacts */
@@ -935,11 +1082,11 @@ router.post('/addEvent', function(req, res) {
     var eventDuration = parseInt(moment.duration(eventDateTimeOut.diff(eventDateTimeIn)).asMinutes());
     var eventType = req.body.eventType;
     var contact1 = req.body.contactID1;
-    if (contact1.valueOf() === "N/A"){
+    if (contact1 == "N/A"){
         contact1 = "";
     }
     var contact2 = req.body.contactID2;
-    if (contact2.valueOf() === "N/A"){
+    if (contact2 == "N/A"){
         contact2 = "";
     }
     var eventBranch = req.body.eventBranch;
