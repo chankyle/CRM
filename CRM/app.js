@@ -55,7 +55,12 @@ var viewEventRouter = require('./routes/view-event');
 
 var app = express();
 
-
+//set correct ports
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+app.listen(port);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
