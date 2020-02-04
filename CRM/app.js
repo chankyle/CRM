@@ -18,6 +18,7 @@ var db = monk('localhost:27017/CRM');
 //Create Route
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
+var logoutRouter = require('./routes/logout');
 var registerRouter = require('./routes/register');
 var homeRouter = require('./routes/home');
 
@@ -85,6 +86,7 @@ app.use(function(req,res,next){
 //handle routers to various page
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
 app.use('/register', registerRouter);
 app.use('/home', homeRouter);
 
