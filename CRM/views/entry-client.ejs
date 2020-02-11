@@ -35,7 +35,7 @@
             <label for="agentName">Agent Assignment</label>
             <select class="form-control" id="agentAbbrev" name="agentAbbrev" required>
         		<%
-              	var list = '';
+              	var list = '<option value="" disabled selected>Select</option>';
               	for (i = 0; i < agentList.length; i++) {
               		list += '<option>' + agentList[i].agentAbbrev + '</option>';
               	}
@@ -66,6 +66,7 @@
       			<div class="col-auto">
       			  <textarea class="form-control" id="clientAddress1" name="clientAddress1" placeholder="Company Address 1" rows="3" required></textarea>
               <select class="form-control" id="clientAddress1Type" name="clientAddress1Type" required>
+                <option value="" disabled selected>Select</option>
                 <option>Contact Address</option>
                 <option>Delivery Address</option>
               </select>

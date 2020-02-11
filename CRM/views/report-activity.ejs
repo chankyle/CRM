@@ -39,9 +39,9 @@
         <div class="form-row">
           <div class="form-group col-6">
             <label for="agentSelect">Agent</label>
-            <select class="form-control" name="agentSelect" id="agentSelect">
+            <select class="form-control" name="agentSelect" id="agentSelect" required>
               <%
-                	var list = '';
+                	var list = '<option value="" disabled selected>Select</option>';
                 	for (i = 0; i < agentList.length; i++) {
                 		list += '<option>' + agentList[i].agentAbbrev + '</option>';
                 	}

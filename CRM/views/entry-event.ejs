@@ -33,7 +33,7 @@
             <label for="agentID">Agent</label>
             <select class="form-control" name="agentID">
             <%
-                var list = '';
+                var list = '<option value="" disabled selected>Select</option>';
                 for (i = 0; i < locals.agents.length; i++) {
                   list += '<option>' + locals.agents[i].agentAbbrev + '</option>';
                 }
@@ -61,7 +61,7 @@
             <label for="clientID">Client</label>
             <select class="form-control" name="clientID" onChange="changeAgent(this.value);">
         		<%
-              	var list = '';
+              	var list = '<option value="" disabled selected>Select</option>';
               	for (i = 0; i < locals.clients.length; i++) {
               		list += '<option value="' + locals.clients[i].clientName + '">' + locals.clients[i].clientName + '</option>';
               	}

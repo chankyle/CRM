@@ -28,7 +28,7 @@
             <label for="clientID">Client</label>
             <select class="form-control" name="clientID">
         		<%
-              	var list = '';
+              	var list = '<option value="" disabled selected>Select</option>';
               	for (i = 0; i < clientList.length; i++) {
               		list += '<option>' + clientList[i].clientName + '</option>';
               	}

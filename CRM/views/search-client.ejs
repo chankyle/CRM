@@ -29,7 +29,7 @@
             <label for="agentSelect">Select Client</label>
             <select class="form-control" id="clientSelect" name="clientSelect">
               <%
-                  var list = '';
+                  var list = '<option value="" disabled selected>Select</option>';
                   for (i = 0; i < clientList.length; i++) {
                     list += '<option>' + clientList[i].clientName + '</option>';
                   }

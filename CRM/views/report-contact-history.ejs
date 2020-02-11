@@ -27,9 +27,9 @@
           <div class="form-row">
             <div class="form-group col">
               <label for="clientID">Client</label>
-              <select class="form-control" name="clientSelect" id="clientSelect" onChange="changeAgent(this.value);">
+              <select class="form-control" name="clientSelect" id="clientSelect" onChange="changeAgent(this.value);" required>
               <%
-                  var list = '';
+                  var list = '<option value="" disabled selected>Select</option>';
                   for (i = 0; i < locals.clients.length; i++) {
                     list += '<option value="' + locals.clients[i].clientName + '">' + locals.clients[i].clientName + '</option>';
                   }
@@ -58,7 +58,7 @@
             <div class="form-row">
               <div class="form-group col-6">
                   <label for="agentContact">Contact</label>
-                    <select class="form-control" name="contactID1" id="contactID1">
+                    <select class="form-control" name="contactID1" id="contactID1" required>
                       <option value="" disabled selected>Select</option>
                     </select>
               </div>
