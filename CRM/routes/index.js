@@ -521,7 +521,8 @@ router.post('/viewClient', function(req, res) {
     var db = req.db;
     // Get our form values. These rely on the "name" attributes
     var username = req.user.username;
-    var clientName = req.body.clientName;
+    var newClientName = req.body.newClientName;
+    var origClientName = req.body.origClientName;
     var agentAbbrev = req.body.agentAbbrev;
     var clientPhone = req.body.clientPhone;
     var clientFax = req.body.clientFax;
@@ -558,14 +559,15 @@ router.post('/viewClient', function(req, res) {
     // Set our collection
     var collection = db.get('Clients');
 
+
     // Submit to the DB
     collection.update(
     {
-        "clientName" : req.body.clientName
+        "clientName" : req.body.origClientName
     },
     {
         $set: {
-            "clientName" : clientName,
+            "clientName" : newClientName,
             "agentAbbrev" : agentAbbrev,
             "clientPhone" : clientPhone,
             "clientFax" : clientFax,
@@ -842,7 +844,7 @@ router.post('/list-event', function(req, res) {
 
 });
 
-/* POST to Edit Clients */
+/* POST to Edit Events */
 router.post('/viewEvent', function(req, res) {
 
     // Set our internal DB variable
