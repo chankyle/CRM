@@ -5,6 +5,165 @@
     <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui@2.1.16/dist/css/coreui.min.css' />
     <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+    <script>
+
+    window.onload = function() {
+      var isEditing = false;
+
+      document.getElementById('editEventDate').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+          document.getElementById('eventDate').disabled = false;
+          document.getElementById('updateEventDate').type = 'button';
+          document.getElementById('editEventDate').type = 'hidden';
+        } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateEventDate').onclick = function(){
+        isEditing = false;
+        document.getElementById('eventDate').disabled = true;
+        document.getElementById('updateEventDate').type = 'hidden';
+        document.getElementById('editEventDate').type = 'button';
+      }
+
+      document.getElementById('editEventAgent').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+          document.getElementById('eventAgent').disabled = false;
+          document.getElementById('updateEventAgent').type = 'button';
+          document.getElementById('editEventAgent').type = 'hidden';
+        } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateEventAgent').onclick = function(){
+        isEditing = false;
+        document.getElementById('eventAgent').disabled = true;
+        document.getElementById('updateEventAgent').type = 'hidden';
+        document.getElementById('editEventAgent').type = 'button';
+      }
+
+      document.getElementById('editEventTimeIn').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+          document.getElementById('eventTimeIn').disabled = false;
+          document.getElementById('updateEventTimeIn').type = 'button';
+          document.getElementById('editEventTimeIn').type = 'hidden';
+        } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateEventTimeIn').onclick = function(){
+        isEditing = false;
+        document.getElementById('eventTimeIn').disabled = true;
+        document.getElementById('updateEventTimeIn').type = 'hidden';
+        document.getElementById('editEventTimeIn').type = 'button';
+      }
+
+      document.getElementById('editEventTimeOut').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+          document.getElementById('eventTimeOut').disabled = false;
+          document.getElementById('updateEventTimeOut').type = 'button';
+          document.getElementById('editEventTimeOut').type = 'hidden';
+        } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateEventTimeOut').onclick = function(){
+        isEditing = false;
+        document.getElementById('eventTimeOut').disabled = true;
+        document.getElementById('updateEventTimeOut').type = 'hidden';
+        document.getElementById('editEventTimeOut').type = 'button';
+      }
+
+      document.getElementById('editEventClient').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+          document.getElementById('eventClient').disabled = false;
+          document.getElementById('updateEventClient').type = 'button';
+          document.getElementById('editEventClient').type = 'hidden';
+        } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateEventClient').onclick = function(){
+        isEditing = false;
+        document.getElementById('eventClient').disabled = true;
+        document.getElementById('updateEventClient').type = 'hidden';
+        document.getElementById('editEventClient').type = 'button';
+      }
+
+      document.getElementById('editEventType').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+          document.getElementById('eventType').disabled = false;
+          document.getElementById('updateEventType').type = 'button';
+          document.getElementById('editEventType').type = 'hidden';
+        } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateEventType').onclick = function(){
+        isEditing = false;
+        document.getElementById('eventType').disabled = true;
+        document.getElementById('updateEventType').type = 'hidden';
+        document.getElementById('editEventType').type = 'button';
+      }
+ 
+      document.getElementById('editEventContactID1').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+          document.getElementById('eventContactID1').disabled = false;
+          document.getElementById('updateEventContactID1').type = 'button';
+          document.getElementById('editEventContactID1').type = 'hidden';
+        } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateEventContactID1').onclick = function(){
+        isEditing = false;
+        document.getElementById('eventContactID1').disabled = true;
+        document.getElementById('updateEventContactID1').type = 'hidden';
+        document.getElementById('editEventContactID1').type = 'button';
+      }
+
+      document.getElementById('editEventContactID2').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+          document.getElementById('eventContactID2').disabled = false;
+          document.getElementById('updateEventContactID2').type = 'button';
+          document.getElementById('editEventContactID2').type = 'hidden';
+        } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateEventContactID2').onclick = function(){
+        isEditing = false;
+        document.getElementById('eventContactID2').disabled = true;
+        document.getElementById('updateEventContactID2').type = 'hidden';
+        document.getElementById('editEventContactID2').type = 'button';
+      }
+
+      document.getElementById('editEventBranch').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+          document.getElementById('eventBranch').readOnly = false;
+          document.getElementById('updateEventBranch').type = 'button';
+          document.getElementById('editEventBranch').type = 'hidden';
+        } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateEventBranch').onclick = function(){
+        isEditing = false;
+        document.getElementById('eventBranch').readOnly = true;
+        document.getElementById('updateEventBranch').type = 'hidden';
+        document.getElementById('editEventBranch').type = 'button';
+      }
+
+      document.getElementById('editEventRemarks').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+          document.getElementById('eventRemarks').readOnly = false;
+          document.getElementById('updateEventRemarks').type = 'button';
+          document.getElementById('editEventRemarks').type = 'hidden';
+        } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateEventRemarks').onclick = function(){
+        isEditing = false;
+        document.getElementById('eventRemarks').readOnly = true;
+        document.getElementById('updateEventRemarks').type = 'hidden';
+        document.getElementById('editEventRemarks').type = 'button';
+      }
+    }
+    </script>
+
+
   </head>
 
 <body class="app sidebar-show aside-menu-show">
@@ -44,18 +203,7 @@
               <input type="date" class="form-control" id="eventDate" name="eventDate" value = "<%= eventDate %>" disabled required>
               <input type="button" id="editEventDate" value="edit"></input>
               <input type="hidden" id="updateEventDate" value="Save"></input>
-              <script> 
-                document.getElementById('editEventDate').onclick = function(){
-                  document.getElementById('eventDate').disabled = false;
-                  document.getElementById('updateEventDate').type = 'button';
-                  document.getElementById('editEventDate').type = 'hidden';
-                }
-                document.getElementById('updateEventDate').onclick = function(){
-                  document.getElementById('eventDate').disabled = true;
-                  document.getElementById('updateEventDate').type = 'hidden';
-                  document.getElementById('editEventDate').type = 'button';
-                }
-              </script>
+
             </td>
           </tr>
           <tr>
@@ -76,18 +224,7 @@
               </select>
               <input type="button" id="editEventAgent" value="edit"></input>
               <input type="hidden" id="updateEventAgent" value="Save"></input>
-              <script> 
-                document.getElementById('editEventAgent').onclick = function(){
-                  document.getElementById('eventAgent').disabled = false;
-                  document.getElementById('updateEventAgent').type = 'button';
-                  document.getElementById('editEventAgent').type = 'hidden';
-                }
-                document.getElementById('updateEventAgent').onclick = function(){
-                  document.getElementById('eventAgent').disabled = true;
-                  document.getElementById('updateEventAgent').type = 'hidden';
-                  document.getElementById('editEventAgent').type = 'button';
-                }
-              </script>
+
             </td>
           </tr>
           <tr>
@@ -100,18 +237,7 @@
               <input type="time" class="form-control" id="eventTimeIn" name="eventTimeIn" value = "<%- eventTimeIn %>" disabled required>
               <input type="button" id="editEventTimeIn" value="edit"></input>
               <input type="hidden" id="updateEventTimeIn" value="Save"></input>
-              <script> 
-                document.getElementById('editEventTimeIn').onclick = function(){
-                  document.getElementById('eventTimeIn').disabled = false;
-                  document.getElementById('updateEventTimeIn').type = 'button';
-                  document.getElementById('editEventTimeIn').type = 'hidden';
-                }
-                document.getElementById('updateEventTimeIn').onclick = function(){
-                  document.getElementById('eventTimeIn').disabled = true;
-                  document.getElementById('updateEventTimeIn').type = 'hidden';
-                  document.getElementById('editEventTimeIn').type = 'button';
-                }
-              </script>
+
             </td>
           </tr>
           <tr>
@@ -124,18 +250,7 @@
               <input type="time" class="form-control" id="eventTimeOut" name="eventTimeOut" value = "<%- eventTimeOut %>" disabled required>
               <input type="button" id="editEventTimeOut" value="edit"></input>
               <input type="hidden" id="updateEventTimeOut" value="Save"></input>
-              <script> 
-                document.getElementById('editEventTimeOut').onclick = function(){
-                  document.getElementById('eventTimeOut').disabled = false;
-                  document.getElementById('updateEventTimeOut').type = 'button';
-                  document.getElementById('editEventTimeOut').type = 'hidden';
-                }
-                document.getElementById('updateEventTimeOut').onclick = function(){
-                  document.getElementById('eventTimeOut').disabled = true;
-                  document.getElementById('updateEventTimeOut').type = 'hidden';
-                  document.getElementById('editEventTimeOut').type = 'button';
-                }
-              </script>
+
             </td>
           </tr>
           <tr>
@@ -159,17 +274,7 @@
               <span id='variableJSON' hidden>
                 <%= JSON.stringify(result.contacts); %>
               </span>
-              <script> 
-                document.getElementById('editEventClient').onclick = function(){
-                  document.getElementById('eventClient').disabled = false;
-                  document.getElementById('updateEventClient').type = 'button';
-                  document.getElementById('editEventClient').type = 'hidden';
-                }
-                document.getElementById('updateEventClient').onclick = function(){
-                  document.getElementById('eventClient').disabled = true;
-                  document.getElementById('updateEventClient').type = 'hidden';
-                  document.getElementById('editEventClient').type = 'button';
-                }
+              <script>
                 function changeAgent(value){
                   var contacts = JSON.parse($('#variableJSON').text());
                   var contactOptions = "";
@@ -219,18 +324,7 @@
               </select>
               <input type="button" id="editEventType" value="edit"></input>
               <input type="hidden" id="updateEventType" value="Save"></input>
-              <script> 
-                document.getElementById('editEventType').onclick = function(){
-                  document.getElementById('eventType').disabled = false;
-                  document.getElementById('updateEventType').type = 'button';
-                  document.getElementById('editEventType').type = 'hidden';
-                }
-                document.getElementById('updateEventType').onclick = function(){
-                  document.getElementById('eventType').disabled = true;
-                  document.getElementById('updateEventType').type = 'hidden';
-                  document.getElementById('editEventType').type = 'button';
-                }
-              </script>
+              
             </td>
           </tr>
           <tr>
@@ -252,18 +346,7 @@
               </select>
               <input type="button" id="editEventContactID1" value="edit"></input>
               <input type="hidden" id="updateEventContactID1" value="Save"></input>
-              <script> 
-                document.getElementById('editEventContactID1').onclick = function(){
-                  document.getElementById('eventContactID1').disabled = false;
-                  document.getElementById('updateEventContactID1').type = 'button';
-                  document.getElementById('editEventContactID1').type = 'hidden';
-                }
-                document.getElementById('updateEventContactID1').onclick = function(){
-                  document.getElementById('eventContactID1').disabled = true;
-                  document.getElementById('updateEventContactID1').type = 'hidden';
-                  document.getElementById('editEventContactID1').type = 'button';
-                }
-              </script>
+             
             </td>
           </tr>
           <tr>
@@ -285,18 +368,7 @@
               </select>
               <input type="button" id="editEventContactID2" value="edit"></input>
               <input type="hidden" id="updateEventContactID2" value="Save"></input>
-              <script> 
-                document.getElementById('editEventContactID2').onclick = function(){
-                  document.getElementById('eventContactID2').disabled = false;
-                  document.getElementById('updateEventContactID2').type = 'button';
-                  document.getElementById('editEventContactID2').type = 'hidden';
-                }
-                document.getElementById('updateEventContactID2').onclick = function(){
-                  document.getElementById('eventContactID2').disabled = true;
-                  document.getElementById('updateEventContactID2').type = 'hidden';
-                  document.getElementById('editEventContactID2').type = 'button';
-                }
-              </script>
+             
             </td>
           </tr>
           <tr>
@@ -305,18 +377,7 @@
               <input type="text" class="form-control" id="eventBranch" name="eventBranch" value = "<%= result.events[0].eventBranch %>" readonly>
               <input type="button" id="editEventBranch" value="edit"></input>
               <input type="hidden" id="updateEventBranch" value="Save"></input>
-              <script> 
-                document.getElementById('editEventBranch').onclick = function(){
-                  document.getElementById('eventBranch').readOnly = false;
-                  document.getElementById('updateEventBranch').type = 'button';
-                  document.getElementById('editEventBranch').type = 'hidden';
-                }
-                document.getElementById('updateEventBranch').onclick = function(){
-                  document.getElementById('eventBranch').readOnly = true;
-                  document.getElementById('updateEventBranch').type = 'hidden';
-                  document.getElementById('editEventBranch').type = 'button';
-                }
-              </script>
+              
             </td>
           </tr>
           <tr>
@@ -325,18 +386,7 @@
               <input type="text" class="form-control" id="eventRemarks" name="eventRemarks" value = "<%= result.events[0].eventRemarks %>" required readonly>
               <input type="button" id="editEventRemarks" value="edit"></input>
               <input type="hidden" id="updateEventRemarks" value="Save"></input>
-              <script> 
-                document.getElementById('editEventRemarks').onclick = function(){
-                  document.getElementById('eventRemarks').readOnly = false;
-                  document.getElementById('updateEventRemarks').type = 'button';
-                  document.getElementById('editEventRemarks').type = 'hidden';
-                }
-                document.getElementById('updateEventRemarks').onclick = function(){
-                  document.getElementById('eventRemarks').readOnly = true;
-                  document.getElementById('updateEventRemarks').type = 'hidden';
-                  document.getElementById('editEventRemarks').type = 'button';
-                }
-              </script>
+
             </td>
           </tr>
         </tbody>
@@ -344,16 +394,16 @@
     </div>
       <!--All drop down fields need to be set at enabled before they will be sent as part of the payload to mongo -->
       <script>
-          function enableFields() {
-            document.getElementById('eventDate').disabled = false;
-            document.getElementById('eventAgent').disabled = false;
-            document.getElementById('eventTimeIn').disabled = false;
-            document.getElementById('eventTimeOut').disabled = false;
-            document.getElementById('eventClient').disabled = false;
-            document.getElementById('eventType').disabled = false;
-            document.getElementById('eventContactID1').disabled = false;
-            document.getElementById('eventContactID2').disabled = false;
-          }
+        function enableFields() {
+          document.getElementById('eventDate').disabled = false;
+          document.getElementById('eventAgent').disabled = false;
+          document.getElementById('eventTimeIn').disabled = false;
+          document.getElementById('eventTimeOut').disabled = false;
+          document.getElementById('eventClient').disabled = false;
+          document.getElementById('eventType').disabled = false;
+          document.getElementById('eventContactID1').disabled = false;
+          document.getElementById('eventContactID2').disabled = false;
+        }
       </script>
       <button type="submit" class="btn btn-primary btn-lg">Submit</button>
       </form>

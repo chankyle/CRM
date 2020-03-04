@@ -4,6 +4,118 @@
   <head>
     <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui@2.1.16/dist/css/coreui.min.css' />
     <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
+
+    <script> 
+
+    window.onload = function() {
+      var isEditing = false;
+
+      document.getElementById('editContactClientID').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+        document.getElementById('contactClientID').disabled = false;
+        document.getElementById('updateContactClientID').type = 'button';
+        document.getElementById('editContactClientID').type = 'hidden';
+      } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateContactClientID').onclick = function(){
+        isEditing = false;
+        document.getElementById('contactClientID').disabled = true;
+        document.getElementById('updateContactClientID').type = 'hidden';
+        document.getElementById('editContactClientID').type = 'button';
+      }
+
+      document.getElementById('editContactPosition').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+        document.getElementById('contactPosition').readOnly = false;
+        document.getElementById('updateContactPosition').type = 'button';
+        document.getElementById('editContactPosition').type = 'hidden';
+      } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateContactPosition').onclick = function(){
+        isEditing = false;
+        document.getElementById('contactPosition').readOnly = true;
+        document.getElementById('updateContactPosition').type = 'hidden';
+        document.getElementById('editContactPosition').type = 'button';
+      }
+
+      document.getElementById('editContactPhone').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+        document.getElementById('contactPhone').readOnly = false;
+        document.getElementById('updateContactPhone').type = 'button';
+        document.getElementById('editContactPhone').type = 'hidden';
+      } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateContactPhone').onclick = function(){
+        isEditing = false;
+        document.getElementById('contactPhone').readOnly = true;
+        document.getElementById('updateContactPhone').type = 'hidden';
+        document.getElementById('editContactPhone').type = 'button';
+      }
+
+      document.getElementById('editContactMobile').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+        document.getElementById('contactMobile').readOnly = false;
+        document.getElementById('updateContactMobile').type = 'button';
+        document.getElementById('editContactMobile').type = 'hidden';
+      } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateContactMobile').onclick = function(){
+        isEditing = false;
+        document.getElementById('contactMobile').readOnly = true;
+        document.getElementById('updateContactMobile').type = 'hidden';
+        document.getElementById('editContactMobile').type = 'button';
+      }
+ 
+      document.getElementById('editContactEmail').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+        document.getElementById('contactEmail').readOnly = false;
+        document.getElementById('updateContactEmail').type = 'button';
+        document.getElementById('editContactEmail').type = 'hidden';
+      } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateContactEmail').onclick = function(){
+        isEditing = false;
+        document.getElementById('contactEmail').readOnly = true;
+        document.getElementById('updateContactEmail').type = 'hidden';
+        document.getElementById('editContactEmail').type = 'button';
+      }
+
+      document.getElementById('editContactNotes').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+        document.getElementById('contactNotes').readOnly = false;
+        document.getElementById('updateContactNotes').type = 'button';
+        document.getElementById('editContactNotes').type = 'hidden';
+      } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateContactNotes').onclick = function(){
+        isEditing = false;
+        document.getElementById('contactNotes').readOnly = true;
+        document.getElementById('updateContactNotes').type = 'hidden';
+        document.getElementById('editContactNotes').type = 'button';
+      }
+
+      document.getElementById('editContactStatus').onclick = function(){
+        if (isEditing == false) {
+          isEditing = true;
+        document.getElementById('contactStatus').disabled = false;
+        document.getElementById('updateContactStatus').type = 'button';
+        document.getElementById('editContactStatus').type = 'hidden';
+      } else {window.alert("Only 1 field can be edited at a time");};
+      }
+      document.getElementById('updateContactStatus').onclick = function(){
+        isEditing = false;
+        document.getElementById('contactStatus').disabled = true;
+        document.getElementById('updateContactStatus').type = 'hidden';
+        document.getElementById('editContactStatus').type = 'button';
+      }
+    }
+    </script>
   </head>
 
 <body class="app sidebar-show aside-menu-show">
@@ -51,18 +163,7 @@
               </select>
               <input type="button" id="editContactClientID" value="edit"></input>
               <input type="hidden" id="updateContactClientID" value="Save"></input>
-              <script> 
-                document.getElementById('editContactClientID').onclick = function(){
-                  document.getElementById('contactClientID').disabled = false;
-                  document.getElementById('updateContactClientID').type = 'button';
-                  document.getElementById('editContactClientID').type = 'hidden';
-                }
-                document.getElementById('updateContactClientID').onclick = function(){
-                  document.getElementById('contactClientID').disabled = true;
-                  document.getElementById('updateContactClientID').type = 'hidden';
-                  document.getElementById('editContactClientID').type = 'button';
-                }
-              </script>
+              
           </td>
           </tr>
           <tr>
@@ -71,18 +172,7 @@
               <input type="text" class="form-control" id="contactPosition" name="contactPosition" value = "<%= result.contact[0].contactPosition %>" required readonly>
               <input type="button" id="editContactPosition" value="edit"></input>
               <input type="hidden" id="updateContactPosition" value="Save"></input>
-              <script> 
-                document.getElementById('editContactPosition').onclick = function(){
-                  document.getElementById('contactPosition').readOnly = false;
-                  document.getElementById('updateContactPosition').type = 'button';
-                  document.getElementById('editContactPosition').type = 'hidden';
-                }
-                document.getElementById('updateContactPosition').onclick = function(){
-                  document.getElementById('contactPosition').readOnly = true;
-                  document.getElementById('updateContactPosition').type = 'hidden';
-                  document.getElementById('editContactPosition').type = 'button';
-                }
-              </script>
+              
             </td>
           </tr>
           <tr>
@@ -91,18 +181,7 @@
               <input type="text" class="form-control" id="contactPhone" name="contactPhone" value = "<%= result.contact[0].contactPhone %>" readonly>
               <input type="button" id="editContactPhone" value="edit"></input>
               <input type="hidden" id="updateContactPhone" value="Save"></input>
-              <script> 
-                document.getElementById('editContactPhone').onclick = function(){
-                  document.getElementById('contactPhone').readOnly = false;
-                  document.getElementById('updateContactPhone').type = 'button';
-                  document.getElementById('editContactPhone').type = 'hidden';
-                }
-                document.getElementById('updateContactPhone').onclick = function(){
-                  document.getElementById('contactPhone').readOnly = true;
-                  document.getElementById('updateContactPhone').type = 'hidden';
-                  document.getElementById('editContactPhone').type = 'button';
-                }
-              </script>
+              
             </td>
           </tr>
           <tr>
@@ -111,18 +190,7 @@
               <input type="text" class="form-control" id="contactMobile" name="contactMobile" value = "<%= result.contact[0].contactMobile %>" readonly>
               <input type="button" id="editContactMobile" value="edit"></input>
               <input type="hidden" id="updateContactMobile" value="Save"></input>
-              <script> 
-                document.getElementById('editContactMobile').onclick = function(){
-                  document.getElementById('contactMobile').readOnly = false;
-                  document.getElementById('updateContactMobile').type = 'button';
-                  document.getElementById('editContactMobile').type = 'hidden';
-                }
-                document.getElementById('updateContactMobile').onclick = function(){
-                  document.getElementById('contactMobile').readOnly = true;
-                  document.getElementById('updateContactMobile').type = 'hidden';
-                  document.getElementById('editContactMobile').type = 'button';
-                }
-              </script>
+              
             </td>
           </tr>
           <tr>
@@ -131,18 +199,7 @@
               <input type="email" class="form-control" id="contactEmail" name="contactEmail" value = "<%= result.contact[0].contactEmail %>" readonly>
               <input type="button" id="editContactEmail" value="edit"></input>
               <input type="hidden" id="updateContactEmail" value="Save"></input>
-              <script> 
-                document.getElementById('editContactEmail').onclick = function(){
-                  document.getElementById('contactEmail').readOnly = false;
-                  document.getElementById('updateContactEmail').type = 'button';
-                  document.getElementById('editContactEmail').type = 'hidden';
-                }
-                document.getElementById('updateContactEmail').onclick = function(){
-                  document.getElementById('contactEmail').readOnly = true;
-                  document.getElementById('updateContactEmail').type = 'hidden';
-                  document.getElementById('editContactEmail').type = 'button';
-                }
-              </script>
+              
             </td>
           </tr>
           <tr>
@@ -151,18 +208,7 @@
               <input type="text" class="form-control" id="contactNotes" name="contactNotes" value = "<%= result.contact[0].contactNotes %>" readonly>
               <input type="button" id="editContactNotes" value="edit"></input>
               <input type="hidden" id="updateContactNotes" value="Save"></input>
-              <script> 
-                document.getElementById('editContactNotes').onclick = function(){
-                  document.getElementById('contactNotes').readOnly = false;
-                  document.getElementById('updateContactNotes').type = 'button';
-                  document.getElementById('editContactNotes').type = 'hidden';
-                }
-                document.getElementById('updateContactNotes').onclick = function(){
-                  document.getElementById('contactNotes').readOnly = true;
-                  document.getElementById('updateContactNotes').type = 'hidden';
-                  document.getElementById('editContactNotes').type = 'button';
-                }
-              </script>
+
             </td>
           </tr>
           <tr>
@@ -183,18 +229,7 @@
               </select>
               <input type="button" id="editContactStatus" value="edit"></input>
               <input type="hidden" id="updateContactStatus" value="Save"></input>
-              <script> 
-                document.getElementById('editContactStatus').onclick = function(){
-                  document.getElementById('contactStatus').disabled = false;
-                  document.getElementById('updateContactStatus').type = 'button';
-                  document.getElementById('editContactStatus').type = 'hidden';
-                }
-                document.getElementById('updateContactStatus').onclick = function(){
-                  document.getElementById('contactStatus').disabled = true;
-                  document.getElementById('updateContactStatus').type = 'hidden';
-                  document.getElementById('editContactStatus').type = 'button';
-                }
-              </script>
+
             </td>
           </tr>
         </tbody>
@@ -204,7 +239,7 @@
         function enableFields() {
           document.getElementById('contactClientID').disabled = false;
           document.getElementById('contactStatus').disabled = false;
-        }
+       }
       </script>
       <button type="submit" class="btn btn-primary btn-lg">Submit</button>
       </form>
