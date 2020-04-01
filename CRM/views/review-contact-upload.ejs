@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui@2.1.16/dist/css/coreui.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
+  </head>
+
+<body class="app sidebar-show aside-menu-show">
+
+  <header class="app-header navbar">
+    <% include partials/header %>
+  </header>
+
+  <div class="app-body">
+
+    <div class="sidebar">
+      <% include partials/sidebar %>
+    </div>
+
+
+
+      <!-- TODO Insert blank Table -->
+
+     <main class="main mt-2 ml-3">
+      <form action="/upload-contacts" method="post">
+        <input type="text" class="form-control" id="csvData" name="csvData" value="<%= JSONContacts %>" hidden>
+        <table class="table table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th style="width: 15%" scope="col">Client Name:</th>
+              <th style="width: 10%" scope="col">Contact First Name: </th>
+              <th style="width: 10%" scope="col">Contact Last Name: </th>
+              <th style="width: 10%" scope="col">Contact Position: </th>
+              <th style="width: 10%" scope="col">Contact Phone: </th>
+              <th style="width: 10%" scope="col">Contact Mobile: </th>              
+              <th style="width: 15%" scope="col">Contact Email: </th>
+              <th style="width: 20%" scope="col">Contact Notes: </th>
+              <th style="width: 20%" scope="col">Active: </th>
+            </tr>
+          </thead>
+          <tbody>
+            <%
+              var contactData = JSON.parse(JSONContacts);
+              var list = '';
+              for (i = 0; i < contactData.length; i++) {
+                list += '<tr>';
+                list += '<td> <select class="form-control" id="contactClientID[' + i + ']" name="contactClientID[' + i + ']" required>';
+                for (k = 0; k < clientList.length; k++) {
+                  list += '<option>' + clientList[k].clientName + '</option>';
+                }
+                list += '</select> </td>';
+                list += '<td>' + contactData[i].contactFirstName + '</td>';
+                list += '<td>' + contactData[i].contactLastName + '</td>';
+                list += '<td>' + contactData[i].contactPosition + '</td>';
+                list += '<td>' + contactData[i].contactPhone + '</td>';
+                list += '<td>' + contactData[i].contactMobile + '</td>';
+                list += '<td>' + contactData[i].contactEmail + '</td>';
+                list += '<td>' + contactData[i].contactNotes + '</td>';
+                list += '<td>Enabled</td>';
+                list += '</tr>'
+              }
+            %>
+            <%- list %>
+          </tbody>
+        </table>
+        <input class="btn btn-primary" type="submit" value="Confirm Upload">
+      </form>
+     </main>
+
+
+    <!-- BACK BUTTON -->
+      <div class="form-row">
+        <div class="form-group col">
+          <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
+        </div>
+        <script>
+          function goBack() {
+            window.history.back();
+          }
+        </script>
+      </div>
+
+    <aside class="aside-menu-hidden">
+      <!-- Aside menu content here -->
+    </aside>
+
+  </div>
+  <footer class="app-footer">
+    <% include partials/footer %>
+  </footer>
+
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui@2.1.16/dist/css/coreui.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
+  </head>
+
+<body class="app sidebar-show aside-menu-show">
+
+  <header class="app-header navbar">
+    <% include partials/header %>
+  </header>
+
+  <div class="app-body">
+
+    <div class="sidebar">
+      <% include partials/sidebar %>
+    </div>
+
+
+
+      <!-- TODO Insert blank Table -->
+
+     <main class="main mt-2 ml-3">
+      <form action="/upload-clients" method="post">
+        <input type="text" class="form-control" id="csvData" name="csvData" value="<%= JSONClients %>" hidden>
+        <table class="table table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th style="width: 5%" scope="col">Agent Abbrev:</th>
+              <th style="width: 10%" scope="col">Client Name:</th>
+              <th style="width: 10%" scope="col">Client Phone:</th>
+              <th style="width: 10%" scope="col">Client Fax:</th>
+              <th style="width: 15%" scope="col">Client Address 1:</th>
+              <th style="width: 10%" scope="col">Client Address 1 Type:</th>
+              <th style="width: 15%" scope="col">Client Address 2:</th>
+              <th style="width: 10%" scope="col">Client Address 2 Type:</th>
+              <th style="width: 15%" scope="col">Client Address 3:</th>
+              <th style="width: 10%" scope="col">Client Address 3 Type:</th>
+              <th style="width: 15%" scope="col">Client Address 4:</th>
+              <th style="width: 10%" scope="col">Client Address 4 Type:</th>
+              <th style="width: 15%" scope="col">Client Email 1:</th>
+              <th style="width: 15%" scope="col">Client Email 2:</th>
+              <th style="width: 5%" scope="col">Client Prod OX:</th>
+              <th style="width: 5%" scope="col">Client Prod PP:</th>
+              <th style="width: 5%" scope="col">Client Prod TP:</th>
+              <th style="width: 25%" scope="col">Client Notes:</th>
+              <th style="width: 10%" scope="col">Client Status:</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <%
+              var list = '';
+              for (i = 0; i < clients.length; i++) {
+                list += '<tr>';
+                list += '<td> <select class="form-control" id="agentAbbrev[' + i + ']" name="agentAbbrev[' + i + ']" required>';
+                  list += '<option value="" disabled selected>Select</option>';
+
+                for (k = 0; k < agentList.length; k++) {
+                  list += '<option>' + agentList[k].agentAbbrev + '</option>';
+                }
+                list += '</select> </td>';
+                list += '<td>' + clients[i].clientName + '</td>';
+                list += '<td>' + clients[i].clientPhone + '</td>';
+                list += '<td>' + clients[i].clientFax + '</td>';
+                list += '<td>' + clients[i].clientAddress1 + '</td>';
+                list += '<td><select class="form-control" id="clientAddress1Type[' + i + ']" name="clientAddress1Type[' + i + ']" required>';
+                  list += '<option value="" disabled selected>Select</option>';
+                  list += '<option>Contact Address</option>';
+                  list += '<option>Delivery Address</option>';
+                list += '</select> </td>';
+                list += '<td>' + clients[i].clientAddress2 + '</td>';
+                list += '<td><select class="form-control" id="clientAddress2Type[' + i + ']" name="clientAddress2Type[' + i + ']">';
+                  list += '<option value=""></option>';
+                  list += '<option>Contact Address</option>';
+                  list += '<option>Delivery Address</option>';
+                list += '</select> </td>';
+                list += '<td>' + clients[i].clientAddress3 + '</td>';
+                list += '<td><select class="form-control" id="clientAddress3Type[' + i + ']" name="clientAddress3Type[' + i + ']">';
+                  list += '<option value=""></option>';
+                  list += '<option>Contact Address</option>';
+                  list += '<option>Delivery Address</option>';
+                list += '</select> </td>';                
+                list += '<td>' + clients[i].clientAddress4 + '</td>';
+                list += '<td><select class="form-control" id="clientAddress4Type[' + i + ']" name="clientAddress4Type[' + i + ']">';
+                  list += '<option value=""></option>';
+                  list += '<option>Contact Address</option>';
+                  list += '<option>Delivery Address</option>';
+                list += '</select> </td>';
+                list += '<td>' + clients[i].clientEmail1 + '</td>';
+                list += '<td>' + clients[i].clientEmail2 + '</td>';
+                list += '<td><input class="form-check-input" type="checkbox" name="clientProdOX[' + i + ']" value="true"/></td>';
+                list += '<td><input class="form-check-input" type="checkbox" name="clientProdPP[' + i + ']" value="true"/></td>';
+                list += '<td><input class="form-check-input" type="checkbox" name="clientProdTP[' + i + ']" value="true"/></td>';
+                list += '<td>' + clients[i].clientNotes + '</td>';
+                list += '<td>Enabled</td>';
+                list += '</tr>'
+              }
+            %>
+            <%- list %>
+          </tbody>
+        </table>
+        <input class="btn btn-primary" type="submit" value="Confirm Upload">
+      </form>
+     </main>
+
+
+    <!-- BACK BUTTON -->
+      <div class="form-row">
+        <div class="form-group col">
+          <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
+        </div>
+        <script>
+          function goBack() {
+            window.history.back();
+          }
+        </script>
+      </div>
+
+    <aside class="aside-menu-hidden">
+      <!-- Aside menu content here -->
+    </aside>
+
+  </div>
+  <footer class="app-footer">
+    <% include partials/footer %>
+  </footer>
+
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

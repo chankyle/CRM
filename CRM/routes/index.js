@@ -6,8 +6,15 @@ var router = express.Router();
 var async = require('async');
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
+const fs = require('fs');
+const csv=require('csvtojson');
+const multer = require('multer');
 var ObjectID = require('MongoDB').ObjectID;
 var urlencoderParser = bodyParser.urlencoded({ extended: false })
+
+// Set temporary csv upload location
+var upload = multer({ dest: 'tmp/csv/' });
+
 
 /* GET home page. */
 router.get('/', function (req, res) {
@@ -63,6 +70,328 @@ router.get('/logout', function(req, res) {
 router.get('/ping', function(req, res){
     res.status(200).send("pong!");
 });
+
+
+
+
+/* Display Import Agent page. */
+router.get('/import-agent', function(req, res) {
+    res.render('import-agent', {
+        user : req.user.username
+     });
+});
+
+/* Review Agent CSV. */
+router.post('/import-agent', upload.single('agentCSV'), function(req, res) {
+
+
+    function getData(){
+        return new Promise(function(resolve,reject) {
+            var csvData = [];
+
+            // open uploaded file
+            csv()
+            .fromFile(req.file.path)
+            .then((csvData)=>{
+                fs.unlinkSync(req.file.path);  // remove temp file
+                resolve(csvData)   //resolve promise
+            })
+        })
+    }
+
+    getData().then(function(csvData){
+        var data = JSON.stringify(csvData);
+        res.render('review-agent-upload', {
+            user : req.user.username,
+            "agents" : csvData,
+            "JSONAgents" : data
+        });
+    });
+    
+});
+
+
+/* Upload Agent CSV. */
+router.post('/upload-agents', function(req, res) {
+    var csvData = JSON.parse(req.body.csvData);
+    console.log(csvData);
+    var length = csvData.length;
+    console.log(length);
+
+     // Set our internal DB variable
+    var db = req.db;
+
+    // Set our collection
+    var collection = db.get('Agents');
+
+
+    // Get our form values. These rely on the "name" attributes
+    var username = req.user.username;
+    var currentDateTime = moment();
+    var defaultStatus = "Enabled";
+
+    
+    for (i in csvData) {
+        collection.insert({
+            "agentAbbrev" : csvData[i].agentAbbrev,
+            "agentFirstName" : csvData[i].agentFirstName,
+            "agentLastName" : csvData[i].agentLastName,
+            "agentPosition" : csvData[i].agentPosition,
+            "agentPhone" : csvData[i].agentPhone,
+            "createdBy" : username,
+            "createDate" : currentDateTime,
+            "agentActive" : defaultStatus
+        }, function (err, doc) {
+            if (err) {
+                // If it failed, return error
+                res.send("There was a problem adding the information to the database.");
+            } 
+        });
+    }
+
+    res.redirect("/home");
+});
+
+
+
+/* Display Import Client page. */
+router.get('/import-client', function(req, res) {
+    res.render('import-client', {
+        user : req.user.username
+     });
+});
+
+/* Review Client CSV. */
+router.post('/import-client', upload.single('clientCSV'), function(req, res) {
+
+
+    function getData(){
+        return new Promise(function(resolve,reject) {
+            var csvData = [];
+
+            // open uploaded file
+            csv()
+            .fromFile(req.file.path)
+            .then((csvData)=>{
+                fs.unlinkSync(req.file.path);  // remove temp file
+                resolve(csvData)   //resolve promise
+            })
+        })
+    }
+
+    getData().then(function(csvData){
+        var data = JSON.stringify(csvData);
+
+        // Set our internal DB variable
+        var db = req.db;
+
+        // Set our collection
+        var collection = db.get('Agents');
+
+
+        collection.find({},{},function(e,docs){
+            res.render('review-client-upload', {
+                "agentList" : docs,
+                user:req.user.username,
+                "clients" : csvData,
+                "JSONClients" : data
+            });
+        });
+    });
+});
+
+
+/* Upload Client CSV. */
+router.post('/upload-clients', function(req, res) {
+    var csvData = JSON.parse(req.body.csvData);
+    console.log(req.body);
+    var length = csvData.length;
+
+     // Set our internal DB variable
+    var db = req.db;
+
+    // Set our collection
+    var collection = db.get('Clients');
+
+
+    // Get our form values. These rely on the "name" attributes
+    var username = req.user.username;
+    var currentDateTime = moment();
+    var defaultStatus = "Enabled";
+
+    
+    for (i in csvData) {
+        var str0 = "agentAbbrev[";
+        var agentAbbrev = str0.concat(i, "]");
+
+        var str1 = "clientAddress1Type[";
+        var clientAddress1Type = str1.concat(i, "]");
+
+        var str2 = "clientAddress2Type[";
+        var clientAddress2Type = str2.concat(i, "]");
+
+        var str3 = "clientAddress3type[";
+        var clientAddress3Type = str3.concat(i, "]");
+
+        var str4 = "clientAddress4type[";
+        var clientAddress4Type = str4.concat(i, "]");
+
+        var str5 = "clientProdOX[";
+        var strOX = str5.concat(i, "]");
+        var clientProdOX = req.body[strOX];
+        if (clientProdOX != "true") {
+            clientProdOX = "false";
+        }
+
+        var str6 = "clientProdPP[";
+        var strPP = str6.concat(i, "]");
+        var clientProdPP = req.body[strPP];
+        if (clientProdPP != "true") {
+            clientProdPP = "false";
+        }
+
+        var str7 = "clientProdTP[";
+        var strTP = str7.concat(i, "]");
+        var clientProdTP = req.body[strTP];
+        if (clientProdTP != "true") {
+            clientProdTP = "false";
+        }
+
+        var clientAddress1 = new Object();
+        var clientAddress2 = new Object();
+        var clientAddress3 = new Object();
+        var clientAddress4 = new Object();
+        clientAddress1.addr = csvData[i].clientAddress1;
+        clientAddress1.type = req.body[clientAddress1Type];
+        clientAddress2.addr = csvData[i].clientAddress2;
+        clientAddress2.type = req.body[clientAddress2Type];
+        clientAddress3.addr = csvData[i].clientAddress3;
+        clientAddress3.type = req.body[clientAddress3Type];
+        clientAddress4.addr = csvData[i].clientAddress4;
+        clientAddress4.type = req.body[clientAddress4Type];
+
+
+        collection.insert({
+            "clientName" : csvData[i].clientName,
+            "agentAbbrev" : req.body[agentAbbrev],
+            "clientPhone" : csvData[i].clientPhone,
+            "clientFax" : csvData[i].clientFax,
+            "clientAddress1" : clientAddress1,
+            "clientAddress2" : clientAddress2,
+            "clientAddress3" : clientAddress3,
+            "clientAddress4" : clientAddress4,
+            "clientEmail1" : csvData[i].clientEmail1,
+            "clientEmail2" : csvData[i].clientEmail2,
+            "clientProdOX" : clientProdOX, 
+            "clientProdPP" : clientProdPP, 
+            "clientProdTP" : clientProdTP, 
+            "clientNotes" : csvData[i].clientNotes,
+            "createdBy" : username,
+            "createDate" : currentDateTime,
+            "clientActive" : defaultStatus
+        }, function (err, doc) {
+            if (err) {
+                // If it failed, return error
+                res.send("There was a problem adding the information to the database.");
+            } 
+        });
+    }
+
+    res.redirect("/home");
+});
+
+
+
+/* Display Import Contact page. */
+router.get('/import-contact', function(req, res) {
+    res.render('import-contact', {
+        user : req.user.username
+     });
+});
+
+/* Review Contact CSV. */
+router.post('/import-contact', upload.single('contactCSV'), function(req, res) {
+
+    function getData(){
+        return new Promise(function(resolve,reject) {
+            var csvData = [];
+
+            // open uploaded file
+            csv()
+            .fromFile(req.file.path)
+            .then((csvData)=>{
+                fs.unlinkSync(req.file.path);  // remove temp file
+                resolve(csvData)   //resolve promise
+            })
+        })
+    }
+
+    getData().then(function(csvData){
+        var data = JSON.stringify(csvData);
+
+        // Set our internal DB variable
+        var db = req.db;
+
+        // Set our collection
+        var collection = db.get('Clients');
+
+        collection.find({},{},function(e,docs){
+            res.render('review-contact-upload', {
+                "clientList" : docs,
+                user:req.user.username,
+                "contacts" : csvData,
+                "JSONContacts" : data
+            });
+        });
+    });
+});
+
+
+/* Upload Contact CSV. */
+router.post('/upload-contacts', function(req, res) {
+    var csvData = JSON.parse(req.body.csvData);
+    var length = csvData.length;
+
+
+     // Set our internal DB variable
+    var db = req.db;
+
+    // Set our collection
+    var collection = db.get('Contacts');
+
+
+    // Get our form values. These rely on the "name" attributes
+    var username = req.user.username;
+    var currentDateTime = moment();
+    var defaultStatus = "Enabled";
+
+    
+    for (i in csvData) {
+        var str = "contactClientID[";
+        var clientID = str.concat(i, "]");
+        collection.insert({
+            "contactClientID" : req.body[clientID],
+            "contactFirstName" : csvData[i].contactFirstName,
+            "contactLastName" : csvData[i].contactLastName,
+            "contactPosition" : csvData[i].contactPosition,
+            "contactPhone" : csvData[i].contactPhone,
+            "contactMobile" : csvData[i].contactMobile,
+            "contactEmail" : csvData[i].contactEmail,
+            "contactNotes" : csvData[i].contactNotes,
+            "createdBy" : username,
+            "createDate" : currentDateTime,
+            "contactActive" : defaultStatus,
+        }, function (err, doc) {
+            if (err) {
+                // If it failed, return error
+                res.send("There was a problem adding the information to the database.");
+            } 
+        });
+    }
+
+    res.redirect("/home");
+});
+
 
 
 /* GET Agents for Client Entry Form. */
@@ -213,7 +542,7 @@ router.post('/resultActivityReport', function(req, res) {
     // Set our internal DB variable
     var dateStartInput = moment(req.body.dateStartInput.concat(' 00:00:00'), 'YYYY-MM-DD HH-mm-ss');
     var dateEndInput = moment(req.body.dateEndInput.concat(' 23:59:59'), 'YYYY-MM-DD HH-mm-ss');
-    var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput
+    var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput;
     var db = req.db;
     var collection = db.get('Events');
     var query = { "agentAbbrev": req.body.agentSelect, "eventTimeIn._d": { $lte: new Date(dateEndInput._d)}, "eventTimeIn._d": { $gte: new Date(dateStartInput._d)} };
@@ -696,7 +1025,7 @@ router.post('/viewContact', function(req, res) {
             "contactMobile" : contactMobile,
             "contactEmail" : contactEmail,
             "contactNotes" : contactNotes,
-            "contactStatus" : contactStatus,
+            "contactActive" : contactStatus,
             "modifiedBy" : username,
             "lastModified" : currentDateTime
         }

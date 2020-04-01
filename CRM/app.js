@@ -27,6 +27,13 @@ var entryContactRouter = require('./routes/entry-contact');
 var entryEventRouter = require('./routes/entry-event');
 var entryAgentRouter = require('./routes/entry-agent');
 
+var importAgentRouter = require('./routes/import-agent');
+var reviewAgentUploadRouter = require('./routes/review-agent-upload');
+var importClientRouter = require('./routes/import-client');
+var reviewClientUploadRouter = require('./routes/review-client-upload');
+var importContactRouter = require('./routes/import-contact');
+var reviewContactUploadRouter = require('./routes/review-contact-upload');
+
 var dataEntryRouter = require('./routes/data-entry');
 var reportsRouter = require('./routes/reports');
 var clientReportRouter = require('./routes/client-report');
@@ -55,6 +62,7 @@ var viewContactRouter = require('./routes/view-contact');
 var viewEventRouter = require('./routes/view-event');
 
 var app = express();
+
 
 
 
@@ -94,6 +102,13 @@ app.use('/entry-client', entryClientRouter);
 app.use('/entry-contact', entryContactRouter);
 app.use('/entry-event', entryEventRouter);
 app.use('/entry-agent', entryAgentRouter);
+
+app.use('/import-agent', importAgentRouter);
+app.use('/review-agent-upload', reviewAgentUploadRouter);
+app.use('/import-client', importClientRouter);
+app.use('/review-client-upload', reviewClientUploadRouter);
+app.use('/import-contact', importContactRouter);
+app.use('/review-contact-upload', reviewContactUploadRouter);
 
 app.use('/data-entry', dataEntryRouter);
 app.use('/reports', reportsRouter);
