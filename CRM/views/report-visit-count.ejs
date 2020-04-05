@@ -1,24 +1,31 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui@2.1.16/dist/css/coreui.min.css' />
-    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
-  </head>
+<!doctype html>
+<html lang="en">
+ <head>
+ <!-- Required meta tags -->
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<body class="app sidebar-show aside-menu-show">
+ <!-- CoreUI CSS -->
+ <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/css/coreui.min.css" crossorigin="anonymous">
+ <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
 
-  <header class="app-header navbar">
-    <% include partials/header %>
-  </header>
+ <title>CoreUI</title>
+ </head>
+ <body class="c-app">
+<!--
+  <div class="c-sidebar c-sidebar-show">
+    <h1>Sidebar Content</h1>
+  </div> -->
 
-  <div class="app-body">
-
-    <div class="sidebar">
-      <% include partials/sidebar %>
-    </div>
-
+  <div class="c-wrapper">
+    <header class="c-header-fluid">
+      <!-- Header content here -->
+      <% include partials/header %>
+    </header>
+    <div class="c-body">
+      <main class="c-main">
+        <!-- Main content here -->
         <main class="main mt-2 ml-3">
-          <h1>Visit Count Report</h1>
             <form id="formVisitCountReport" name="formVisitCountReport" method="post" action="/result-visit-count-report">
             <div class="card w-50">
               <h3 class="card-header">Visit Count Report</h3>
@@ -63,13 +70,17 @@
         </div>
 
       </main>
-    <aside class="aside-menu-hidden">
-      <!-- Aside menu content here -->
-    </aside>
-
+      </main>
+    </div>
+    <footer class="c-footer">
+      <!-- Footer content here -->
+      <h1>Footer Content</h1>
+    </footer>
   </div>
-  <footer class="app-footer">
-    <% include partials/footer %>
-  </footer>
-</body>
+
+  <!-- Optional JavaScript -->
+ <!-- Popper.js first, then CoreUI JS -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js" integrity="sha384-L2pyEeut/H3mtgCBaUNw7KWzp5n9&#43;4pDQiExs933/5QfaTh8YStYFFkOzSoXjlTb" crossorigin="anonymous"></script>
+ <script src="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/js/coreui.min.js"></script>
+ </body>
 </html>

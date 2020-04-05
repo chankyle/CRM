@@ -1,105 +1,112 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+ <head>
+ <!-- Required meta tags -->
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <head>
-    <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui@2.1.16/dist/css/coreui.min.css' />
-    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
-  </head>
+ <!-- CoreUI CSS -->
+ <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/css/coreui.min.css" crossorigin="anonymous">
+ <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
 
-<body class="app sidebar-show aside-menu-show">
+ <title>CoreUI</title>
+ </head>
+ <body class="c-app">
+<!--
+  <div class="c-sidebar c-sidebar-show">
+    <h1>Sidebar Content</h1>
+  </div> -->
 
-  <header class="app-header navbar">
+  <div class="c-wrapper">
+    <header class="c-header-fluid">
+      <!-- Header content here -->
+      <% include partials/header %>
+    </header>
+    <div class="c-body">
+      <main class="c-main">
+        <!-- Main content here -->
+        <main class="main mt-2 ml-3">
 
-<% include partials/header %>
+          <div class="card w-50">
+            <div class="card-body">
 
-  </header>
+    <h3> <strong>Visit Count Report</strong></h3>
+    <h4><small class="text">Agent: <u><%- agentAbbrev %></u></small></h4>
+    <h4><small class="text">Date Range: <u><%- dateRange %></u></small></h4>
 
-  <div class="app-body">
+      <!-- Extracted data in Table Form -->
 
-    <div class="sidebar">
-      <% include partials/sidebar %>
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">CLIENT</th>
+            <th scope="col">NUMBER OF VISITS</th>
+            <th scope="col">DATE/S OF VISIT/S</th>
+            <th scope="col">AVERAGE DURATION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <%
+              var list = '';
+              var k = 1;
+              for (i = 0; i < result.length; i++) {
+                list += '<tr>';
+                list += '<th scope="row">' + k + '</th>';
+                list += '<td>' + result[i]._id + '</td>';
+                list += '<td>' + result[i].visitCount + '</td>';
+                var eventsDateList = '';
+                for (x = 0; x < result[i].eventDates.length; x++) {
+                  var str = result[i].eventDates[x].toString();
+                  var str = str.substr(0, 15);
+                  eventsDateList += str;
+                  eventsDateList += '<br>';
+                }
+                list += '<td>' + eventsDateList + '</td>';
+                var hours = Math.floor(result[i].totalDuration / 60);
+                var minutes = result[i].totalDuration % 60;
+                minutes = Math.round(minutes * 100) / 100;
+                list += '<td>' + hours + ' hours ' + minutes + ' minutes' + '</td>';
+                list += '</tr>';
+                k++;
+            }
+            %>
+            <%- list %>
+
+        </tbody>
+      </table>
     </div>
 
-    <main class="main mt-2 ml-3">
 
-      <div class="card w-50">
-        <div class="card-body">
+    <!-- Submit Button to execute -->
+            <div class="form-row">
+              <div class="form-group col">
+                <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
+              </div>
+            </div>
+            <script>
+              function goBack() {
+                window.history.back();
+              }
+            </script>
 
-<h3> <strong>Visit Count Report</strong></h3>
-<h4><small class="text">Agent: <u><%- agentAbbrev %></u></small></h4>
-<h4><small class="text">Date Range: <u><%- dateRange %></u></small></h4>
-
-  <!-- Extracted data in Table Form -->
-
-<div class="table-responsive">
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">CLIENT</th>
-        <th scope="col">NUMBER OF VISITS</th>
-        <th scope="col">DATE/S OF VISIT/S</th>
-        <th scope="col">AVERAGE DURATION</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <%
-          var list = '';
-          var k = 1;
-          for (i = 0; i < result.length; i++) {
-            list += '<tr>';
-            list += '<th scope="row">' + k + '</th>';
-            list += '<td>' + result[i]._id + '</td>';
-            list += '<td>' + result[i].visitCount + '</td>';
-            var eventsDateList = '';
-            for (x = 0; x < result[i].eventDates.length; x++) {
-              var str = result[i].eventDates[x].toString();
-              var str = str.substr(0, 15);
-              eventsDateList += str;
-              eventsDateList += '<br>';
-            }
-            list += '<td>' + eventsDateList + '</td>';
-            var hours = Math.floor(result[i].totalDuration / 60);          
-            var minutes = result[i].totalDuration % 60;
-            minutes = Math.round(minutes * 100) / 100;
-            list += '<td>' + hours + ' hours ' + minutes + ' minutes' + '</td>';
-            list += '</tr>';
-            k++;
-        }
-        %>
-        <%- list %>  
-
-    </tbody>
-  </table>
-</div>
-
-
-<!-- Submit Button to execute -->
-        <div class="form-row">
-          <div class="form-group col">
-            <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
           </div>
         </div>
-        <script>
-          function goBack() {
-            window.history.back();
-          }
-        </script>
 
-      </div>
+        </main>
+      </main>
     </div>
-
-    </main>
-
-    <aside class="aside-menu-hidden">
-      <!-- Aside menu content here -->
-    </aside>
-
+    <footer class="c-footer">
+      <!-- Footer content here -->
+      <h1>Footer Content</h1>
+    </footer>
   </div>
-  <footer class="app-footer">
-    <% include partials/footer %>
-  </footer>
-</body>
 
+  <!-- Optional JavaScript -->
+ <!-- Popper.js first, then CoreUI JS -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js" integrity="sha384-L2pyEeut/H3mtgCBaUNw7KWzp5n9&#43;4pDQiExs933/5QfaTh8YStYFFkOzSoXjlTb" crossorigin="anonymous"></script>
+ <script src="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/js/coreui.min.js"></script>
+ </body>
 </html>
