@@ -1,10 +1,60 @@
-<!-- views/partials/header.ejs -->
-<meta charset="UTF-8">
-<title>CHANSEY CRM</title>
-
-<!-- CSS (load bootstrap from a CDN) -->
-
-<link rel="stylesheet" href="https://unpkg.com/@coreui/coreui@2.1.16/dist/css/coreui.min.css">
-<link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
-
-<strong>Current User: </strong> <u class="text-primary"> <%- user %></u>
+<header class="c-header c-header-light px-3">
+  <a class="c-header-brand" href="#">
+        <h4>CRM SOFTWARE</h4>
+  </a>
+  <ul class="c-header-nav mr-auto">
+      <li class="c-header-nav-item active">
+        <a class="c-header-nav-link" href="/home">HOME <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="c-header-nav-item dropdown">
+        <a class="c-header-nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+          NEW
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/entry-client">Client</a>
+          <a class="dropdown-item" href="/entry-contact">Contact</a>
+          <a class="dropdown-item" href="/entry-event">Event</a>
+          <a class="dropdown-item" href="/entry-agent">Agent</a>
+        </div>
+      <li class="c-header-nav-item dropdown">
+        <a class="c-header-nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+          IMPORT
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/entry-client">Client</a>
+          <a class="dropdown-item" href="/entry-contact">Contact</a>
+          <a class="dropdown-item" href="/entry-event">Event</a>
+          <a class="dropdown-item" href="/entry-agent">Agent</a>
+        </div>
+      </li>
+      <li class="c-header-nav-item dropdown">
+        <a class="c-header-nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+          REPORTS
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/report-activity">Agent Activity</a>
+          <a class="dropdown-item" href="/report-client-history">Client History</a>
+          <a class="dropdown-item" href="/report-client-list">Client List</a>
+          <a class="dropdown-item" href="/report-contact-history">Contact History</a>
+          <a class="dropdown-item" href="/report-visit-count">Visit Count</a>
+        </div>
+      </li>
+      <li class="c-header-nav-item dropdown">
+        <a class="c-header-nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+          VIEW/EDIT
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/search-client">Client</a>
+          <a class="dropdown-item" href="/search-contact">Contact</a>
+          <a class="dropdown-item" href="/search-event">Event</a>
+        </div>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <button class="c-header-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="cil-user"></span>
+    </button>
+</header>

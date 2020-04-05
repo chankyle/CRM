@@ -19,6 +19,11 @@ router.get('/login', function(req, res) {
     res.render('login', { user : req.user });
 });
 
+/* GET login page. */
+router.get('/home2', function(req, res) {
+    res.render('home2', { user : req.user });
+});
+
 /* GET logout page. */
 router.get('/logout', function(req, res){
   req.logout();
@@ -650,12 +655,12 @@ router.post('/search-contact', function(req, res) {
         if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
         // Here `locals` will be an object with `users` and `colors` keys
         // Example: `locals = {users: [...], colors: [...]}`
-        
+
         // Load Events that match Client and Contact searched
         var collection3 = db.get('Events');
         collection3.find({$or:[{"contact1": contactName}, {"contact2": contactName}]},{sort: {'eventTimeIn._d' :-1} },function(e,events){
             result.events = events;
-            db.close(); 
+            db.close();
             res.render('view-contact', {
                 "result": result,
                 contactID : req.body.contactID,

@@ -1,96 +1,100 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+ <head>
+ <!-- Required meta tags -->
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <head>
-    <link rel='stylesheet' href='https://unpkg.com/@coreui/coreui@2.1.16/dist/css/coreui.min.css' />
-    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
-  </head>
+ <!-- CoreUI CSS -->
+ <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/css/coreui.min.css" crossorigin="anonymous">
+ <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
 
-<body class="app sidebar-show aside-menu-show">
+ <title>CoreUI</title>
+ </head>
+ <body class="c-app">
+<!--
+  <div class="c-sidebar c-sidebar-show">
+    <h1>Sidebar Content</h1>
+  </div> -->
 
-  <header class="app-header navbar">
-    <% include partials/header %>
-  </header>
+  <div class="c-wrapper">
+    <header class="c-header-fluid">
+      <!-- Header content here -->
+      <% include partials/header %>
+    </header>
+    <div class="c-body">
+      <main class="c-main">
+        <!-- Main content here -->
+        <main class="main mt-2 ml-3">
+          <form id="formAddAgent" name="addAgent" method="post" action="/addAgent">
+          <div class="card  w-75">
+            <h3 class="card-header">Agent Information</h3>
+            <div class="card-body">
 
-  <div class="app-body">
-
-    <div class="sidebar">
-      <% include partials/sidebar %>
-    </div>
-
-    <main class="main mt-2 ml-3">
-      <form id="formAddAgent" name="addAgent" method="post" action="/addAgent">
-      <div class="card  w-75">
-        <h3 class="card-header">Agent Information</h3>
-        <div class="card-body">
-
-      <!-- Agent Abbreviation-->
-      <div class="form-group">
-        <label for="agentAbbrev">Agent Abbreviation</label>
-          <div class="form-row">
-      			<div class="col-auto">
-      			  <input type="text" class="form-control" id="agentAbbrev" name="agentAbbrev" placeholder="Use All Caps"  required>
-      			</div>
-      	</div>
-      </div>
-
-      <!-- Agent Name-->
-      <div class="form-group">
-        <label for="agentName">Agent Name</label>
-          <div class="form-row">
-      			<div class="col">
-      			  <input type="text" class="form-control" id="agentFirstName" name="agentFirstName" placeholder="First Name" required>
-      			</div>
-      			<div class="col">
-      			  <input type="text" class="form-control" id="agentLastName" name="agentLastName" placeholder="Last Name" required>
-      			</div>
-      	</div>
-      </div>
-
-      <!-- Agent Position-->
-      <div class="form-row">
-          <div class="form-group col">
-            <label for="agentPosition">Position</label>
-            <select class="form-control" id="agentPosition" name="agentPosition">
-            <option value="" disabled selected>Select</option>
-      		  <option>Sales Executive</option>
-      		  <option>Office</option>
-      		  <option>Sales Manager</option>
-      	  </select>
+          <!-- Agent Abbreviation-->
+          <div class="form-group">
+            <label for="agentAbbrev">Agent Abbreviation</label>
+              <div class="form-row">
+          			<div class="col-auto">
+          			  <input type="text" class="form-control" id="agentAbbrev" name="agentAbbrev" placeholder="Use All Caps"  required>
+          			</div>
+          	</div>
           </div>
-      </div>
 
+          <!-- Agent Name-->
+          <div class="form-group">
+            <label for="agentName">Agent Name</label>
+              <div class="form-row">
+          			<div class="col">
+          			  <input type="text" class="form-control" id="agentFirstName" name="agentFirstName" placeholder="First Name" required>
+          			</div>
+          			<div class="col">
+          			  <input type="text" class="form-control" id="agentLastName" name="agentLastName" placeholder="Last Name" required>
+          			</div>
+          	</div>
+          </div>
 
-      <!-- Agent Phone Number-->
-      <div class="form-group">
-        <label for="agentAbbrev">Agent Phone Number</label>
+          <!-- Agent Position-->
           <div class="form-row">
-      			<div class="col">
-      			  <input type="text" class="form-control" id="agentPhone" name="agentPhone" placeholder="Contact Number">
-      			</div>
-      	</div>
+              <div class="form-group col">
+                <label for="agentPosition">Position</label>
+                <select class="form-control" id="agentPosition" name="agentPosition">
+                <option value="" disabled selected>Select</option>
+          		  <option>Sales Executive</option>
+          		  <option>Office</option>
+          		  <option>Sales Manager</option>
+          	  </select>
+              </div>
+          </div>
+
+
+          <!-- Agent Phone Number-->
+          <div class="form-group">
+            <label for="agentAbbrev">Agent Phone Number</label>
+              <div class="form-row">
+          			<div class="col">
+          			  <input type="text" class="form-control" id="agentPhone" name="agentPhone" placeholder="Contact Number">
+          			</div>
+          	</div>
+          </div>
+
+          <input class="btn btn-primary" type="submit" value="Submit">
+          </form>
+
+        </div>
       </div>
-
-      <input class="btn btn-primary" type="submit" value="Submit">
-      </form>
-
+        </main>
+      </main>
     </div>
+    <footer class="c-footer">
+      <!-- Footer content here -->
+      <h1>Footer Content</h1>
+    </footer>
   </div>
-    </main>
 
-    <aside class="aside-menu-hidden">
-      <!-- Aside menu content here -->
-    </aside>
-
-  </div>
-  <footer class="app-footer">
-    <% include partials/footer %>
-  </footer>
-
-  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.min.js"></script>
-</body>
-
+  <!-- Optional JavaScript -->
+ <!-- Popper.js first, then CoreUI JS -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js" integrity="sha384-L2pyEeut/H3mtgCBaUNw7KWzp5n9&#43;4pDQiExs933/5QfaTh8YStYFFkOzSoXjlTb" crossorigin="anonymous"></script>
+ <script src="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/js/coreui.min.js"></script>
+ </body>
 </html>
