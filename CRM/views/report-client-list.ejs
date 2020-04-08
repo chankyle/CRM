@@ -9,16 +9,16 @@
  <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/css/coreui.min.css" crossorigin="anonymous">
  <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
 
- <title>CoreUI</title>
+ <title>CRM - Client List Report</title>
  </head>
  <body class="c-app">
-<!--
-  <div class="c-sidebar c-sidebar-show">
-    <h1>Sidebar Content</h1>
-  </div> -->
+
+   <div class="c-sidebar c-sidebar-light c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
+     <% include partials/sidebar %>
+   </div>
 
   <div class="c-wrapper">
-    <header class="c-header-fluid">
+    <header class="c-header c-header-dark bg-primary c-header-fixed">
       <!-- Header content here -->
       <% include partials/header %>
     </header>

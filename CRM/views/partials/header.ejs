@@ -1,60 +1,59 @@
-<header class="c-header c-header-light px-3">
-  <a class="c-header-brand" href="#">
-        <h4>CRM SOFTWARE</h4>
-  </a>
-  <ul class="c-header-nav mr-auto">
-      <li class="c-header-nav-item active">
-        <a class="c-header-nav-link" href="/home">HOME <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="c-header-nav-item dropdown">
-        <a class="c-header-nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
-          NEW
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+<button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar" data-class="c-sidebar-show">
+<svg class="c-icon c-icon-lg">
+<use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
+</svg>
+</button>
+
+
+
+<button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true">
+<i class="cil-hamburger-menu"></i>
+</button>
+
+<button class="c-header-toggler c-class-toggler mfs-3 d-lg-none" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+  <i class="cil-hamburger-menu"></i>
+</button>
+
+            <div class="collapse" id="collapseExample">
+              <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+              </div>
+            </div>
+
+<a class="c-header-brand d-lg-none c-header-brand-up-center" href="/home">
+  CRM SOFTWARE
+</a>
+
+<ul class="c-header-nav d-md-down-none ml-auto">
+  <li class="c-header-nav-item dropdown">
+    <a class="c-header-nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+      NEW
+    </a>
+    <div class="dropdown-menu dropdown-menu-right pt-0" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/entry-client">Client</a>
           <a class="dropdown-item" href="/entry-contact">Contact</a>
           <a class="dropdown-item" href="/entry-event">Event</a>
           <a class="dropdown-item" href="/entry-agent">Agent</a>
-        </div>
-      <li class="c-header-nav-item dropdown">
-        <a class="c-header-nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
-          IMPORT
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    </div>
+  </li>
+  <li class="c-header-nav-item dropdown">
+    <a class="c-header-nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+      IMPORT
+    </a>
+    <div class="dropdown-menu dropdown-menu-right pt-0" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/import-client">Client</a>
           <a class="dropdown-item" href="/import-contact">Contact</a>
           <a class="dropdown-item" href="/import-event">Event</a>
           <a class="dropdown-item" href="/import-agent">Agent</a>
-        </div>
-      </li>
-      <li class="c-header-nav-item dropdown">
-        <a class="c-header-nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
-          REPORTS
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/report-activity">Agent Activity</a>
-          <a class="dropdown-item" href="/report-client-history">Client History</a>
-          <a class="dropdown-item" href="/report-client-list">Client List</a>
-          <a class="dropdown-item" href="/report-contact-history">Contact History</a>
-          <a class="dropdown-item" href="/report-visit-count">Visit Count</a>
-        </div>
-      </li>
-      <li class="c-header-nav-item dropdown">
-        <a class="c-header-nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
-          VIEW/EDIT
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/search-client">Client</a>
-          <a class="dropdown-item" href="/search-contact">Contact</a>
-          <a class="dropdown-item" href="/search-event">Event</a>
-        </div>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-    <button class="c-header-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="cil-user"></span>
-    </button>
-</header>
+    </div>
+  </li>
+  <li class="c-header-nav-item dropdown">
+    <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" ariahaspopup="true" aria-expanded="false">
+      <button type="button" class="btn btn-light">USERNAME</button>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right pt-0">
+      <a class="dropdown-item" href="#"> Settings</a>
+      <a class="dropdown-item" href="#"> Log Out</a>
+    </div>
+  </li>
+</ul>
