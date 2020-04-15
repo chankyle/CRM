@@ -33,7 +33,7 @@
 
           <div class="form-group">
                 <label for="clientID">Client</label>
-                <select class="form-control" name="clientID">
+                <select class="form-control" name="clientID" required>
             		<%
                   	var list = '<option value="" disabled selected>Select</option>';
                   	for (i = 0; i < clientList.length; i++) {
@@ -74,7 +74,7 @@
             <label for="clientPhone">Contact Numbers</label>
               <div class="form-row">
           			<div class="col-auto">
-          			  <input type="text" class="form-control" id="contactPhone" name="contactPhone" placeholder="Phone Number">
+          			  <input type="text" class="form-control" id="contactPhone" name="contactPhone" placeholder="Phone Number" required>
           			</div>
           			<div class="col-auto">
           			  <input type="text" class="form-control" id="contactMobile" name="contactMobile" placeholder="Mobile Number">
@@ -87,7 +87,7 @@
             <label for="inputAddress">Email Address</label>
               <div class="form-row">
           			<div class="col-auto">
-          			  <input type="email" class="form-control" id="contactEmail" name="contactEmail" placeholder="user@email.com">
+          			  <input type="email" class="form-control" id="contactEmail" name="contactEmail" placeholder="user@email.com" required>
           			</div>
           	</div>
           </div>
