@@ -1,36 +1,33 @@
 <!doctype html>
 <html lang="en">
- <head>
+
+<head>
  <!-- Required meta tags -->
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
-
  <!-- CoreUI CSS -->
  <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/css/coreui.min.css" crossorigin="anonymous">
  <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
-
  <title>CRM - Agent Entry</title>
- </head>
- <body class="c-app">
+</head>
 
-   <div class="c-sidebar c-sidebar-light c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
-     <% include partials/sidebar %>
-   </div>
-
-  <div class="c-wrapper">
-    <header class="c-header c-header-dark bg-primary c-header-fixed">
-      <!-- Header content here -->
-      <% include partials/header %>
-    </header>
-    <div class="c-body">
-      <main class="c-main">
-        <!-- Main content here -->
-        <main class="main mt-2 ml-3">
-          <form id="formAddAgent" name="addAgent" method="post" action="/addAgent">
-          <div class="card  w-75">
-            <h3 class="card-header">Agent Information</h3>
-            <div class="card-body">
-
+<body class="c-app">
+ <div class="c-sidebar c-sidebar-light c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
+   <% include partials/sidebar %>
+ </div>
+ <div class="c-wrapper">
+   <header class="c-header c-header-dark bg-primary c-header-fixed">
+     <!-- Header content here -->
+     <% include partials/header %>
+   </header>
+   <div class="c-body">
+    <main class="c-main">
+      <!-- Main content here -->
+      <main class="main mt-2 ml-3">
+        <form id="formAddAgent" name="addAgent" method="post" action="/addAgent">
+        <div class="card  w-75">
+          <h3 class="card-header">Agent Information</h3>
+          <div class="card-body">
           <!-- Agent Abbreviation-->
           <div class="form-group">
             <label for="agentAbbrev">Agent Abbreviation</label>
@@ -38,7 +35,7 @@
           			<div class="col-auto">
           			  <input type="text" class="form-control" id="agentAbbrev" name="agentAbbrev" placeholder="Use All Caps"  required>
           			</div>
-          	</div>
+              </div>
           </div>
 
           <!-- Agent Name-->
@@ -51,7 +48,7 @@
           			<div class="col">
           			  <input type="text" class="form-control" id="agentLastName" name="agentLastName" placeholder="Last Name" required>
           			</div>
-          	</div>
+              </div>
           </div>
 
           <!-- Agent Position-->
