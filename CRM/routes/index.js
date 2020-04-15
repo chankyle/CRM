@@ -659,14 +659,15 @@ router.post('/result-visit-count-report', function(req, res) {
     var dateStartInput = moment(req.body.dateStartInput.concat(' 00:00:00'), 'YYYY-MM-DD HH-mm-ss');
     var dateEndInput = moment(req.body.dateEndInput.concat(' 23:59:59'), 'YYYY-MM-DD HH-mm-ss');
     var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput;
-    var agentSelect = req.body.agentSelect;
     var db = req.db;
     var collection = db.get('Events');
-    var query = ([ { $group : {_id : "$clientName", visitCount : { $sum : 1}, totalDuration : { $avg : "$eventDuration"}, eventDates : { $push : "$eventTimeIn._d"} } } ] );
+    var query = ([ {$match : {agentAbbrev:req.body.agentSelect}}, { $group : {_id : "$clientName", visitCount : { $sum : 1}, totalDuration : { $sum : "$eventDuration"}, eventDates : { $push : "$eventTimeIn._d"} } } ] );
 
+    console.log(query)
     collection.aggregate(query,{},function(err, result){
         if (err) throw err;
         db.close();
+        console.log(result);
         res.render('result-visit-count-report', {
             user:req.user.username,
             "result":result,
