@@ -32,7 +32,7 @@
             <div class="card-body">
     <!-- Select Client from Prepopulated list of options -->
               <div class="form-row">
-                <div class="form-group col">
+                <div class="form-group col-auto">
                   <label for="clientID">Client</label>
                   <select class="form-control" name="clientSelect" id="clientSelect" onChange="changeAgent(this.value);" required>
                   <%
@@ -63,7 +63,7 @@
           </div>
       <!-- Select Contact from Prepopulated list of options -->
                 <div class="form-row">
-                  <div class="form-group col-6">
+                  <div class="form-group col-auto">
                       <label for="agentContact">Contact</label>
                         <select class="form-control" name="contactID1" id="contactID1" required>
                           <option value="" disabled selected>Select</option>
@@ -75,11 +75,11 @@
 
       <!-- Select Date Range for Data -->
             <div class="form-row">
-              <div class="form-group col-6">
+              <div class="form-group col-auto">
                 <label for="inputDateStart">Date Start</label>
                 <input type="date" class="form-control" name="dateStartInput" id="dateStartInput" required>
               </div>
-              <div class="form-group col-6">
+              <div class="form-group col-auto">
                 <label for="inputDateEnd">Date End</label>
                 <input type="date" class="form-control" name="dateEndInput" id="dateEndInput" required>
               </div>

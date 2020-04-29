@@ -148,14 +148,15 @@
           <table class="table table-bordered">
             <thead class="thead-dark">
               <tr>
-                <th style="width: 5%" scope="col">Name:</th>
-                <th style="width: 20%" scope="col"> <%= result.contact[0].contactFirstName %> <%= result.contact[0].contactLastName %> </th>
+                <th style="width: 15%" scope="col" class="align-middle">Name:</th>
+                <th class="align-middle"> <%= result.contact[0].contactFirstName %> <%= result.contact[0].contactLastName %> </th>
+                <th style="width: 5%" scope="col"></th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <th scope="row">Client:</th>
-                <td colspan="3">
+                <th scope="row" class="align-middle">Client:</th>
+                <td class="align-middle">
                   <select class="form-control" id="contactClientID" name="contactClientID" disabled required>
                     <%
                         var list = '';
@@ -169,59 +170,65 @@
                     %>
                       <%- list %>
                   </select>
-                  <input type="button" id="editContactClientID" value="edit"></input>
-                  <input type="hidden" id="updateContactClientID" value="Save"></input>
-
+              </td>
+              <td class="align-middle" style="text-align:center">
+                <input type="button" id="editContactClientID" value="edit"></input>
+                <input type="hidden" id="updateContactClientID" value="Save"></input>
               </td>
               </tr>
               <tr>
-                <th scope="row">Position:</th>
-                <td colspan="3">
+                <th scope="row" class="align-middle">Position:</th>
+                <td class="align-middle">
                   <input type="text" class="form-control" id="contactPosition" name="contactPosition" value = "<%= result.contact[0].contactPosition %>" required readonly>
+                </td>
+                <td class="align-middle" style="text-align:center">
                   <input type="button" id="editContactPosition" value="edit"></input>
                   <input type="hidden" id="updateContactPosition" value="Save"></input>
-
                 </td>
               </tr>
               <tr>
-                <th scope="row">Contact Phone Number:</th>
-                <td colspan="3">
+                <th scope="row" class="align-middle">Contact Phone Number:</th>
+                <td class="align-middle">
                   <input type="text" class="form-control" id="contactPhone" name="contactPhone" value = "<%= result.contact[0].contactPhone %>" readonly>
+                </td>
+                <td class="align-middle" style="text-align:center">
                   <input type="button" id="editContactPhone" value="edit"></input>
                   <input type="hidden" id="updateContactPhone" value="Save"></input>
-
                 </td>
               </tr>
               <tr>
-                <th scope="row">Contact Mobile Number:</th>
-                <td colspan="3">
+                <th scope="row" class="align-middle">Contact Mobile Number:</th>
+                <td class="align-middle">
                   <input type="text" class="form-control" id="contactMobile" name="contactMobile" value = "<%= result.contact[0].contactMobile %>" readonly>
+                </td>
+                <td class="align-middle" style="text-align:center">
                   <input type="button" id="editContactMobile" value="edit"></input>
                   <input type="hidden" id="updateContactMobile" value="Save"></input>
-
                 </td>
               </tr>
               <tr>
-                <th scope="row">Email Address:</th>
-                <td colspan="3">
+                <th scope="row" class="align-middle">Email Address:</th>
+                <td class="align-middle">
                   <input type="email" class="form-control" id="contactEmail" name="contactEmail" value = "<%= result.contact[0].contactEmail %>" readonly>
+                </td>
+                <td class="align-middle" style="text-align:center">
                   <input type="button" id="editContactEmail" value="edit"></input>
                   <input type="hidden" id="updateContactEmail" value="Save"></input>
-
                 </td>
               </tr>
               <tr>
-                <th scope="row">Notes:</th>
-                <td colspan="3">
+                <th scope="row" class="align-middle">Notes:</th>
+                <td class="align-middle">
                   <input type="text" class="form-control" id="contactNotes" name="contactNotes" value = "<%= result.contact[0].contactNotes %>" readonly>
+                </td>
+                <td class="align-middle" style="text-align:center">
                   <input type="button" id="editContactNotes" value="edit"></input>
                   <input type="hidden" id="updateContactNotes" value="Save"></input>
-
                 </td>
               </tr>
               <tr>
-                <th scope="row">Status:</th>
-                <td colspan="3">
+                <th scope="row" class="align-middle">Status:</th>
+                <td class="align-middle">
                   <select class="form-control" id="contactStatus" name="contactStatus" disabled required>
                     <%
                     var statusList = '';
@@ -235,10 +242,11 @@
                     %>
                     <%- statusList %>
                   </select>
-                  <input type="button" id="editContactStatus" value="edit"></input>
-                  <input type="hidden" id="updateContactStatus" value="Save"></input>
-
                 </td>
+                <td class="align-middle" style="text-align:center">
+                <input type="button" id="editContactStatus" value="edit"></input>
+                <input type="hidden" id="updateContactStatus" value="Save"></input>
+              </td>
               </tr>
             </tbody>
           </table>

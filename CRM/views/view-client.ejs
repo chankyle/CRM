@@ -287,14 +287,15 @@
                 <table class="table table-bordered">
                   <thead class="thead-dark">
                     <tr>
-                      <th style="width: 5%" scope="col">Name</th>
-                      <th style="width: 20%" scope="col"> <%= clientName %> </th>
+                      <th style="width: 15%" scope="col" class="align-middle">Name</th>
+                      <th class="align-middle"> <%= clientName %> </th>
+                      <th style="width: 5%" scope="col"></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <th scope="row">Contacts:</th>
-                      <td>
+                      <th scope="row" class="align-middle">Contacts:</th>
+                      <td class="align-middle">
                       <%
                         var contactList ='';
                         for (i = 0; i < result.contact.length; i++) {
@@ -306,18 +307,22 @@
                       %>
                       <%- contactList -%>
                       </td>
+                      <td></td>
                     </tr>
                     <tr>
-                      <th scope="row">Client Name:</th>
+                      <th scope="row" class="align-middle">Client Name:
+                      </th>
                       <td>
-                          <input type="text" class="form-control" id="newClientName" name="newClientName" value = "<%= result.client[0].clientName %>" required readonly>
-                          <input type="button" id="editClientName" value="edit"></input>
-                          <input type="hidden" id="updateClientName" value="Save"></input>
+                        <input type="text" class="form-control" id="newClientName" name="newClientName" value = "<%= result.client[0].clientName %>" required readonly>
+                      </td>
+                      <td class="align-middle" style="text-align:center">
+                        <input type="button" id="editClientName" value="edit"></input>
+                        <input type="hidden" id="updateClientName" value="Save"></input>
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Agent Assigment:</th>
-                      <td>
+                      <th scope="row" class="align-middle">Agent Assigment:</th>
+                      <td class="align-middle">
                           <select class="form-control" id="agentAbbrev" name="agentAbbrev" disabled required>
                             <%
                                 var list = '';
@@ -332,41 +337,45 @@
                             %>
                               <%- list %>
                           </select>
-                          <input type="button" id="editAgentAbbrev" value="edit"></input>
-                          <input type="hidden" id="updateAgentAbbrev" value="Save"></input>
-
+                      </td>
+                      <td class="align-middle" style="text-align:center">
+                        <input type="button" id="editAgentAbbrev" value="edit"></input>
+                        <input type="hidden" id="updateAgentAbbrev" value="Save"></input>
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Phone Number/s:</th>
-                      <td>
+                      <th scope="row" class="align-middle">Phone Number/s:</th>
+                      <td class="align-middle">
                           <input type="text" class="form-control" id="clientPhone" name="clientPhone" value = "<%= result.client[0].clientPhone %>" required readonly>
-                          <input type="button" id="editClientPhone" value="edit"></input>
-                          <input type="hidden" id="updateClientPhone" value="Save"></input>
-
+                      </td>
+                      <td class="align-middle" style="text-align:center">
+                        <input type="button" id="editClientPhone" value="edit"></input>
+                        <input type="hidden" id="updateClientPhone" value="Save"></input>
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Fax Number/s:</th>
-                      <td>
+                      <th scope="row" class="align-middle">Fax Number/s:</th>
+                      <td class="align-middle">
                         <input type="name" class="form-control" id="clientFax" name="clientFax" value = "<%= result.client[0].clientFax %>" readonly>
+                      </td>
+                      <td class="align-middle" style="text-align:center">
                         <input type="button" id="editClientFax" value="edit"></input>
                         <input type="hidden" id="updateClientFax" value="Save"></input>
-
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Client Address 1:</th>
-                      <td>
+                      <th scope="row" class="align-middle">Client Address 1:</th>
+                      <td class="align-middle">
                         <input type="name" class="form-control" id="clientAddress1" name="clientAddress1" value = "<%= result.client[0].clientAddress1.addr %>" required readonly>
+                      </td>
+                      <td class="align-middle" style="text-align:center">
                         <input type="button" id="editClientAddress1" value="edit"></input>
                         <input type="hidden" id="updateClientAddress1" value="Save"></input>
-
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Client Address 1 Type:</th>
-                      <td>
+                      <th scope="row" class="align-middle">Client Address 1 Type:</th>
+                      <td class="align-middle">
                         <select class="form-control" id="clientAddress1type" name="clientAddress1type" disabled required>
                           <%
                           var address1List = '';
@@ -380,22 +389,24 @@
                           %>
                           <%- address1List %>
                         </select>
+                      </td>
+                      <td class="align-middle" style="text-align:center">
                         <input type="button" id="editClientAddress1type" value="edit"></input>
                         <input type="hidden" id="updateClientAddress1type" value="Save"></input>
-
                       </td>
                     </tr>                <tr>
-                      <th scope="row">Client Address 2:</th>
-                      <td>
+                      <th scope="row" class="align-middle">Client Address 2:</th>
+                      <td class="align-middle">
                         <input type="name" class="form-control" id="clientAddress2" name="clientAddress2" value = "<%= result.client[0].clientAddress2.addr %>" readonly>
+                      </td>
+                      <td class="align-middle" style="text-align:center">
                         <input type="button" id="editClientAddress2" value="edit"></input>
                         <input type="hidden" id="updateClientAddress2" value="Save"></input>
-
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Client Address 2 Type:</th>
-                      <td>
+                      <th scope="row" class="align-middle">Client Address 2 Type:</th>
+                      <td class="align-middle">
                         <select class="form-control" id="clientAddress2type" name="clientAddress2type" disabled>
                           <%
                           var address2List = '';
@@ -415,23 +426,25 @@
                           %>
                           <%- address2List %>
                         </select>
+                      </td>
+                      <td class="align-middle" style="text-align:center">
                         <input type="button" id="editClientAddress2type" value="edit"></input>
                         <input type="hidden" id="updateClientAddress2type" value="Save"></input>
-
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Client Address 3:</th>
-                      <td>
+                      <th scope="row" class="align-middle">Client Address 3:</th>
+                      <td class="align-middle">
                         <input type="name" class="form-control" id="clientAddress3" name="clientAddress3" value = "<%= result.client[0].clientAddress3.addr %>" readonly>
+                      </td>
+                      <td class="align-middle" style="text-align:center">
                         <input type="button" id="editClientAddress3" value="edit"></input>
                         <input type="hidden" id="updateClientAddress3" value="Save"></input>
-
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Client Address 3 Type:</th>
-                      <td>
+                      <th scope="row" class="align-middle">Client Address 3 Type:</th>
+                      <td class="align-middle">
                         <select class="form-control" id="clientAddress3type" name="clientAddress3type" disabled>
                           <%
                           var address3List = '';
@@ -451,23 +464,25 @@
                           %>
                           <%- address3List %>
                         </select>
+                      </td>
+                      <td class="align-middle" style="text-align:center">
                         <input type="button" id="editClientAddress3type" value="edit"></input>
                         <input type="hidden" id="updateClientAddress3type" value="Save"></input>
-
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Client Address 4:</th>
-                      <td>
+                      <th scope="row" class="align-middle">Client Address 4:</th>
+                      <td class="align-middle">
                         <input type="name" class="form-control" id="clientAddress4" name="clientAddress4" value = "<%= result.client[0].clientAddress4.addr %>" readonly>
+                      </td>
+                      <td class="align-middle" style="text-align:center">
                         <input type="button" id="editClientAddress4" value="edit"></input>
                         <input type="hidden" id="updateClientAddress4" value="Save"></input>
-
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Client Address 4 Type:</th>
-                      <td>
+                      <th scope="row" class="align-middle">Client Address 4 Type:</th>
+                      <td class="align-middle">
                         <select class="form-control" id="clientAddress4type" name="clientAddress4type" disabled>
                           <%
                           var address4List = '';
@@ -487,32 +502,35 @@
                           %>
                           <%- address4List %>
                         </select>
+                      </td>
+                      <td class="align-middle" style="text-align:center">
                         <input type="button" id="editClientAddress4type" value="edit"></input>
                         <input type="hidden" id="updateClientAddress4type" value="Save"></input>
-
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Email Address 1:</th>
-                      <td>
+                      <th scope="row" class="align-middle">Email Address 1:</th>
+                      <td class="align-middle">
                         <input type="email" class="form-control" id="clientEmail1" name="clientEmail1" value = "<%= result.client[0].clientEmail1 %>" readonly>
+                      </td>
+                      <td class="align-middle" style="text-align:center">
                         <input type="button" id="editClientEmail1" value="edit"></input>
                         <input type="hidden" id="updateClientEmail1" value="Save"></input>
-
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Email Address 2:</th>
-                      <td>
+                      <th scope="row" class="align-middle">Email Address 2:</th>
+                      <td class="align-middle">
                         <input type="email" class="form-control" id="clientEmail2" name="clientEmail2" value = "<%= result.client[0].clientEmail2 %>" readonly>
+                      </td>
+                      <td class="align-middle" style="text-align:center">
                         <input type="button" id="editClientEmail2" value="edit"></input>
                         <input type="hidden" id="updateClientEmail2" value="Save"></input>
-
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Client Products:</th>
-                      <td>
+                      <th scope="row" class="align-middle">Client Products:</th>
+                      <td class="align-center" style="padding-left: 35px">
                         <%
                           var productList = '';
                           if(result.client[0].clientProdOX == "true"){
@@ -537,23 +555,25 @@
                           productList += '<label class="form-check-label" for="clientProdTP">TP</label>';
                         %>
                         <%- productList %>
+                      </td>
+                      <td class="align-middle" style="text-align:center">
                         <input type="button" id="editProducts" value="edit"></input>
                         <input type="hidden" id="updateProducts" value="Save"></input>
-
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Notes:</th>
-                      <td colspan="3">
+                      <th scope="row" class="align-middle">Notes:</th>
+                      <td class="align-middle">
                         <textarea class="form-control" id="clientNotes" name="clientNotes" rows="3" readonly><%=result.client[0].clientNotes %></textarea>
+                      </td>
+                      <td class="align-middle" style="text-align:center">
                         <input type="button" id="editClientNotes" value="edit"></input>
                         <input type="hidden" id="updateClientNotes" value="Save"></input>
-
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Status:</th>
-                      <td colspan="3">
+                      <th scope="row" class="align-middle">Status:</th>
+                      <td class="align-middle">
                         <select type="name" class="form-control" id="clientStatus" name="clientStatus" disabled required>
                           <%
                           var statusList = '';
@@ -567,9 +587,10 @@
                           %>
                           <%- statusList %>
                         </select>
+                      </td>
+                      <td class="align-middle" style="text-align:center">
                         <input type="button" id="editClientStatus" value="edit"></input>
                         <input type="hidden" id="updateClientStatus" value="Save"></input>
-
                       </td>
                     </tr>
                   </tbody>

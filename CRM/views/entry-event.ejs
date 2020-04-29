@@ -10,7 +10,6 @@
  <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/css/coreui.min.css" crossorigin="anonymous">
  <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
 
-
  <title>CRM - Event Entry</title>
  </head>
  <body class="c-app">
@@ -29,35 +28,37 @@
         <!-- Main content here -->
         <main class="main mt-2 mx-3">
           <form id="formAddEvent" name="addEvent" method="post" action="/addEvent">
-            <div class="card  w-auto">
+            <div class="card w-auto">
               <h3 class="card-header">Event Information</h3>
               <div class="card-body">
+
+          <!-- Event Date & Agent-->
           <div class="form-row">
-              <div class="form-group col">
+              <div class="form-group col-12 col-md-auto">
                 <label for="eventDate">Date</label>
                 <input type="date" class="form-control" id="eventDate" name="eventDate" required>
               </div>
-              <div class="form-group col">
+              <div class="form-group col-12 col-md-auto">
                 <label for="agentID">Agent</label>
                 <select class="form-control" name="agentID" required>
-                <%
-                    var list = '<option value="" disabled selected>Select</option>';
-                    for (i = 0; i < locals.agents.length; i++) {
-                      list += '<option>' + locals.agents[i].agentAbbrev + '</option>';
-                    }
-                %>
-                  <%- list %>
-          	  </select>
+                  <%
+                      var list = '<option value="" disabled selected>Select</option>';
+                      for (i = 0; i < locals.agents.length; i++) {
+                        list += '<option>' + locals.agents[i].agentAbbrev + '</option>';
+                      }
+                  %>
+                    <%- list %>
+          	     </select>
               </div>
           </div>
 
           <!-- Event Time In & Out-->
           <div class="form-row">
-              <div class="form-group col">
+              <div class="form-group col-12 col-md-auto">
                 <label for="eventTimeIn">Time In</label>
                 <input type="time" class="form-control" id="eventTimeIn" name="eventTimeIn" required>
               </div>
-              <div class="form-group col">
+              <div class="form-group col-12 col-md-auto">
                 <label for="eventTimeOut">Time Out</label>
                 <input type="time" class="form-control" id="eventTimeOut" name="eventTimeOut" required>
               </div>
@@ -65,88 +66,81 @@
 
           <!-- Client Visited-->
           <div class="form-row">
-              <div class="form-group col">
+              <div class="form-group col-12 col-md-auto">
                 <label for="clientID">Client</label>
                 <select class="form-control" name="clientID" onChange="changeAgent(this.value);" required>
-            		<%
-                  	var list = '<option value="" disabled selected>Select</option>';
-                  	for (i = 0; i < locals.clients.length; i++) {
-                  		list += '<option value="' + locals.clients[i].clientName + '">' + locals.clients[i].clientName + '</option>';
-                  	}
-            		%>
-                	<%- list %>
-          	  </select>
-          </div>
-          <span id='variableJSON' hidden>
-            <%= JSON.stringify(locals.contacts); %>
-          </span>
-          <script>
-            function changeAgent(value){
-              var contacts = JSON.parse($('#variableJSON').text());
+              		<%
+                    	var list = '<option value="" disabled selected>Select</option>';
+                    	for (i = 0; i < locals.clients.length; i++) {
+                    		list += '<option value="' + locals.clients[i].clientName + '">' + locals.clients[i].clientName + '</option>';
+                    	}
+              		%>
+                  	<%- list %>
+            	  </select>
+              </div>
 
-              var contactOptions = "";
-              contactOptions += "<option disabled selected>Select</option>";
-              for (j = 0; j < contacts.length; j++) {
-                if(contacts[j].contactClientID === value) {
-                  contactOptions += "<option>" + contacts[j].contactFirstName + " " + contacts[j].contactLastName + "</option>";
+              <span id='variableJSON' hidden>
+                <%= JSON.stringify(locals.contacts); %>
+              </span>
+              <script>
+                function changeAgent(value){
+                  var contacts = JSON.parse($('#variableJSON').text());
+
+                  var contactOptions = "";
+                  contactOptions += "<option disabled selected>Select</option>";
+                  for (j = 0; j < contacts.length; j++) {
+                    if(contacts[j].contactClientID === value) {
+                      contactOptions += "<option>" + contacts[j].contactFirstName + " " + contacts[j].contactLastName + "</option>";
+                    }
+                  }
+                  document.getElementById("contactID1").innerHTML = contactOptions;
+                  document.getElementById("contactID2").innerHTML = contactOptions;
                 }
-              }
-              document.getElementById("contactID1").innerHTML = contactOptions;
-              document.getElementById("contactID2").innerHTML = contactOptions;
-            }
-          </script>
+              </script>
 
-          <div class="form-row">
-          <div class="form-group col">
+              <div class="form-group col-12 col-md-auto">
                 <label for="eventType">Visit Type</label>
                 <select class="form-control" name="eventType">
           		  <option>Collection</option>
           		  <option>Courtesy Visit</option>
           		  <option>Technical Service</option>
           		  <option>Delivery</option>
-          	  </select>
+                </select>
               </div>
             </div>
-          </div>
+
 
           <!-- Contact Visited-->
           <!-- [TODO] I don't know if I should be referring to the contactID when what I actually want to show up is the contactName. Create a button for Contact(s) visited to pull all contacts with Client = ClientID Above -->
-
-          <div class="form-group">
-            <label for="inputAddress">Contact(s) Visited</label>
-              <div class="form-row">
-          		<div class="form-group col">
-          			<select class="form-control" name="contactID1" id="contactID1" required>
-                  <option value="" disabled selected >Select</option>
-                </select>
-          		</div>
-          		<div class="form-group col">
-          			<select class="form-control" name="contactID2" id="contactID2">
-                  <option value="" disabled selected>Select</option>
-                </select>
-          		</div>
-          	</div>
-          </div>
+            <label for="eventContacts">Contact(s) Visited</label>
+            <div class="form-row">
+            		<div class="form-group col-12 col-md-2">
+            			<select class="form-control" name="contactID1" id="contactID1" required>
+                    <option value="" disabled selected >Select</option>
+                  </select>
+            		</div>
+            		<div class="form-group  col-12 col-md-2">
+            			<select class="form-control" name="contactID2" id="contactID2">
+                    <option value="" disabled selected>Select</option>
+                  </select>
+            		</div>
+          	 </div>
 
           <!-- Event Location/Branch-->
-          <div class="form-group">
             <label for="eventBranch">Branch Location (If Applicable)</label>
-              <div class="form-row">
-          			<div class="col">
-          			  <input type="text" class="form-control" id="eventBranch" name="eventBranch" placeholder="Location" required>
-          			</div>
-          	</div>
-          </div>
+            <div class="form-row">
+          		<div class="form-group col-12 col-md-auto">
+          		  <input type="text" class="form-control" id="eventBranch" name="eventBranch" placeholder="Location" required>
+          		</div>
+            </div>
 
           <!-- Event Notes-->
-          <div class="form-group">
-            <label for="inputAddress2">Event Notes</label>
-              <div class="form-row">
-          		<div class="col">
+            <label for="eventNotes">Event Notes</label>
+            <div class="form-row">
+          		<div class="form-group col-12 col-md-4">
           			<textarea class="form-control" name="eventRemarks" rows="3" placeholder="Remarks" required></textarea>
           		</div>
           	</div>
-          </div>
 
           <input class="btn btn-primary" type="submit" value="Submit">
           </form>
