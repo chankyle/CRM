@@ -19,13 +19,12 @@ var db = monk('localhost:27017/CRM');
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
-var registerRouter = require('./routes/register');
 var homeRouter = require('./routes/home');
 
 var entryClientRouter = require('./routes/entry-client');
 var entryContactRouter = require('./routes/entry-contact');
 var entryEventRouter = require('./routes/entry-event');
-var entryAgentRouter = require('./routes/entry-agent');
+var entryUserRouter = require('./routes/entry-user');
 
 var importAgentRouter = require('./routes/import-agent');
 var reviewAgentUploadRouter = require('./routes/review-agent-upload');
@@ -95,13 +94,12 @@ app.use(function(req,res,next){
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
-app.use('/register', registerRouter);
 app.use('/home', homeRouter);
 
 app.use('/entry-client', entryClientRouter);
 app.use('/entry-contact', entryContactRouter);
 app.use('/entry-event', entryEventRouter);
-app.use('/entry-agent', entryAgentRouter);
+app.use('/entry-user', entryUserRouter);
 
 app.use('/import-agent', importAgentRouter);
 app.use('/review-agent-upload', reviewAgentUploadRouter);
