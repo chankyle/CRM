@@ -2,6 +2,7 @@
 <html lang="en">
  <head>
  <!-- Required meta tags -->
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -50,10 +51,13 @@
             <script>
               function changeAgent(value){
                 var contacts = JSON.parse($('#variableJSON').text());
+                
                 var contactOptions = "";
                 contactOptions += "<option>N/A</option>";
                 for (j = 0; j < contacts.length; j++) {
+                  console.log('here');
                   if(contacts[j].contactClientID === value) {
+                    console.log('here2');
                     contactOptions += "<option>" + contacts[j].contactFirstName + " " + contacts[j].contactLastName + "</option>";
                   }
                 }
