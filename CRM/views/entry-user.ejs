@@ -24,19 +24,48 @@
     <main class="c-main">
       <!-- Main content here -->
       <main class="main mt-2 mx-3">
-        <form id="formAddAgent" name="addAgent" method="post" action="/addAgent">
+        <form id="formaddUser" name="addUser" method="post" action="/addUser">
         <div class="card  w-auto">
-          <h3 class="card-header">Agent Information</h3>
+          <h3 class="card-header">New User Information</h3>
           <div class="card-body">
           <!-- Agent Abbreviation-->
           <div class="form-group">
-            <label for="agentAbbrev">Agent Abbreviation</label>
               <div class="form-row">
-          			<div class="col-auto">
-          			  <input type="text" class="form-control" id="agentAbbrev" name="agentAbbrev" placeholder="Use All Caps"  required>
-          			</div>
+                <div class="col">
+                  <label for="newUserName">Username</label>
+                  <input type="text" class="form-control" id="newUserName" name="newUserName" placeholder="Username"  required>
+                </div>
+                <div class="col">
+                  <label for="newUserType">User Type</label>
+                  <select class="form-control" id="newUserType" name="newUserType"  required>
+                    <option value="" disabled selected>Select</option>
+                    <option>Administrator</option>
+                    <option>Agent</option>
+                    <option>Read-Only</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label for="agentAbbrev">Agent Abbreviation</label>
+                  <input type="text" class="form-control" id="agentAbbrev" name="agentAbbrev" placeholder="Use All Caps"  required>
+                </div>
               </div>
-          </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col">
+                  <label for="newPassword">Password</label>
+                  <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Password"  required>
+                </div>
+                <div class="col">
+                  <label for="newPasswordRetype">Re-Type Password</label>
+                  <input type="password" class="form-control" id="newPasswordRetype" name="newPasswordRetype" placeholder="Re-TypePassword" required>
+                </div>
+                <div class="col">
+                  <label for="changePW">Change Password on First Login?</label>
+                  <input type="checkbox" class="form-control" id="changePW" name="changePW" >
+                </div>
+              </div>
+            </div>
 
           <!-- Agent Name-->
           <div class="form-group">

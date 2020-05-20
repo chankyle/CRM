@@ -42,35 +42,6 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
     res.redirect('/home');
 });
 
-/* GET Register page. */
-router.get('/register', function(req, res) {
-    res.render('register', { });
-});
-
-
-/* Register User */
-router.post('/register', function(req, res) {
-    if (req.body.regCode == "KPCRS"){
-        Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
-            if (err) {
-                return res.render('register', { account : account });
-            }
-
-            passport.authenticate('local')(req, res, function () {
-                res.redirect('/');
-            });
-        });
-    } else {
-        res.status(500).send('Invalid Registration Code. Please Try again!');
-    }
-});
-
-/* Reroute after Logout Successful. */
-router.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
-});
-
 /* Test page */
 router.get('/ping', function(req, res){
     res.status(200).send("pong!");
@@ -1372,44 +1343,104 @@ router.post('/addContact', function(req, res) {
 
 
 /* POST to Add Agents */
-router.post('/addAgent', function(req, res) {
+router.post('/addUser', function(req, res) {
+    var ac = new AccessControl(grantsList);
+    const permission = ac.can(req.user.usertype).createAny('Account');
+    if (permission.granted) {
+        // Perform what is allowed when permission is granted
+        // Set our internal DB variable
+        var db = req.db;
 
-    // Set our internal DB variable
-    var db = req.db;
+        // Get our form values. These rely on the "name" attributes
+        var agentAbbrev = req.body.agentAbbrev;
+        var newUserName = req.body.newUserName;
+        var newUserType = req.body.newUserType;
+        var username = req.user.username;
+        var agentFirstName = req.body.agentFirstName;
+        var agentLastName = req.body.agentLastName;
+        var agentPosition = req.body.agentPosition;
+        var agentPhone = req.body.agentPhone;
+        var currentDateTime = moment();
+        var defaultStatus = "Enabled";
+        var newPassword = req.body.newPassword;
+        var changePW
 
-    // Get our form values. These rely on the "name" attributes
-    var agentAbbrev = req.body.agentAbbrev;
-    var username = req.user.username;
-    var agentFirstName = req.body.agentFirstName;
-    var agentLastName = req.body.agentLastName;
-    var agentPosition = req.body.agentPosition;
-    var agentPhone = req.body.agentPhone;
-    var currentDateTime = moment();
-    var defaultStatus = "Enabled";
-
-    // Set our collection
-    var collection = db.get('Agents');
-
-    // Submit to the DB
-    collection.insert({
-        "agentAbbrev" : agentAbbrev,
-        "agentFirstName" : agentFirstName,
-        "agentLastName" : agentLastName,
-        "agentPosition" : agentPosition,
-        "agentPhone" : agentPhone,
-        "createdBy" : username,
-        "createDate" : currentDateTime,
-        "agentActive" : defaultStatus
-    }, function (err, doc) {
-        if (err) {
-            // If it failed, return error
-            res.send("There was a problem adding the information to the database.");
+        if (req.body.changePW == "on"){
+            changePW = true;
+        } else {
+            changePW = false;
         }
-        else {
-            // And forward to success page
-            res.redirect("/home");
-        }
-    });
+        
+        if (newUserType == 'Administrator'){
+            Account.register(new Account({ username : newUserName, usertype : 'admin' , active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
+                if (err) {
+                    console.log(err);
+                    res.render('home', {
+                        user:req.user
+                    });
+                }
+            });
+            
+        } else if (newUserType == 'Read-Only') {
+            Account.register(new Account({ username : newUserName, usertype : 'readonly', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
+                if (err) {
+                    console.log(err);
+                    res.render('home', {
+                        user:req.user
+                    });
+                }
+            });
+
+        } else if (newUserType == 'Agent'){
+
+            var tasks = [
+            // Create Agent object
+            function(callback) {
+                var collection1 = db.get('Agents');
+
+                collection1.insert({
+                    "agentAbbrev" : agentAbbrev,
+                    "agentFirstName" : agentFirstName,
+                    "agentLastName" : agentLastName,
+                    "agentPosition" : agentPosition,
+                    "agentPhone" : agentPhone,
+                    "createdBy" : username,
+                    "createDate" : currentDateTime,
+                    "agentActive" : defaultStatus
+                },{},function(e,doc){
+                    if (e) console.log(e);
+                    callback();
+                })
+            },
+            // Create Account
+            function(callback) {
+                Account.register(new Account({ username : newUserName, usertype : 'agent', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
+                    if (err) {
+                        console.log(err);
+                        callback();
+                    }
+                });
+            }
+            ];
+
+            async.parallel(tasks, function(err) { //This function gets called after the three tasks have called their "task callbacks"
+                if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+                // Here `locals` will be an object with `users` and `colors` keys
+                // Example: `locals = {users: [...], colors: [...]}`
+                db.close();
+                res.render('home', {
+                        user:req.user
+                });
+            });
+           
+        } 
+    } else {
+        // resource is forbidden for this user/role
+        res.status(403).end();
+    }
+
+    
+
 
 });
 
@@ -1508,22 +1539,6 @@ router.get('/contact-report', function(req, res) {
 });
 
 
-/* GET list of Agents. */
-router.get('/agent-report', function(req, res) {
-
-    // Set our internal DB variable
-    var db = req.db;
-
-    // Set our collection
-    var collection = db.get('Agents');
-
-    collection.find({},{},function(e,docs){
-        res.render('agent-report', {
-            "agentList" : docs,
-            user:req.user.username
-        });
-    });
-});
 
 /* GET list of Event. */
 router.get('/event-report', function(req, res) {
