@@ -11,8 +11,8 @@ admin,Event,Update:any,*
 admin,Import,Create:any,*
 admin,Permissions,Read:any,*
 admin,Permissions,Update:any,*
-admin,roles,Read:any,*
-admin,roles,Update:any,*
+admin,Roles,Read:any,*
+admin,Roles,Update:any,*
 admin,Account,Create:any,*
 admin,Account,Read:any,*
 admin,Account,Update:any,*

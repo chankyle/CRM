@@ -66,11 +66,11 @@ const grantsList = [ { role: 'admin',
     action: 'Update:any',
     attributes: '*' },
   { role: 'admin',
-    resource: 'roles',
+    resource: 'Roles',
     action: 'Read:any',
     attributes: '*' },
   { role: 'admin',
-    resource: 'roles',
+    resource: 'Roles',
     action: 'Update:any',
     attributes: '*' },
   { role: 'admin',
@@ -178,9 +178,6 @@ router.get('/ping', function(req, res){
     res.status(200).send("pong!");
 });
 
-
-
-
 /* Display Import Agent page. */
 router.get('/import-agent', function(req, res) {
     var ac = new AccessControl(grantsList);
@@ -194,7 +191,6 @@ router.get('/import-agent', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
 });
 
 /* Review Agent CSV. */
@@ -230,9 +226,7 @@ router.post('/import-agent', upload.single('agentCSV'), function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }  
-    
 });
-
 
 /* Upload Agent CSV. */
 router.post('/upload-agents', function(req, res) {
@@ -280,10 +274,7 @@ router.post('/upload-agents', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
 });
-
-
 
 /* Display Import Client page. */
 router.get('/import-client', function(req, res) {
@@ -298,9 +289,6 @@ router.get('/import-client', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-
-    
 });
 
 /* Review Client CSV. */
@@ -347,9 +335,7 @@ router.post('/import-client', upload.single('clientCSV'), function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
 });
-
 
 /* Upload Client CSV. */
 router.post('/upload-clients', function(req, res) {
@@ -454,11 +440,7 @@ router.post('/upload-clients', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-
 });
-
-
 
 /* Display Import Contact page. */
 router.get('/import-contact', function(req, res) {
@@ -474,8 +456,6 @@ router.get('/import-contact', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-
 });
 
 /* Review Contact CSV. */
@@ -521,9 +501,7 @@ router.post('/import-contact', upload.single('contactCSV'), function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-   
 });
-
 
 /* Upload Contact CSV. */
 router.post('/upload-contacts', function(req, res) {
@@ -576,10 +554,7 @@ router.post('/upload-contacts', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
 });
-
-
 
 /* GET Client Entry Form. */
 router.get('/entry-client', function(req, res) {
@@ -603,7 +578,6 @@ router.get('/entry-client', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
- 
 });
 
 /* GET Agents for View Client Page. */
@@ -628,11 +602,7 @@ router.get('/view-client', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-
-   
 });
-
 
 /* GET Clients for Contact Entry Form. */
 router.get('/entry-contact', function(req, res) {
@@ -657,8 +627,6 @@ router.get('/entry-contact', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-    
 });
 
 /* GET Clients for View Contact Page. */
@@ -683,9 +651,7 @@ router.get('/view-contact', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-    
 });
-
 
 /* GET Clients for Event Entry Form. */
 router.get('/entry-event', function(req, res) {
@@ -743,9 +709,6 @@ router.get('/entry-event', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-
-    
 });
 
 /* GET Agents for Activity Report Form. */
@@ -771,9 +734,6 @@ router.get('/report-activity', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-
-    
 });
 
 /* GET Activity Report Results*/
@@ -787,9 +747,6 @@ router.get('/result-activity-report', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-
-
 });
 
 /* POST Query to MongoDB and return Activity Report Results. */
@@ -819,10 +776,6 @@ router.post('/resultActivityReport', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-
-    
-
 });
 
 /* GET Client List Report Results*/
@@ -865,9 +818,6 @@ router.post('/result-client-list-report', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-    
-
 });
 
 /* GET Client History Report Results*/
@@ -882,7 +832,6 @@ router.get('/result-client-history-report', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
 });
 
 /* POST Query to MongoDB and return Client History Results. */
@@ -916,8 +865,6 @@ router.post('/result-client-history-report', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-    
 });
 
 /* GET Contact History Report Results*/
@@ -931,7 +878,6 @@ router.get('/result-contact-history-report', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
 });
 
 /* POST Query to MongoDB and return Contact History Results. */
@@ -964,8 +910,6 @@ router.post('/result-contact-history-report', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-    
 });
 
 /* GET Visit Count Report Results*/
@@ -980,7 +924,6 @@ router.get('/result-visit-count-report', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
 });
 
 /* POST Query to MongoDB and return Activity Report Results. */
@@ -1012,9 +955,6 @@ router.post('/result-visit-count-report', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-
-    
 });
 
 /* GET Agents for Visit Count Report Form. */
@@ -1039,8 +979,6 @@ router.get('/report-visit-count', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-    
 });
 
 /* GET Agents for Client List Report Form. */
@@ -1065,8 +1003,6 @@ router.get('/report-client-list', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-    
 });
 
 /* GET Clients for Contact History Report Form. */
@@ -1115,8 +1051,6 @@ router.get('/report-contact-history', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-    
 });
 
 /* GET Clients for Client History Report Form. */
@@ -1141,9 +1075,7 @@ router.get('/report-client-history', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
 });
-
 
 /* GET Clients for Search Client Page. */
 router.get('/search-client', function(req, res) {
@@ -1167,7 +1099,6 @@ router.get('/search-client', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
 });
 
 /* POST Query to MongoDB and return View Client Page Page. */
@@ -1238,7 +1169,6 @@ router.post('/search-client', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
 });
 
 /* POST to Edit Clients */
@@ -1330,7 +1260,6 @@ router.post('/viewClient', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
 });
 
 /* GET Contact for Search Contact Page. */
@@ -1356,10 +1285,6 @@ router.get('/search-contact', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-
-
-    
 });
 
 /* POST Query to MongoDB and return View Contact Page. */
@@ -1473,9 +1398,6 @@ router.post('/viewContact', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-    
-
 });
 
 /* GET Clients for Search Event Page. */
@@ -1513,8 +1435,6 @@ router.get('/search-event', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-    
 });
 
 /* POST Query to MongoDB and return List Event Page. */
@@ -1564,7 +1484,6 @@ router.post('/search-event', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-    
 });
 
 /* POST Query to MongoDB and return Edit Event Page. */
@@ -1631,9 +1550,6 @@ router.post('/list-event', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-    
-
 });
 
 /* POST to Edit Events */
@@ -1704,9 +1620,7 @@ router.post('/viewEvent', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-    
 });
-
 
 /* POST to Add Clients */
 router.post('/addClient', function(req, res) {
@@ -1792,7 +1706,6 @@ router.post('/addClient', function(req, res) {
     }
 });
 
-
 /* POST to Add Contacts */
 router.post('/addContact', function(req, res) {
     var ac = new AccessControl(grantsList);
@@ -1845,16 +1758,13 @@ router.post('/addContact', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-    
-
 });
-
 
 /* POST to Add Agents */
 router.post('/addUser', function(req, res) {
     var ac = new AccessControl(grantsList);
-    const permission = ac.can(req.user.usertype).createAny('Account');
+    // TODO: Allow register of users on home page
+    const permission = ac.can(req.user.usertype).readAny('Event');
     if (permission.granted) {
         // Perform what is allowed when permission is granted
         // Set our internal DB variable
@@ -1947,12 +1857,7 @@ router.post('/addUser', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
-    
-
-
 });
-
 
 /* POST to Add Event */
 router.post('/addEvent', function(req, res) {
@@ -2015,10 +1920,7 @@ router.post('/addEvent', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-
 });
-
-
 
 /* GET list of Clients. */
 router.get('/client-report', function(req, res) {
@@ -2066,12 +1968,10 @@ router.get('/contact-report', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
-    
 });
 
 
-
-/* GET list of Event. */
+/* GET list of Users. */
 router.get('/event-report', function(req, res) {
     var ac = new AccessControl(grantsList);
     const permission = ac.can(req.user.usertype).readAny('Event');
@@ -2098,5 +1998,9 @@ router.get('/event-report', function(req, res) {
 });
 
 
+//TODO - Take permission from Database instead of stored locally on code
+//TODO - Figure out how to hide view from server side
+//TODO - Add link to access 'view-users'
+//TOOD - Complete 'edit permssions'
 
 module.exports = router;
