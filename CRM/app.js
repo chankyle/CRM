@@ -33,6 +33,10 @@ var reviewClientUploadRouter = require('./routes/review-client-upload');
 var importContactRouter = require('./routes/import-contact');
 var reviewContactUploadRouter = require('./routes/review-contact-upload');
 
+var editUsersRouter = require('./routes/edit-users');
+var viewUsersRouter = require('./routes/view-users');
+var editPermissionsRouter = require('./routes/edit-permissions');
+
 var dataEntryRouter = require('./routes/data-entry');
 var reportsRouter = require('./routes/reports');
 var clientReportRouter = require('./routes/client-report');
@@ -107,6 +111,10 @@ app.use('/import-client', importClientRouter);
 app.use('/review-client-upload', reviewClientUploadRouter);
 app.use('/import-contact', importContactRouter);
 app.use('/review-contact-upload', reviewContactUploadRouter);
+
+app.use('/edit-users', editUsersRouter);
+app.use('/view-users', viewUsersRouter);
+app.use('/edit-permissions', editPermissionsRouter);
 
 app.use('/data-entry', dataEntryRouter);
 app.use('/reports', reportsRouter);
