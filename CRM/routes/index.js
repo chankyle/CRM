@@ -146,7 +146,7 @@ router.get('/', function (req, res) {
 
 /* GET login page. */
 router.get('/login', function(req, res) {
-    res.render('login', { user : req.user });
+    res.render('login');
 });
 
 /* GET Home page. */
@@ -173,10 +173,6 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
     res.redirect('/home');
 });
 
-/* Test page */
-router.get('/ping', function(req, res){
-    res.status(200).send("pong!");
-});
 
 /* Display Import Agent page. */
 router.get('/import-agent', function(req, res) {
@@ -186,7 +182,7 @@ router.get('/import-agent', function(req, res) {
         // Perform what is allowed when permission is granted
         res.render('import-agent', {
             user : req.user
-         });
+        });
     } else {
         // resource is forbidden for this user/role
         res.status(403).end();
@@ -225,7 +221,7 @@ router.post('/import-agent', upload.single('agentCSV'), function(req, res) {
     } else {
         // resource is forbidden for this user/role
         res.status(403).end();
-    }  
+    }
 });
 
 /* Upload Agent CSV. */
@@ -239,7 +235,7 @@ router.post('/upload-agents', function(req, res) {
         var length = csvData.length;
 
          // Set our internal DB variable
-        var db = req.db;
+         var db = req.db;
 
         // Set our collection
         var collection = db.get('Agents');
@@ -250,7 +246,7 @@ router.post('/upload-agents', function(req, res) {
         var currentDateTime = moment();
         var defaultStatus = "Enabled";
 
-        
+
         for (i in csvData) {
             collection.insert({
                 "agentAbbrev" : csvData[i].agentAbbrev,
@@ -265,11 +261,11 @@ router.post('/upload-agents', function(req, res) {
                 if (err) {
                     // If it failed, return error
                     res.send("There was a problem adding the information to the database.");
-                } 
+                }
             });
         }
 
-        res.redirect("/home");
+        res.redirect('/home');
     } else {
         // resource is forbidden for this user/role
         res.status(403).end();
@@ -325,7 +321,7 @@ router.post('/import-client', upload.single('clientCSV'), function(req, res) {
             collection.find({},{},function(e,docs){
                 res.render('review-client-upload', {
                     "agentList" : docs,
-                    user:req.user,
+                    user : req.user,
                     "clients" : csvData,
                     "JSONClients" : data
                 });
@@ -347,7 +343,7 @@ router.post('/upload-clients', function(req, res) {
         var length = csvData.length;
 
          // Set our internal DB variable
-        var db = req.db;
+         var db = req.db;
 
         // Set our collection
         var collection = db.get('Clients');
@@ -358,7 +354,7 @@ router.post('/upload-clients', function(req, res) {
         var currentDateTime = moment();
         var defaultStatus = "Enabled";
 
-        
+
         for (i in csvData) {
             var str0 = "agentAbbrev[";
             var agentAbbrev = str0.concat(i, "]");
@@ -421,9 +417,9 @@ router.post('/upload-clients', function(req, res) {
                 "clientAddress4" : clientAddress4,
                 "clientEmail1" : csvData[i].clientEmail1,
                 "clientEmail2" : csvData[i].clientEmail2,
-                "clientProdOX" : clientProdOX, 
-                "clientProdPP" : clientProdPP, 
-                "clientProdTP" : clientProdTP, 
+                "clientProdOX" : clientProdOX,
+                "clientProdPP" : clientProdPP,
+                "clientProdTP" : clientProdTP,
                 "clientNotes" : csvData[i].clientNotes,
                 "createdBy" : username,
                 "createDate" : currentDateTime,
@@ -432,10 +428,10 @@ router.post('/upload-clients', function(req, res) {
                 if (err) {
                     // If it failed, return error
                     res.send("There was a problem adding the information to the database.");
-                } 
+                }
             });
         }
-        res.redirect("/home");
+        res.redirect('/home');
     } else {
         // resource is forbidden for this user/role
         res.status(403).end();
@@ -451,7 +447,7 @@ router.get('/import-contact', function(req, res) {
         // Perform what is allowed when permission is granted
         res.render('import-contact', {
             user : req.user
-         });
+        });
     } else {
         // resource is forbidden for this user/role
         res.status(403).end();
@@ -491,7 +487,7 @@ router.post('/import-contact', upload.single('contactCSV'), function(req, res) {
             collection.find({},{},function(e,docs){
                 res.render('review-contact-upload', {
                     "clientList" : docs,
-                    user:req.user,
+                    user : req.user,
                     "contacts" : csvData,
                     "JSONContacts" : data
                 });
@@ -501,6 +497,7 @@ router.post('/import-contact', upload.single('contactCSV'), function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
+
 });
 
 /* Upload Contact CSV. */
@@ -514,7 +511,7 @@ router.post('/upload-contacts', function(req, res) {
 
 
          // Set our internal DB variable
-        var db = req.db;
+         var db = req.db;
 
         // Set our collection
         var collection = db.get('Contacts');
@@ -525,7 +522,7 @@ router.post('/upload-contacts', function(req, res) {
         var currentDateTime = moment();
         var defaultStatus = "Enabled";
 
-        
+
         for (i in csvData) {
             var str = "contactClientID[";
             var clientID = str.concat(i, "]");
@@ -545,11 +542,10 @@ router.post('/upload-contacts', function(req, res) {
                 if (err) {
                     // If it failed, return error
                     res.send("There was a problem adding the information to the database.");
-                } 
+                }
             });
         }
-
-        res.redirect("/home");
+        res.redirect('/home');
     } else {
         // resource is forbidden for this user/role
         res.status(403).end();
@@ -578,6 +574,7 @@ router.get('/entry-client', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
+
 });
 
 /* GET Agents for View Client Page. */
@@ -587,7 +584,7 @@ router.get('/view-client', function(req, res) {
     if (permission.granted) {
         // Perform what is allowed when permission is granted
          // Set our internal DB variable
-        var db = req.db;
+         var db = req.db;
 
         // Set our collection
         var collection = db.get('Agents');
@@ -602,6 +599,9 @@ router.get('/view-client', function(req, res) {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
+
+
+
 });
 
 /* GET Clients for Contact Entry Form. */
@@ -620,7 +620,7 @@ router.get('/entry-contact', function(req, res) {
         collection.find({},{},function(e,docs){
             res.render('entry-contact', {
                 "clientList" : docs,
-                user:req.user
+                user : req.user
             });
         });
     } else {
@@ -644,7 +644,7 @@ router.get('/view-contact', function(req, res) {
         collection.find({},{},function(e,docs){
             res.render('view-contact', {
                 "clientList" : docs,
-                user:req.user
+                user : req.user
             });
         });
     } else {
@@ -696,14 +696,17 @@ router.get('/entry-event', function(req, res) {
                 })
             }
 
-        ];
+            ];
 
         async.parallel(tasks, function(err) { //This function gets called after the three tasks have called their "task callbacks"
             if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
             // Here `locals` will be an object with `users` and `colors` keys
             // Example: `locals = {users: [...], colors: [...]}`
             db.close();
-            res.render('entry-event', locals);
+            res.render('entry-event', {
+                locals,
+                user : req.user
+            });
         });
     } else {
         // resource is forbidden for this user/role
@@ -727,7 +730,7 @@ router.get('/report-activity', function(req, res) {
         collection.find({},{},function(e,docs){
             res.render('report-activity', {
                 "agentList" : docs,
-                user:req.user
+                user : req.user
             });
         });
     } else {
@@ -742,7 +745,9 @@ router.get('/result-activity-report', function(req, res) {
     const permission = ac.can(req.user.usertype).readAny('Event');
     if (permission.granted) {
         // Perform what is allowed when permission is granted
-        res.render('result-activity-report');
+        res.render('result-activity-report', {
+            user : req.user
+        });
     } else {
         // resource is forbidden for this user/role
         res.status(403).end();
@@ -766,7 +771,7 @@ router.post('/resultActivityReport', function(req, res) {
             if (err) throw err;
             db.close();
             res.render('result-activity-report', {
-                user:req.user,
+                user : req.user,
                 "result":result,
                 "agent":req.body.agentSelect,
                 "dateRange": dateRange
@@ -784,7 +789,9 @@ router.get('/result-client-list-report', function(req, res) {
     const permission = ac.can(req.user.usertype).readAny('Client');
     if (permission.granted) {
         // Perform what is allowed when permission is granted
-        res.render('result-client-list-report');
+        res.render('result-client-list-report', {
+            user : req.user
+        });
 
     } else {
         // resource is forbidden for this user/role
@@ -809,7 +816,7 @@ router.post('/result-client-list-report', function(req, res) {
             if (err) throw err;
             db.close();
             res.render('result-client-list-report', {
-                user:req.user,
+                user : req.user,
                 "result":result,
                 "agent":req.body.agentAbbrev,
             });
@@ -826,7 +833,9 @@ router.get('/result-client-history-report', function(req, res) {
     const permission = ac.can(req.user.usertype).readAny('Client');
     if (permission.granted) {
         // Perform what is allowed when permission is granted
-        res.render('result-client-history-report');
+        res.render('result-client-history-report', {
+            user : req.user
+        });
 
     } else {
         // resource is forbidden for this user/role
@@ -854,7 +863,7 @@ router.post('/result-client-history-report', function(req, res) {
             if (err) throw err;
             db.close();
             res.render('result-client-history-report', {
-                user:req.user,
+                user : req.user,
                 "result":result,
                 "clientName":req.body.clientSelect,
                 "dateRange": dateRange
@@ -873,7 +882,9 @@ router.get('/result-contact-history-report', function(req, res) {
     const permission = ac.can(req.user.usertype).readAny('Contact');
     if (permission.granted) {
         // Perform what is allowed when permission is granted
-        res.render('result-contact-history-report');
+        res.render('result-contact-history-report', {
+            user : req.user
+        });
     } else {
         // resource is forbidden for this user/role
         res.status(403).end();
@@ -899,7 +910,7 @@ router.post('/result-contact-history-report', function(req, res) {
             if (err) throw err;
             db.close();
             res.render('result-contact-history-report', {
-                user:req.user,
+                user : req.user,
                 "result":result,
                 "clientName":req.body.clientSelect,
                 "contactName":req.body.contactID1,
@@ -918,7 +929,9 @@ router.get('/result-visit-count-report', function(req, res) {
     const permission = ac.can(req.user.usertype).readAny('Event');
     if (permission.granted) {
         // Perform what is allowed when permission is granted
-        res.render('result-visit-count-report');
+        res.render('result-visit-count-report', {
+            user : req.user
+        });
 
     } else {
         // resource is forbidden for this user/role
@@ -945,7 +958,7 @@ router.post('/result-visit-count-report', function(req, res) {
             if (err) throw err;
             db.close();
             res.render('result-visit-count-report', {
-                user:req.user,
+                user : req.user,
                 "result":result,
                 "agentAbbrev":req.body.agentSelect,
                 "dateRange": dateRange
@@ -972,7 +985,7 @@ router.get('/report-visit-count', function(req, res) {
         collection.find({},{},function(e,docs){
             res.render('report-visit-count', {
                 "agentList" : docs,
-                user:req.user
+                user : req.user
             });
         });
     } else {
@@ -996,7 +1009,7 @@ router.get('/report-client-list', function(req, res) {
         collection.find({},{},function(e,docs){
             res.render('report-client-list', {
                 "agentList" : docs,
-                user:req.user
+                user : req.user
             });
         });
     } else {
@@ -1037,14 +1050,17 @@ router.get('/report-contact-history', function(req, res) {
                     callback();
                 })
             }
-        ];
+            ];
 
         async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
             if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
             // Here `locals` will be an object with `users` and `colors` keys
             // Example: `locals = {users: [...], colors: [...]}`
             db.close();
-            res.render('report-contact-history', locals);
+            res.render('report-contact-history', {
+                locals,
+                user : req.user
+            });
         });
 
     } else {
@@ -1068,7 +1084,7 @@ router.get('/report-client-history', function(req, res) {
         collection.find({},{},function(e,docs){
             res.render('report-client-history', {
                 "clientList" : docs,
-                user:req.user
+                user : req.user
             });
         });
     } else {
@@ -1092,7 +1108,7 @@ router.get('/search-client', function(req, res) {
         collection.find({},{},function(e,docs){
             res.render('search-client', {
                 "clientList" : docs,
-                user:req.user
+                user : req.user
             });
         });
     } else {
@@ -1152,7 +1168,7 @@ router.post('/search-client', function(req, res) {
                     callback();
                 });
             },
-        ];
+            ];
 
         async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
             if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
@@ -1162,7 +1178,7 @@ router.post('/search-client', function(req, res) {
             res.render('view-client', {
                 "result": result,
                 clientName:req.body.clientSelect,
-                user:req.user
+                user : req.user
             });
         });
     } else {
@@ -1202,20 +1218,20 @@ router.post('/viewClient', function(req, res) {
         var clientEmail1 = req.body.clientEmail1;
         var clientEmail2 = req.body.clientEmail2;
         var clientProdOX = req.body.clientProdOX;
-            if (clientProdOX != "true") {
-                clientProdOX = "false";
-            }
+        if (clientProdOX != "true") {
+            clientProdOX = "false";
+        }
         var clientProdPP = req.body.clientProdPP;
-            if (clientProdPP != "true") {
-                clientProdPP = "false";
-            }
+        if (clientProdPP != "true") {
+            clientProdPP = "false";
+        }
         var clientProdTP = req.body.clientProdTP;
-            if (clientProdTP != "true") {
-                clientProdTP = "false";
-            }
+        if (clientProdTP != "true") {
+            clientProdTP = "false";
+        }
         var clientNotes = req.body.clientNotes;
         var currentDateTime = moment();
-    var clientStatus = req.body.clientStatus;
+        var clientStatus = req.body.clientStatus;
 
     // Set our collection
     var collection = db.get('Clients');
@@ -1253,10 +1269,10 @@ router.post('/viewClient', function(req, res) {
         }
         else {
             // And forward to success page
-            res.redirect("/home");
+            res.redirect('/home');
         }
     });
-    } else {
+} else {
         // resource is forbidden for this user/role
         res.status(403).end();
     }
@@ -1278,7 +1294,7 @@ router.get('/search-contact', function(req, res) {
         collection.find({},{contactFirstName : 1, contactLastName : 1},function(e,docs){
             res.render('search-contact', {
                 "contactList" : docs,
-                user:req.user
+                user : req.user
             });
         });
     } else {
@@ -1321,7 +1337,7 @@ router.post('/search-contact', function(req, res) {
                     callback();
                 });
             }
-        ];
+            ];
 
         async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
             if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
@@ -1336,7 +1352,7 @@ router.post('/search-contact', function(req, res) {
                 res.render('view-contact', {
                     "result": result,
                     contactID : req.body.contactID,
-                    user:req.user
+                    user : req.user
                 });
             });
         });
@@ -1391,7 +1407,7 @@ router.post('/viewContact', function(req, res) {
             }
             else {
                 // And forward to success page
-                res.redirect("/home");
+                res.redirect('/home');
             }
         });
     } else {
@@ -1422,14 +1438,17 @@ router.get('/search-event', function(req, res) {
                     callback();
                 })
             }
-        ];
+            ];
 
         async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
             if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
             // Here `locals` will be an object with `users` and `colors` keys
             // Example: `locals = {users: [...], colors: [...]}`
             db.close();
-            res.render('search-event', locals);
+            res.render('search-event', {
+                locals,
+                user : req.user
+            });
         });
     } else {
         // resource is forbidden for this user/role
@@ -1455,9 +1474,9 @@ router.post('/search-event', function(req, res) {
                 var collection1 = db.get('Events');
                 collection1.find( {
                     $and : [
-                        { "clientName" : req.body.clientName },
-                        { "eventTimeIn._d": { $gte: new Date(dateStartInput)} },
-                        { "eventTimeIn._d": { $lte: new Date(dateEndInput)} }
+                    { "clientName" : req.body.clientName },
+                    { "eventTimeIn._d": { $gte: new Date(dateStartInput)} },
+                    { "eventTimeIn._d": { $lte: new Date(dateEndInput)} }
                     ]
                 },{sort: {'eventTimeIn._d' :-1} },function(e,events){
                     if (e) return callback(err);
@@ -1465,7 +1484,7 @@ router.post('/search-event', function(req, res) {
                     callback();
                 });
             }
-        ];
+            ];
 
         async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
             if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
@@ -1477,7 +1496,7 @@ router.post('/search-event', function(req, res) {
                 clientName : req.body.clientName,
                 dateStartInput: req.body.dateStartInput,
                 dateEndInput: req.body.dateEndInput,
-                user:req.user
+                user : req.user
             });
         });
     } else {
@@ -1532,7 +1551,7 @@ router.post('/list-event', function(req, res) {
                     callback();
                 })
             }
-        ];
+            ];
 
         async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
             if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
@@ -1541,7 +1560,7 @@ router.post('/list-event', function(req, res) {
             db.close();
             res.render('view-event', {
                 "result": result,
-                user: req.user,
+                user : req.user,
                 eventID: req.body.submit,
                 clientName : req.body.clientName
             });
@@ -1613,7 +1632,7 @@ router.post('/viewEvent', function(req, res) {
             }
             else {
                 // And forward to success page
-                res.redirect("/home");
+                res.redirect('/home');
             }
         });
     } else {
@@ -1651,17 +1670,17 @@ router.post('/addClient', function(req, res) {
         var clientEmail1 = req.body.clientEmail1;
         var clientEmail2 = req.body.clientEmail2;
         var clientProdOX = req.body.clientProdOX;
-            if (clientProdOX != "true") {
-                clientProdOX = "false";
-            }
+        if (clientProdOX != "true") {
+            clientProdOX = "false";
+        }
         var clientProdPP = req.body.clientProdPP;
-            if (clientProdPP != "true") {
-                clientProdPP = "false";
-            }
+        if (clientProdPP != "true") {
+            clientProdPP = "false";
+        }
         var clientProdTP = req.body.clientProdTP;
-            if (clientProdTP != "true") {
-                clientProdTP = "false";
-            }
+        if (clientProdTP != "true") {
+            clientProdTP = "false";
+        }
         var clientNotes = req.body.clientNotes;
         var currentDateTime = moment();
         var defaultStatus = "Enabled";
@@ -1697,7 +1716,7 @@ router.post('/addClient', function(req, res) {
             }
             else {
                 // And forward to success page
-                res.redirect("/home");
+                res.redirect('/home');
             }
         });
     } else {
@@ -1751,7 +1770,7 @@ router.post('/addContact', function(req, res) {
             }
             else {
                 // And forward to success page
-                res.redirect("/home");
+                res.redirect('/home');
             }
         });
     } else {
@@ -1760,104 +1779,6 @@ router.post('/addContact', function(req, res) {
     }
 });
 
-/* POST to Add Agents */
-router.post('/addUser', function(req, res) {
-    var ac = new AccessControl(grantsList);
-    // TODO: Allow register of users on home page
-    const permission = ac.can(req.user.usertype).readAny('Event');
-    if (permission.granted) {
-        // Perform what is allowed when permission is granted
-        // Set our internal DB variable
-        var db = req.db;
-
-        // Get our form values. These rely on the "name" attributes
-        var agentAbbrev = req.body.agentAbbrev;
-        var newUserName = req.body.newUserName;
-        var newUserType = req.body.newUserType;
-        var username = req.user.username;
-        var agentFirstName = req.body.agentFirstName;
-        var agentLastName = req.body.agentLastName;
-        var agentPosition = req.body.agentPosition;
-        var agentPhone = req.body.agentPhone;
-        var currentDateTime = moment();
-        var defaultStatus = "Enabled";
-        var newPassword = req.body.newPassword;
-        var changePW
-
-        if (req.body.changePW == "on"){
-            changePW = true;
-        } else {
-            changePW = false;
-        }
-        
-        if (newUserType == 'Administrator'){
-            Account.register(new Account({ username : newUserName, usertype : 'admin' , active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
-                if (err) {
-                    console.log(err);
-                    res.render('home', {
-                        user:req.user
-                    });
-                }
-            });
-            
-        } else if (newUserType == 'Read-Only') {
-            Account.register(new Account({ username : newUserName, usertype : 'readonly', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
-                if (err) {
-                    console.log(err);
-                    res.render('home', {
-                        user:req.user
-                    });
-                }
-            });
-
-        } else if (newUserType == 'Agent'){
-
-            var tasks = [
-            // Create Agent object
-            function(callback) {
-                var collection1 = db.get('Agents');
-
-                collection1.insert({
-                    "agentAbbrev" : agentAbbrev,
-                    "agentFirstName" : agentFirstName,
-                    "agentLastName" : agentLastName,
-                    "agentPosition" : agentPosition,
-                    "agentPhone" : agentPhone,
-                    "createdBy" : username,
-                    "createDate" : currentDateTime,
-                    "agentActive" : defaultStatus
-                },{},function(e,doc){
-                    if (e) console.log(e);
-                    callback();
-                })
-            },
-            // Create Account
-            function(callback) {
-                Account.register(new Account({ username : newUserName, usertype : 'agent', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
-                    if (err) {
-                        console.log(err);
-                        callback();
-                    }
-                });
-            }
-            ];
-
-            async.parallel(tasks, function(err) { //This function gets called after the three tasks have called their "task callbacks"
-                if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
-                // Here `locals` will be an object with `users` and `colors` keys
-                // Example: `locals = {users: [...], colors: [...]}`
-                db.close();
-                res.render('home', {
-                        user:req.user
-                });
-            });
-           
-        } 
-    } else {
-        // resource is forbidden for this user/role
-        res.status(403).end();
-    }
-});
 
 /* POST to Add Event */
 router.post('/addEvent', function(req, res) {
@@ -1913,7 +1834,7 @@ router.post('/addEvent', function(req, res) {
             }
             else {
                 // And forward to success page
-                res.redirect("/home");
+                res.redirect('/home');
             }
         });
     } else {
@@ -1937,7 +1858,7 @@ router.get('/client-report', function(req, res) {
         collection.find({},{},function(e,docs){
             res.render('client-report', {
                 "clientList" : docs,
-                user:req.user
+                user : req.user
             });
         });
     } else {
@@ -1961,7 +1882,7 @@ router.get('/contact-report', function(req, res) {
         collection.find({},{},function(e,docs){
             res.render('contact-report', {
                 "contactList" : docs,
-                user:req.user
+                user : req.user
             });
         });
     } else {
@@ -1986,7 +1907,230 @@ router.get('/event-report', function(req, res) {
         collection.find({},{},function(e,docs){
             res.render('event-report', {
                 "eventList" : docs,
-                user:req.user
+                user : req.user
+            });
+        });
+    } else {
+        // resource is forbidden for this user/role
+        res.status(403).end();
+    }
+});
+
+router.get('/view-users', function(req, res){
+    console.log(req);
+    var ac = new AccessControl(grantsList);
+    const permission = ac.can(req.user.usertype).readAny('Account');
+    if (permission.granted) {
+        // Perform what is allowed when permission is granted
+        // Set our internal DB variable
+        var db = req.db;
+
+        // Set our collection
+        var collection = db.get('accounts');
+
+        collection.find({},{},function(e,docs){
+            res.render('view-users', {
+                "users" : docs,
+                user : req.user
+            });
+        });
+    } else {
+        // resource is forbidden for this user/role
+        res.status(403).end();
+    }
+});
+
+/* POST Query to MongoDB and return Edit User Page. */
+router.post('/view-users', function(req, res) {
+
+    var ac = new AccessControl(grantsList);
+    const permission = ac.can(req.user.usertype).readAny('Account');
+    if (permission.granted) {
+        // Perform what is allowed when permission is granted
+        // Set our internal DB variable
+        var db = req.db;
+        var collection = db.get('accounts');
+        collection.find({"username":req.body.username},{},function(e,docs){
+            res.render('edit-users', {
+                "results" : docs,
+                user : req.user
+            });
+        });
+    } else {
+        // resource is forbidden for this user/role
+        res.status(403).end();
+    }
+});
+
+/* POST Query to MongoDB and Update Account Entry. */
+router.post('/edit-user', function(req, res) {
+
+    var ac = new AccessControl(grantsList);
+    const permission = ac.can(req.user.usertype).updateAny('Account');
+    if (permission.granted) {
+        // Perform what is allowed when permission is granted
+        // Set our internal DB variable
+        var db = req.db;
+        var collection = db.get('accounts');
+        var changePW;
+        if (req.body.changePW == "on"){
+            changePW = true;
+        } else {
+            changePW = false;
+        }
+
+
+        var userStatus;
+        if (req.body.userStatus == 'Enabled'){
+            userStatus = true;
+        } else if (req.body.userStatus = 'Disabled') {
+            userStatus = false;
+        }
+
+
+        collection.update({
+            "_id" : req.body.userID
+        },
+        {
+            $set: {
+                "username": req.body.userName,
+                "usertype": req.body.userRole,
+                "active": userStatus,
+                "changePwOnLogin": changePW
+            }
+        }, function (err, doc) {
+            if (err) {
+                // If it failed, return error
+                res.send("There was a problem adding the information to the database.");
+            }
+            else {
+                //forward to success page
+                res.redirect('/home');
+            }
+        });
+    } else {
+        // resource is forbidden for this user/role
+        res.status(403).end();
+    }
+});
+
+/* POST to Add Agents */
+router.post('/addUser', function(req, res) {
+    var ac = new AccessControl(grantsList);
+    // TODO: Allow register of users on home page
+    // TODO: Restirct access to entry-user
+    // TODO: Figure out why there is 2 /adduser posts
+    const permission = ac.can(req.user.usertype).readAny('Event');
+    if (permission.granted) {
+        // Perform what is allowed when permission is granted
+        // Set our internal DB variable
+        var db = req.db;
+
+        // Get our form values. These rely on the "name" attributes
+        var agentAbbrev = req.body.agentAbbrev;
+        var newUserName = req.body.newUserName;
+        var newUserType = req.body.newUserType;
+        var username = req.user.username;
+        var agentFirstName = req.body.agentFirstName;
+        var agentLastName = req.body.agentLastName;
+        var agentPosition = req.body.agentPosition;
+        var agentPhone = req.body.agentPhone;
+        var currentDateTime = moment();
+        var defaultStatus = "Enabled";
+        var newPassword = req.body.newPassword;
+        var changePW
+
+        if (req.body.changePW == "on"){
+            changePW = true;
+        } else {
+            changePW = false;
+        }
+
+        if (newUserType == 'Administrator'){
+            Account.register(new Account({ username : newUserName, usertype : 'admin' , active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
+                if (err) {
+                    console.log(err);
+                    res.render('home', {
+
+                        usertype: req.user.usertype
+                    });
+                }
+            });
+
+        } else if (newUserType == 'Read-Only') {
+            Account.register(new Account({ username : newUserName, usertype : 'readonly', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
+                if (err) {
+                    console.log(err);
+                    res.render('home', {
+
+                        usertype: req.user.usertype
+                    });
+                }
+            });
+
+        } else if (newUserType == 'Agent'){
+
+            var tasks = [
+            // Create Agent object
+            function(callback) {
+                var collection1 = db.get('Agents');
+
+                collection1.insert({
+                    "agentAbbrev" : agentAbbrev,
+                    "agentFirstName" : agentFirstName,
+                    "agentLastName" : agentLastName,
+                    "agentPosition" : agentPosition,
+                    "agentPhone" : agentPhone,
+                    "createdBy" : username,
+                    "createDate" : currentDateTime,
+                    "agentActive" : defaultStatus
+                },{},function(e,doc){
+                    if (e) console.log(e);
+                    callback();
+                })
+            },
+            // Create Account
+            function(callback) {
+                Account.register(new Account({ username : newUserName, usertype : 'agent', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
+                    if (err) {
+                        console.log(err);
+                        callback();
+                    }
+                });
+            }
+            ];
+
+            async.parallel(tasks, function(err) { //This function gets called after the three tasks have called their "task callbacks"
+                if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+                // Here `locals` will be an object with `users` and `colors` keys
+                // Example: `locals = {users: [...], colors: [...]}`
+                db.close();
+                res.redirect('/home');
+            });
+
+        }
+    } else {
+        // resource is forbidden for this user/role
+        res.status(403).end();
+    }
+});
+
+
+router.get('/edit-permissions', function(req, res){
+    var ac = new AccessControl(grantsList);
+    const permission = ac.can(req.user.usertype).readAny('Permissions');
+    if (permission.granted) {
+        // Perform what is allowed when permission is granted
+        // Set our internal DB variable
+        var db = req.db;
+
+        // Set our collection
+        var collection = db.get('permissions');
+
+        collection.find({},{},function(e,docs){
+            res.render('edit-permissions', {
+                "permissions" : docs,
+                user : req.user
             });
         });
     } else {
@@ -1994,7 +2138,6 @@ router.get('/event-report', function(req, res) {
         res.status(403).end();
     }
 
-    
 });
 
 

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <!-- Required meta tags -->
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+
+ <!-- CoreUI CSS -->
+ <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/css/coreui.min.css" crossorigin="anonymous">
+ <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
+
+ <title>CRM - Edit User Account</title>
+
+</head>
+<body class="c-app">
+
+ <div class="c-sidebar c-sidebar-light c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
+   <% include partials/sidebar %>
+ </div>
+
+ <div class="c-wrapper">
+  <header class="c-header c-header-dark bg-primary c-header-fixed">
+    <!-- Header content here -->
+    <% include partials/header %>
+  </header>
+  <div class="c-body">
+    <main class="c-main">
+      <!-- Main content here -->
+      <main class="main mt-2 mx-3">
+        <form id="formEditContact" name="viewContact" method="post" action="/edit-user" >
+          <input type="name" class="form-control" id="userID" name="userID" value="<%= results[0]._id %>" hidden>
+          <div class="card w-auto">
+            <h3 class="card-header">Edit User Account</h3>
+            <div class="card-body">
+              <h4> User Account</h4>
+              <table class="table table-bordered">
+                <tbody>
+                  <tr>
+                    <td class="align-middle">
+                      <h5> Username: </h5>
+                      <br />
+                      <input type="text" class="form-control" id="userName" name="userName" value = "<%= results[0].username %>" >
+                    </td>
+                    <td class="align-middle">
+                      <h5> Role: </h5>
+                      <select class="form-control" id="userRole" name="userRole" required>
+                        <%
+                        var roleList = '';
+                        if(results[0].usertype == "admin"){
+                        roleList += '<option selected>admin</option>';
+                        roleList += '<option>agent</option>';
+                        roleList += '<option>readonly</option>';
+                      } else if (results[0].usertype == "agent"){
+                      roleList += '<option>admin</option>';
+                      roleList += '<option selected>agent</option>';
+                      roleList += '<option>readonly</option>';
+                    } else {
+                    roleList += '<option>admin</option>';
+                    roleList += '<option>agent</option>';
+                    roleList += '<option selected>readonly</option>';
+                  }
+                  %>
+                  <%- roleList %>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td class="align-middle">
+                <h5> Status: </h5>
+                <select type="name" class="form-control" id="userStatus" name="userStatus"  required>
+                  <%
+                  var activeList = '';
+                  if(results[0].active){
+                  activeList += '<option selected>Enabled</option>';
+                  activeList += '<option>Disabled</option>';
+                } else {
+                activeList += '<option>Enabled</option>';
+                activeList += '<option selected>Disabled</option>';
+              }
+              %>
+              <%- activeList %>
+            </select>
+          </td>
+
+          <td class="align-left">
+            <h5> Change Password On Login: </h5>
+            <%
+            var changePWList = '';
+            if(results[0].changePwOnLogin){
+            changePWList += '<input type="checkbox" class="form-control" id="changePW" name="changePW" checked>';
+          }else{
+          changePWList += '<input type="checkbox" class="form-control" id="changePW" name="changePW">';
+        }
+        %>
+        <%- changePWList %>
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+<!-- BACK BUTTON -->
+<div class="form-row">
+  <div class="form-group col">
+    <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
+  </div>
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+</div>
+<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+</form>
+
+
+
+</div>
+</div>
+
+</main>
+</main>
+</div>
+<footer class="c-footer">
+  <!-- Footer content here -->
+  <h1>Footer Content</h1>
+</footer>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- Popper.js first, then CoreUI JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js" integrity="sha384-L2pyEeut/H3mtgCBaUNw7KWzp5n9&#43;4pDQiExs933/5QfaTh8YStYFFkOzSoXjlTb" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/js/coreui.min.js"></script>
+</body>
+</html>

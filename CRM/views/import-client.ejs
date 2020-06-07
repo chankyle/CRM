@@ -23,64 +23,64 @@
       <% include partials/header %>
     </header>
     <div class="c-body">
-      <main class="c-main">
+        <main class="c-main">
         <!-- Main content here -->
-        <main class="main mt-2 mx-3">
+        <main class="main my-3 mx-3">
 
-          <div class="card w-auto">
-            <h3 class="card-header">Import Client Tool</h3>
-            <div class="card-body">
+            <h3>Import Client Tool</h3>
             <h4> Instructions: </h4>
             <ul>
               <li> Download the template file: <a href="/files/clients.csv" download>Clients.csv</a></li>
               <li> Populate table with Client information.</li>
               <li> Delete Sample Data included </li>
               <li> It is important that you do not change the column names </li>
-              <li> NOTE: Any fields with commas should be surronded by Double Quotes. <br/> <b>Example</b>: "1600 Pennsylvania Ave NW, Washington, DC"</li>
+              <li> <strong>NOTE:</strong> Any fields with commas should be surronded by Double Quotes. <br/> <b>Example</b>: "1600 Pennsylvania Ave NW, Washington, DC"</li>
               <li> Upload the file, click submit and review the information on the next page.</li>
             </ul>
-            <br/>
+            <br>
             <h4> Example Data: </h4>
-            <a href="/files/clients.csv" download>Download Template CSV File</a>
-            <table class="table table-bordered table-responsive">
-              <thead class="thead-dark">
-                <tr>
-                  <th style="width: 10%" scope="col">Client Name:</th>
-                  <th style="width: 5%" scope="col">Client Phone: </th>
-                  <th style="width: 5%" scope="col">Client Fax: </th>
-                  <th style="width: 12%" scope="col">Client Address 1: </th>
-                  <th style="width: 12%" scope="col">Client Address 2: </th>
-                  <th style="width: 12%" scope="col">Client Address 3:</th>
-                  <th style="width: 12%" scope="col">Client Address 4: </th>
-                  <th style="width: 10%" scope="col">Client Email 1: </th>
-                  <th style="width: 10%" scope="col">Client Email 2: </th>
-                  <th style="width: 12%" scope="col">Client Notes: </th>
-                </tr>
-                <tr>
-                  <td>Acme Corporation</td>
-                  <td>123-4567</td>
-                  <td>321-7654</td>
-                  <td>"111 Wellington St, Ottawa, ON"</td>
-                  <td>"1600 Pennsylvania Ave NW, Washington, DC"</td>
-                  <td></td>
-                  <td></td>
-                  <td>info@acmecorporation.com</td>
-                  <td></td>
-                  <td>This is a sample data set</td>
-              </thead>
-            </table>
-          </div>
-        </div>
+            <h6><a href="/files/clients.csv" download>Download Template CSV File</a></h6>
+          <div class="table-responsive">
+              <table class="table table-bordered px-2 py-2 bg-white">
+                <thead>
+                  <tr>
+                    <th scope="col" class="align-middle">Client Name:</th>
+                    <th scope="col" class="align-middle">Client Phone: </th>
+                    <th scope="col" class="align-middle">Client Fax: </th>
+                    <th scope="col" class="align-middle">Client Address 1: </th>
+                    <th scope="col" class="align-middle">Client Address 2: </th>
+                    <th scope="col" class="align-middle">Client Address 3:</th>
+                    <th scope="col" class="align-middle">Client Address 4: </th>
+                    <th scope="col" class="align-middle">Client Email 1: </th>
+                    <th scope="col" class="align-middle">Client Email 2: </th>
+                    <th scope="col" class="align-middle">Client Notes: </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Acme Corporation</td>
+                    <td>123-4567</td>
+                    <td>321-7654</td>
+                    <td>"111 Wellington St, Ottawa, ON"</td>
+                    <td>"1600 Pennsylvania Ave NW, Washington, DC"</td>
+                    <td></td>
+                    <td></td>
+                    <td>info@acmecorporation.com</td>
+                    <td></td>
+                    <td>This is a sample data set</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h4> Upload File: </h4>
 
-
-          <h3> Upload File: </h3>
-
-         <form action="/import-client" method="post" enctype="multipart/form-data">
-           <input type="file" class="form-control-file" name="clientCSV" required>
-           <br/>
-           <input class="btn btn-primary" type="submit" value="Submit">
-         </form>
-
+           <form action="/import-client" method="post" enctype="multipart/form-data">
+             <input type="file" class="form-control-file" name="clientCSV" required>
+             <br>
+             <input class="btn btn-primary" type="submit" value="Submit">
+           </form>
+         </div>
+       </div>
 
        <!-- BACK BUTTON -->
          <div class="form-row">
@@ -93,7 +93,7 @@
              }
            </script>
          </div>
-                </div>
+      </div>
      </div>
 
        </main>
