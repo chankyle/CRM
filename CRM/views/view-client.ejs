@@ -29,6 +29,12 @@
      document.getElementById('updateClientName').type = 'hidden';
      document.getElementById('editClientName').type = 'button';
    }
+   document.getElementById('updateClientName').onclick = function(){
+     isEditing = false;
+     document.getElementById('newClientName').readOnly = true;
+     document.getElementById('updateClientName').type = 'hidden';
+     document.getElementById('editClientName').type = 'button';
+   }
    document.getElementById('editAgentAbbrev').onclick = function(){
      if (isEditing == false) {
        isEditing = true;
@@ -257,7 +263,6 @@
        document.getElementById('updateClientStatus').type = 'hidden';
        document.getElementById('editClientStatus').type = 'button';
      }
-   }
    </script>
 
  </head>
@@ -276,15 +281,14 @@
       <main class="c-main">
         <!-- Main content here -->
         <main class="main mt-2 mx-3">
-        <form id="formEditClient" name="viewClient" method="post" action="/viewClient" onsubmit="enableFields()">
-        <input style="visibility: hidden" id="isEditing" name ="isEditing" value="false">
-        <input type="name" class="form-control" id="origClientName" name="origClientName" value="<%= clientName %>" hidden>
-        <input type="name" class="form-control" id="user" name="user" value="<%- user %>" hidden>
-            <div class="card w-auto">
-              <h3 class="card-header">View/Edit Client</h3>
-              <div class="card-body">
+
+              <h3>View/Edit Client</h3>
                 <h4> Client Information</h4>
-                <table class="table table-bordered">
+                <form class="d-none d-md-block" id="formEditClient" name="viewClient" method="post" action="/viewClient" onsubmit="enableFields()">
+                <input type="name" class="form-control" id="origClientName" name="origClientName" value="<%= clientName %>" hidden>
+                <input type="name" class="form-control" id="user" name="user" value="<%- user %>" hidden>
+                <div class="table d-none d-md-block ">
+                <table class="table table-bordered px-2 py-2 bg-white">
                   <thead class="thead-dark">
                     <tr>
                       <th style="width: 15%" scope="col" class="align-middle">Name</th>
@@ -310,8 +314,7 @@
                       <td></td>
                     </tr>
                     <tr>
-                      <th scope="row" class="align-middle">Client Name:
-                      </th>
+                      <th scope="row" class="align-middle">Client Name:</th>
                       <td>
                         <input type="text" class="form-control" id="newClientName" name="newClientName" value = "<%= result.client[0].clientName %>" required readonly>
                       </td>
@@ -595,6 +598,7 @@
                     </tr>
                   </tbody>
                 </table>
+                </div>
                 <script>
                   function enableFields() {
                     document.getElementById('agentAbbrev').disabled = false;
@@ -610,15 +614,13 @@
                   }
                 </script>
               <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+              <input style="visibility: hidden" id="isEditing" name ="isEditing" value="false">
             </form>
 
-
-
     <!-- Contact History Snapshot - thinking maybe last 5 entries -->
-
+                <div class="d-none d-md-block table-responsive">
                 <h4> Communication History</h4>
-                <div class="table-responsive">
-                  <table class="table table-bordered">
+                  <table class="table table-bordered bg-white">
                     <thead class="thead-dark">
                       <tr>
                         <th scope="col"></th>
@@ -650,23 +652,363 @@
                       %>
                       <%- eventsList %>
                     <tbody>
-
                     </tbody>
                   </table>
                 </div>
-    <!-- BACK BUTTON -->
-                <div class="form-row">
-                  <div class="form-group col">
-                    <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
-                  </div>
-                  <script>
-                    function goBack() {
-                      window.history.back();
-                    }
-                  </script>
-                </div>
-              </div>
-            </div>
+
+            <!-- Mobile View of Data -->
+                      <div class="table d-block d-sm-none">
+                        <table class="table bg-white">
+                          <tbody>
+                <!-- Mobile View Client Name -->
+                            <tr>
+                              <th class="px-3" style="text-align:left">Client Name</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editClientName" value="edit"></input>
+                                <input type="hidden" id="updateClientName" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 style="width: 100%" class="align-middle">
+                                <input style="width:100%" type="text" class="form-control" id="newClientName" name="newClientName" value = "<%= result.client[0].clientName %>" required readonly>
+                              </td>
+                            </tr>
+                <!-- Mobile View Agent Assignment -->
+                            <tr>
+                              <th style="text-align:left">Agent Assignment</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editAgentAbbrev" value="edit"></input>
+                                <input type="hidden" id="updateAgentAbbrev" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                              <select class="form-control" id="agentAbbrev" name="agentAbbrev" disabled required>
+                                <%
+                                    var list = '';
+                                    for (i = 0; i < result.agents.length; i++) {
+                                      if (result.agents[i].agentAbbrev == result.client[0].agentAbbrev){
+                                        list += '<option selected>' + result.agents[i].agentAbbrev + '</option>';
+                                      } else {
+                                        list += '<option>' + result.agents[i].agentAbbrev + '</option>';
+                                    }
+
+                                    }
+                                %>
+                                  <%- list %>
+                              </select>
+                              </td>
+                            </tr>
+                  <!-- Mobile View Phone Numbers -->
+                            <tr>
+                              <th style="text-align:left">Phone Number/s</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editClientPhone" value="edit"></input>
+                                <input type="hidden" id="updateClientPhone" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <input type="text" class="form-control" id="clientPhone" name="clientPhone" value = "<%= result.client[0].clientPhone %>" required readonly>
+                              </td>
+                            </tr>
+                  <!-- Mobile View Fax Numbers -->
+                            <tr>
+                              <th style="text-align:left">Fax Number/s</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editClientFax" value="edit"></input>
+                                <input type="hidden" id="updateClientFax" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <input type="name" class="form-control" id="clientFax" name="clientFax" value = "<%= result.client[0].clientFax %>" readonly>
+                              </td>
+                            </tr>
+                  <!-- Mobile View Client Address 1 -->
+                            <tr>
+                              <th style="text-align:left">Client Address 1</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editClientAddress1" value="edit"></input>
+                                <input type="hidden" id="updateClientAddress1" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <input type="name" class="form-control" id="clientAddress1" name="clientAddress1" value = "<%= result.client[0].clientAddress1.addr %>" required readonly>
+                              </td>
+                            </tr>
+                  <!-- Mobile View Client Address 1 Type-->
+                            <tr>
+                              <th style="text-align:left">Client Address 1 Type</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editClientAddress1type" value="edit"></input>
+                                <input type="hidden" id="updateClientAddress1type" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                              <select class="form-control" id="clientAddress1type" name="clientAddress1type" disabled required>
+                                <%
+                                var address1List = '';
+                                  if(result.client[0].clientAddress1.type == "Contact Address"){
+                                    address1List += '<option selected>Contact Address</option>';
+                                    address1List += '<option>Delivery Address</option>';
+                                } else {
+                                    address1List += '<option>Contact Address</option>';
+                                    address1List += '<option selected>Delivery Address</option>';
+                                }
+                                %>
+                                <%- address1List %>
+                              </select>
+                              </td>
+                            </tr>
+                  <!-- Mobile View Client Address 2 -->
+                            <tr>
+                              <th style="text-align:left">Client Address 2</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editClientAddress2" value="edit"></input>
+                                <input type="hidden" id="updateClientAddress2" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <input type="name" class="form-control" id="clientAddress2" name="clientAddress2" value = "<%= result.client[0].clientAddress2.addr %>" required readonly>
+                              </td>
+                            </tr>
+                  <!-- Mobile View Client Address 2 Type-->
+                            <tr>
+                              <th style="text-align:left">Client Address 2 Type</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editClientAddress2type" value="edit"></input>
+                                <input type="hidden" id="updateClientAddress2type" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <select class="form-control" id="clientAddress2type" name="clientAddress2type" disabled>
+                                  <%
+                                  var address2List = '';
+                                    if(result.client[0].clientAddress2.type == "Contact Address"){
+                                      address2List += '<option selected>Contact Address</option>';
+                                      address2List += '<option>Delivery Address</option>';
+                                      address2List += '<option></option>';
+                                  } else if (result.client[0].clientAddress2.type == "Delivery Address") {
+                                      address2List += '<option>Contact Address</option>';
+                                      address2List += '<option selected>Delivery Address</option>';
+                                      address2List += '<option></option>';
+                                  } else {
+                                      address2List += '<option>Contact Address</option>';
+                                      address2List += '<option>Delivery Address</option>';
+                                      address2List += '<option selected></option>';
+                                  }
+                                  %>
+                                  <%- address2List %>
+                                </select>
+                              </td>
+                            </tr>
+                    <!-- Mobile View Client Address 3 -->
+                            <tr>
+                              <th style="text-align:left">Client Address 3</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editClientAddress3" value="edit"></input>
+                                <input type="hidden" id="updateClientAddress3" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <input type="name" class="form-control" id="clientAddress3" name="clientAddress3" value = "<%= result.client[0].clientAddress3.addr %>" required readonly>
+                              </td>
+                            </tr>
+                  <!-- Mobile View Client Address 3 Type-->
+                            <tr>
+                              <th style="text-align:left">Client Address 3 Type</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editClientAddress3type" value="edit"></input>
+                                <input type="hidden" id="updateClientAddress3type" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <select class="form-control" id="clientAddress3type" name="clientAddress3type" disabled>
+                                  <%
+                                  var address3List = '';
+                                    if(result.client[0].clientAddress3.type == "Contact Address"){
+                                      address3List += '<option selected>Contact Address</option>';
+                                      address3List += '<option>Delivery Address</option>';
+                                      address3List += '<option></option>';
+                                  } else if (result.client[0].clientAddress3.type == "Delivery Address") {
+                                      address3List += '<option>Contact Address</option>';
+                                      address3List += '<option selected>Delivery Address</option>';
+                                      address3List += '<option></option>';
+                                  } else {
+                                      address3List += '<option>Contact Address</option>';
+                                      address3List += '<option>Delivery Address</option>';
+                                      address3List += '<option selected></option>';
+                                  }
+                                  %>
+                                  <%- address3List %>
+                                </select>
+                              </td>
+                            </tr>
+                    <!-- Mobile View Client Address 4 -->
+                            <tr>
+                              <th style="text-align:left">Client Address 4</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editClientAddress4" value="edit"></input>
+                                <input type="hidden" id="updateClientAddress4" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <input type="name" class="form-control" id="clientAddress4" name="clientAddress4" value = "<%= result.client[0].clientAddress4.addr %>" required readonly>
+                              </td>
+                            </tr>
+                  <!-- Mobile View Client Address 4 Type-->
+                            <tr>
+                              <th style="text-align:left">Client Address 4 Type</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editClientAddress4" value="edit"></input>
+                                <input type="hidden" id="updateClientAddress4" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <select class="form-control" id="clientAddress4type" name="clientAddress4type" disabled>
+                                  <%
+                                  var address4List = '';
+                                    if(result.client[0].clientAddress4.type == "Contact Address"){
+                                      address4List += '<option selected>Contact Address</option>';
+                                      address4List += '<option>Delivery Address</option>';
+                                      address4List += '<option></option>';
+                                  } else if (result.client[0].clientAddress4.type == "Delivery Address") {
+                                      address4List += '<option>Contact Address</option>';
+                                      address4List += '<option selected>Delivery Address</option>';
+                                      address4List += '<option></option>';
+                                  } else {
+                                      address4List += '<option>Contact Address</option>';
+                                      address4List += '<option>Delivery Address</option>';
+                                      address4List += '<option selected></option>';
+                                  }
+                                  %>
+                                  <%- address4List %>
+                                </select>
+                              </td>
+                            </tr>
+                  <!-- Mobile View Email Address 1-->
+                            <tr>
+                              <th style="text-align:left">Email Address 1</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editClientEmail1" value="edit"></input>
+                                <input type="hidden" id="updateClientEmail1" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <input type="email" class="form-control" id="clientEmail1" name="clientEmail1" value = "<%= result.client[0].clientEmail1 %>" readonly>
+                              </td>
+                            </tr>
+                  <!-- Mobile View Email Address 2-->
+                            <tr>
+                              <th style="text-align:left">Email Address 2</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editClientEmail2" value="edit"></input>
+                                <input type="hidden" id="updateClientEmail2" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <input type="email" class="form-control" id="clientEmail2" name="clientEmail2" value = "<%= result.client[0].clientEmail2 %>" readonly>
+                            </tr>
+                  <!-- Mobile View Client Products-->
+                            <tr>
+                              <th style="text-align:left">Client Products</th>
+                              <th style="width: 16.66%" class="align-middle">
+                              <input type="button" id="editProducts" value="edit"></input>
+                              <input type="hidden" id="updateProducts" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row" style="padding-left: 40px">
+                              <%
+                                var productList = '';
+                                if(result.client[0].clientProdOX == "true"){
+                                  productList += '<input class="form-check-input" type="checkbox" id="clientProdOX" name="clientProdOX" value="true"  checked disabled>';
+                                }else{
+                                  productList += '<input class="form-check-input" type="checkbox" id="clientProdOX" name="clientProdOX" value="true"  disabled>';
+                                }
+                                productList += '<label class="form-check-label" for="clientProdOX">OX</label>';
+                                productList += '<br>';
+                                if(result.client[0].clientProdPP == "true"){
+                                  productList += '<input class="form-check-input" type="checkbox" id="clientProdPP" name="clientProdPP" value="true" checked disabled>';
+                                }else{
+                                  productList += '<input class="form-check-input" type="checkbox" id="clientProdPP" name="clientProdPP" value="true" disabled>';
+                                }
+                                productList += '<label class="form-check-label" for="clientProdPP">PP</label>';
+                                productList += '<br>';
+                                if(result.client[0].clientProdTP == "true"){
+                                  productList += '<input class="form-check-input" type="checkbox" id="clientProdTP" name="clientProdTP" value="true" checked disabled>';
+                                }else{
+                                  productList += '<input class="form-check-input" type="checkbox" id="clientProdTP" name="clientProdTP" value="true" disabled>';
+                                }
+                                productList += '<label class="form-check-label" for="clientProdTP">TP</label>';
+                              %>
+                              <%- productList %>
+                            </tr>
+                  <!-- Mobile View Client Notes-->
+                            <tr>
+                              <th style="text-align:left">Remarks</th>
+                              <th style="width: 16.66%" class="align-middle">
+                              <input type="button" id="editClientNotes" value="edit"></input>
+                              <input type="hidden" id="updateClientNotes" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <textarea class="form-control" id="clientNotes" name="clientNotes" rows="3" readonly><%=result.client[0].clientNotes %></textarea>
+                            </tr>
+                  <!-- Mobile View Client Status-->
+                            <tr>
+                              <th style="text-align:left">Status</th>
+                              <th style="width: 16.66%" class="align-middle">
+                              <input type="button" id="editClientNotes" value="edit"></input>
+                              <input type="hidden" id="updateClientNotes" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <select type="name" class="form-control" id="clientStatus" name="clientStatus" disabled required>
+                                  <%
+                                  var statusList = '';
+                                    if(result.client[0].clientActive == "Enabled"){
+                                      statusList += '<option selected>Enabled</option>';
+                                      statusList += '<option>Disabled</option>';
+                                  } else {
+                                      statusList += '<option>Enabled</option>';
+                                      statusList += '<option selected>Disabled</option>';
+                                  }
+                                  %>
+                                  <%- statusList %>
+                                </select>
+                            </tr>
+
+
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <!-- BACK BUTTON -->
+                                  <div class="form-row">
+                                    <div class="form-group col">
+                                      <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
+                                    </div>
+                                    <script>
+                                      function goBack() {
+                                        window.history.back();
+                                      }
+                                    </script>
+                                  </div>
+
         </main>
       </main>
     </div>

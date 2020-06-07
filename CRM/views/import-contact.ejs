@@ -25,33 +25,32 @@
     <div class="c-body">
       <main class="c-main">
         <!-- Main content here -->
-        <main class="main mt-2 mx-3">
+        <main class="main my-3 mx-3">
 
-          <div class="card w-auto">
-            <h3 class="card-header">Import Contact Tool</h3>
-            <div class="card-body">
+            <h3>Import Contact Tool</h3>
             <h4> Instructions: </h4>
             <ul>
               <li> Download the template file: <a href="/files/contacts.csv" download>Contacts.csv</a></li>
               <li> Populate table with Client information.</li>
               <li> Delete Sample Data included </li>
               <li> It is important that you do not change the column names </li>
-              <li> NOTE: Any fields with commas should be surronded by Double Quotes. <br/> <b>Example</b>: "1600 Pennsylvania Ave NW, Washington, DC"</li>
+              <li> <strong>NOTE:</strong> Any fields with commas should be surronded by Double Quotes. <br/> <b>Example</b>: "1600 Pennsylvania Ave NW, Washington, DC"</li>
               <li> Upload the file, click submit and review the information on the next page.</li>
             </ul>
             <br/>
             <h4> Example Data: </h4>
-            <a href="/files/contacts.csv" download>Download Template CSV File</a>
-            <table class="table table-bordered table-responsive">
+            <h6><a href="/files/contacts.csv" download>Download Template CSV File</a></h6>
+            <div class="table-responsive">
+            <table class="table table-bordered px-2 py-2 bg-white">
               <thead class="thead-dark">
                 <tr>
-                  <th style="width: 10%" scope="col">Contact First Name:</th>
-                  <th style="width: 5%" scope="col">Contact Last Name: </th>
-                  <th style="width: 5%" scope="col">Contact Position: </th>
-                  <th style="width: 12%" scope="col">Contact Phone:</th>
-                  <th style="width: 12%" scope="col">Contact Mobile: </th>
-                  <th style="width: 12%" scope="col">Contact Email:</th>
-                  <th style="width: 12%" scope="col">Contact Notes: </th>
+                  <th style="width: 10%" scope="col" class="align-middle">Contact First Name:</th>
+                  <th style="width: 10%" scope="col" class="align-middle">Contact Last Name: </th>
+                  <th style="width: 10%" scope="col" class="align-middle">Contact Position: </th>
+                  <th style="width: 10%" scope="col" class="align-middle">Contact Phone:</th>
+                  <th style="width: 10%" scope="col" class="align-middle">Contact Mobile: </th>
+                  <th style="width: 10%" scope="col" class="align-middle">Contact Email:</th>
+                  <th style="width: 10%" scope="col" class="align-middle">Contact Notes: </th>
                 </tr>
                 <tr>
                   <td>John</td>
@@ -64,35 +63,31 @@
               </thead>
             </table>
           </div>
+            <h4> Upload File: </h4>
+
+            <form action="/import-contact" method="post" enctype="multipart/form-data">
+              <input type="file" class="form-control-file" name="contactCSV" required>
+              <br>
+              <input class="btn btn-primary" type="submit" value="Submit">
+            </form>
+          </div>
         </div>
 
-          <h3> Upload File: </h3>
-
-          <form action="/import-contact" method="post" enctype="multipart/form-data">
-            <input type="file" class="form-control-file" name="contactCSV" required>
-            <br/>
-            <input class="btn btn-primary" type="submit" value="Submit">
-          </form>
-
-         </div>
-       </div>
-      </main>
-
-
        <!-- BACK BUTTON -->
-         <div class="form-row">
-           <div class="form-group col">
-             <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
-           </div>
-           <script>
-             function goBack() {
-               window.history.back();
-             }
-           </script>
-         </div>
-      </main>
-    </div>
-    <footer class="c-footer">
+        <div class="form-row">
+          <div class="form-group col">
+            <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
+          </div>
+          <script>
+            function goBack() {
+              window.history.back();
+            }
+          </script>
+        </div>
+    </main>
+  </main>
+</div>
+<footer class="c-footer">
       <!-- Footer content here -->
       <h1>Footer Content</h1>
     </footer>

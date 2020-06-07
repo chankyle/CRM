@@ -35,56 +35,56 @@
               <li> Populate table with Agent information.</li>
               <li> Delete Sample Data included </li>
               <li> It is important that you do not change the column names </li>
-              <li> NOTE: Any fields with commas should be surronded by Double Quotes. <br/> <b>Example</b>: "1600 Pennsylvania Ave NW, Washington, DC"</li>
+              <li> <strong>NOTE:</strong> Any fields with commas should be surronded by Double Quotes. <br/> <b>Example</b>: "1600 Pennsylvania Ave NW, Washington, DC"</li>
               <li> Upload the file, click submit and review the information on the next page.</li>
             </ul>
             <br/>
-            <h3> Example Data: </h3>
-            <a href="/files/agents.csv" download>Download Template CSV File</a>
-            <table class="table table-bordered table-responsive">
+            <h4> Example Data: </h4>
+            <h6><a href="/files/agents.csv" download>Download Template CSV File</a></h6>
+            <table class="table table-bordered table-responsive px-2 py-2">
               <thead class="thead-dark">
                 <tr>
-                  <th style="width: 5%" scope="col">Agent Abbreviation:</th>
-                  <th style="width: 20%" scope="col">Agent First Name: </th>
-                  <th style="width: 20%" scope="col">Agent Last Name: </th>
-                  <th style="width: 20%" scope="col">Agent Position: </th>
-                  <th style="width: 20%" scope="col">Agent Phone: </th>
+                  <th style="width: 10%" scope="col" class="align-middle">Agent Abbreviation:</th>
+                  <th style="width: 10%" scope="col" class="align-middle">Agent First Name: </th>
+                  <th style="width: 10%" scope="col" class="align-middle">Agent Last Name: </th>
+                  <th style="width: 10%" scope="col" class="align-middle">Agent Position: </th>
+                  <th style="width: 10%" scope="col" class="align-middle">Agent Phone: </th>
                 </tr>
+              </thead>
+              <tbody>
                 <tr>
                   <td>JS</td>
                   <td>John</td>
                   <td>Smith</td>
                   <td>Senior Account Manager</td>
                   <td>123-4567</td>
-              </thead>
+                </tr>
+              </tbody>
             </table>
+            <h4> Upload File: </h4>
+
+             <form action="/import-agent" method="post" enctype="multipart/form-data">
+               <input type="file" class="form-control-file" name="agentCSV" required>
+               <br/>
+               <input class="btn btn-primary" type="submit" value="Submit">
+             </form>
           </div>
         </div>
 
-        <h3> Upload File: </h3>
-
-         <form action="/import-agent" method="post" enctype="multipart/form-data">
-           <input type="file" class="form-control-file" name="agentCSV" required>
-           <br/>
-           <input class="btn btn-primary" type="submit" value="Submit">
-         </form>
-
+        <!-- BACK BUTTON -->
+          <div class="form-row">
+            <div class="form-group col">
+              <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
+            </div>
+            <script>
+              function goBack() {
+                window.history.back();
+              }
+            </script>
+          </div>
        </div>
      </div>
        </main>
-
-
-       <!-- BACK BUTTON -->
-         <div class="form-row">
-           <div class="form-group col">
-             <button type="button" class="btn btn-primary" onclick="goBack()">Back</button>
-           </div>
-           <script>
-             function goBack() {
-               window.history.back();
-             }
-           </script>
-         </div>
       </main>
     </div>
     <footer class="c-footer">

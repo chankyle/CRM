@@ -167,8 +167,8 @@
    }
  }
  </script>
-
  </head>
+
  <body class="c-app">
 
    <div class="c-sidebar c-sidebar-light c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
@@ -181,16 +181,13 @@
       <% include partials/header %>
     </header>
     <div class="c-body">
-      <main class="c-main">
         <!-- Main content here -->
-        <main class="main mt-2 mx-3">
+        <main class="main my-2 mx-3">
           <form id="formEditEvent" name="viewEvent" method="post" action="/viewEvent" onsubmit="enableFields()">
           <input type="name" class="form-control" id="eventID" name="eventID" value="<%= eventID %>" hidden>
-          <div class="card w-auto">
-            <h3 class="card-header">View/Edit Event</h3>
-            <div class="card-body">
+            <h3>View/Edit Event</h3>
             <h4> Event Information</h4>
-            <table class="table table-bordered">
+            <table class="table table-bordered px-2 py-2">
             <thead class="thead-dark">
               <tr>
                 <th style="width: 5%" scope="col">Field:</th>
@@ -396,7 +393,6 @@
               </tr>
             </tbody>
           </table>
-        </div>
           <!--All drop down fields need to be set at enabled before they will be sent as part of the payload to mongo -->
           <script>
             function enableFields() {
@@ -412,7 +408,6 @@
           </script>
           <button type="submit" class="btn btn-primary btn-lg">Submit</button>
           </form>
-        </div>
       </form>
 
 
@@ -431,7 +426,7 @@
   </div>
 
     </main>
-      </main>
+
     </div>
     <footer class="c-footer">
       <!-- Footer content here -->
