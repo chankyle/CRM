@@ -17,122 +17,122 @@ var collection = db.get('Permissions');
 collection.find({},{projection:{ _id: 0 }},function(e,docs){
     const grantsList = docs;
 });*/
-const grantsList = [ { role: 'admin',
-    resource: 'Client',
-    action: 'Create:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Client',
-    action: 'Read:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Client',
-    action: 'Update:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Contact',
-    action: 'Create:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Contact',
-    action: 'Read:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Contact',
-    action: 'Update:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Event',
-    action: 'Create:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Event',
-    action: 'Read:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Event',
-    action: 'Update:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Import',
-    action: 'Create:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Permissions',
-    action: 'Read:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Permissions',
-    action: 'Update:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Roles',
-    action: 'Read:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Roles',
-    action: 'Update:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Account',
-    action: 'Create:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Account',
-    action: 'Read:any',
-    attributes: '*' },
-  { role: 'admin',
-    resource: 'Account',
-    action: 'Update:any',
-    attributes: '*' },
-  { role: 'agent',
-    resource: 'Client',
-    action: 'Create:any',
-    attributes: '*' },
-  { role: 'agent',
-    resource: 'Client',
-    action: 'Read:any',
-    attributes: '*' },
-  { role: 'agent',
-    resource: 'Client',
-    action: 'Update:any',
-    attributes: '*' },
-  { role: 'agent',
-    resource: 'Contact',
-    action: 'Create:any',
-    attributes: '*' },
-  { role: 'agent',
-    resource: 'Contact',
-    action: 'Read:any',
-    attributes: '*' },
-  { role: 'agent',
-    resource: 'Contact',
-    action: 'Update:any',
-    attributes: '*' },
-  { role: 'agent',
-    resource: 'Event',
-    action: 'Create:any',
-    attributes: '*' },
-  { role: 'agent',
-    resource: 'Event',
-    action: 'Read:any',
-    attributes: '*' },
-  { role: 'agent',
-    resource: 'Event',
-    action: 'Update:any',
-    attributes: '*' },
-  { role: 'readonly',
-    resource: 'Client',
-    action: 'Read:any',
-    attributes: '*' },
-  { role: 'readonly',
-    resource: 'Contact',
-    action: 'Read:any',
-    attributes: '*' },
-  { role: 'readonly',
-    resource: 'Event',
-    action: 'Read:any',
-    attributes: '*' } ];
+const grantsList = [ { role: 'Administrator',
+resource: 'Client',
+action: 'Create:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Client',
+action: 'Read:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Client',
+action: 'Update:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Contact',
+action: 'Create:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Contact',
+action: 'Read:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Contact',
+action: 'Update:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Event',
+action: 'Create:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Event',
+action: 'Read:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Event',
+action: 'Update:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Import',
+action: 'Create:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Permissions',
+action: 'Read:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Permissions',
+action: 'Update:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Roles',
+action: 'Read:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Roles',
+action: 'Update:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Account',
+action: 'Create:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Account',
+action: 'Read:any',
+attributes: '*' },
+{ role: 'Administrator',
+resource: 'Account',
+action: 'Update:any',
+attributes: '*' },
+{ role: 'Agent',
+resource: 'Client',
+action: 'Create:any',
+attributes: '*' },
+{ role: 'Agent',
+resource: 'Client',
+action: 'Read:any',
+attributes: '*' },
+{ role: 'Agent',
+resource: 'Client',
+action: 'Update:any',
+attributes: '*' },
+{ role: 'Agent',
+resource: 'Contact',
+action: 'Create:any',
+attributes: '*' },
+{ role: 'Agent',
+resource: 'Contact',
+action: 'Read:any',
+attributes: '*' },
+{ role: 'Agent',
+resource: 'Contact',
+action: 'Update:any',
+attributes: '*' },
+{ role: 'Agent',
+resource: 'Event',
+action: 'Create:any',
+attributes: '*' },
+{ role: 'Agent',
+resource: 'Event',
+action: 'Read:any',
+attributes: '*' },
+{ role: 'Agent',
+resource: 'Event',
+action: 'Update:any',
+attributes: '*' },
+{ role: 'ReadOnly',
+resource: 'Client',
+action: 'Read:any',
+attributes: '*' },
+{ role: 'ReadOnly',
+resource: 'Contact',
+action: 'Read:any',
+attributes: '*' },
+{ role: 'ReadOnly',
+resource: 'Event',
+action: 'Read:any',
+attributes: '*' } ];
 
 
 // Set temporary csv upload location
@@ -1916,8 +1916,8 @@ router.get('/event-report', function(req, res) {
     }
 });
 
+/* GET Query to display list of users */ 
 router.get('/view-users', function(req, res){
-    console.log(req);
     var ac = new AccessControl(grantsList);
     const permission = ac.can(req.user.usertype).readAny('Account');
     if (permission.granted) {
@@ -1961,6 +1961,7 @@ router.post('/view-users', function(req, res) {
         res.status(403).end();
     }
 });
+
 
 /* POST Query to MongoDB and Update Account Entry. */
 router.post('/edit-user', function(req, res) {
@@ -2014,6 +2015,92 @@ router.post('/edit-user', function(req, res) {
     }
 });
 
+/* GET Query to display list of Permissions and Roles */ 
+router.get('/edit-permissions', function(req, res){
+    var ac = new AccessControl(grantsList);
+    const permission = ac.can(req.user.usertype).readAny('Permissions');
+    if (permission.granted) {
+        // Perform what is allowed when permission is granted
+        // Set our internal DB variable
+        var db = req.db;
+
+        // Set our collection
+        var collection = db.get('Permissions');
+
+        collection.find({},{},function(e,docs){
+            var roles =[];
+            var resources = [];
+            for (i = 0; i < docs.length; i++){
+                //If role is not in array of roles, add role into array
+                var currentRole = docs[i].role;
+                if (roles.indexOf(currentRole) > -1) {
+                    //Do nothing since Role is found
+                } else {
+                    roles.push (currentRole);
+                }
+                //If resource is not in array of resources, add resource into array 
+                var currentResource = docs[i].resource;
+                if (resources.indexOf(currentResource) > -1) {
+                    //Do nothing since Resource is found
+                } else {
+                    resources.push (currentResource);
+                }
+            }
+            res.render('edit-permissions', {
+                "permissions" : docs,
+                roles : roles,
+                resources : resources,
+                user : req.user
+            });
+        });
+    } else {
+        // resource is forbidden for this user/role
+        res.status(403).end();
+    }
+
+});
+    
+
+/* POST Query to MongoDB and return Edit User Page. */
+router.post('/edit-permissions', function(req, res) {
+    console.log(req);
+
+    var ac = new AccessControl(grantsList);
+    const permission = ac.can(req.user.usertype).updateAny('Permissions');
+    if (permission.granted) {
+        // Perform what is allowed when permission is granted
+        // Set our internal DB variable
+        var db = req.db;
+        var collection = db.get('Permissions');
+        /* TODO
+        collection.find({"username":req.body.username},{},function(e,docs){
+            res.render('edit-users', {
+                "results" : docs,
+                user : req.user
+            });
+        });*/
+    } else {
+        // resource is forbidden for this user/role
+        res.status(403).end();
+    }
+});
+
+
+/* GET User Entry Form. */
+router.get('/entry-user', function(req, res) {
+    var ac = new AccessControl(grantsList);
+    // TODO: Restirct access to entry-user
+    const permission = ac.can(req.user.usertype).readAny('Event');
+    if (permission.granted) {
+        res.render('./entry-user', {
+            user : req.user
+        });
+    } else {
+        // resource is forbidden for this user/role
+        res.status(403).end();
+    }
+});
+
 /* POST to Add Agents */
 router.post('/addUser', function(req, res) {
     var ac = new AccessControl(grantsList);
@@ -2047,7 +2134,7 @@ router.post('/addUser', function(req, res) {
         }
 
         if (newUserType == 'Administrator'){
-            Account.register(new Account({ username : newUserName, usertype : 'admin' , active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
+            Account.register(new Account({ username : newUserName, usertype : 'Administrator' , active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
                 if (err) {
                     console.log(err);
                     res.render('home', {
@@ -2058,7 +2145,7 @@ router.post('/addUser', function(req, res) {
             });
 
         } else if (newUserType == 'Read-Only') {
-            Account.register(new Account({ username : newUserName, usertype : 'readonly', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
+            Account.register(new Account({ username : newUserName, usertype : 'ReadOnly', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
                 if (err) {
                     console.log(err);
                     res.render('home', {
@@ -2091,7 +2178,7 @@ router.post('/addUser', function(req, res) {
             },
             // Create Account
             function(callback) {
-                Account.register(new Account({ username : newUserName, usertype : 'agent', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
+                Account.register(new Account({ username : newUserName, usertype : 'Agent', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
                     if (err) {
                         console.log(err);
                         callback();
@@ -2114,36 +2201,5 @@ router.post('/addUser', function(req, res) {
         res.status(403).end();
     }
 });
-
-
-router.get('/edit-permissions', function(req, res){
-    var ac = new AccessControl(grantsList);
-    const permission = ac.can(req.user.usertype).readAny('Permissions');
-    if (permission.granted) {
-        // Perform what is allowed when permission is granted
-        // Set our internal DB variable
-        var db = req.db;
-
-        // Set our collection
-        var collection = db.get('permissions');
-
-        collection.find({},{},function(e,docs){
-            res.render('edit-permissions', {
-                "permissions" : docs,
-                user : req.user
-            });
-        });
-    } else {
-        // resource is forbidden for this user/role
-        res.status(403).end();
-    }
-
-});
-
-
-//TODO - Take permission from Database instead of stored locally on code
-//TODO - Figure out how to hide view from server side
-//TODO - Add link to access 'view-users'
-//TOOD - Complete 'edit permssions'
 
 module.exports = router;

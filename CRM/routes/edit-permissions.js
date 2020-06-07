@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-/* Render Client-Entry vieww */
+/* GET permissions listing. */
 router.get('/', function(req, res, next) {
-  res.render('entry-user');
+  res.render('edit-permissions');
 });
 
 module.exports = router;

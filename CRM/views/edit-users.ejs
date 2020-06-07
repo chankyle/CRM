@@ -46,18 +46,18 @@
                       <select class="form-control" id="userRole" name="userRole" required>
                         <%
                         var roleList = '';
-                        if(results[0].usertype == "admin"){
-                        roleList += '<option selected>admin</option>';
-                        roleList += '<option>agent</option>';
-                        roleList += '<option>readonly</option>';
-                      } else if (results[0].usertype == "agent"){
-                      roleList += '<option>admin</option>';
-                      roleList += '<option selected>agent</option>';
-                      roleList += '<option>readonly</option>';
+                        if(results[0].usertype == "Administrator"){
+                        roleList += '<option selected>Administrator</option>';
+                        roleList += '<option>Agent</option>';
+                        roleList += '<option>ReadOnly</option>';
+                      } else if (results[0].usertype == "Agent"){
+                      roleList += '<option>Administrator</option>';
+                      roleList += '<option selected>Agent</option>';
+                      roleList += '<option>ReadOnly</option>';
                     } else {
-                    roleList += '<option>admin</option>';
-                    roleList += '<option>agent</option>';
-                    roleList += '<option selected>readonly</option>';
+                    roleList += '<option>Administrator</option>';
+                    roleList += '<option>Agent</option>';
+                    roleList += '<option selected>ReadOnly</option>';
                   }
                   %>
                   <%- roleList %>
