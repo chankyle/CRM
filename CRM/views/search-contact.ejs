@@ -25,15 +25,13 @@
     <div class="c-body">
       <main class="c-main">
         <!-- Main content here -->
-        <main class="main mt-2 mx-3">
-            <div class="card w-auto">
-              <h3 class="card-header">View/Edit Contact</h3>
+        <main class="main mt-0 mx-3">
+              <h2>View/Edit Contact</h2>
+              <hr>
               <form id="search-contact" name="search-contact" method="post" action="/search-contact">
-              <div class="card-body">
-
                 <!-- Select Contact from Prepopulated list of options -->
                   <div class="form-row">
-                    <div class="form-group col-12">
+                    <div class="form-group col-12 col-md-auto">
                         <label for="contactSelect">Select Contact</label>
                           <select class="form-control" id="contactID" name="contactID" required>
                             <%
@@ -54,9 +52,6 @@
                       </form>
                     </div>
                   </div>
-
-                </div>
-              </div>
         </main>
       </main>
     </div>

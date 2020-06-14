@@ -25,35 +25,35 @@
     <div class="c-body">
       <main class="c-main">
         <!-- Main content here -->
-        <main class="main mt-2 mx-3">
+        <main class="main mt-0 mx-3">
+              <h2>Import Client Tool</h2>
+              <hr>
 
-          <div class="card w-auto">
-            <h3 class="card-header">Import Client Tool</h3>
-            <div class="card-body">
              <form action="/upload-clients" method="post">
                <input type="text" class="form-control" id="csvData" name="csvData" value="<%= JSONClients %>" hidden>
-               <table class="table table-bordered table-responsive">
+          <div class="table-responsive">
+               <table class="table table-bordered px-2 py-2 bg-white">
                  <thead class="thead-dark">
                    <tr>
-                     <th scope="col">Agent Abbrev:</th>
-                     <th scope="col">Client Name:</th>
-                     <th scope="col">Client Phone:</th>
-                     <th scope="col">Client Fax:</th>
-                     <th scope="col">Client Address 1:</th>
-                     <th scope="col">Client Address 1 Type:</th>
-                     <th scope="col">Client Address 2:</th>
-                     <th scope="col">Client Address 2 Type:</th>
-                     <th scope="col">Client Address 3:</th>
-                     <th scope="col">Client Address 3 Type:</th>
-                     <th scope="col">Client Address 4:</th>
-                     <th scope="col">Client Address 4 Type:</th>
-                     <th scope="col">Client Email 1:</th>
-                     <th scope="col">Client Email 2:</th>
-                     <th scope="col">Client Prod OX:</th>
-                     <th scope="col">Client Prod PP:</th>
-                     <th scope="col">Client Prod TP:</th>
-                     <th scope="col">Client Notes:</th>
-                     <th scope="col">Client Status:</th>
+                     <th scope="col" class="align-middle">Agent Abbrev:</th>
+                     <th scope="col" class="align-middle">Client Name:</th>
+                     <th scope="col" class="align-middle">Client Phone:</th>
+                     <th scope="col" class="align-middle">Client Fax:</th>
+                     <th scope="col" class="align-middle">Client Address 1:</th>
+                     <th scope="col" class="align-middle">Client Address 1 Type:</th>
+                     <th scope="col" class="align-middle">Client Address 2:</th>
+                     <th scope="col" class="align-middle">Client Address 2 Type:</th>
+                     <th scope="col" class="align-middle">Client Address 3:</th>
+                     <th scope="col" class="align-middle">Client Address 3 Type:</th>
+                     <th scope="col" class="align-middle">Client Address 4:</th>
+                     <th scope="col" class="align-middle">Client Address 4 Type:</th>
+                     <th scope="col" class="align-middle">Client Email 1:</th>
+                     <th scope="col" class="align-middle">Client Email 2:</th>
+                     <th scope="col" class="align-middle">Client Prod OX:</th>
+                     <th scope="col" class="align-middle">Client Prod PP:</th>
+                     <th scope="col" class="align-middle">Client Prod TP:</th>
+                     <th scope="col" class="align-middle">Client Notes:</th>
+                     <th scope="col" class="align-middle">Client Status:</th>
                    </tr>
                  </thead>
                  <tbody>
@@ -108,11 +108,9 @@
                    <%- list %>
                  </tbody>
                </table>
-
+             </div>
                <input class="btn btn-primary" type="submit" value="Confirm Upload">
              </form>
-           </div>
-         </div>
         </main>
       </main>
     </div>

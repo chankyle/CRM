@@ -25,14 +25,13 @@
     <div class="c-body">
       <main class="c-main">
         <!-- Main content here -->
-        <main class="main mt-2 mx-3">
-
+        <main class="main mt-0 mx-3">
+              <h2>View/Edit Event</h2>
+              <hr>
               <form id="search-event" name="search-event" method="post" action="/search-event">
-
-              <h3>View/Edit Event</h3>
           <!-- Select Agent from Prepopulated list of options -->
                   <div class="form-row">
-                    <div class="form-group col-12">
+                    <div class="form-group col-12 col-md-auto">
                       <label for="clientSelect">Select Client</label>
                       <select class="form-control" name="clientName" id="clientName" required>
                       <%
@@ -48,11 +47,11 @@
 
                   <!-- Select Date Range for Data -->
                         <div class="form-row">
-                          <div class="form-group col-6">
+                          <div class="form-group col-12 col-md-auto">
                             <label for="inputDateStart">Date Range Start</label>
                             <input type="date" class="form-control" id="dateStartInput" name="dateStartInput" required>
                           </div>
-                          <div class="form-group col-6">
+                          <div class="form-group col-12 col-md-auto">
                             <label for="inputDateEnd">Date Range End</label>
                             <input type="date" class="form-control" id="dateEndInput" name="dateEndInput" required>
                           </div>
