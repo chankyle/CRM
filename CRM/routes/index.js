@@ -2063,7 +2063,6 @@ router.get('/edit-permissions', function(req, res){
 
 /* POST Query to MongoDB and return Edit User Page. */
 router.post('/edit-permissions', function(req, res) {
-    console.log(req);
 
     var ac = new AccessControl(grantsList);
     const permission = ac.can(req.user.usertype).updateAny('Permissions');
@@ -2072,13 +2071,67 @@ router.post('/edit-permissions', function(req, res) {
         // Set our internal DB variable
         var db = req.db;
         var collection = db.get('Permissions');
-        /* TODO
-        collection.find({"username":req.body.username},{},function(e,docs){
-            res.render('edit-users', {
-                "results" : docs,
-                user : req.user
-            });
-        });*/
+        console.log(req.body);
+        console.log(req.body['Administrator.Client.Create']);
+        var roles = JSON.parse(req.body.roles);
+        var resources = JSON.parse(req.body.resources);
+        var str = '';
+        //empty permissions table
+        collection.remove({});
+
+        //repopulate every entry on table
+        for (i in roles) {
+            for (k in resources) {
+                //Check action:Create
+                str = '';
+                str = str.concat(roles[i], '.', resources[k], '.Create');
+                if (req.body[str] == 'on'){
+                    collection.insert({
+                        "role": roles[i],
+                        "resource": resources[k],
+                        "action": "Create:any",
+                        "attributes": "*"
+                    })
+                }
+
+                //Check action:Read
+                str = '';
+                str = str.concat(roles[i], '.', resources[k], '.Read');
+                if (req.body[str] == 'on'){
+                    collection.insert({
+                        "role": roles[i],
+                        "resource": resources[k],
+                        "action": "Read:any",
+                        "attributes": "*"
+                    })
+                }
+
+                //Check action:Update
+                str = '';
+                str = str.concat(roles[i], '.', resources[k], '.Update');
+                if (req.body[str] == 'on'){
+                    collection.insert({
+                        "role": roles[i],
+                        "resource": resources[k],
+                        "action": "Update:any",
+                        "attributes": "*"
+                    })
+                }
+
+                //Check action:Delete
+                str = '';
+                str = str.concat(roles[i], '.', resources[k], '.Delete');
+                if (req.body[str] == 'on'){
+                    collection.insert({
+                        "role": roles[i],
+                        "resource": resources[k],
+                        "action": "Delete:any",
+                        "attributes": "*"
+                    })
+                }
+            }
+        }
+        res.redirect('/home');
     } else {
         // resource is forbidden for this user/role
         res.status(403).end();
