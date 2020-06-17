@@ -26,11 +26,10 @@
     <div class="c-body">
       <main class="c-main">
         <!-- Main content here -->
-        <main class="main mt-2 mx-3">
+        <main class="main mt-0 mx-3">
+              <h2>Contact History Report</h2>
+              <hr>
           <form id="formContactHistoryReport" name="formContactHistoryReport" method="post" action="/result-contact-history-report">
-          <div class="card w-auto">
-            <h3 class="card-header">Contact History Report</h3>
-            <div class="card-body">
     <!-- Select Client from Prepopulated list of options -->
               <div class="form-row">
                 <div class="form-group col-auto">
@@ -51,7 +50,7 @@
             <script>
               function changeAgent(value){
                 var contacts = JSON.parse($('#variableJSON').text());
-                
+
                 var contactOptions = "";
                 contactOptions += "<option>N/A</option>";
                 for (j = 0; j < contacts.length; j++) {
@@ -96,10 +95,6 @@
                 </form>
               </div>
             </div>
-
-          </div>
-        </div>
-
         </main>
       </main>
     </div>

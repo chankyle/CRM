@@ -25,19 +25,17 @@
     <div class="c-body">
       <main class="c-main">
         <!-- Main content here -->
-        <main class="main">
+        <main class="main mt-0 mx-3">
+              <h2>Client History Report</h2>
+              <hr>
 
-          <div class="card w-auto">
-            <div class="card-body">
-
-    <h3> <strong>Client History Report</strong></h3>
-    <h4><small class="text">Client: <u><%- clientName %></u></small></h4>
+      <h4><small class="text">Client: <u><%- clientName %></u></small></h4>
     <h4><small class="text">Date Range: <u><%- dateRange %></u></small></h4>
 
       <!-- Extracted data in Table Form -->
 
     <div class="table-responsive">
-      <table class="table">
+      <table class="table table-bordered px-2 py-2 bg-white">
         <thead class="thead-dark">
           <tr>
             <th scope="col"></th>
@@ -84,9 +82,6 @@
                 window.history.back();
               }
             </script>
-          </div>
-        </div>
-
         </main>
       </main>
     </div>
