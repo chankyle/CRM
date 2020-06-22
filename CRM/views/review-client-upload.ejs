@@ -31,7 +31,7 @@
 
              <form action="/upload-clients" method="post">
                <input type="text" class="form-control" id="csvData" name="csvData" value="<%= JSONClients %>" hidden>
-          <div class="table-responsive">
+          <div class="table-responsive text-nowrap" style=" height: 700px; overflow-y:auto;">
                <table class="table table-bordered px-2 py-2 bg-white">
                  <thead class="thead-dark">
                    <tr>
@@ -68,40 +68,40 @@
                          list += '<option>' + agentList[k].agentAbbrev + '</option>';
                        }
                        list += '</select> </th>';
-                       list += '<td>' + clients[i].clientName + '</td>';
-                       list += '<td>' + clients[i].clientPhone + '</td>';
-                       list += '<td>' + clients[i].clientFax + '</td>';
-                       list += '<td>' + clients[i].clientAddress1 + '</td>';
-                       list += '<td><select class="form-control" id="clientAddress1Type[' + i + ']" name="clientAddress1Type[' + i + ']" required>';
+                       list += '<td style="vertical-align: middle">' + clients[i].clientName + '</td>';
+                       list += '<td style="vertical-align: middle">' + clients[i].clientPhone + '</td>';
+                       list += '<td style="vertical-align: middle">' + clients[i].clientFax + '</td>';
+                       list += '<td style="vertical-align: middle">' + clients[i].clientAddress1 + '</td>';
+                       list += '<td style="vertical-align: middle"><select class="form-control" id="clientAddress1Type[' + i + ']" name="clientAddress1Type[' + i + ']" required>';
                          list += '<option value="" disabled selected>Select</option>';
                          list += '<option>Contact Address</option>';
                          list += '<option>Delivery Address</option>';
                        list += '</select> </td>';
-                       list += '<td>' + clients[i].clientAddress2 + '</td>';
-                       list += '<td><select class="form-control" id="clientAddress2Type[' + i + ']" name="clientAddress2Type[' + i + ']">';
+                       list += '<td style="vertical-align: middle">' + clients[i].clientAddress2 + '</td>';
+                       list += '<td style="vertical-align: middle"><select class="form-control" id="clientAddress2Type[' + i + ']" name="clientAddress2Type[' + i + ']">';
                          list += '<option value=""></option>';
                          list += '<option>Contact Address</option>';
                          list += '<option>Delivery Address</option>';
                        list += '</select> </td>';
-                       list += '<td>' + clients[i].clientAddress3 + '</td>';
-                       list += '<td><select class="form-control" id="clientAddress3Type[' + i + ']" name="clientAddress3Type[' + i + ']">';
+                       list += '<td style="vertical-align: middle">' + clients[i].clientAddress3 + '</td>';
+                       list += '<td style="vertical-align: middle"><select class="form-control" id="clientAddress3Type[' + i + ']" name="clientAddress3Type[' + i + ']">';
                          list += '<option value=""></option>';
                          list += '<option>Contact Address</option>';
                          list += '<option>Delivery Address</option>';
                        list += '</select> </td>';
-                       list += '<td>' + clients[i].clientAddress4 + '</td>';
-                       list += '<td><select class="form-control" id="clientAddress4Type[' + i + ']" name="clientAddress4Type[' + i + ']">';
+                       list += '<td style="vertical-align: middle">' + clients[i].clientAddress4 + '</td>';
+                       list += '<td style="vertical-align: middle"><select class="form-control" id="clientAddress4Type[' + i + ']" name="clientAddress4Type[' + i + ']">';
                          list += '<option value=""></option>';
                          list += '<option>Contact Address</option>';
                          list += '<option>Delivery Address</option>';
                        list += '</select> </td>';
-                       list += '<td>' + clients[i].clientEmail1 + '</td>';
-                       list += '<td>' + clients[i].clientEmail2 + '</td>';
-                       list += '<td><input class="form-check-input" type="checkbox" name="clientProdOX[' + i + ']" value="true"/></td>';
-                       list += '<td><input class="form-check-input" type="checkbox" name="clientProdPP[' + i + ']" value="true"/></td>';
-                       list += '<td><input class="form-check-input" type="checkbox" name="clientProdTP[' + i + ']" value="true"/></td>';
-                       list += '<td>' + clients[i].clientNotes + '</td>';
-                       list += '<td>Enabled</td>';
+                       list += '<td style="vertical-align: middle">' + clients[i].clientEmail1 + '</td>';
+                       list += '<td style="vertical-align: middle">' + clients[i].clientEmail2 + '</td>';
+                       list += '<td style="text-align:center; vertical-align: middle"><div class="custom-control custom-checkbox"><input class="form-check-input" type="checkbox" name="clientProdOX[' + i + ']" value="true"/></div></td>';
+                       list += '<td style="text-align:center; vertical-align: middle"><div class="custom-control custom-checkbox"><input class="form-check-input" type="checkbox" name="clientProdPP[' + i + ']" value="true"/></div></td>';
+                       list += '<td style="text-align:center; vertical-align: middle"><div class="custom-control custom-checkbox"><input class="form-check-input" type="checkbox" name="clientProdTP[' + i + ']" value="true"/></div></td>';
+                       list += '<td style="vertical-align: middle">' + clients[i].clientNotes + '</td>';
+                       list += '<td style="vertical-align: middle">Enabled</td>';
                        list += '</tr>'
                      }
                    %>
@@ -109,6 +109,7 @@
                  </tbody>
                </table>
              </div>
+             <br>
                <input class="btn btn-primary" type="submit" value="Confirm Upload">
              </form>
         </main>
