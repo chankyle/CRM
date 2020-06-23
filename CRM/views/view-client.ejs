@@ -14,7 +14,6 @@
  <script>
  window.onload = function() {
    var isEditing = false;
-   var changedView = 'Desktop';
 
    document.getElementById('editClientName').onclick = function() {
      if (isEditing == false) {
@@ -27,7 +26,6 @@
 
    document.getElementById('updateClientName').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('newClientName').readOnly = true;
      document.getElementById('updateClientName').type = 'hidden';
      document.getElementById('editClientName').type = 'button';
@@ -44,7 +42,6 @@
 
    document.getElementById('updateAgentAbbrev').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('agentAbbrev').disabled = true;
      document.getElementById('updateAgentAbbrev').type = 'hidden';
      document.getElementById('editAgentAbbrev').type = 'button';
@@ -61,7 +58,6 @@
 
    document.getElementById('updateClientPhone').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('clientPhone').readOnly = true;
      document.getElementById('updateClientPhone').type = 'hidden';
      document.getElementById('editClientPhone').type = 'button';
@@ -78,7 +74,6 @@
 
    document.getElementById('updateClientFax').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('clientFax').readOnly = true;
      document.getElementById('updateClientFax').type = 'hidden';
      document.getElementById('editClientFax').type = 'button';
@@ -95,7 +90,6 @@
 
    document.getElementById('updateClientAddress1').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('clientAddress1').readOnly = true;
      document.getElementById('updateClientAddress1').type = 'hidden';
      document.getElementById('editClientAddress1').type = 'button';
@@ -112,7 +106,6 @@
 
    document.getElementById('updateClientAddress1type').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('clientAddress1type').disabled = true;
      document.getElementById('updateClientAddress1type').type = 'hidden';
      document.getElementById('editClientAddress1type').type = 'button';
@@ -129,7 +122,6 @@
 
    document.getElementById('updateClientAddress2').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('clientAddress2').readOnly = true;
      document.getElementById('updateClientAddress2').type = 'hidden';
      document.getElementById('editClientAddress2').type = 'button';
@@ -146,7 +138,6 @@
 
    document.getElementById('updateClientAddress2type').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('clientAddress2type').disabled = true;
      document.getElementById('updateClientAddress2type').type = 'hidden';
      document.getElementById('editClientAddress2type').type = 'button';
@@ -163,7 +154,6 @@
 
    document.getElementById('updateClientAddress3').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('clientAddress3').readOnly = true;
      document.getElementById('updateClientAddress3').type = 'hidden';
      document.getElementById('editClientAddress3').type = 'button';
@@ -180,7 +170,6 @@
 
    document.getElementById('updateClientAddress3type').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('clientAddress3type').disabled = true;
      document.getElementById('updateClientAddress3type').type = 'hidden';
      document.getElementById('editClientAddress3type').type = 'button';
@@ -197,7 +186,6 @@
 
    document.getElementById('updateClientAddress4').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('clientAddress4').readOnly = true;
      document.getElementById('updateClientAddress4').type = 'hidden';
      document.getElementById('editClientAddress4').type = 'button';
@@ -214,7 +202,6 @@
 
    document.getElementById('updateClientAddress4type').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('clientAddress4type').disabled = true;
      document.getElementById('updateClientAddress4type').type = 'hidden';
      document.getElementById('editClientAddress4type').type = 'button';
@@ -231,7 +218,6 @@
 
    document.getElementById('updateClientEmail1').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('clientEmail1').readOnly = true;
      document.getElementById('updateClientEmail1').type = 'hidden';
      document.getElementById('editClientEmail1').type = 'button';
@@ -248,7 +234,6 @@
 
    document.getElementById('updateClientEmail2').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('clientEmail2').readOnly = true;
      document.getElementById('updateClientEmail2').type = 'hidden';
      document.getElementById('editClientEmail2').type = 'button';
@@ -267,7 +252,6 @@
 
    document.getElementById('updateProducts').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('clientProdOX').disabled = true;
      document.getElementById('clientProdPP').disabled = true;
      document.getElementById('clientProdTP').disabled = true;
@@ -286,7 +270,6 @@
 
    document.getElementById('updateClientNotes').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('clientNotes').readOnly = true;
      document.getElementById('updateClientNotes').type = 'hidden';
      document.getElementById('editClientNotes').type = 'button';
@@ -303,7 +286,6 @@
 
    document.getElementById('updateClientStatus').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('clientStatus').disabled = true;
      document.getElementById('updateClientStatus').type = 'hidden';
      document.getElementById('editClientStatus').type = 'button';
@@ -320,7 +302,6 @@
 
    document.getElementById('updateClientNameMobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('newClientNameMobile').readOnly = true;
      document.getElementById('updateClientNameMobile').type = 'hidden';
      document.getElementById('editClientNameMobile').type = 'button';
@@ -337,7 +318,6 @@
 
    document.getElementById('updateAgentAbbrevMobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('agentAbbrevMobile').disabled = true;
      document.getElementById('updateAgentAbbrevMobile').type = 'hidden';
      document.getElementById('editAgentAbbrevMobile').type = 'button';
@@ -354,7 +334,6 @@
 
    document.getElementById('updateClientPhoneMobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('clientPhoneMobile').readOnly = true;
      document.getElementById('updateClientPhoneMobile').type = 'hidden';
      document.getElementById('editClientPhoneMobile').type = 'button';
@@ -371,7 +350,6 @@
 
    document.getElementById('updateClientFaxMobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('clientFaxMobile').readOnly = true;
      document.getElementById('updateClientFaxMobile').type = 'hidden';
      document.getElementById('editClientFaxMobile').type = 'button';
@@ -388,7 +366,6 @@
 
    document.getElementById('updateClientAddress1Mobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('clientAddress1Mobile').readOnly = true;
      document.getElementById('updateClientAddress1Mobile').type = 'hidden';
      document.getElementById('editClientAddress1Mobile').type = 'button';
@@ -405,7 +382,6 @@
 
    document.getElementById('updateClientAddress1typeMobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('clientAddress1typeMobile').disabled = true;
      document.getElementById('updateClientAddress1typeMobile').type = 'hidden';
      document.getElementById('editClientAddress1typeMobile').type = 'button';
@@ -422,7 +398,6 @@
 
    document.getElementById('updateClientAddress2Mobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('clientAddress2Mobile').readOnly = true;
      document.getElementById('updateClientAddress2Mobile').type = 'hidden';
      document.getElementById('editClientAddress2Mobile').type = 'button';
@@ -439,7 +414,6 @@
 
    document.getElementById('updateClientAddress2typeMobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('clientAddress2typeMobile').disabled = true;
      document.getElementById('updateClientAddress2typeMobile').type = 'hidden';
      document.getElementById('editClientAddress2typeMobile').type = 'button';
@@ -456,7 +430,6 @@
 
    document.getElementById('updateClientAddress3Mobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('clientAddress3Mobile').readOnly = true;
      document.getElementById('updateClientAddress3Mobile').type = 'hidden';
      document.getElementById('editClientAddress3Mobile').type = 'button';
@@ -473,7 +446,6 @@
 
    document.getElementById('updateClientAddress3typeMobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('clientAddress3typeMobile').disabled = true;
      document.getElementById('updateClientAddress3typeMobile').type = 'hidden';
      document.getElementById('editClientAddress3typeMobile').type = 'button';
@@ -490,7 +462,6 @@
 
    document.getElementById('updateClientAddress4Mobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('clientAddress4Mobile').readOnly = true;
      document.getElementById('updateClientAddress4Mobile').type = 'hidden';
      document.getElementById('editClientAddress4Mobile').type = 'button';
@@ -507,7 +478,6 @@
 
    document.getElementById('updateClientAddress4typeMobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('clientAddress4typeMobile').disabled = true;
      document.getElementById('updateClientAddress4typeMobile').type = 'hidden';
      document.getElementById('editClientAddress4typeMobile').type = 'button';
@@ -524,7 +494,6 @@
 
    document.getElementById('updateClientEmail1Mobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('clientEmail1Mobile').readOnly = true;
      document.getElementById('updateClientEmail1Mobile').type = 'hidden';
      document.getElementById('editClientEmail1Mobile').type = 'button';
@@ -541,7 +510,6 @@
 
    document.getElementById('updateClientEmail2Mobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('clientEmail2Mobile').readOnly = true;
      document.getElementById('updateClientEmail2Mobile').type = 'hidden';
      document.getElementById('editClientEmail2Mobile').type = 'button';
@@ -560,7 +528,6 @@
 
    document.getElementById('updateProductsMobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('clientProdOXMobile').disabled = true;
      document.getElementById('clientProdPPMobile').disabled = true;
      document.getElementById('clientProdTPMobile').disabled = true;
@@ -579,7 +546,6 @@
 
    document.getElementById('updateClientNotesMobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('clientNotesMobile').readOnly = true;
      document.getElementById('updateClientNotesMobile').type = 'hidden';
      document.getElementById('editClientNotesMobile').type = 'button';
@@ -596,7 +562,6 @@
 
    document.getElementById('updateClientStatusMobile').onclick = function(){
      isEditing = false;
-      changedView = 'Mobile';
      document.getElementById('clientStatusMobile').disabled = true;
      document.getElementById('updateClientStatusMobile').type = 'hidden';
      document.getElementById('editClientStatusMobile').type = 'button';
@@ -938,9 +903,16 @@
                     </tbody>
                   </table>
                 </div>
+                <button type="submit" class="btn btn-primary btn-lg" id="submit" name="submit">Submit</button>
+              <input style="visibility: hidden" id="isEditing" name ="isEditing" value="false">
+            </form>
+
 
                 <!-- Mobile View of Data -->
                           <div class="table d-block d-sm-none">
+                          <form id="formEditClient" name="viewClient" method="post" action="/viewClient" onsubmit="enableFields()">
+                          <input type="name" class="form-control" id="origClientName" name="origClientName" value="<%= clientName %>" hidden>
+                          <input type="name" class="form-control" id="user" name="user" value="<%- user %>" hidden>
                             <table class="table bg-white">
                               <tbody>
                     <!-- Mobile View Client Name -->
@@ -1276,7 +1248,10 @@
                                 </tr>
                               </tbody>
                             </table>
-                          </div>
+                            <button type="submit" class="btn btn-primary btn-lg" id="submit" name="submit">Submit</button>
+                            <input style="visibility: hidden" id="isEditing" name ="isEditing" value="false">
+                          </form>
+                        </div>
 
                 <script>
                   function enableFields() {
@@ -1290,34 +1265,9 @@
                     document.getElementById('clientProdPP').disabled = false;
                     document.getElementById('clientProdTP').disabled = false;
                     document.getElementById('clientStatus').disabled = false;
-
-                    //If user was on Mobile, set desktop fields = to Mobile fields since Server only parses desktop fields
-                    if (changedView == "Mobile") {
-                      newClientName = newClientNameMobile
-                      agentAbbrev = agentAbbrevMobile
-                      clientPhone = clientPhoneMobile
-                      clientFax = clientFaxMobile
-                      clientAddress1 = clientAddress1Mobile
-                      clientAddress1type = clientAddress1typeMobile
-                      clientAddress2 = clientAddress2Mobile
-                      clientAddress2type = clientAddress2typeMobile
-                      clientAddress3 = clientAddress3Mobile
-                      clientAddress3type = clientAddress3typeMobile
-                      clientAddress4 = clientAddress4Mobile
-                      clientAddress4type = clientAddress4typeMobile
-                      clientEmail1 = clientEmail1Mobile
-                      clientEmail2 = clientEmail2Mobile
-                      clientProdOX = clientProdOXMobile
-                      clientProdPP = clientProdPPMobile
-                      clientProdTP = clientProdTPMobile
-                      clientNotes = clientNotesMobile
-                      clientStatus = clientStatusMobile
-                    }
                   }
                 </script>
-              <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-              <input style="visibility: hidden" id="isEditing" name ="isEditing" value="false">
-            </form>
+
 <hr>
     <!-- Contact History Snapshot - thinking maybe last 5 entries -->
                 <h4> Communication History</h4>
