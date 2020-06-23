@@ -141,7 +141,7 @@ var upload = multer({ dest: 'tmp/csv/' });
 
 /* GET home page. */
 router.get('/', function (req, res) {
-    res.render('index', { user : req.user });
+    res.render('index', { user : req.user, permissions: req.permissions});
 });
 
 /* GET login page. */
@@ -151,15 +151,35 @@ router.get('/login', function(req, res) {
 
 /* GET Home page. */
 router.get('/home', function(req, res) {
-    var ac = new AccessControl(grantsList);
-    const permission = ac.can(req.user.usertype).readAny('Event');
-    if (permission.granted) {
-        // Perform what is allowed when permission is granted
-        res.render('home', { user : req.user });
-    } else {
-        // resource is forbidden for this user/role
-        res.status(403).end();
-    }
+
+    // Set our internal DB variable
+    var db = req.db;
+    // Set our collection
+    var userType = ''
+    var permissions = {};
+
+    var collection = db.get('accounts');
+    var collection2 = db.get('Permissions');
+
+    collection.find({"_id" : req.user._id},{fields : "usertype -_id"},function(e,usertype){
+        if (e) return callback(err);
+        userType = usertype[0].usertype;
+        collection2.find({"role" : userType},{},function(e,results){
+                if (e) return callback(err);
+                permissions = results;
+                var ac = new AccessControl(permissions);
+                const permission = ac.can(req.user.usertype).readAny('Event');
+                if (permission.granted) {
+                    // Perform what is allowed when permission is granted
+                    res.render('home', { user : req.user, permissions : results });
+                } else {
+                    // resource is forbidden for this user/role
+                    res.status(403).end();
+                } 
+            });
+    });
+        
+
 });
 
 /* GET logout page. */
@@ -2063,7 +2083,6 @@ router.get('/edit-permissions', function(req, res){
 
 /* POST Query to MongoDB and return Edit User Page. */
 router.post('/edit-permissions', function(req, res) {
-    console.log(req);
 
     var ac = new AccessControl(grantsList);
     const permission = ac.can(req.user.usertype).updateAny('Permissions');
