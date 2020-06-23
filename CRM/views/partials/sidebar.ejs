@@ -2,25 +2,53 @@
 <a href="/home" style="color:white;">CRM SOFTWARE</a>
 </div>
 
+<% 
+  var grantEventRead = false;
+  var grantClientRead = false;
+  var grantContactRead = false;
+
+  for (i = 0; i < permissions.length; i++){
+        if (permissions[i].resource == 'Event' && permissions[i].action == 'Read:any') {
+          grantEventRead = true;
+        }
+        if (permissions[i].resource == 'Client' && permissions[i].action == 'Read:any') {
+          grantClientRead = true;
+        }
+        if (permissions[i].resource == 'Contact' && permissions[i].action == 'Read:any') {
+          grantContactRead = true;
+        }
+      }
+%>
+
 <ul class="c-sidebar-nav ps ps--active-y">
+
+<% if (grantClientRead == true) {%>
   <li class="c-sidebar-nav-item">
     <a class="c-sidebar-nav-link" href="/search-client">
       <i class="c-sidebar-nav-icon cil-briefcase"></i>
       Clients
     </a>
   </li>
+<% } %>
+
+<% if (grantContactRead == true) {%>
   <li class="c-sidebar-nav-item">
     <a class="c-sidebar-nav-link" href="/search-contact">
       <i class="c-sidebar-nav-icon cil-contact"></i>
       Contacts
     </a>
   </li>
+<% } %>
+
+
+<% if (grantEventRead == true) {%>
   <li class="c-sidebar-nav-item">
     <a class="c-sidebar-nav-link" href="/search-event">
       <i class="c-sidebar-nav-icon cil-calendar"></i>
       Events
     </a>
   </li>
+<% } %>
 
   <li class="c-sidebar-nav-dropdown">
     <a class="c-sidebar-nav-dropdown-toggle" href="#">
@@ -28,21 +56,40 @@
       Reports
     </a>
     <ul class="c-sidebar-nav-dropdown-items">
-      <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link" href="/report-activity">Activity Report</a>
-      </li>
-      <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link" href="/report-client-history">Client History</a>
-      </li>
-      <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link" href="/report-client-list">Client List</a>
-      </li>
-      <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link" href="/report-contact-history">Contact History</a>
-      </li>
-      <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link" href="/report-visit-count">Visit Count</a>
-      </li>
+
+
+      <% if (grantEventRead == true) {%>
+        <li class="c-sidebar-nav-item">
+          <a class="c-sidebar-nav-link" href="/report-activity">Activity Report</a>
+        </li>
+      <% } %>
+      
+      <% if (grantClientRead == true) {%>
+        <li class="c-sidebar-nav-item">
+          <a class="c-sidebar-nav-link" href="/report-client-history">Client History</a>
+        </li>
+      <% } %>
+
+
+      <% if (grantClientRead == true) {%>
+        <li class="c-sidebar-nav-item">
+          <a class="c-sidebar-nav-link" href="/report-client-list">Client List</a>
+        </li>
+      <% } %>
+
+
+      <% if (grantContactRead == true) {%>
+        <li class="c-sidebar-nav-item">
+          <a class="c-sidebar-nav-link" href="/report-contact-history">Contact History</a>
+        </li>
+      <% } %>
+
+      <% if (grantEventRead == true) {%>
+        <li class="c-sidebar-nav-item">
+          <a class="c-sidebar-nav-link" href="/report-visit-count">Visit Count</a>
+        </li>
+      <% } %>
+      
     </ul>
   </li>
 

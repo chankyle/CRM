@@ -8,6 +8,42 @@
 </a>
 
 
+<% 
+  var grantEventCreate = false;
+  var grantClientCreate = false;
+  var grantContactCreate = false;
+  var grantAccountCreate = false;
+  var grantAccountUpdate = false;
+  var grantPermissionsUpdate = false;
+  var grantImportCreate = false;
+
+
+
+  for (i = 0; i < permissions.length; i++){
+        if (permissions[i].resource == 'Event' && permissions[i].action == 'Create:any') {
+          grantEventCreate = true;
+        }
+        if (permissions[i].resource == 'Client' && permissions[i].action == 'Create:any') {
+          grantClientCreate = true;
+        }
+        if (permissions[i].resource == 'Contact' && permissions[i].action == 'Create:any') {
+          grantContactCreate = true;
+        }
+        if (permissions[i].resource == 'Account' && permissions[i].action == 'Create:any') {
+          grantUserCreate = true;
+        }
+        if (permissions[i].resource == 'Account' && permissions[i].action == 'Update:any') {
+          grantUserUpdate = true;
+        }
+        if (permissions[i].resource == 'Permissions' && permissions[i].action == 'Update:any') {
+          grantPermissionsUpdate = true;
+        }
+        if (permissions[i].resource == 'Import' && permissions[i].action == 'Create:any') {
+          grantImportCreate = true;
+        }
+      }
+%>
+
 
 <ul class="c-header-nav d-lg-none">
   <li class="c-header-nav-item dropdown">
@@ -42,16 +78,27 @@ TESTING
 
 <ul class="c-header-nav d-md-down-none ml-auto">
   <li class="c-header-nav-item dropdown">
-    <a class="c-header-nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
-      NEW
-    </a>
+    <% if (grantEventCreate || grantClientCreate || grantContactCreate || grantUserCreate) {%>
+      <a class="c-header-nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+        NEW
+      </a>
+    <% } %>
     <div class="dropdown-menu dropdown-menu-right pt-0" aria-labelledby="navbarDropdown">
+          <% if (grantClientCreate == true) {%>
           <a class="dropdown-item" href="/entry-client">Client</a>
+          <% } %>
+          <% if (grantContactCreate == true) {%>
           <a class="dropdown-item" href="/entry-contact">Contact</a>
+          <% } %>
+          <% if (grantEventCreate == true) {%>
           <a class="dropdown-item" href="/entry-event">Event</a>
+          <% } %>
+          <% if (grantUserCreate == true) {%>
           <a class="dropdown-item" href="/entry-user">User</a>
+          <% } %>
     </div>
   </li>
+  <% if (grantImportCreate == true) {%>
   <li class="c-header-nav-item dropdown">
     <a class="c-header-nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
       IMPORT
@@ -63,6 +110,7 @@ TESTING
           <a class="dropdown-item" href="/import-agent">Agent</a>
     </div>
   </li>
+  <% } %>
   <li class="c-header-nav-item dropdown">
     <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" ariahaspopup="true" aria-expanded="false">
       <button type="button" class="btn btn-light"> <%- user.username %> </button>
