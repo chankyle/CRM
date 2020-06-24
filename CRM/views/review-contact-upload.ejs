@@ -30,19 +30,19 @@
               <hr>
          <form action="/upload-contacts" method="post">
            <input type="text" class="form-control" id="csvData" name="csvData" value="<%= JSONContacts %>" hidden>
-          <div class="table-responsive">
+          <div class="table-responsive text-nowrap" style=" height: 65vh; overflow-y:auto;">
            <table class="table table-bordered px-2 py-2 bg-white">
              <thead class="thead-dark">
                <tr>
-                 <th style="width: 15%" scope="col" class="align-middle">Client Name:</th>
-                 <th style="width: 10%" scope="col" class="align-middle">Contact First Name: </th>
-                 <th style="width: 10%" scope="col" class="align-middle">Contact Last Name: </th>
-                 <th style="width: 10%" scope="col" class="align-middle">Contact Position: </th>
-                 <th style="width: 10%" scope="col" class="align-middle">Contact Phone: </th>
-                 <th style="width: 10%" scope="col" class="align-middle">Contact Mobile: </th>
-                 <th style="width: 15%" scope="col" class="align-middle">Contact Email: </th>
-                 <th style="width: 20%" scope="col" class="align-middle">Contact Notes: </th>
-                 <th style="width: 20%" scope="col" class="align-middle">Active: </th>
+                 <th style="width: 15%" scope="col" class="align-middle">Client Name</th>
+                 <th style="width: 10%" scope="col" class="align-middle">Contact First Name</th>
+                 <th style="width: 10%" scope="col" class="align-middle">Contact Last Name</th>
+                 <th style="width: 10%" scope="col" class="align-middle">Contact Position</th>
+                 <th style="width: 10%" scope="col" class="align-middle">Contact Phone</th>
+                 <th style="width: 10%" scope="col" class="align-middle">Contact Mobile</th>
+                 <th style="width: 15%" scope="col" class="align-middle">Contact Email</th>
+                 <th style="width: 20%" scope="col" class="align-middle">Contact Notes</th>
+                 <th style="width: 20%" scope="col" class="align-middle">Active</th>
                </tr>
              </thead>
              <tbody>
@@ -71,6 +71,7 @@
              </tbody>
            </table>
          </div>
+         <br>
            <input class="btn btn-primary" type="submit" value="Confirm Upload">
          </form>
         </main>
