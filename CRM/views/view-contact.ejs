@@ -16,21 +16,36 @@
  window.onload = function() {
    var isEditing = false;
 
-   document.getElementById('editContactName').onclick = function() {
+   document.getElementById('editContactFirstName').onclick = function() {
      if (isEditing == false) {
        isEditing = true;
-       document.getElementById('newContactName').readOnly = false;
-       document.getElementById('updateContactName').type = 'button';
-       document.getElementById('editContactName').type = 'hidden';
+       document.getElementById('contactFirstName').readOnly = false;
+       document.getElementById('updateContactFirstName').type = 'button';
+       document.getElementById('editContactFirstName').type = 'hidden';
      } else {window.alert("Only 1 field can be edited at a time");};
    }
 
-   document.getElementById('updateContactName').onclick = function(){
+   document.getElementById('updateContactFirstName').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
-     document.getElementById('newContactName').readOnly = true;
-     document.getElementById('updateContactName').type = 'hidden';
-     document.getElementById('editContactName').type = 'button';
+     document.getElementById('contactFirstName').readOnly = true;
+     document.getElementById('updateContactFirstName').type = 'hidden';
+     document.getElementById('editContactFirstName').type = 'button';
+   }
+
+  document.getElementById('editContactLastName').onclick = function() {
+     if (isEditing == false) {
+       isEditing = true;
+       document.getElementById('contactLastName').readOnly = false;
+       document.getElementById('updateContactLastName').type = 'button';
+       document.getElementById('editContactLastName').type = 'hidden';
+     } else {window.alert("Only 1 field can be edited at a time");};
+   }
+
+   document.getElementById('updateContactLastName').onclick = function(){
+     isEditing = false;
+     document.getElementById('contactLastName').readOnly = true;
+     document.getElementById('updateContactLastName').type = 'hidden';
+     document.getElementById('editContactLastName').type = 'button';
    }
 
    document.getElementById('editContactClientID').onclick = function(){
@@ -44,7 +59,6 @@
 
    document.getElementById('updateContactClientID').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('contactClientID').disabled = true;
      document.getElementById('updateContactClientID').type = 'hidden';
      document.getElementById('editContactClientID').type = 'button';
@@ -60,7 +74,6 @@
    }
    document.getElementById('updateContactPosition').onclick = function(){
      isEditing = false;
-     changedView = 'Desktop';
      document.getElementById('updateContactPosition').type = 'hidden';
      document.getElementById('editContactPosition').type = 'button';
    }
@@ -144,22 +157,39 @@
      document.getElementById('updateContactStatus').type = 'hidden';
      document.getElementById('editContactStatus').type = 'button';
    }
-   document.getElementById('editContactNameMobile').onclick = function() {
+   document.getElementById('editContactFirstNameMobile').onclick = function() {
      if (isEditing == false) {
        isEditing = true;
-       document.getElementById('newContactNameMobile').readOnly = false;
-       document.getElementById('updateContactNameMobile').type = 'button';
-       document.getElementById('editContactNameMobile').type = 'hidden';
+       document.getElementById('contactFirstNameMobile').readOnly = false;
+       document.getElementById('updateContactFirstNameMobile').type = 'button';
+       document.getElementById('editContactFirstNameMobile').type = 'hidden';
      } else {window.alert("Only 1 field can be edited at a time");};
    }
 
-   document.getElementById('updateContactNameMobile').onclick = function(){
+   document.getElementById('updateContactFirstNameMobile').onclick = function(){
      isEditing = false;
      changedView = 'Mobile';
-     document.getElementById('newContactNameMobile').readOnly = true;
-     document.getElementById('updateContactNameMobile').type = 'hidden';
-     document.getElementById('editContactNameMobile').type = 'button';
+     document.getElementById('contactFirstNameMobile').readOnly = true;
+     document.getElementById('updateContactFirstNameMobile').type = 'hidden';
+     document.getElementById('editContactFirstNameMobile').type = 'button';
    }
+   document.getElementById('editContactLastNameMobile').onclick = function() {
+     if (isEditing == false) {
+       isEditing = true;
+       document.getElementById('contactLastNameMobile').readOnly = false;
+       document.getElementById('updateContactLastNameMobile').type = 'button';
+       document.getElementById('editContactLastNameMobile').type = 'hidden';
+     } else {window.alert("Only 1 field can be edited at a time");};
+   }
+
+   document.getElementById('updateContactLastNameMobile').onclick = function(){
+     isEditing = false;
+     changedView = 'Mobile';
+     document.getElementById('contactLastNameMobile').readOnly = true;
+     document.getElementById('updateContactLastNameMobile').type = 'hidden';
+     document.getElementById('editContactLastNameMobile').type = 'button';
+   }
+
    document.getElementById('editContactClientIDMobile').onclick = function(){
      if (isEditing == false) {
        isEditing = true;
@@ -298,14 +328,23 @@
             <input type="name" class="form-control" id="user" name="user" value="<%- user %>" hidden>
               <div class="table d-none d-md-block">
                 <table class="table table-bordered px-2 py-2 bg-white">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th style="width: 15%" scope="col" class="align-middle">Name:</th>
-                      <th class="align-middle"> <%= result.contact[0].contactFirstName %> <%= result.contact[0].contactLastName %> </th>
-                      <th style="width: 5%" scope="col"></th>
-                    </tr>
-                  </thead>
                   <tbody>
+                    <tr>
+                      <th style="width: 15%" scope="col" class="align-middle">First Name:</th>
+                      <td class="align-middle"> <select class="form-control" id="contactFirstName" name="contactFirstName" disabled required><%= result.contact[0].contactFirstName %> </select> </td>
+                      <td style="width: 5%" class="align-middle" style="text-align:center">
+                        <input type="button" id="editContactFirstName" value="edit"></input>
+                        <input type="hidden" id="updateContactFirstName" value="Save"></input>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th style="width: 15%" scope="col" class="align-middle">Last Name:</th>
+                      <td class="align-middle"> <select class="form-control" id="contactLastName" name="contactLastName" disabled required><%= result.contact[0].contactLastName %> </select> </td>
+                      <td class="align-middle" style="text-align:center">
+                        <input type="button" id="editContactLastName" value="edit"></input>
+                        <input type="hidden" id="updateContactLastName" value="Save"></input>
+                      </td>
+                    </tr>
                     <tr>
                       <th scope="row" class="align-middle">Client:</th>
                       <td class="align-middle">
@@ -408,17 +447,30 @@
                   <div class="table d-block d-sm-none">
                     <table class="table bg-white">
                       <tbody>
-        <!-- Mobile View Contact Name -->
+        <!-- Mobile View Contact First Name -->
                         <tr>
-                          <th style="text-align:left">Contact Name</th>
+                          <th style="text-align:left">Contact First Name</th>
                           <th style="width: 16.66%" class="align-middle">
-                            <input type="button" id="editContactNameMobile" value="edit"></input>
-                            <input type="hidden" id="updateContactNameMobile" value="Save"></input>
+                            <input type="button" id="editContactFirstNameMobile" value="edit"></input>
+                            <input type="hidden" id="updateContactFirstNameMobile" value="Save"></input>
                           </th>
                         </tr>
                         <tr>
                           <td colspan=2 scope="row">
-                            <input type="text" class="form-control" id="newContactNameMobile" name="newContactName" value = "<%= result.contact[0].contactFirstName %> <%= result.contact[0].contactLastName %>" required readonly>
+                            <input type="text" class="form-control" id="contactFirstNameMobile" name="contactFirstNameMobile" value = "<%= result.contact[0].contactFirstName %> " required readonly>
+                          </td>
+                        </tr>
+                  <!-- Mobile View Contact Last Name -->
+                        <tr>
+                          <th style="text-align:left">Contact Last Name</th>
+                          <th style="width: 16.66%" class="align-middle">
+                            <input type="button" id="editContactLastNameMobile" value="edit"></input>
+                            <input type="hidden" id="updateContactLastNameMobile" value="Save"></input>
+                          </th>
+                        </tr>
+                        <tr>
+                          <td colspan=2 scope="row">
+                            <input type="text" class="form-control" id="contactLastNameMobile" name="contactLastNameMobile" value = "<%= result.contact[0].contactLastName %> " required readonly>
                           </td>
                         </tr>
             <!-- Mobile View Client Name -->

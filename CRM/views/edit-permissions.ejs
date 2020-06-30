@@ -16,7 +16,7 @@
   function setTableData() {
     var permissions = <%- JSON.stringify(permissions) %>;
     var table = document.getElementById("premissionsTable");
-
+    console.log(permissions);
 
     for (i = 0; i < permissions.length; i++){
       //Find cell. Role.Resource.Action
