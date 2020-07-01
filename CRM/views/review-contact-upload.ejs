@@ -53,7 +53,14 @@
                    list += '<tr>';
                    list += '<td> <select class="form-control" id="contactClientID[' + i + ']" name="contactClientID[' + i + ']" required>';
                    for (k = 0; k < clientList.length; k++) {
-                     list += '<option>' + clientList[k].clientName + '</option>';
+                    console.log (clientList[k].clientName);
+                    console.log(defaultClient);
+                    // check if clientName is default selected from prior pagge
+                    if (defaultClient == clientList[k].clientName){
+                      list += '<option selected>' + clientList[k].clientName + '</option>';
+                    } else {
+                      list += '<option>' + clientList[k].clientName + '</option>';
+                    }
                    }
                    list += '</select> </td>';
                    list += '<td>' + contactData[i].contactFirstName + '</td>';

@@ -73,12 +73,60 @@
               </table>
             </div>
             <br>
-            <h4> Upload File: </h4>
-
            <form action="/import-client" method="post" enctype="multipart/form-data">
-             <input type="file" class="form-control-file" name="clientCSV" required>
-             <br>
-             <input class="btn btn-primary" type="submit" value="Submit">
+              <h4> Default Values: </h4>
+              <h5> Agent Abbreviation:</h5>
+              <select class="form-control" id="agentAbbrev" name="agentAbbrev">
+                <%
+                    var list = '<option value="" disabled selected>Select</option>';
+                    for (i = 0; i < agentList.length; i++) {
+                      list += '<option>' + agentList[i].agentAbbrev + '</option>';
+                    }
+                %>
+                  <%- list %>
+              </select>
+
+              <h5> Client Address 1 Type:</h5>
+              <select class="form-control" id="clientAddress1Type" name="clientAddress1Type">
+                <option></option>
+                <option>Contact Address</option>
+                <option>Delivery Address</option>
+              </select>
+
+              <h5> Client Address 2 Type:</h5>
+              <select class="form-control" id="clientAddress2Type" name="clientAddress2Type">
+                <option></option>
+                <option>Contact Address</option>
+                <option>Delivery Address</option>
+              </select>
+
+              <h5> Client Address 3 Type:</h5>
+              <select class="form-control" id="clientAddress3Type" name="clientAddress3Type">
+                <option></option>
+                <option>Contact Address</option>
+                <option>Delivery Address</option>
+              </select>
+
+              <h5> Client Address 4 Type:</h5>
+              <select class="form-control" id="clientAddress4Type" name="clientAddress4Type">
+                <option></option>
+                <option>Contact Address</option>
+                <option>Delivery Address</option>
+              </select>
+
+              <h5> Client Prod OX:</h5>
+              <input class="form-check-input" type="checkbox" name="clientProdOX" value="true">
+
+              <h5> Client Prod PP:</h5>
+              <input class="form-check-input" type="checkbox" name="clientProdPP" value="true">
+
+              <h5> Client Prod TP:</h5>
+              <input class="form-check-input" type="checkbox" name="clientProdTP" value="true">
+
+              <h4> Upload File: </h4>
+              <input type="file" class="form-control-file" name="clientCSV" required>
+              <br>
+              <input class="btn btn-primary" type="submit" value="Submit">
            </form>
          </div>
        </div>

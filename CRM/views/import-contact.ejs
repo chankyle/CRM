@@ -65,9 +65,18 @@
             </table>
           </div>
           <br>
-            <h4> Upload File: </h4>
-
             <form action="/import-contact" method="post" enctype="multipart/form-data">
+              <h4> Default Client: </h4>
+              <select class="form-control" id="clientSelect" name="clientSelect" required>
+                <%
+                    var list = '<option value="" disabled selected>Select</option>';
+                    for (i = 0; i < clientList.length; i++) {
+                      list += '<option>' + clientList[i].clientName + '</option>';
+                    }
+                %>
+                  <%- list %>
+              </select>
+              <h4> Upload File: </h4>
               <input type="file" class="form-control-file" name="contactCSV" required>
               <br>
               <input class="btn btn-primary" type="submit" value="Submit">

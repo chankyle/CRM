@@ -12,128 +12,7 @@ const multer = require('multer');
 var ObjectID = require('MongoDB').ObjectID;
 var urlencoderParser = bodyParser.urlencoded({ extended: false });
 const AccessControl = require('accesscontrol');
-/*var db = app.db;
-var collection = db.get('Permissions');
-collection.find({},{projection:{ _id: 0 }},function(e,docs){
-    const grantsList = docs;
-});*/
-const grantsList = [ { role: 'Administrator',
-resource: 'Client',
-action: 'Create:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Client',
-action: 'Read:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Client',
-action: 'Update:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Contact',
-action: 'Create:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Contact',
-action: 'Read:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Contact',
-action: 'Update:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Event',
-action: 'Create:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Event',
-action: 'Read:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Event',
-action: 'Update:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Import',
-action: 'Create:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Permissions',
-action: 'Read:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Permissions',
-action: 'Update:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Roles',
-action: 'Read:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Roles',
-action: 'Update:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Account',
-action: 'Create:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Account',
-action: 'Read:any',
-attributes: '*' },
-{ role: 'Administrator',
-resource: 'Account',
-action: 'Update:any',
-attributes: '*' },
-{ role: 'Agent',
-resource: 'Client',
-action: 'Create:any',
-attributes: '*' },
-{ role: 'Agent',
-resource: 'Client',
-action: 'Read:any',
-attributes: '*' },
-{ role: 'Agent',
-resource: 'Client',
-action: 'Update:any',
-attributes: '*' },
-{ role: 'Agent',
-resource: 'Contact',
-action: 'Create:any',
-attributes: '*' },
-{ role: 'Agent',
-resource: 'Contact',
-action: 'Read:any',
-attributes: '*' },
-{ role: 'Agent',
-resource: 'Contact',
-action: 'Update:any',
-attributes: '*' },
-{ role: 'Agent',
-resource: 'Event',
-action: 'Create:any',
-attributes: '*' },
-{ role: 'Agent',
-resource: 'Event',
-action: 'Read:any',
-attributes: '*' },
-{ role: 'Agent',
-resource: 'Event',
-action: 'Update:any',
-attributes: '*' },
-{ role: 'ReadOnly',
-resource: 'Client',
-action: 'Read:any',
-attributes: '*' },
-{ role: 'ReadOnly',
-resource: 'Contact',
-action: 'Read:any',
-attributes: '*' },
-{ role: 'ReadOnly',
-resource: 'Event',
-action: 'Read:any',
-attributes: '*' } ];
-
+var grantsList = [];
 
 // Set temporary csv upload location
 var upload = multer({ dest: 'tmp/csv/' });
@@ -196,17 +75,34 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 
 /* Display Import Agent page. */
 router.get('/import-agent', function(req, res) {
-    var ac = new AccessControl(grantsList);
-    const permission = ac.can(req.user.usertype).createAny('Import');
-    if (permission.granted) {
-        // Perform what is allowed when permission is granted
-        res.render('import-agent', {
-            user : req.user, permissions : results
+// Set our internal DB variable
+    var db = req.db;
+    // Set our collection
+    var userType = ''
+    var permissions = {};
+
+    var collectionAccounts = db.get('accounts');
+    var collectionPermissions = db.get('Permissions');
+
+    collectionAccounts.find({"_id" : req.user._id},{fields : "usertype -_id"},function(e,usertype){
+        if (e) return callback(err);
+        userType = usertype[0].usertype;
+        collectionPermissions.find({"role" : userType},{},function(e,results){
+            if (e) return callback(err);
+            permissions = results;
+            var ac = new AccessControl(permissions);
+            const permission = ac.can(req.user.usertype).createAny('Import');
+            if (permission.granted) {
+                // Perform what is allowed when permission is granted
+                res.render('import-agent', {
+                    user : req.user, permissions : results
+                });
+            } else {
+                // resource is forbidden for this user/role
+                res.status(403).end();
+            }
         });
-    } else {
-        // resource is forbidden for this user/role
-        res.status(403).end();
-    }
+    });
 });
 
 /* Review Agent CSV. */
@@ -226,7 +122,7 @@ router.post('/import-agent', upload.single('agentCSV'), function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Import');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -277,7 +173,7 @@ router.post('/upload-agents', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Import');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -341,11 +237,22 @@ router.get('/import-client', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Import');
             if (permission.granted) {
-                res.render('import-client', {
-                    user : req.user, permissions : results
+                // Perform what is allowed when permission is granted
+                // Set our internal DB variable
+                var db = req.db;
+
+                // Set our collection
+                var collection = db.get('Agents');
+
+                collection.find({},{},function(e,docs){
+                    res.render('import-client', {
+                        "agentList" : docs,
+                        user : req.user, 
+                        permissions : results
+                    });
                 });
             } else {
                 // resource is forbidden for this user/role
@@ -372,9 +279,18 @@ router.post('/import-client', upload.single('clientCSV'), function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Import');
             if (permission.granted) {
+                var defaultAgent = req.body.agentAbbrev;
+                var defaultAddress1Type = req.body.clientAddress1Type;
+                var defaultAddress2Type = req.body.clientAddress2Type;
+                var defaultAddress3Type = req.body.clientAddress3Type;
+                var defaultAddress4Type = req.body.clientAddress4Type;
+                var defaultProdOX = req.body.clientProdOX;
+                var defaultProdPP = req.body.clientProdPP;
+                var defaultProdTP = req.body.clientProdTP;
+
                 // Perform what is allowed when permission is granted
                 function getData(){
                     return new Promise(function(resolve,reject) {
@@ -402,6 +318,14 @@ router.post('/import-client', upload.single('clientCSV'), function(req, res) {
 
                     collection.find({},{},function(e,docs){
                         res.render('review-client-upload', {
+                            "defaultAgent" : defaultAgent,
+                            "defaultAddress1Type" : defaultAddress1Type,
+                            "defaultAddress2Type" : defaultAddress2Type,
+                            "defaultAddress3Type" : defaultAddress3Type,
+                            "defaultAddress4Type" : defaultAddress4Type,
+                            "defaultProdOX" : defaultProdOX,
+                            "defaultProdPP" : defaultProdPP,
+                            "defaultProdTP" : defaultProdTP,
                             "agentList" : docs,
                             user : req.user, permissions : results,
                             "clients" : csvData,
@@ -434,7 +358,7 @@ router.post('/upload-clients', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Import');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -556,12 +480,22 @@ router.get('/import-contact', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Import');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
-                res.render('import-contact', {
-                    user : req.user, permissions : results
+                // Set our internal DB variable
+                var db = req.db;
+
+                // Set our collection
+                var collection = db.get('Clients');
+
+                collection.find({},{},function(e,docs){
+                    res.render('import-contact', {
+                        "clientList" : docs,
+                        user : req.user, 
+                        permissions : results
+                    });
                 });
             } else {
                 // resource is forbidden for this user/role
@@ -588,10 +522,12 @@ router.post('/import-contact', upload.single('contactCSV'), function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Import');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
+                var defaultClient = req.body.clientSelect;
+
                 function getData(){
                     return new Promise(function(resolve,reject) {
                         var csvData = [];
@@ -617,6 +553,7 @@ router.post('/import-contact', upload.single('contactCSV'), function(req, res) {
 
                     collection.find({},{},function(e,docs){
                         res.render('review-contact-upload', {
+                            "defaultClient" : defaultClient,
                             "clientList" : docs,
                             user : req.user, permissions : results,
                             "contacts" : csvData,
@@ -649,7 +586,7 @@ router.post('/upload-contacts', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Import');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -718,7 +655,7 @@ router.get('/entry-client', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Client');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -731,7 +668,7 @@ router.get('/entry-client', function(req, res) {
                 collection.find({},{},function(e,docs){
                     res.render('entry-client', {
                         "agentList" : docs,
-                        user : req.user
+                        user : req.user, permissions : results,
                     });
                 });
             } else {
@@ -766,7 +703,7 @@ router.get('/entry-contact', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Contact');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -845,7 +782,7 @@ router.get('/entry-event', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Event');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -923,7 +860,7 @@ router.get('/report-activity', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Event');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -964,7 +901,7 @@ router.get('/result-activity-report', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Event');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -996,7 +933,7 @@ router.post('/resultActivityReport', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Event');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1042,7 +979,7 @@ router.get('/result-client-list-report', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Client');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1075,7 +1012,7 @@ router.post('/result-client-list-report', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Client');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1119,7 +1056,7 @@ router.get('/result-client-history-report', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Client');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1152,7 +1089,7 @@ router.post('/result-client-history-report', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Client');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1201,7 +1138,7 @@ router.get('/result-contact-history-report', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Contact');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1233,7 +1170,7 @@ router.post('/result-contact-history-report', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Contact');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1281,7 +1218,7 @@ router.get('/result-visit-count-report', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Event');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1314,7 +1251,7 @@ router.post('/result-visit-count-report', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Event');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1361,7 +1298,7 @@ router.get('/report-visit-count', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Event');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1402,7 +1339,7 @@ router.get('/report-client-list', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Client');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1443,7 +1380,7 @@ router.get('/report-contact-history', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Contact');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1511,7 +1448,7 @@ router.get('/report-client-history', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Client');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1552,7 +1489,7 @@ router.get('/search-client', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Client');
 
             if (permission.granted) {
@@ -1594,7 +1531,7 @@ router.post('/search-client', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Client');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1681,7 +1618,7 @@ router.post('/viewClient', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).updateAny('Client');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1908,7 +1845,7 @@ router.post('/viewContact', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).updateAny('Contact');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -1978,7 +1915,7 @@ router.get('/search-event', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Event');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -2035,7 +1972,7 @@ router.post('/search-event', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Event');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -2101,7 +2038,7 @@ router.post('/list-event', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Event');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -2184,7 +2121,7 @@ router.post('/viewEvent', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).updateAny('Event');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -2271,7 +2208,7 @@ router.post('/addClient', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Client');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -2372,7 +2309,7 @@ router.post('/addContact', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Contact');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -2444,7 +2381,7 @@ router.post('/addEvent', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Event');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -2524,7 +2461,7 @@ router.get('/client-report', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Client');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -2565,7 +2502,7 @@ router.get('/contact-report', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Contact');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -2607,7 +2544,7 @@ router.get('/event-report', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Event');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -2648,7 +2585,7 @@ router.get('/view-users', function(req, res){
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Account');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -2689,7 +2626,7 @@ router.post('/view-users', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Account');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -2728,7 +2665,7 @@ router.post('/edit-user', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).updateAny('Account');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -2796,7 +2733,7 @@ router.get('/edit-permissions', function(req, res){
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Permissions');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
@@ -2858,15 +2795,13 @@ router.post('/edit-permissions', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).updateAny('Permissions');
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
                 // Set our internal DB variable
                 var db = req.db;
                 var collection = db.get('Permissions');
-                console.log(req.body);
-                console.log(req.body['Administrator.Client.Create']);
                 var roles = JSON.parse(req.body.roles);
                 var resources = JSON.parse(req.body.resources);
                 var str = '';
@@ -2952,7 +2887,7 @@ router.get('/entry-user', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Account');
             if (permission.granted) {
                 res.render('./entry-user', {
@@ -2983,7 +2918,7 @@ router.post('/addUser', function(req, res) {
         collectionPermissions.find({"role" : userType},{},function(e,results){
             if (e) return callback(err);
             permissions = results;
-            var ac = new AccessControl(grantsList);
+            var ac = new AccessControl(permissions);
             // TODO: Allow register of users on home page
             // TODO: Restirct access to entry-user
             // TODO: Figure out why there is 2 /adduser posts
@@ -3018,7 +2953,7 @@ router.post('/addUser', function(req, res) {
                         if (err) {
                             console.log(err);
                             res.render('home', {
-
+                                permissions : results,
                                 usertype: req.user.usertype
                             });
                         }
@@ -3029,7 +2964,7 @@ router.post('/addUser', function(req, res) {
                         if (err) {
                             console.log(err);
                             res.render('home', {
-
+                                permissions : results,
                                 usertype: req.user.usertype
                             });
                         }
