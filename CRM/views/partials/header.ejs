@@ -47,13 +47,25 @@
 
 <ul class="c-header-nav d-lg-none">
   <li class="c-header-nav-item dropdown">
+  <% if (grantEventCreate || grantClientCreate || grantContactCreate || grantUserCreate) {%>
     <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="cil-caret-bottom"></i></a>
+  <% } %>
     <div class="dropdown-menu dropdown-menu-right pt-2 pb-2">
       <div class="dropdown-header bg-light py-2"><strong>NEW</strong></div>
+      <% if (grantClientCreate == true) {%>
       <a class="dropdown-item" href="/entry-client"><i class="c-sidebar-nav-icon cil-briefcase"></i>Client</a>
+      <% } %>
+      <% if (grantContactCreate == true) {%>
       <a class="dropdown-item" href="/entry-contact"><i class="c-sidebar-nav-icon cil-contact"></i>Contact</a>
+      <% } %>
+      <% if (grantEventCreate == true) {%>
       <a class="dropdown-item" href="/entry-event"><i class="c-sidebar-nav-icon cil-calendar"></i>Event</a>
+      <% } %>
+      <% if (grantUserCreate == true) {%>
+      <a class="dropdown-item" href="/entry-user"><i class="c-sidebar-nav-icon cil-user"></i>User</a>
+      <% } %>
       <div class="dropdown-header bg-light py-2"><strong>SETTINGS</strong></div>
+      <a class="dropdown-item" href="/edit-permissions"><i class="c-sidebar-nav-icon cil-settings"></i>Permissions</a>
       <a class="dropdown-item" href="#"><i class="c-sidebar-nav-icon cil-user"></i><%- user.username %></a>
       <a class="dropdown-item" href="#"><i class="c-sidebar-nav-icon cil-settings"></i>Settings</a>
       <div class="dropdown-divider"></div>
@@ -116,9 +128,11 @@ TESTING
       <button type="button" class="btn btn-light"> <%- user.username %> </button>
     </a>
     <div class="dropdown-menu dropdown-menu-right pt-0">
-      <a class="dropdown-item" href="/edit-permissions"> Permissions</a>
-      <a class="dropdown-item" href="#"> Settings</a>
-      <a class="dropdown-item" href="/logout"> Log Out</a>
+      <% if (grantPermissionsUpdate == true) {%>
+        <a class="dropdown-item" href="/edit-permissions"> Permissions</a>
+      <% } %>
+        <a class="dropdown-item" href="#"> Settings</a>
+        <a class="dropdown-item" href="/logout"> Log Out</a>
     </div>
   </li>
 </ul>
