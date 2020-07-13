@@ -32,7 +32,7 @@
           <form id="formContactHistoryReport" name="formContactHistoryReport" method="post" action="/result-contact-history-report">
     <!-- Select Client from Prepopulated list of options -->
               <div class="form-row">
-                <div class="form-group col-auto">
+                <div class="form-group col-12 col-md-auto">
                   <label for="clientID">Client</label>
                   <select class="form-control" name="clientSelect" id="clientSelect" onChange="changeAgent(this.value);" required>
                   <%
@@ -66,7 +66,7 @@
           </div>
       <!-- Select Contact from Prepopulated list of options -->
                 <div class="form-row">
-                  <div class="form-group col-auto">
+                  <div class="form-group col-12 col-md-auto">
                       <label for="agentContact">Contact</label>
                         <select class="form-control" name="contactID1" id="contactID1" required>
                           <option value="" disabled selected>Select</option>
@@ -78,11 +78,11 @@
 
       <!-- Select Date Range for Data -->
             <div class="form-row">
-              <div class="form-group col-auto">
+              <div class="form-group col-12 col-md-auto">
                 <label for="inputDateStart">Date Start</label>
                 <input type="date" class="form-control" name="dateStartInput" id="dateStartInput" required>
               </div>
-              <div class="form-group col-auto">
+              <div class="form-group col-12 col-md-auto">
                 <label for="inputDateEnd">Date End</label>
                 <input type="date" class="form-control" name="dateEndInput" id="dateEndInput" required>
               </div>
@@ -91,7 +91,11 @@
     <!-- Submit Button to execute -->
             <div class="form-row">
               <div class="form-group col">
-                <input class="btn btn-primary" type="submit" value="Submit">
+                <div class="row">
+                  <div class="col-12 col-md-auto">
+                    <input class="btn-block btn-primary btn-lg" type="submit" value="Submit">
+                  </div>
+                </div>
                 </form>
               </div>
             </div>

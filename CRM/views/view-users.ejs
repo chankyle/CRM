@@ -24,16 +24,13 @@
     </header>
     <div class="c-body">
       <main class="c-main">
-        <!-- Main content here -->
-        <main class="main mt-2 mx-3">
-            <div class="card w-auto">
-              <h3 class="card-header">Edit User Account</h3>
+        <main class="main mt-0 mx-3">
+          <h2>Edit User Accounts</h2>
+          <hr>
               <form id="search-contact" name="search-contact" method="post" action="/view-users">
-              <div class="card-body">
-
                 <!-- Select Contact from Prepopulated list of options -->
                   <div class="form-row">
-                    <div class="form-group col-12">
+                    <div class="form-group col-12 col-md-auto">
                         <label for="contactSelect">Select User Account</label>
                           <select class="form-control" id="username" name="username" required>
                             <%
@@ -48,13 +45,11 @@
                   </div>
 
           <!-- Submit Button to execute -->
-                  <div class="form-row">
-                    <div class="form-group col">
-                      <input class="btn btn-primary" type="submit" value="Submit">
-                      </form>
-                    </div>
+                <div class="row">
+                  <div class="col-12 col-md-auto">
+                    <button type="submit" class="btn-block btn-primary btn-lg">Submit</button>
+                  </form>
                   </div>
-
                 </div>
               </div>
         </main>
