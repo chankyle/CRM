@@ -157,6 +157,9 @@
      document.getElementById('updateContactStatus').type = 'hidden';
      document.getElementById('editContactStatus').type = 'button';
    }
+
+
+
    document.getElementById('editContactFirstNameMobile').onclick = function() {
      if (isEditing == false) {
        isEditing = true;
@@ -323,9 +326,9 @@
               <h2>View/Edit Contact</h2>
               <hr>
               <h4> Contact Information</h4>
-          <form id="formEditContact" name="viewContact" method="post" action="/viewContact" onsubmit="enableFields()">
-            <input type="name" class="form-control" id="contactID" name="contactID" value="<%= contactID %>" hidden>
-            <input type="name" class="form-control" id="user" name="user" value="<%- user %>" hidden>
+              <form id="formEditContact" name="viewContact" method="post" action="/viewContact" onsubmit="enableFields()">
+              <input type="name" class="form-control" id="contactID" name="contactID" value="<%= contactID %>" hidden>
+              <input type="name" class="form-control" id="user" name="user" value="<%- user %>" hidden>
               <div class="table d-none d-md-block">
                 <table class="table table-bordered px-2 py-2 bg-white">
                   <tbody>
@@ -441,10 +444,16 @@
                     </tr>
                   </tbody>
                 </table>
+                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                <input style="visibility: hidden" id="isEditing" name ="isEditing" value="false">
               </div>
+            </form>
 
         <!-- Mobile View of Data -->
                   <div class="table d-block d-sm-none">
+                    <form id="formEditContact" name="viewContact" method="post" action="/viewContact" onsubmit="enableFields()">
+                    <input type="name" class="form-control" id="contactID" name="contactID" value="<%= contactID %>" hidden>
+                    <input type="name" class="form-control" id="user" name="user" value="<%- user %>" hidden>
                     <table class="table bg-white">
                       <tbody>
         <!-- Mobile View Contact First Name -->
@@ -587,13 +596,14 @@
                         </tr>
                       </tbody>
                     </table>
+
+                    <div class="row">
+                      <div class="col-12 col-md-auto">
+                        <button type="submit" class="btn-block btn-primary btn-lg" id="submit" name="submit">Submit</button>
+                        <input style="visibility: hidden" id="isEditing" name ="isEditing" value="false">
+                      </div>
+                    </div>
                   </div>
-
-
-
-
-
-
 
           <!--All drop down fields need to be set at enabled before they will be sent as part of the payload to mongo -->
           <script>
@@ -614,8 +624,6 @@
               }
            }
             </script>
-            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-            <input style="visibility: hidden" id="isEditing" name ="isEditing" value="false">
           </form>
 <hr>
     <!-- Contact History Snapshot - thinking maybe last 5 entries -->
