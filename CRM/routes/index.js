@@ -157,7 +157,7 @@ router.post('/import-agent', upload.single('agentCSV'), function(req, res) {
 });
 
 /* Upload Agent CSV. */
-router.post('/upload-agents', function(req, res) {
+router.post('/upload-agents', function(req, res, next) {
 // Set our internal DB variable
     var db = req.db;
     // Set our collection
@@ -206,12 +206,13 @@ router.post('/upload-agents', function(req, res) {
                     }, function (err, doc) {
                         if (err) {
                             // If it failed, return error
-                            res.send("There was a problem adding the information to the database.");
+                            next(err);
+                        } else {
+                            // And forward to success page
+                            res.redirect('/home');
                         }
                     });
                 }
-
-                res.redirect('/home');
             } else {
                 // resource is forbidden for this user/role
                 res.status(403).end();
@@ -450,11 +451,13 @@ router.post('/upload-clients', function(req, res) {
                     }, function (err, doc) {
                         if (err) {
                             // If it failed, return error
-                            res.send("There was a problem adding the information to the database.");
+                            next(err);
+                        } else {
+                            // And forward to success page
+                            res.redirect('/home');
                         }
                     });
                 }
-                res.redirect('/home');
             } else {
                 // resource is forbidden for this user/role
                 res.status(403).end();
@@ -570,7 +573,7 @@ router.post('/import-contact', upload.single('contactCSV'), function(req, res) {
 });
 
 /* Upload Contact CSV. */
-router.post('/upload-contacts', function(req, res) {
+router.post('/upload-contacts', function(req, res, next) {
 // Set our internal DB variable
     var db = req.db;
     // Set our collection
@@ -625,11 +628,13 @@ router.post('/upload-contacts', function(req, res) {
                     }, function (err, doc) {
                         if (err) {
                             // If it failed, return error
-                            res.send("There was a problem adding the information to the database.");
+                            next(err);
+                        } else {
+                            // And forward to success page
+                            res.redirect('/home');
                         }
                     });
                 }
-                res.redirect('/home');
             } else {
                 // resource is forbidden for this user/role
                 res.status(403).end();
@@ -640,7 +645,7 @@ router.post('/upload-contacts', function(req, res) {
 
 /* GET Client Entry Form. */
 router.get('/entry-client', function(req, res) {
-// Set our internal DB variable
+    // Set our internal DB variable
     var db = req.db;
     // Set our collection
     var userType = ''
@@ -681,14 +686,50 @@ router.get('/entry-client', function(req, res) {
 
 /* GET Agents for View Client Page. */
 router.get('/view-client', function(req, res) {
+// Set our internal DB variable
+    var db = req.db;
+    // Set our collection
+    var userType = ''
+    var permissions = {};
 
+    var collectionAccounts = db.get('accounts');
+    var collectionPermissions = db.get('Permissions');
+
+    collectionAccounts.find({"_id" : req.user._id},{fields : "usertype -_id"},function(e,usertype){
+        if (e) return callback(err);
+        userType = usertype[0].usertype;
+        collectionPermissions.find({"role" : userType},{},function(e,results){
+            if (e) return callback(err);
+            permissions = results;
+            var ac = new AccessControl(permissions);
+            const permission = ac.can(req.user.usertype).readAny('Client');
+            if (permission.granted) {
+                // Perform what is allowed when permission is granted
+                 // Set our internal DB variable
+                 var db = req.db;
+
+                // Set our collection
+                var collection = db.get('Agents');
+
+                collection.find({},{},function(e,docs){
+                    res.render('view-client', {
+                        "agentList" : docs,
+                        user : req.user
+                    });
+                });
+            } else {
+                // resource is forbidden for this user/role
+                res.status(403).end();
+            }
+        });
+    });
 
 
 });
 
 /* GET Clients for Contact Entry Form. */
 router.get('/entry-contact', function(req, res) {
-// Set our internal DB variable
+    // Set our internal DB variable
     var db = req.db;
     // Set our collection
     var userType = ''
@@ -1693,9 +1734,8 @@ router.post('/viewClient', function(req, res) {
                 }, function (err, doc) {
                     if (err) {
                         // If it failed, return error
-                        res.send("There was a problem adding the information to the database.");
-                    }
-                    else {
+                        next(err);
+                    } else {
                         // And forward to success page
                         res.redirect('/home');
                     }
@@ -1884,9 +1924,8 @@ router.post('/viewContact', function(req, res) {
                 }, function (err, doc) {
                     if (err) {
                         // If it failed, return error
-                        res.send("There was a problem adding the information to the database.");
-                    }
-                    else {
+                        next(err);
+                    } else {
                         // And forward to success page
                         res.redirect('/home');
                     }
@@ -2176,9 +2215,8 @@ router.post('/viewEvent', function(req, res) {
                 }, function (err, doc) {
                     if (err) {
                         // If it failed, return error
-                        res.send("There was a problem adding the information to the database.");
-                    }
-                    else {
+                        next(err);
+                    } else {
                         // And forward to success page
                         res.redirect('/home');
                     }
@@ -2192,7 +2230,7 @@ router.post('/viewEvent', function(req, res) {
 });
 
 /* POST to Add Clients */
-router.post('/addClient', function(req, res) {
+router.post('/addClient', function(req, res, next) {
 // Set our internal DB variable
     var db = req.db;
     // Set our collection
@@ -2277,9 +2315,8 @@ router.post('/addClient', function(req, res) {
                 }, function (err, doc) {
                     if (err) {
                         // If it failed, return error
-                        res.send("There was a problem adding the information to the database.");
-                    }
-                    else {
+                        next(err);
+                    } else {
                         // And forward to success page
                         res.redirect('/home');
                     }
@@ -2348,9 +2385,8 @@ router.post('/addContact', function(req, res) {
                 }, function (err, doc) {
                     if (err) {
                         // If it failed, return error
-                        res.send("There was a problem adding the information to the database.");
-                    }
-                    else {
+                        next(err);
+                    } else {
                         // And forward to success page
                         res.redirect('/home');
                     }
@@ -2429,9 +2465,8 @@ router.post('/addEvent', function(req, res) {
                 }, function (err, doc) {
                     if (err) {
                         // If it failed, return error
-                        res.send("There was a problem adding the information to the database.");
-                    }
-                    else {
+                        next(err);
+                    } else {
                         // And forward to success page
                         res.redirect('/home');
                     }
@@ -2701,10 +2736,9 @@ router.post('/edit-user', function(req, res) {
                 }, function (err, doc) {
                     if (err) {
                         // If it failed, return error
-                        res.send("There was a problem adding the information to the database.");
-                    }
-                    else {
-                        //forward to success page
+                        next(err);
+                    } else {
+                        // And forward to success page
                         res.redirect('/home');
                     }
                 });
