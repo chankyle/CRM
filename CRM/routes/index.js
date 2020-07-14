@@ -40,10 +40,15 @@ router.get('/home', function(req, res) {
     var collectionAccounts = db.get('accounts');
     var collectionPermissions = db.get('Permissions');
 
-    collectionAccounts.find({"_id" : req.user._id},{fields : "usertype -_id"},function(e,usertype){
+    collectionAccounts.find({"_id" : req.user._id},{fields : "usertype active -_id"},function(e,usertype){
         if (e) return callback(err);
-        userType = usertype[0].usertype;
-        collectionPermissions.find({"role" : userType},{},function(e,results){
+        console.log(usertype[0].active)
+        if (usertype[0].active === false) {
+            req.logout();
+            res.redirect('/access-denied');
+        } else {
+            userType = usertype[0].usertype;
+            collectionPermissions.find({"role" : userType},{},function(e,results){
                 if (e) return callback(err);
                 permissions = results;
                 var ac = new AccessControl(permissions);
@@ -56,6 +61,8 @@ router.get('/home', function(req, res) {
                     res.status(403).end();
                 } 
             });
+        }
+
     });
         
 
@@ -2986,10 +2993,7 @@ router.post('/addUser', function(req, res) {
                     Account.register(new Account({ username : newUserName, usertype : 'Administrator' , active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
                         if (err) {
                             console.log(err);
-                            res.render('home', {
-                                permissions : results,
-                                usertype: req.user.usertype
-                            });
+                            res.redirect('/home');
                         }
                     });
 
@@ -2997,10 +3001,7 @@ router.post('/addUser', function(req, res) {
                     Account.register(new Account({ username : newUserName, usertype : 'ReadOnly', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
                         if (err) {
                             console.log(err);
-                            res.render('home', {
-                                permissions : results,
-                                usertype: req.user.usertype
-                            });
+                            res.redirect('/home');
                         }
                     });
 
