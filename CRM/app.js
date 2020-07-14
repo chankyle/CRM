@@ -20,6 +20,7 @@ var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
 var homeRouter = require('./routes/home');
+var accessDeniedRouter = require('./routes/access-denied');
 
 var entryClientRouter = require('./routes/entry-client');
 var entryContactRouter = require('./routes/entry-contact');
@@ -99,6 +100,7 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
 app.use('/home', homeRouter);
+app.use('/access-denied', accessDeniedRouter);
 
 app.use('/entry-client', entryClientRouter);
 app.use('/entry-contact', entryContactRouter);
