@@ -32,10 +32,11 @@
             <h4> Instructions: </h4>
             <ul>
               <li> Download the template file: <a href="/files/contacts.csv" download>Contacts.csv</a></li>
-              <li> Populate table with Client information.</li>
+              <li> Populate table with Contact information.</li>
               <li> Delete Sample Data included </li>
               <li> It is important that you do not change the column names </li>
               <li> <strong>NOTE:</strong> Any fields with commas should be surronded by Double Quotes. <br/> <b>Example</b>: "1600 Pennsylvania Ave NW, Washington, DC"</li>
+              <li><strong>OPTIONAL:</strong> Define the default field entries for upload</li>
               <li> Upload the file, click submit and review the information on the next page.</li>
             </ul>
             <br/>
@@ -66,19 +67,29 @@
           </div>
           <br>
             <form action="/import-contact" method="post" enctype="multipart/form-data">
-              <h4> Default Client: </h4>
-              <select class="form-control" id="clientSelect" name="clientSelect" required>
-                <%
-                    var list = '<option value="" disabled selected>Select</option>';
-                    for (i = 0; i < clientList.length; i++) {
-                      list += '<option>' + clientList[i].clientName + '</option>';
-                    }
-                %>
-                  <%- list %>
-              </select>
-              <h4> Upload File: </h4>
-              <input type="file" class="form-control-file" name="contactCSV" required>
-              <br>
+              <h4> Default Values: </h4>
+              <div class="form-row">
+                <div class="form-group col-12 col-md-auto">
+                  <label>Client</label>
+                  <select class="form-control" id="clientSelect" name="clientSelect" required>
+                    <%
+                        var list = '<option value="" disabled selected>Select</option>';
+                        for (i = 0; i < clientList.length; i++) {
+                          list += '<option>' + clientList[i].clientName + '</option>';
+                        }
+                    %>
+                      <%- list %>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-12 col-md-auto">
+                  <label>File for Upload</label>
+                  <input type="file" class="form-control-file" name="contactCSV" required>
+                </div>
+              </div>
+
+
               <input class="btn btn-primary" type="submit" value="Submit">
             </form>
           </div>

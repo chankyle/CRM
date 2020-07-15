@@ -35,6 +35,7 @@
               <li> Delete Sample Data included </li>
               <li> It is important that you do not change the column names </li>
               <li> <strong>NOTE:</strong> Any fields with commas should be surronded by Double Quotes. <br/> <b>Example</b>: "1600 Pennsylvania Ave NW, Washington, DC"</li>
+              <li><strong>OPTIONAL:</strong> Define the default field entries for upload</li>
               <li> Upload the file, click submit and review the information on the next page.</li>
             </ul>
             <br>
@@ -75,57 +76,90 @@
             <br>
            <form action="/import-client" method="post" enctype="multipart/form-data">
               <h4> Default Values: </h4>
-              <h5> Agent Abbreviation:</h5>
-              <select class="form-control" id="agentAbbrev" name="agentAbbrev">
-                <%
-                    var list = '<option value="" disabled selected>Select</option>';
-                    for (i = 0; i < agentList.length; i++) {
-                      list += '<option>' + agentList[i].agentAbbrev + '</option>';
-                    }
-                %>
-                  <%- list %>
-              </select>
+              <div class="form-row">
+                <div class="form-group col-12 col-md-auto">
+                  <label>Agent Abbreviation</label>
+                  <select class="form-control" id="agentAbbrev" name="agentAbbrev">
+                    <%
+                        var list = '<option value="" disabled selected>Select</option>';
+                        for (i = 0; i < agentList.length; i++) {
+                          list += '<option>' + agentList[i].agentAbbrev + '</option>';
+                        }
+                    %>
+                      <%- list %>
+                  </select>
+                </div>
+              </div>
 
-              <h5> Client Address 1 Type:</h5>
-              <select class="form-control" id="clientAddress1Type" name="clientAddress1Type">
-                <option></option>
-                <option>Contact Address</option>
-                <option>Delivery Address</option>
-              </select>
+              <div class="form-row">
+                <div class="form-group col-12 col-md-auto">
+                  <label>Client Address 1 Type</label>
+                  <select class="form-control" id="clientAddress1Type" name="clientAddress1Type">
+                    <option></option>
+                    <option>Contact Address</option>
+                    <option>Delivery Address</option>
+                  </select>
+                </div>
+              </div>
 
-              <h5> Client Address 2 Type:</h5>
-              <select class="form-control" id="clientAddress2Type" name="clientAddress2Type">
-                <option></option>
-                <option>Contact Address</option>
-                <option>Delivery Address</option>
-              </select>
+              <div class="form-row">
+                <div class="form-group col-12 col-md-auto">
+                  <label>Client Address 2 Type</label>
+                  <select class="form-control" id="clientAddress2Type" name="clientAddress2Type">
+                    <option></option>
+                    <option>Contact Address</option>
+                    <option>Delivery Address</option>
+                  </select>
+                </div>
+              </div>
 
-              <h5> Client Address 3 Type:</h5>
-              <select class="form-control" id="clientAddress3Type" name="clientAddress3Type">
-                <option></option>
-                <option>Contact Address</option>
-                <option>Delivery Address</option>
-              </select>
+              <div class="form-row">
+                <div class="form-group col-12 col-md-auto">
+                  <label>Client Address 3 Type</label>
+                  <select class="form-control" id="clientAddress3Type" name="clientAddress3Type">
+                    <option></option>
+                    <option>Contact Address</option>
+                    <option>Delivery Address</option>
+                  </select>
+                </div>
+              </div>
 
-              <h5> Client Address 4 Type:</h5>
-              <select class="form-control" id="clientAddress4Type" name="clientAddress4Type">
-                <option></option>
-                <option>Contact Address</option>
-                <option>Delivery Address</option>
-              </select>
+              <div class="form-row">
+                <div class="form-group col-12 col-md-auto">
+                  <label>Client Address 4 Type</label>
+                  <select class="form-control" id="clientAddress4Type" name="clientAddress4Type">
+                    <option></option>
+                    <option>Contact Address</option>
+                    <option>Delivery Address</option>
+                  </select>
+                </div>
+              </div>
 
-              <h5> Client Prod OX:</h5>
-              <input class="form-check-input" type="checkbox" name="clientProdOX" value="true">
+              <div class="form-row">
+                <div class="form-group col-12 col-md-auto">
+                  <label>Client Products</label>
+                  <div class="custom-control custom-checkbox">
+                    <input class="form-check-input" type="checkbox" name="clientProdOX" value="true">
+                    <label class="form-check-label" for="clientProdOX">OX</label>
+                  </div>
+                  <div class="custom-control custom-checkbox">
+                    <input class="form-check-input" type="checkbox" name="clientProdPP" value="true">
+                    <label class="form-check-label" for="clientProdPP">PP</label>
+                  </div>
+                  <div class="custom-control custom-checkbox">
+                    <input class="form-check-input" type="checkbox" name="clientProdTP" value="true">
+                    <label class="form-check-label" for="clientProdTP">TP</label>
+                  </div>
+                </div>
+              </div>
 
-              <h5> Client Prod PP:</h5>
-              <input class="form-check-input" type="checkbox" name="clientProdPP" value="true">
+              <div class="form-row">
+                <div class="form-group col-12 col-md-auto">
+                  <label>File for Upload</label>
+                  <input type="file" class="form-control-file" name="clientCSV" required>
+                </div>
+              </div>
 
-              <h5> Client Prod TP:</h5>
-              <input class="form-check-input" type="checkbox" name="clientProdTP" value="true">
-
-              <h4> Upload File: </h4>
-              <input type="file" class="form-control-file" name="clientCSV" required>
-              <br>
               <input class="btn btn-primary" type="submit" value="Submit">
            </form>
          </div>
