@@ -344,17 +344,9 @@
           <input type="name" class="form-control" id="eventID" name="eventID" value="<%= eventID %>" hidden>
           <div class="table d-none d-md-block">
             <table class="table table-bordered px-2 py-2 bg-white">
-            <thead class="thead-dark">
-              <tr>
-                <th style="width: 15%" scope="col"></th>
-                <th scope="col">Value: </th>
-                <th style="width: 5%" scope="col"></th>
-
-              </tr>
-            </thead>
             <tbody>
               <tr>
-                <th scope="row" class="align-middle">Date</th>
+                <th style="width: 15%" scope="col" class="align-middle">Date</th>
                 <td>
                   <%
                     var str = result.events[0].eventTimeIn._i.toString();
@@ -362,13 +354,13 @@
                   %>
                   <input type="date" class="form-control" id="eventDate" name="eventDate" value = "<%= eventDate %>" disabled required>
                 </td>
-                <td class="align-middle" style="text-align:center">
+                <td style="width: 5%; text-align:center" class="align-middle">
                   <input type="button" id="editEventDate" value="edit"></input>
                   <input type="hidden" id="updateEventDate" value="Save"></input>
                 </td>
               </tr>
               <tr>
-                <th scope="row" class="align-middle">Agent:</th>
+                <th style="width: 15%" scope="col" class="align-middle">Agent:</th>
                 <td>
                   <select class="form-control" id="eventAgent" name="eventAgent" disabled required>
                     <%
@@ -384,13 +376,13 @@
                       <%- list %>
                   </select>
                 </td>
-                <td class="align-middle" style="text-align:center">
+                <td style="width: 5%; text-align:center" class="align-middle">
                   <input type="button" id="editEventAgent" value="edit"></input>
                   <input type="hidden" id="updateEventAgent" value="Save"></input>
                 </td>
               </tr>
               <tr>
-                <th scope="row" class="align-middle">Time In</th>
+                <th style="width: 15%" scope="col" class="align-middle">Time In</th>
                 <td>
                   <%
                     var str = result.events[0].eventTimeIn._d.toString();
@@ -398,13 +390,13 @@
                   %>
                   <input type="time" class="form-control" id="eventTimeIn" name="eventTimeIn" value = "<%- eventTimeIn %>" disabled required>
                 </td>
-                <td class="align-middle" style="text-align:center">
+                <td style="width: 5%; text-align:center" class="align-middle">
                   <input type="button" id="editEventTimeIn" value="edit"></input>
                   <input type="hidden" id="updateEventTimeIn" value="Save"></input>
                 </td>
               </tr>
               <tr>
-                <th scope="row" class="align-middle">Time Out</th>
+                <th style="width: 15%" scope="col" class="align-middle">Time Out</th>
                 <td>
                   <%
                     var str = result.events[0].eventTimeOut._d.toString();
@@ -412,13 +404,13 @@
                   %>
                   <input type="time" class="form-control" id="eventTimeOut" name="eventTimeOut" value = "<%- eventTimeOut %>" disabled required>
                 </td>
-                <td class="align-middle" style="text-align:center">
+                <td style="width: 5%; text-align:center" class="align-middle">
                   <input type="button" id="editEventTimeOut" value="edit"></input>
                   <input type="hidden" id="updateEventTimeOut" value="Save"></input>
                 </td>
               </tr>
               <tr>
-                <th scope="row" class="align-middle">Client:</th>
+                <th style="width: 15%" scope="col" class="align-middle">Client:</th>
                 <td>
                   <select class="form-control" id="eventClient" name="eventClient" onChange="changeAgent(this.value);" disabled>
                     <%
@@ -454,13 +446,13 @@
                     }
                   </script>
                 </td>
-                <td class="align-middle" style="text-align:center">
+                <td style="width: 5%; text-align:center" class="align-middle">
                   <input type="button" id="editEventClient" value="edit"></input>
                   <input type="hidden" id="updateEventClient" value="Save"></input>
                 </td>
               </tr>
               <tr>
-                <th scope="row" class="align-middle">Visit Type:</th>
+                <th style="width: 15%" scope="col" class="align-middle">Visit Type:</th>
                 <td>
                   <select class="form-control" id="eventType" name="eventType" disabled required>
                     <%
@@ -490,13 +482,13 @@
                       <%- list %>
                   </select>
                 </td>
-                <td class="align-middle" style="text-align:center">
+                <td style="width: 5%; text-align:center" class="align-middle">
                   <input type="button" id="editEventType" value="edit"></input>
                   <input type="hidden" id="updateEventType" value="Save"></input>
                 </td>
               </tr>
               <tr>
-                <th scope="row" class="align-middle">Contact 1 Visited</th>
+                <th style="width: 15%" scope="col" class="align-middle">Contact 1 Visited</th>
                 <td>
                   <select class="form-control" id="eventContactID1" name="eventContactID1" disabled>
                     <%
@@ -513,13 +505,13 @@
                     <%- list %>
                   </select>
                 </td>
-                <td class="align-middle" style="text-align:center">
+                <td style="width: 5%; text-align:center" class="align-middle">
                   <input type="button" id="editEventContactID1" value="edit"></input>
                   <input type="hidden" id="updateEventContactID1" value="Save"></input>
                 </td>
               </tr>
               <tr>
-                <th scope="row" class="align-middle">Contact 2 Visited</th>
+                <th style="width: 15%" scope="col" class="align-middle">Contact 2 Visited</th>
                 <td>
                   <select class="form-control" id="eventContactID2" name="eventContactID2" disabled>
                     <%
@@ -536,27 +528,27 @@
                     <%- list %>
                   </select>
                 </td>
-                <td class="align-middle" style="text-align:center">
+                <td style="width: 5%; text-align:center" class="align-middle">
                   <input type="button" id="editEventContactID2" value="edit"></input>
                   <input type="hidden" id="updateEventContactID2" value="Save"></input>
                 </td>
               </tr>
               <tr>
-                <th scope="row" class="align-middle">Branch Location:</th>
+                <th style="width: 15%" scope="col" class="align-middle">Branch Location:</th>
                 <td>
                   <input type="text" class="form-control" id="eventBranch" name="eventBranch" value = "<%= result.events[0].eventBranch %>" readonly>
                 </td>
-                <td class="align-middle" style="text-align:center">
+                <td style="width: 5%; text-align:center" class="align-middle">
                   <input type="button" id="editEventBranch" value="edit"></input>
                   <input type="hidden" id="updateEventBranch" value="Save"></input>
                 </td>
               </tr>
               <tr>
-                <th scope="row" class="align-middle">Remarks:</th>
+                <th style="width: 15%" scope="col" class="align-middle">Remarks:</th>
                 <td>
                   <input type="text" class="form-control" id="eventRemarks" name="eventRemarks" value = "<%= result.events[0].eventRemarks %>" required readonly>
                 </td>
-                <td class="align-middle" style="text-align:center">
+                <td style="width: 5%; text-align:center" class="align-middle">
                   <input type="button" id="editEventRemarks" value="edit"></input>
                   <input type="hidden" id="updateEventRemarks" value="Save"></input>
                 </td>

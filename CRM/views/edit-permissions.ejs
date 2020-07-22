@@ -48,82 +48,79 @@
       <main class="c-main">
         <!-- Main content here -->
         <main class="main mt-2 mx-3">
-
-          <div class="card w-auto">
-            <div class="card-body">
-
-    <h3> <strong>Edit Permissions</strong></h3>
+          <h2>Edit Permissions</h2>
+          <hr>
 
       <!-- Extracted data in Table Form -->
-    <form id="formEditPermissions" name="editPermissions" method="post" action="/edit-permissions">
-    <input type="text" class="form-control" id="roles" name="roles" value="<%= JSON.stringify(roles) %>" hidden>
-    <input type="text" class="form-control" id="resources" name="resources" value="<%= JSON.stringify(resources) %>" hidden>
-    <div class="table-responsive">
-      <table class="table table-bordered" id="premissionsTable">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col"></th>
-            <%
-              var list = '';
-              for (i = 0; i < roles.length; i++) {
-                list += '<th scope="col" id="' + roles[i] + '">' + roles[i] + '</th>';
-              }
-            %>
-            <%- list %>
-          </tr>
-        </thead>
-        <tbody>
-          <%
-              var list = '';
-              var emptyCells = '';
-              for (i = 0; i < roles.length; i++) {
-                emptyCells += '<td />'
-              }
-              for (i = 0; i < resources.length; i++) {
-                list += '<tr id="' + resources[i] + '">' + '<th scope="row">' + resources[i] + '</th>' + emptyCells + '</tr>'
+            <form id="formEditPermissions" name="editPermissions" method="post" action="/edit-permissions">
+            <input type="text" class="form-control" id="roles" name="roles" value="<%= JSON.stringify(roles) %>" hidden>
+            <input type="text" class="form-control" id="resources" name="resources" value="<%= JSON.stringify(resources) %>" hidden>
+            <div class="table-responsive">
+              <table class="table table-bordered px-2 py-2 bg-white" style="width: auto;" id="premissionsTable">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col"></th>
+                    <%
+                      var list = '';
+                      for (i = 0; i < roles.length; i++) {
+                        list += '<th scope="col" id="' + roles[i] + '">' + roles[i] + '</th>';
+                      }
+                    %>
+                    <%- list %>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%
+                      var list = '';
+                      var emptyCells = '';
+                      for (i = 0; i < roles.length; i++) {
+                        emptyCells += '<td />'
+                      }
+                      for (i = 0; i < resources.length; i++) {
+                        list += '<tr id="' + resources[i] + '">' + '<th scope="row">' + resources[i] + '</th>' + emptyCells + '</tr>'
 
-                list += '<tr id="' + resources[i] + '.Create"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspCreate</td>';
-                  for (k = 0; k < roles.length; k++) {
-                    list += '<td><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Create" name="' + roles[k] + '.' + resources[i] + '.Create"></td>';
-                  }
-                list += '</tr>'
+                        list += '<tr id="' + resources[i] + '.Create"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspCreate</td>';
+                          for (k = 0; k < roles.length; k++) {
+                            list += '<td style="text-align:center; vertical-align: middle"><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Create" name="' + roles[k] + '.' + resources[i] + '.Create"></td>';
+                          }
+                        list += '</tr>'
 
-                list += '<tr id="' + resources[i] + '.Read"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspRead</td>';
-                  for (k = 0; k < roles.length; k++) {
-                    list += '<td><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Read" name="' + roles[k] + '.' + resources[i] + '.Read"></td>';
-                  }
-                list += '</tr>'
+                        list += '<tr id="' + resources[i] + '.Read"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspRead</td>';
+                          for (k = 0; k < roles.length; k++) {
+                            list += '<td style="text-align:center; vertical-align: middle"><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Read" name="' + roles[k] + '.' + resources[i] + '.Read"></td>';
+                          }
+                        list += '</tr>'
 
-                list += '<tr id="' + resources[i] + '.Update"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspUpdate</td>';
-                  for (k = 0; k < roles.length; k++) {
-                    list += '<td><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Update" name="' + roles[k] + '.' + resources[i] + '.Update"></td>';
-                  }
-                list += '</tr>'
+                        list += '<tr id="' + resources[i] + '.Update"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspUpdate</td>';
+                          for (k = 0; k < roles.length; k++) {
+                            list += '<td style="text-align:center; vertical-align: middle"><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Update" name="' + roles[k] + '.' + resources[i] + '.Update"></td>';
+                          }
+                        list += '</tr>'
 
-                list += '<tr id="' + resources[i] + '.Delete"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspDelete</td>';
-                  for (k = 0; k < roles.length; k++) {
-                    list += '<td><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Delete" name="' + roles[k] + '.' + resources[i] + '.Delete"></td>';
-                  }
-                list += '</tr>'
-              }
+                        list += '<tr id="' + resources[i] + '.Delete"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspDelete</td>';
+                          for (k = 0; k < roles.length; k++) {
+                            list += '<td style="text-align:center; vertical-align: middle"><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Delete" name="' + roles[k] + '.' + resources[i] + '.Delete"></td>';
+                          }
+                        list += '</tr>'
+                      }
 
-            %>
-            <%- list %>
-        </tbody>
-      </table>
-    </div>
-      <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-    </form>
+                    %>
+                    <%- list %>
+                </tbody>
+              </table>
+            </div>
+              <div class="row">
+                <div class="col-12 col-md-auto">
+                  <button type="submit" class="btn-block btn-primary btn-lg">Submit</button>
+                </div>
+              </div>
+            </form>
 
             <script>
               function goBack() {
                 window.history.back();
               }
             </script>
-
-          </div>
-        </div>
-
         </main>
       </main>
     </div>
