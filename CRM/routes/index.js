@@ -1902,6 +1902,8 @@ router.post('/viewContact', function(req, res) {
                 var username = req.user.username;
                 var contactID = req.body.contactID;
                 var contactClientID = req.body.contactClientID;
+                var contactFirstName = req.body.contactFirstName;
+                var contactLastName = req.body.contactLastName;
                 var contactPosition = req.body.contactPosition;
                 var contactPhone = req.body.contactPhone;
                 var contactMobile = req.body.contactMobile;
@@ -1918,6 +1920,8 @@ router.post('/viewContact', function(req, res) {
                 },
                 {
                     $set: {
+                        "contactFirstName" : contactFirstName,
+                        "contactLastName" : contactLastName,
                         "contactClientID" : contactClientID,
                         "contactPosition" : contactPosition,
                         "contactPhone" : contactPhone,

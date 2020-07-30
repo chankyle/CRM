@@ -205,7 +205,7 @@
      changedView = 'Mobile';
      document.getElementById('contactClientIDMobile').disabled = true;
      document.getElementById('updateContactClientIDMobile').type = 'hidden';
-     document.getElementById('editContactClientID').type = 'button';
+     document.getElementById('editContactClientIDMobile').type = 'button';
    }
 
    document.getElementById('editContactPositionMobile').onclick = function(){
@@ -429,7 +429,7 @@
                         <select class="form-control" id="contactStatus" name="contactStatus" disabled required>
                           <%
                           var statusList = '';
-                            if(result.contact[0].contactStatus == "Enabled"){
+                            if(result.contact[0].contactActive == "Enabled"){
                               statusList += '<option selected>Enabled</option>';
                               statusList += '<option>Disabled</option>';
                           } else {
@@ -447,7 +447,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                <button type="submit" class="btn btn-primary btn-lg" id="submit">Submit</button>
                 <input style="visibility: hidden" id="isEditing" name ="isEditing" value="false">
               </div>
             </form>
@@ -469,7 +469,7 @@
                         </tr>
                         <tr>
                           <td colspan=2 scope="row">
-                            <input type="text" class="form-control" id="contactFirstNameMobile" name="contactFirstNameMobile" value = "<%= result.contact[0].contactFirstName %> " required readonly>
+                            <input type="text" class="form-control" id="contactFirstNameMobile" name="contactFirstName" value = "<%= result.contact[0].contactFirstName %> " required readonly>
                           </td>
                         </tr>
                   <!-- Mobile View Contact Last Name -->
@@ -482,7 +482,7 @@
                         </tr>
                         <tr>
                           <td colspan=2 scope="row">
-                            <input type="text" class="form-control" id="contactLastNameMobile" name="contactLastNameMobile" value = "<%= result.contact[0].contactLastName %> " required readonly>
+                            <input type="text" class="form-control" id="contactLastNameMobile" name="contactLastName" value = "<%= result.contact[0].contactLastName %> " required readonly>
                           </td>
                         </tr>
             <!-- Mobile View Client Name -->
@@ -586,7 +586,7 @@
                             <select class="form-control" id="contactStatusMobile" name="contactStatus" disabled required>
                               <%
                               var statusList = '';
-                                if(result.contact[0].contactStatus == "Enabled"){
+                                if(result.contact[0].contactActive == "Enabled"){
                                   statusList += '<option selected>Enabled</option>';
                                   statusList += '<option>Disabled</option>';
                               } else {
@@ -607,27 +607,19 @@
                       </div>
                     </div>
                   </div>
-
+          </form>
           <!--All drop down fields need to be set at enabled before they will be sent as part of the payload to mongo -->
           <script>
             function enableFields() {
+              // if desktop
               document.getElementById('contactClientID').disabled = false;
               document.getElementById('contactStatus').disabled = false;
 
-              //If user was on Mobile, set desktop fields = to Mobile fields since Server only parses desktop fields
-              if (changedView == "Mobile") {
-                newContactName = newContactNameMobile
-                contactClientID = contactClientIDMobile
-                contactPosition = contactPositionMobile
-                contactPhone = contactPhoneMobile
-                contactMobile = contactMobileMobile
-                contactEmail = contactEmailMobile
-                contactNotes = contactNotesMobile
-                contactStatus = contactStatusMobile
-              }
+              // if mobile
+              document.getElementById('contactClientIDMobile').disabled = false;
+              document.getElementById('contactStatusMobile').disabled = false;
            }
-            </script>
-          </form>
+          </script>
 <hr>
     <!-- Contact History Snapshot - thinking maybe last 5 entries -->
 

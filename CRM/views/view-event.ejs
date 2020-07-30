@@ -8,7 +8,7 @@
  <!-- CoreUI CSS -->
  <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/css/coreui.min.css" crossorigin="anonymous">
  <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
-
+ <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
  <title>CRM - View Event</title>
 
  <script>
@@ -225,7 +225,7 @@
    document.getElementById('updateEventTimeOutMobile').onclick = function(){
      isEditing = false;
      document.getElementById('eventTimeOutMobile').disabled = true;
-     document.getElementById('updateEventTimeOut').type = 'hidden';
+     document.getElementById('updateEventTimeOutMobile').type = 'hidden';
      document.getElementById('editEventTimeOutMobile').type = 'button';
    }
 
@@ -429,22 +429,6 @@
                   <span id='variableJSON' hidden>
                     <%= JSON.stringify(result.contacts); %>
                   </span>
-                  <script>
-                    function changeAgent(value){
-                      var contacts = JSON.parse($('#variableJSON').text());
-                      var contactOptions = "";
-                      console.log(value);
-                      contactOptions += "<option>N/A</option>";
-                      for (j = 0; j < contacts.length; j++) {
-                        if(contacts[j].contactClientID === value) {
-                          contactOptions += "<option>" + contacts[j].contactFirstName + " " + contacts[j].contactLastName + "</option>";
-                        }
-                      }
-                      window.alert("Reselect both contacts");
-                      document.getElementById("eventContactID1").innerHTML = contactOptions;
-                      document.getElementById("eventContactID2").innerHTML = contactOptions;
-                    }
-                  </script>
                 </td>
                 <td style="width: 5%; text-align:center" class="align-middle">
                   <input type="button" id="editEventClient" value="edit"></input>
@@ -579,7 +563,7 @@
                                 var str = result.events[0].eventTimeIn._i.toString();
                                 var eventDate = str.substr(0,10);
                               %>
-                              <input type="date" class="form-control" id="eventDate" name="eventDate" value = "<%= eventDate %>" disabled required>
+                              <input type="date" class="form-control" id="eventDateMobile" name="eventDate" value = "<%= eventDate %>" disabled required>
                             </td>
                           </tr>
                     <!-- Mobile View Event Agent -->
@@ -592,7 +576,7 @@
                           </tr>
                           <tr>
                             <td colspan=2 scope="row">
-                              <select class="form-control" id="eventAgent" name="eventAgent" disabled required>
+                              <select class="form-control" id="eventAgentMobile" name="eventAgent" disabled required>
                                 <%
                                     var list = '';
                                     for (i = 0; i < result.agents.length; i++) {
@@ -621,7 +605,7 @@
                                 var str = result.events[0].eventTimeIn._d.toString();
                                 var eventTimeIn = str.substr(16, 5);
                               %>
-                              <input type="time" class="form-control" id="eventTimeIn" name="eventTimeIn" value = "<%- eventTimeIn %>" disabled required>
+                              <input type="time" class="form-control" id="eventTimeInMobile" name="eventTimeIn" value = "<%- eventTimeIn %>" disabled required>
                           </tr>
               <!-- Mobile View Event Time Out -->
                           <tr>
@@ -637,7 +621,7 @@
                                 var str = result.events[0].eventTimeOut._d.toString();
                                 var eventTimeOut = str.substr(16, 5);
                               %>
-                              <input type="time" class="form-control" id="eventTimeOut" name="eventTimeOut" value = "<%- eventTimeOut %>" disabled required>
+                              <input type="time" class="form-control" id="eventTimeOutMobile" name="eventTimeOut" value = "<%- eventTimeOut %>" disabled required>
                             </td>
                           </tr>
                 <!-- Mobile View Event Client -->
@@ -650,7 +634,7 @@
                           </tr>
                           <tr>
                             <td colspan=2 scope="row">
-                              <select class="form-control" id="eventClient" name="eventClient" onChange="changeAgent(this.value);" disabled>
+                              <select class="form-control" id="eventClientMobile" name="eventClient" onChange="changeAgent(this.value);" disabled>
                                 <%
                                     var list = '';
                                     for (i = 0; i < result.clients.length; i++) {
@@ -667,22 +651,6 @@
                               <span id='variableJSON' hidden>
                                 <%= JSON.stringify(result.contacts); %>
                               </span>
-                              <script>
-                                function changeAgent(value){
-                                  var contacts = JSON.parse($('#variableJSON').text());
-                                  var contactOptions = "";
-                                  console.log(value);
-                                  contactOptions += "<option>N/A</option>";
-                                  for (j = 0; j < contacts.length; j++) {
-                                    if(contacts[j].contactClientID === value) {
-                                      contactOptions += "<option>" + contacts[j].contactFirstName + " " + contacts[j].contactLastName + "</option>";
-                                    }
-                                  }
-                                  window.alert("Reselect both contacts");
-                                  document.getElementById("eventContactID1").innerHTML = contactOptions;
-                                  document.getElementById("eventContactID2").innerHTML = contactOptions;
-                                }
-                              </script>
                             </td>
                           </tr>
                 <!-- Mobile View Event Visit Type -->
@@ -695,7 +663,7 @@
                           </tr>
                           <tr>
                             <td colspan=2 scope="row">
-                              <select class="form-control" id="eventType" name="eventType" disabled required>
+                              <select class="form-control" id="eventTypeMobile" name="eventType" disabled required>
                                 <%
                                   var list = '';
                                   if(result.events[0].eventType == "Collection"){
@@ -734,7 +702,7 @@
                           </tr>
                           <tr>
                             <td colspan=2 scope="row">
-                              <select class="form-control" id="eventContactID1" name="eventContactID1" disabled>
+                              <select class="form-control" id="eventContactID1Mobile" name="eventContactID1" disabled>
                                 <%
                                   var list = '<option>N/A</option>';
                                   for (i = 0; i < result.contacts.length; i++) {
@@ -760,7 +728,7 @@
                           </tr>
                           <tr>
                             <td colspan=2 scope="row">
-                              <select class="form-control" id="eventContactID2" name="eventContactID2" disabled>
+                              <select class="form-control" id="eventContactID2Mobile" name="eventContactID2" disabled>
                                 <%
                                   var list = '<option>N/A</option>';
                                   for (i = 0; i < result.contacts.length; i++) {
@@ -785,7 +753,7 @@
                           </tr>
                           <tr>
                             <td colspan=2 scope="row">
-                              <input type="text" class="form-control" id="eventBranch" name="eventBranch" value = "<%= result.events[0].eventBranch %>" readonly>
+                              <input type="text" class="form-control" id="eventBranchMobile" name="eventBranch" value = "<%= result.events[0].eventBranch %>" readonly>
                           </tr>
                 <!-- Mobile View Visit Remarks-->
                           <tr>
@@ -797,7 +765,7 @@
                           </tr>
                           <tr>
                             <td colspan=2 scope="row">
-                              <textarea class="form-control" id="eventRemarks" name="eventRemarks" required readonly><%= result.events[0].eventRemarks %></textarea>
+                              <textarea class="form-control" id="eventRemarksMobile" name="eventRemarks" required readonly><%= result.events[0].eventRemarks %></textarea>
                           </tr>
                         </tbody>
                       </table>
@@ -812,7 +780,27 @@
 
           <!--All drop down fields need to be set at enabled before they will be sent as part of the payload to mongo -->
           <script>
+            function changeAgent(value){
+              var contacts = JSON.parse($('#variableJSON').text());
+              var contactOptions = "";
+              console.log(contactOptions);
+              contactOptions += "<option>N/A</option>";
+              for (j = 0; j < contacts.length; j++) {
+                if(contacts[j].contactClientID === value) {
+                  contactOptions += "<option>" + contacts[j].contactFirstName + " " + contacts[j].contactLastName + "</option>";
+                }
+              }
+              console.log(contactOptions);
+              window.alert("Reselect both contacts");
+              document.getElementById("eventContactID1").innerHTML = contactOptions;
+              document.getElementById("eventContactID2").innerHTML = contactOptions;
+              document.getElementById("eventContactID1Mobile").value = contactOptions;
+              document.getElementById("eventContactID2Mobile").value = contactOptions;
+            }
+          </script>
+          <script>
             function enableFields() {
+              // for desktop
               document.getElementById('eventDate').disabled = false;
               document.getElementById('eventAgent').disabled = false;
               document.getElementById('eventTimeIn').disabled = false;
@@ -821,6 +809,16 @@
               document.getElementById('eventType').disabled = false;
               document.getElementById('eventContactID1').disabled = false;
               document.getElementById('eventContactID2').disabled = false;
+
+              // for mobile
+              document.getElementById('eventDateMobile').disabled = false;
+              document.getElementById('eventAgentMobile').disabled = false;
+              document.getElementById('eventTimeInMobile').disabled = false;
+              document.getElementById('eventTimeOutMobile').disabled = false;
+              document.getElementById('eventClientMobile').disabled = false;
+              document.getElementById('eventTypeMobile').disabled = false;
+              document.getElementById('eventContactID1Mobile').disabled = false;
+              document.getElementById('eventContactID2Mobile').disabled = false;
             }
           </script>
           </form>
