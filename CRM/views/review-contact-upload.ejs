@@ -8,6 +8,7 @@
  <!-- CoreUI CSS -->
  <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/css/coreui.min.css" crossorigin="anonymous">
  <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/custom.css">
 
  <title>CRM - Import Contact</title>
  </head>
@@ -30,7 +31,7 @@
               <hr>
          <form action="/upload-contacts" method="post">
            <input type="text" class="form-control" id="csvData" name="csvData" value="<%= JSONContacts %>" hidden>
-          <div class="table-responsive text-nowrap" style=" height: 65vh; overflow-y:auto;">
+          <div class="tableWrap table-responsive text-nowrap" style=" height: 65vh; overflow-y:auto;">
            <table class="table table-bordered px-2 py-2 bg-white">
              <thead class="thead-dark">
                <tr>

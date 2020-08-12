@@ -1,3 +1,5 @@
+app.use(express.static('public'));
+
 $(function(){
 
     $("#fetchagent").on('click', function(){
@@ -14,14 +16,14 @@ $(function(){
             $("#trdata").html(string);
         });
     });
- 
+
     $("#importagent").on('click', function(){
         $.get( "/uploadagent", function( data ) {
             $("#message").show().html(data['success']);
         });
     });
 
-}); 
+});
 
 
 $(function(){
@@ -40,11 +42,11 @@ $(function(){
             $("#trdata").html(string);
         });
     });
- 
+
     $("#importcontact").on('click', function(){
         $.get( "/uploadcontact", function( data ) {
             $("#message").show().html(data['success']);
         });
     });
 
-}); 
+});
