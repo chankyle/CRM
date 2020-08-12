@@ -1779,15 +1779,39 @@ router.get('/search-contact', function(req, res) {
                     // Perform what is allowed when permission is granted
                     // Set our internal DB variable
                     var db = req.db;
+                    var locals = {};
+                    var tasks = [
+                        // Load Clients
+                        function(callback) {
+                            var collection1 = db.get('Clients');
 
-                    // Set our collection
-                    var collection = db.get('Contacts');
+                            collection1.find({},{clientName : 1},function(e,clients){
+                                if (e) return callback(err);
+                                locals.clients = clients;
+                                callback();
+                            })
+                        },
+                        // Load Contacts
+                        function(callback) {
+                            var collection2 = db.get('Contacts');
 
-                    collection.find({},{contactFirstName : 1, contactLastName : 1},function(e,docs){
+                            collection2.find({},{contactFirstName : 1, contactLastName : 1},function(e,contacts){
+                                if (e) return callback(err);
+                                locals.contacts = contacts;
+                                callback();
+                            })
+                        }
+                    ];
+
+                    async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+                        if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+                        // Here `locals` will be an object with `users` and `colors` keys
+                        // Example: `locals = {users: [...], colors: [...]}`
+                        db.close();
                         res.render('search-contact', {
-                            "contactList" : docs,
-                            user : req.user,
-                            permissions : results
+                            clientList : locals.clients,
+                            contactList : locals.contacts,
+                            user : req.user, permissions : results
                         });
                     });
                 } else {
@@ -2789,29 +2813,10 @@ router.get('/edit-permissions', function(req, res){
                 var collection = db.get('Permissions');
 
                 collection.find({},{},function(e,docs){
-                    var roles =[];
-                    var resources = [];
-                    for (i = 0; i < docs.length; i++){
-                        //If role is not in array of roles, add role into array
-                        var currentRole = docs[i].role;
-                        if (roles.indexOf(currentRole) > -1) {
-                            //Do nothing since Role is found
-                        } else {
-                            roles.push (currentRole);
-                        }
-                        //If resource is not in array of resources, add resource into array 
-                        var currentResource = docs[i].resource;
-                        if (resources.indexOf(currentResource) > -1) {
-                            //Do nothing since Resource is found
-                        } else {
-                            resources.push (currentResource);
-                        }
-                    }
                     res.render('edit-permissions', {
-                        "permissions" : docs,
-                        roles : roles,
-                        resources : resources,
-                        user : req.user, permissions : results
+                        "getPermissions" : docs,
+                        user : req.user, 
+                        permissions : results
                     });
                 });
             } else {
@@ -2847,12 +2852,9 @@ router.post('/edit-permissions', function(req, res) {
                 // Set our internal DB variable
                 var db = req.db;
                 var collection = db.get('Permissions');
-                var roles = JSON.parse(req.body.roles);
-                var resources = JSON.parse(req.body.resources);
+                var roles = ['Administrator', 'Agent', 'ReadOnly'];
+                var resources = ['Client', 'Contact', 'Event', 'Import', 'Permissions', 'Roles', 'Account'];
                 var str = '';
-                //empty permissions table
-                collection.remove({});
-
                 //repopulate every entry on table
                 for (i in roles) {
                     for (k in resources) {
@@ -2860,11 +2862,27 @@ router.post('/edit-permissions', function(req, res) {
                         str = '';
                         str = str.concat(roles[i], '.', resources[k], '.Create');
                         if (req.body[str] == 'on'){
-                            collection.insert({
+                            collection.findOneAndUpdate(
+                            {  //filter
                                 "role": roles[i],
                                 "resource": resources[k],
                                 "action": "Create:any",
                                 "attributes": "*"
+                            },
+                            {   //update
+                                $set: {"role": roles[i],
+                                    "resource": resources[k],
+                                    "action": "Create:any",
+                                    "attributes": "*" }
+                            },
+                            {
+                                upsert: true
+                            })
+                        } else {
+                            collection.remove({
+                                "role": roles[i],
+                                "resource": resources[k],
+                                "action": "Create:any"
                             })
                         }
 
@@ -2872,11 +2890,27 @@ router.post('/edit-permissions', function(req, res) {
                         str = '';
                         str = str.concat(roles[i], '.', resources[k], '.Read');
                         if (req.body[str] == 'on'){
-                            collection.insert({
+                            collection.findOneAndUpdate(
+                            {   //filter
                                 "role": roles[i],
                                 "resource": resources[k],
                                 "action": "Read:any",
                                 "attributes": "*"
+                            }, 
+                            {   //update
+                                $set: {"role": roles[i],
+                                "resource": resources[k],
+                                "action": "Read:any",
+                                "attributes": "*"}
+                            },
+                            {
+                                    upsert: true
+                            })
+                        } else {
+                            collection.remove({
+                                "role": roles[i],
+                                "resource": resources[k],
+                                "action": "Read:any"
                             })
                         }
 
@@ -2884,11 +2918,27 @@ router.post('/edit-permissions', function(req, res) {
                         str = '';
                         str = str.concat(roles[i], '.', resources[k], '.Update');
                         if (req.body[str] == 'on'){
-                            collection.insert({
+                            collection.findOneAndUpdate(
+                            {   //filter
                                 "role": roles[i],
                                 "resource": resources[k],
                                 "action": "Update:any",
                                 "attributes": "*"
+                            },
+                            {   //update
+                                $set: {"role": roles[i],
+                                "resource": resources[k],
+                                "action": "Update:any",
+                                "attributes": "*"}
+                            },
+                            {
+                                    upsert: true
+                            })
+                        } else {
+                            collection.remove({
+                                "role": roles[i],
+                                "resource": resources[k],
+                                "action": "Update:any"
                             })
                         }
 
@@ -2896,11 +2946,27 @@ router.post('/edit-permissions', function(req, res) {
                         str = '';
                         str = str.concat(roles[i], '.', resources[k], '.Delete');
                         if (req.body[str] == 'on'){
-                            collection.insert({
+                            collection.findOneAndUpdate(
+                            {   //filter
                                 "role": roles[i],
                                 "resource": resources[k],
                                 "action": "Delete:any",
                                 "attributes": "*"
+                            },
+                            {   //update
+                                $set: {"role": roles[i],
+                                "resource": resources[k],
+                                "action": "Delete:any",
+                                "attributes": "*"}
+                            },
+                            {
+                                    upsert: true
+                            })
+                        } else {
+                            collection.remove({
+                                "role": roles[i],
+                                "resource": resources[k],
+                                "action": "Delete:any"
                             })
                         }
                     }

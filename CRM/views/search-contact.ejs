@@ -2,6 +2,7 @@
 <html lang="en">
  <head>
  <!-- Required meta tags -->
+ <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -32,16 +33,37 @@
                 <!-- Select Contact from Prepopulated list of options -->
                   <div class="form-row">
                     <div class="form-group col-12 col-md-auto">
-                        <label for="contactSelect">Select Contact</label>
-                          <select class="form-control" id="contactID" name="contactID" required>
-                            <%
-                                var list = '<option value="" disabled selected>Select</option>';
-                                for (i = 0; i < contactList.length; i++) {
-                                  list += '<option value="' + contactList[i]._id + '">' + contactList[i].contactFirstName + ' ' + contactList[i].contactLastName + '</option>';
-                                }
-                            %>
-                              <%- list %>
-                          </select>
+                      <label for="contactSelect">Select Client</label>
+                      <select class="form-control" id="clientID" name="clientID" onChange="changeContact(this.value);" required>
+                        <%
+                            var list = '<option value="" disabled selected>Select</option>';
+                            for (i = 0; i < clientList.length; i++) {
+                              list += '<option value="' + clientList[i].clientName + '">' + clientList[i].clientName + '</option>';
+                            }
+                        %>
+                          <%- list %>
+                      </select>
+                      <span id="variableJSON" hidden>
+                        <%= JSON.stringify(contactList); %>
+                        </span>
+                      <script>
+                        function changeContact(value){
+                          var contacts = JSON.parse($('#variableJSON').text());
+
+                          var contactOptions = "";
+                          for (j = 0; j < contacts.length; j++) {
+                            if(contacts[j].contactClientID === value) {
+                              contactOptions += '<option value="' + contacts[j]._id + '">' + contacts[j].contactFirstName + ' ' + contacts[j].contactLastName + '</option>';
+                            }
+                          }
+                          document.getElementById("contactID").innerHTML = contactOptions;
+                        }
+                      </script>
+
+
+                      <label for="contactSelect">Select Contact</label>
+                      <select class="form-control" id="contactID" name="contactID" required>
+                      </select>
                     </div>
                   </div>
 

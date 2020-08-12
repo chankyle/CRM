@@ -14,9 +14,8 @@
   <script type="text/javascript">
 
   function setTableData() {
-    var permissions = <%- JSON.stringify(permissions) %>;
+    var permissions = <%- JSON.stringify(getPermissions) %>;
     var table = document.getElementById("premissionsTable");
-    console.log(permissions);
 
     for (i = 0; i < permissions.length; i++){
       //Find cell. Role.Resource.Action
@@ -25,7 +24,6 @@
       var roleName = permissions[i].role;
       var resourceName = permissions[i].resource;
       var idName = roleName + '.' + resourceName + '.' + actionName;
-
       document.getElementById(idName).checked = true;
     }
 
@@ -53,14 +51,13 @@
 
       <!-- Extracted data in Table Form -->
             <form id="formEditPermissions" name="editPermissions" method="post" action="/edit-permissions">
-            <input type="text" class="form-control" id="roles" name="roles" value="<%= JSON.stringify(roles) %>" hidden>
-            <input type="text" class="form-control" id="resources" name="resources" value="<%= JSON.stringify(resources) %>" hidden>
             <div class="table-responsive">
               <table class="table table-bordered px-2 py-2 bg-white" style="width: auto;" id="premissionsTable">
                 <thead class="thead-dark">
                   <tr>
                     <th scope="col"></th>
                     <%
+                      var roles = ['Administrator', 'Agent', 'ReadOnly'];
                       var list = '';
                       for (i = 0; i < roles.length; i++) {
                         list += '<th scope="col" id="' + roles[i] + '">' + roles[i] + '</th>';
@@ -71,6 +68,7 @@
                 </thead>
                 <tbody>
                   <%
+                      var resources = ['Client', 'Contact', 'Event', 'Import', 'Permissions', 'Roles', 'Account'];
                       var list = '';
                       var emptyCells = '';
                       for (i = 0; i < roles.length; i++) {

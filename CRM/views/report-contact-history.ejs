@@ -52,11 +52,8 @@
                 var contacts = JSON.parse($('#variableJSON').text());
 
                 var contactOptions = "";
-                contactOptions += "<option>N/A</option>";
                 for (j = 0; j < contacts.length; j++) {
-                  console.log('here');
                   if(contacts[j].contactClientID === value) {
-                    console.log('here2');
                     contactOptions += "<option>" + contacts[j].contactFirstName + " " + contacts[j].contactLastName + "</option>";
                   }
                 }
