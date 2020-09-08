@@ -54,19 +54,30 @@ router.get('/home', function(req, res) {
                 var ac = new AccessControl(permissions);
                 const permission = ac.can(req.user.usertype).readAny('Event');
                 if (permission.granted) {
-                    // Perform what is allowed when permission is granted
-                    res.render('home', { user : req.user, permissions : results });
+                  // Perform what is allowed when permission is granted
+                  // Set our internal DB variable
+                  var db = req.db;
+                  // Set our collection
+                  var collection1 = db.get('Agents');
+                  collection1.find({agentPosition: 'Sales Executive',agentActive: "Enabled"},{},function(e,docs){
+                      res.render('home', {
+                          "agentDB" : docs,
+                          user : req.user, permissions : results
+                      });
+                  });
+
                 } else {
                     // resource is forbidden for this user/role
                     res.status(403).end();
-                } 
+                }
             });
         }
 
     });
-        
+
 
 });
+
 
 /* GET logout page. */
 router.get('/logout', function(req, res){
@@ -258,7 +269,7 @@ router.get('/import-client', function(req, res) {
                 collection.find({},{},function(e,docs){
                     res.render('import-client', {
                         "agentList" : docs,
-                        user : req.user, 
+                        user : req.user,
                         permissions : results
                     });
                 });
@@ -503,7 +514,7 @@ router.get('/import-contact', function(req, res) {
                 collection.find({},{},function(e,docs){
                     res.render('import-contact', {
                         "clientList" : docs,
-                        user : req.user, 
+                        user : req.user,
                         permissions : results
                     });
                 });
@@ -1082,7 +1093,7 @@ router.post('/result-client-list-report', function(req, res) {
             } else {
                 // resource is forbidden for this user/role
                 res.status(403).end();
-            }        
+            }
         });
     });
 });
@@ -1820,7 +1831,7 @@ router.get('/search-contact', function(req, res) {
                 }
             });
     });
-    
+
 });
 
 /* POST Query to MongoDB and return View Contact Page. */
@@ -2638,7 +2649,7 @@ router.get('/event-report', function(req, res) {
     });
 });
 
-/* GET Query to display list of users */ 
+/* GET Query to display list of users */
 router.get('/view-users', function(req, res){
 // Set our internal DB variable
     var db = req.db;
@@ -2785,7 +2796,7 @@ router.post('/edit-user', function(req, res) {
     });
 });
 
-/* GET Query to display list of Permissions and Roles */ 
+/* GET Query to display list of Permissions and Roles */
 router.get('/edit-permissions', function(req, res){
 // Set our internal DB variable
     var db = req.db;
@@ -2815,7 +2826,7 @@ router.get('/edit-permissions', function(req, res){
                 collection.find({},{},function(e,docs){
                     res.render('edit-permissions', {
                         "getPermissions" : docs,
-                        user : req.user, 
+                        user : req.user,
                         permissions : results
                     });
                 });
@@ -2826,7 +2837,7 @@ router.get('/edit-permissions', function(req, res){
         });
     });
 });
-    
+
 
 /* POST Query to MongoDB and return Edit User Page. */
 router.post('/edit-permissions', function(req, res) {
@@ -2896,7 +2907,7 @@ router.post('/edit-permissions', function(req, res) {
                                 "resource": resources[k],
                                 "action": "Read:any",
                                 "attributes": "*"
-                            }, 
+                            },
                             {   //update
                                 $set: {"role": roles[i],
                                 "resource": resources[k],
@@ -3123,5 +3134,6 @@ router.post('/addUser', function(req, res) {
         });
     });
 });
+
 
 module.exports = router;

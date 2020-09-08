@@ -15,6 +15,7 @@ var path = require('path');
 var db = monk('localhost:27017/CRM');
 
 
+
 //Create Route
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
@@ -144,6 +145,7 @@ app.use('/list-event', listEventRouter);
 app.use('/view-client', viewClientRouter);
 app.use('/view-contact', viewContactRouter);
 app.use('/view-event', viewEventRouter);
+app.use('/trial',function(req,res){res.send('Hello World')})
 
 
 // passport config

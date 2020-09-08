@@ -29,6 +29,7 @@
         <h1> WELCOME TO THE CRM HOME PAGE </h1>
         <hr>
         <h5 class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Magna fermentum iaculis eu non diam. Maecenas accumsan lacus vel facilisis volutpat. Fusce ut placerat orci nulla pellentesque dignissim. Nibh tellus molestie nunc non. Arcu cursus euismod quis viverra nibh. Commodo sed egestas egestas fringilla. Vitae nunc sed velit dignissim sodales ut eu sem. Magna ac placerat vestibulum lectus. Vitae auctor eu augue ut. Ultricies lacus sed turpis tincidunt id aliquet. Ipsum dolor sit amet consectetur adipiscing elit.</h5>
+
         <hr>
 
 <!-- Card Portion for Dashboards -->
@@ -45,7 +46,10 @@
                         var monthlyVisitCountDash = new Chart(ctx, {
                             type: 'horizontalBar',
                             data: {
-                                labels: ["JV", "FB", "DG", "RPL", "JP", "KJ"],
+                                labels: [
+                                  <% for(var i = 0; i < agentDB.length; i++) {%>
+                                    "<%= agentDB[i].agentAbbrev %>",
+                                              <% } %>],
                                 datasets: [{
                                     label: 'Visits',
                                     data: [5, 3, 5, 6, 4, 6],

@@ -2,6 +2,7 @@
 .tableWrap {
   height: 200px;
   overflow: auto;
+  width: auto;
 }
 /* Set header to stick to the top of the container. */
 thead tr th {

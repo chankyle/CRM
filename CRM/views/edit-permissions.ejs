@@ -8,6 +8,7 @@
  <!-- CoreUI CSS -->
  <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/css/coreui.min.css" crossorigin="anonymous">
  <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
+ <link rel="stylesheet" type="text/css" href="/stylesheets/custom.css">
 
  <title>CRM - Edit Permissions</title>
 
@@ -51,7 +52,7 @@
 
       <!-- Extracted data in Table Form -->
             <form id="formEditPermissions" name="editPermissions" method="post" action="/edit-permissions">
-            <div class="table-responsive">
+            <div class="tableWrap table-responsive text-nowrap" style="height: 70vh; overflow-y:auto;">
               <table class="table table-bordered px-2 py-2 bg-white" style="width: auto;" id="premissionsTable">
                 <thead class="thead-dark">
                   <tr>
@@ -107,9 +108,10 @@
                 </tbody>
               </table>
             </div>
+            <br>
               <div class="row">
                 <div class="col-12 col-md-auto">
-                  <button type="submit" class="btn-block btn-primary btn-lg">Submit</button>
+                  <input class="btn btn-primary" type="submit" value="Submit">
                 </div>
               </div>
             </form>
