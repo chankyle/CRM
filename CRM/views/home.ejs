@@ -30,6 +30,8 @@
         <hr>
         <h5 class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Magna fermentum iaculis eu non diam. Maecenas accumsan lacus vel facilisis volutpat. Fusce ut placerat orci nulla pellentesque dignissim. Nibh tellus molestie nunc non. Arcu cursus euismod quis viverra nibh. Commodo sed egestas egestas fringilla. Vitae nunc sed velit dignissim sodales ut eu sem. Magna ac placerat vestibulum lectus. Vitae auctor eu augue ut. Ultricies lacus sed turpis tincidunt id aliquet. Ipsum dolor sit amet consectetur adipiscing elit.</h5>
 
+        <strong>FILTER TEST: <%- result.events.length %></strong>
+
         <hr>
 
 <!-- Card Portion for Dashboards -->
@@ -37,7 +39,7 @@
         <div class="card-deck">
           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mx-0 my-2 px-1">
             <div class="card h-100">
-              <div class="card-header"><strong>Monthly Visit Count - Month of (Insert Month Here) (Insert Year Here)</strong></div>
+              <div class="card-header"><strong>Monthly Visit Count - <%- dateToday.format("MMMM YYYY") %></strong></div>
               <div class="card-body">
                 <div class="container">
                   <canvas id="monthlyVisitCountDash" height="300"></canvas>
@@ -47,12 +49,17 @@
                             type: 'horizontalBar',
                             data: {
                                 labels: [
-                                  <% for(var i = 0; i < agentDB.length; i++) {%>
-                                    "<%= agentDB[i].agentAbbrev %>",
-                                              <% } %>],
+                                  <% for(var i = 0; i < result.activeAgents.length; i++) {%>
+                                  "<%= result.activeAgents[i][0] %>",
+                                            <% } %>
+                                    ],
                                 datasets: [{
                                     label: 'Visits',
-                                    data: [5, 3, 5, 6, 4, 6],
+                                    data: [
+                                      <% for(var i = 0; i < result.activeAgents.length; i++) {%>
+                                      "<%= result.activeAgents[i][1] %>",
+                                                <% } %>
+                                    ],
                                     backgroundColor: [
                                       'rgba(255, 99, 132, 0.6)',
                                       'rgba(54, 162, 235, 0.6)',
@@ -71,6 +78,7 @@
                                   xAxes: [{
                                     ticks: {
                                       beginAtZero: true,
+                                      stepSize: 1,
                                     }
                                   }]
                                 }

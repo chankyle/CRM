@@ -56,12 +56,64 @@ router.get('/home', function(req, res) {
                 if (permission.granted) {
                   // Perform what is allowed when permission is granted
                   // Set our internal DB variable
+                  var result = {};
                   var db = req.db;
+                  var dateToday = moment();
+
+                  var tasks = [
+                      // Load Events
+                      function(callback) {
+                          var collection1 = db.get('Events');
+                          collection1.find( {},{},function(e,events){
+                              if (e) return callback(err);
+                              var eventListMonth = [];
+                              var eventAgentActivity = [];
+                              for (i = 0; i < events.length; i++){
+                                if (moment(events[i].eventTimeIn).isSame(dateToday, 'month') == true){
+                                  eventListMonth.push(events[i]);
+                                        function isItemInArray(array, item) {
+                                              for (var j = 0; j < array.length; j++) {
+                                                  // This if statement depends on the format of your array
+                                                  if (array[j][0] == item[0]) {
+                                                      return true;   // Found it
+                                                  }
+                                              }
+                                                      return false;   // Not found
+                                          }
+
+                                  if (isItemInArray(eventAgentActivity, [events[i].agentAbbrev,]) == false){
+                                    eventAgentActivity.push([events[i].agentAbbrev,1]);
+                                    console.log(eventAgentActivity);
+                                  } else {
+                                    for (var l = 0; l < eventAgentActivity.length; l++){
+                                      if (eventAgentActivity[l][0] == events[i].agentAbbrev){
+                                        eventAgentActivity[l][1] = eventAgentActivity[l][1] + 1;
+                                        console.log(eventAgentActivity);
+                                      }
+                                    }
+                                  }
+
+                                }
+                              }
+
+                              result.events = eventListMonth;
+                              result.activeAgents = eventAgentActivity;
+                              callback();
+                          });
+                      }
+                      ];
+
+                  async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+                      if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+                      // Here `locals` will be an object with `users` and `colors` keys
+                      // Example: `locals = {users: [...], colors: [...]}`
+                      db.close();
+
                   // Set our collection
-                  var collection1 = db.get('Agents');
-                  collection1.find({agentPosition: 'Sales Executive',agentActive: "Enabled"},{},function(e,docs){
-                      res.render('home', {
-                          "agentDB" : docs,
+                  var collection1 = db.get('Events');
+                        res.render('home', {
+                          "result": result,
+                          dateToday : dateToday,
                           user : req.user, permissions : results
                       });
                   });
