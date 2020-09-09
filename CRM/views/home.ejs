@@ -44,7 +44,11 @@
                 <div class="container">
                   <canvas id="monthlyVisitCountDash" height="300"></canvas>
                   <script>
-                        var ctx = document.getElementById("monthlyVisitCountDash");
+                        var ctx = document.getElementById("monthlyVisitCountDash").getContext("2d");
+                        var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
+                        gradientStroke.addColorStop(0, "#321FDB");
+                        gradientStroke.addColorStop(1, "#b1aee8");
+
                         var monthlyVisitCountDash = new Chart(ctx, {
                             type: 'horizontalBar',
                             data: {
@@ -60,14 +64,7 @@
                                       "<%= result.activeAgents[i][1] %>",
                                                 <% } %>
                                     ],
-                                    backgroundColor: [
-                                      'rgba(255, 99, 132, 0.6)',
-                                      'rgba(54, 162, 235, 0.6)',
-                                      'rgba(255, 206, 86, 0.6)',
-                                      'rgba(75, 192, 192, 0.6)',
-                                      'rgba(255, 159, 64, 0.6)',
-                                      'rgba(255, 99, 132, 0.6)',
-                                    ]
+                                    backgroundColor: gradientStroke
                                 }]
                             },
                             options: {
@@ -105,14 +102,7 @@
                                 datasets: [{
                                     label: 'Visits',
                                     data: [10, 8, 8, 7, 5, 2],
-                                    backgroundColor: [
-                                      'rgba(255, 99, 132, 0.6)',
-                                      'rgba(54, 162, 235, 0.6)',
-                                      'rgba(255, 206, 86, 0.6)',
-                                      'rgba(75, 192, 192, 0.6)',
-                                      'rgba(255, 159, 64, 0.6)',
-                                      'rgba(255, 99, 132, 0.6)',
-                                    ]
+                                    backgroundColor: gradientStroke
                                 }]
                             },
                             options: {

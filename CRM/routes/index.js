@@ -83,12 +83,10 @@ router.get('/home', function(req, res) {
 
                                   if (isItemInArray(eventAgentActivity, [events[i].agentAbbrev,]) == false){
                                     eventAgentActivity.push([events[i].agentAbbrev,1]);
-                                    console.log(eventAgentActivity);
                                   } else {
                                     for (var l = 0; l < eventAgentActivity.length; l++){
                                       if (eventAgentActivity[l][0] == events[i].agentAbbrev){
                                         eventAgentActivity[l][1] = eventAgentActivity[l][1] + 1;
-                                        console.log(eventAgentActivity);
                                       }
                                     }
                                   }
