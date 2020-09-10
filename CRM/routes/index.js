@@ -59,6 +59,7 @@ router.get('/home', function(req, res) {
                   var result = {};
                   var db = req.db;
                   var dateToday = moment();
+                  var dateLess30 = moment().subtract(30, 'days');
 
                   var tasks = [
                       // Load Events
@@ -68,19 +69,28 @@ router.get('/home', function(req, res) {
                               if (e) return callback(err);
                               var eventListMonth = [];
                               var eventAgentActivity = [];
+                              var eventList30 = [];
+                              var clientVisit30 = [];
+                              function isItemInArray(array, item) {
+                                    for (var j = 0; j < array.length; j++) {
+                                        // This if statement depends on the format of your array
+                                        if (array[j][0] == item[0]) {
+                                            return true;   // Found it
+                                        }
+                                    }
+                                            return false;   // Not found
+                                }
+                                function compareCount(a, b) {
+                                  var countA = a[1];
+                                  var countB = b[1];
+                                  let comparison = 0;
+                                  if (countA > countB) return -1;
+                                  if (countB > countA) return 1;
+                                  return comparison;
+                                }
                               for (i = 0; i < events.length; i++){
                                 if (moment(events[i].eventTimeIn).isSame(dateToday, 'month') == true){
                                   eventListMonth.push(events[i]);
-                                        function isItemInArray(array, item) {
-                                              for (var j = 0; j < array.length; j++) {
-                                                  // This if statement depends on the format of your array
-                                                  if (array[j][0] == item[0]) {
-                                                      return true;   // Found it
-                                                  }
-                                              }
-                                                      return false;   // Not found
-                                          }
-
                                   if (isItemInArray(eventAgentActivity, [events[i].agentAbbrev,]) == false){
                                     eventAgentActivity.push([events[i].agentAbbrev,1]);
                                   } else {
@@ -90,12 +100,33 @@ router.get('/home', function(req, res) {
                                       }
                                     }
                                   }
+                                }
+                                eventAgentActivity.sort(compareCount);
+                                if (moment(events[i].eventTimeIn).isAfter(dateLess30, 'day') == true){
+                                  eventList30.push(events[i]);
+                                  if (isItemInArray(clientVisit30, [events[i].clientName,]) == false){
+                                    clientVisit30.push([events[i].clientName,1]);
+                                  } else {
+                                    for (var l = 0; l < clientVisit30.length; l++){
+                                      if (clientVisit30[l][0] == events[i].clientName){
+                                        clientVisit30[l][1] = clientVisit30[l][1] + 1;
+                                      }
+                                    }
+                                  }
+                                }
+                                clientVisit30.sort(compareCount);
+                              }
+                              for (i = 0; i < clientVisit30.length; i++){
+                                if (clientVisit30[i][0].length > 12){
+                                  clientVisit30[i][0] = clientVisit30[i][0].split(" ", 3);
 
                                 }
                               }
-
+                              console.log(clientVisit30);
                               result.events = eventListMonth;
                               result.activeAgents = eventAgentActivity;
+                              result.eventList30 = eventList30;
+                              result.frequentClients = clientVisit30;
                               callback();
                           });
                       }
