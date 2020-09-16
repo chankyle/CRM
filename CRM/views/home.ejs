@@ -26,10 +26,9 @@
 
       <main class="c-main mx-4 my-0">
         <!-- Main content here -->
-        <h1> WELCOME TO THE CRM HOME PAGE </h1>
+        <h1> Welcome to your Dashboard, <%-  user.username.charAt(0).toUpperCase() + user.username.slice(1);%>! </h1>
         <hr>
         <h5 class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Magna fermentum iaculis eu non diam. Maecenas accumsan lacus vel facilisis volutpat. Fusce ut placerat orci nulla pellentesque dignissim. Nibh tellus molestie nunc non. Arcu cursus euismod quis viverra nibh. Commodo sed egestas egestas fringilla. Vitae nunc sed velit dignissim sodales ut eu sem. Magna ac placerat vestibulum lectus. Vitae auctor eu augue ut. Ultricies lacus sed turpis tincidunt id aliquet. Ipsum dolor sit amet consectetur adipiscing elit.</h5>
-<%- result.frequentClients[0][1] %>
 
         <hr>
 
@@ -42,6 +41,7 @@
               <div class="card-body">
                 <div class="container">
                   <canvas id="monthlyVisitCountDash" height="300"></canvas>
+
                   <script>
                         var ctx = document.getElementById("monthlyVisitCountDash").getContext("2d");
                         var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
@@ -99,8 +99,9 @@
                             data: {
                                 labels: [
                                   <% for(var i = 0; i < result.frequentClients.length; i++) {%>
-                                  "<%= result.frequentClients[i][0] %>",
+                                   '<%=result.frequentClients[i][0]%>',
                                             <% } %>
+
                                 ],
                                 datasets: [{
                                     label: 'Visits',
@@ -147,21 +148,20 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>Company X</td>
-                          <td>1/1/2020</td>
-                          <td>14</td>
-                        </tr>
-                        <tr>
-                          <td>Company Y</td>
-                          <td>1/5/2020</td>
-                          <td>12</td>
-                        </tr>
-                        <tr>
-                          <td>Company Z</td>
-                          <td>1/14/2020</td>
-                          <td>8</td>
-                        </tr>
+                          <%
+                              var list = '';
+                              var k = 1;
+                              for (i = 0; i < result.visitDue.length; i++) {
+                                list += '<tr>';
+                                list += '<td>' + result.visitDue[i][0] + '</td>';
+                                list += '<td style="text-align: center; vertical-align: middle;">' + result.visitDue[i][1]._i.substring(0,10) + '</td>';
+                                list += '<td style="text-align: center; vertical-align: middle;">' + result.visitDue[i][2] + '</td>';
+                                list += '</tr>';
+                                k++;
+                            }
+                            %>
+                          <%- list %>
+
                       </tbody>
                     </table>
                   </div>
@@ -174,7 +174,7 @@
     </div>
     <footer class="c-footer">
       <!-- Footer content here -->
-      <h2>Footer Content</h2>
+      <% include partials/footer %>
     </footer>
   </div>
 

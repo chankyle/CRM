@@ -72,16 +72,19 @@ router.get('/home', function(req, res) {
                               var eventListMonth = [];
                               var eventAgentActivity = [];
                               var eventList30 = [];
+                              var eventListMore30 = [];
                               var clientVisit30 = [];
-                              function isItemInArray(array, item) {
-                                    for (var j = 0; j < array.length; j++) {
-                                        // This if statement depends on the format of your array
-                                        if (array[j][0] == item[0]) {
-                                            return true;   // Found it
-                                        }
-                                    }
-                                            return false;   // Not found
-                                }
+                              var tempVisitDue = [];
+                              var visitDue = [];
+                                function isItemInArray(array, item) {
+                                      for (var j = 0; j < array.length; j++) {
+                                          // This if statement depends on the format of your array
+                                          if (array[j][0] == item[0]) {
+                                              return true;   // Found it
+                                          }
+                                      }
+                                              return false;   // Not found
+                                  }
                                 function compareCount(a, b) {
                                   var countA = a[1];
                                   var countB = b[1];
@@ -90,12 +93,22 @@ router.get('/home', function(req, res) {
                                   if (countB > countA) return 1;
                                   return comparison;
                                 }
+                                function compareCount2(a, b) {
+                                  var countA = a[2];
+                                  var countB = b[2];
+                                  let comparison = 0;
+                                  if (countA > countB) return -1;
+                                  if (countB > countA) return 1;
+                                  return comparison;
+                                }
                               for (i = 0; i < events.length; i++){
+                                //Filter number of visits per Agent
                                 if (moment(events[i].eventTimeIn).isSame(dateToday, 'month') == true){
                                   eventListMonth.push(events[i]);
                                   if (isItemInArray(eventAgentActivity, [events[i].agentAbbrev,]) == false){
                                     eventAgentActivity.push([events[i].agentAbbrev,1]);
                                   } else {
+                                    //Add count for visits > 1
                                     for (var l = 0; l < eventAgentActivity.length; l++){
                                       if (eventAgentActivity[l][0] == events[i].agentAbbrev){
                                         eventAgentActivity[l][1] = eventAgentActivity[l][1] + 1;
@@ -103,7 +116,7 @@ router.get('/home', function(req, res) {
                                     }
                                   }
                                 }
-                                eventAgentActivity.sort(compareCount);
+                                //Filter number of visits per Client
                                 if (moment(events[i].eventTimeIn).isAfter(dateLess30, 'day') == true){
                                   eventList30.push(events[i]);
                                   if (isItemInArray(clientVisit30, [events[i].clientName,]) == false){
@@ -116,19 +129,54 @@ router.get('/home', function(req, res) {
                                     }
                                   }
                                 }
-                                clientVisit30.sort(compareCount);
-                              }
-                              for (i = 0; i < clientVisit30.length; i++){
-                                if (clientVisit30[i][0].length > 12){
-                                  clientVisit30[i][0] = clientVisit30[i][0].split(" ", 3);
-
+                                //Filter Clients without visits in past 30 days
+                                if (moment(events[i].eventTimeIn._i).isBefore(dateLess30, 'day') == true){
+                                  eventListMore30.push(events[i]);
+                                  if (isItemInArray(clientVisit30, [events[i].clientName,]) == false ){
+                                    tempVisitDue.push([events[i].clientName,events[i].eventTimeIn]);
+                                  }
                                 }
                               }
-                              console.log(clientVisit30);
+
+                              for (var l = 0; l < tempVisitDue.length; l++){
+                                if (isItemInArray(visitDue, [tempVisitDue[l][0],]) == false){
+                                  visitDue.push([tempVisitDue[l][0],tempVisitDue[l][1],dateToday.diff(tempVisitDue[l][1]._i, 'days')]);
+
+                                } else{
+                                  for (var r = 0; r < visitDue.length; r++){
+                                        if (visitDue[r][0] == tempVisitDue[l][0]){
+                                          visitDue[r][1] = moment.max(moment(visitDue[r][1]),moment(tempVisitDue[l][1]));
+                                          visitDue[r][2] = dateToday.diff(visitDue[r][1]._i, 'days');
+                                          console.log('Replaced with more recent!' + visitDue[r][0] + visitDue[r][2]);
+                                        }
+                                      }
+                                }
+                                }
+
+                                //Sort arrays in descending order
+                                eventAgentActivity.sort(compareCount);
+                                clientVisit30.sort(compareCount);
+                                visitDue.sort(compareCount2);
+
+
+
+
+                            //  for (i = 0; i < clientVisit30.length; i++){
+                            //    if (clientVisit30[i][0].length > 12){
+                            //      clientVisit30[i][0] = clientVisit30[i][0].split(" ", 3);
+                            //    }
+                            //  }
+                              console.log('Total Events (events):' + events.length)
+                              console.log('Events Past 30 Days (eventList30):' + eventList30.length);
+                              console.log('Events Beyond 30 Days Prior (eventListMore30):' + eventListMore30.length)
+                              console.log('Events w/ Clients not Visited in the Past 30 Days (tempVisitDue):' + tempVisitDue.length)
+                              console.log('Number of Customers not Visited Past 30 (visitDue):' + visitDue.length)
+
                               result.events = eventListMonth;
                               result.activeAgents = eventAgentActivity;
                               result.eventList30 = eventList30;
                               result.frequentClients = clientVisit30;
+                              result.visitDue = visitDue;
                               callback();
                           });
                       }
