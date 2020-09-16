@@ -18,7 +18,7 @@ var db = monk('localhost:27017/CRM');
 
 //Create Route
 var indexRouter = require('./routes/index');
-var loginRouter = require('./routes/login');
+var loginRouter = require('./routes/index');
 var logoutRouter = require('./routes/logout');
 var homeRouter = require('./routes/home');
 var accessDeniedRouter = require('./routes/access-denied');

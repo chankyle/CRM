@@ -147,7 +147,6 @@ router.get('/home', function(req, res) {
                                         if (visitDue[r][0] == tempVisitDue[l][0]){
                                           visitDue[r][1] = moment.max(moment(visitDue[r][1]),moment(tempVisitDue[l][1]));
                                           visitDue[r][2] = dateToday.diff(visitDue[r][1]._i, 'days');
-                                          console.log('Replaced with more recent!' + visitDue[r][0] + visitDue[r][2]);
                                         }
                                       }
                                 }
@@ -157,6 +156,10 @@ router.get('/home', function(req, res) {
                                 eventAgentActivity.sort(compareCount);
                                 clientVisit30.sort(compareCount);
                                 visitDue.sort(compareCount2);
+
+                                // Slice arrays to show only top X entries
+                                clientVisit30 = clientVisit30.slice(0,8);
+                                visitDue = visitDue.slice(0,12)
 
 
 
@@ -197,7 +200,7 @@ router.get('/home', function(req, res) {
                       });
                   });
 
-                } 
+                }
             });
         }
 
@@ -234,7 +237,7 @@ router.post('/login', function(req, res, next) {
       }
     });
   })(req, res, next);
-}); 
+});
 
 /* POST to Add Agents */
 router.post('/changePW', function(req, res) {
@@ -245,7 +248,7 @@ router.post('/changePW', function(req, res) {
     }
     user.changePassword(req.body.oldPassword, req.body.newPassword, function(err) {
         if (err) {
-            return next(err) 
+            return next(err)
         }
         else {
             var db = req.db;
@@ -271,7 +274,7 @@ router.post('/changePW', function(req, res) {
                 }
             });
         }
-    }); 
+    });
   });
 });
 
