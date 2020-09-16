@@ -42,7 +42,6 @@ router.get('/home', function(req, res) {
 
     collectionAccounts.find({"_id" : req.user._id},{fields : "usertype active -_id"},function(e,usertype){
         if (e) return callback(err);
-        console.log(usertype[0].active)
         if (usertype[0].active === false) {
             req.logout();
             res.redirect('/access-denied');
@@ -53,7 +52,10 @@ router.get('/home', function(req, res) {
                 permissions = results;
                 var ac = new AccessControl(permissions);
                 const permission = ac.can(req.user.usertype).readAny('Event');
-                if (permission.granted) {
+                if (ac._isLocked) {
+                    // resource is forbidden for this user/role
+                    res.status(403).end();
+                } else {
                   // Perform what is allowed when permission is granted
                   // Set our internal DB variable
                   var result = {};
@@ -147,10 +149,7 @@ router.get('/home', function(req, res) {
                       });
                   });
 
-                } else {
-                    // resource is forbidden for this user/role
-                    res.status(403).end();
-                }
+                } 
             });
         }
 
@@ -167,8 +166,65 @@ router.get('/logout', function(req, res){
 });
 
 /* Reroute after Login Successful. */
-router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/home');
+/* POST login page. */
+router.post('/login', function(req, res, next) {
+  passport.authenticate('local', { successRedirect: '/home',
+    failureRedirect: '/login'}, function(err, user, info) {
+    if(err) {
+      //res.status(403).end();
+      console.log('')
+      return res.render('login', {title: 'Login', error: err.message});
+    }
+    return req.logIn(user, function(err) {
+      if(err) {
+        //res.status(403).end();
+        return res.render('login', {title: 'Login', error: err.message});
+      } else if (user.changePwOnLogin) {
+        return res.redirect('/change-password');
+      } else {
+        return res.redirect('/home');
+      }
+    });
+  })(req, res, next);
+}); 
+
+/* POST to Add Agents */
+router.post('/changePW', function(req, res) {
+  Account.findOne({ username : req.user.username}, function(err, user) {
+    if (!user) {
+      req.flash('error', 'Password reset token is invalid or has expired.');
+      return res.redirect('back');
+    }
+    user.changePassword(req.body.oldPassword, req.body.newPassword, function(err) {
+        if (err) {
+            return next(err) 
+        }
+        else {
+            var db = req.db;
+            var collection = db.get('accounts');
+
+
+            // Submit to the DB
+            collection.update(
+            {
+                "_id" : req.user._id
+            },
+            {
+                $set: {
+                    "changePwOnLogin" : false
+                }
+            }, function (err, doc) {
+                if (err) {
+                    // If it failed, return error
+                    next(err);
+                } else {
+                    // And forward to success page
+                    res.redirect('/');
+                }
+            });
+        }
+    }); 
+  });
 });
 
 

@@ -22,6 +22,7 @@ var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
 var homeRouter = require('./routes/home');
 var accessDeniedRouter = require('./routes/access-denied');
+var changePasswordRouter = require('./routes/change-password');
 
 var entryClientRouter = require('./routes/entry-client');
 var entryContactRouter = require('./routes/entry-contact');
@@ -102,6 +103,8 @@ app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
 app.use('/home', homeRouter);
 app.use('/access-denied', accessDeniedRouter);
+app.use('/change-password', changePasswordRouter);
+
 
 app.use('/entry-client', entryClientRouter);
 app.use('/entry-contact', entryContactRouter);

@@ -67,10 +67,11 @@
               list += '<td>' + result[i].contact2 + '</td>';
               list += '<td>' + result[i].eventType + '</td>';
               var timeInString = result[i].eventTimeIn._d.toString();
-              var eventTimeIn = str.substr(16, timeInString.length);
+              console.log(timeInString);
+              var eventTimeIn = str.substr(16, 8);
               list += '<td>' + eventTimeIn + '</td>';
               var timeOutString = result[i].eventTimeOut._d.toString();
-              var eventTimeOut = str2.substr(16, timeOutString.length);
+              var eventTimeOut = str2.substr(16, 8);
               list += '<td>' + eventTimeOut + '</td>';
               var hours = Math.floor(result[i].eventDuration / 60);
               var minutes = result[i].eventDuration % 60;
