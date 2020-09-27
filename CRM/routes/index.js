@@ -1873,25 +1873,25 @@ router.post('/viewClient', function(req, res) {
                 var db = req.db;
                 // Get our form values. These rely on the "name" attributes
                 var username = req.user.username;
-                var newClientName = req.body.newClientName;
+                var newClientName = req.body.newClientName.trim();
                 var origClientName = req.body.origClientName;
                 var agentAbbrev = req.body.agentAbbrev;
-                var clientPhone = req.body.clientPhone;
-                var clientFax = req.body.clientFax;
+                var clientPhone = req.body.clientPhone.trim();
+                var clientFax = req.body.clientFax.trim();
                 var clientAddress1 = new Object();
                 var clientAddress2 = new Object();
                 var clientAddress3 = new Object();
                 var clientAddress4 = new Object();
-                clientAddress1.addr = req.body.clientAddress1;
+                clientAddress1.addr = req.body.clientAddress1.trim();
                 clientAddress1.type = req.body.clientAddress1type;
-                clientAddress2.addr = req.body.clientAddress2;
+                clientAddress2.addr = req.body.clientAddress2.trim();
                 clientAddress2.type = req.body.clientAddress2type;
-                clientAddress3.addr = req.body.clientAddress3;
+                clientAddress3.addr = req.body.clientAddress3.trim();
                 clientAddress3.type = req.body.clientAddress3type;
-                clientAddress4.addr = req.body.clientAddress4;
+                clientAddress4.addr = req.body.clientAddress4.trim();
                 clientAddress4.type = req.body.clientAddress4type;
-                var clientEmail1 = req.body.clientEmail1;
-                var clientEmail2 = req.body.clientEmail2;
+                var clientEmail1 = req.body.clientEmail1.trim();
+                var clientEmail2 = req.body.clientEmail2.trim();
                 var clientProdOX = req.body.clientProdOX;
                 if (clientProdOX != "true") {
                     clientProdOX = "false";
@@ -1904,7 +1904,7 @@ router.post('/viewClient', function(req, res) {
                 if (clientProdTP != "true") {
                     clientProdTP = "false";
                 }
-                var clientNotes = req.body.clientNotes;
+                var clientNotes = req.body.clientNotes.trim();
                 var currentDateTime = moment();
                 var clientStatus = req.body.clientStatus;
 
@@ -2125,13 +2125,13 @@ router.post('/viewContact', function(req, res) {
                 var username = req.user.username;
                 var contactID = req.body.contactID;
                 var contactClientID = req.body.contactClientID;
-                var contactFirstName = req.body.contactFirstName;
-                var contactLastName = req.body.contactLastName;
-                var contactPosition = req.body.contactPosition;
-                var contactPhone = req.body.contactPhone;
-                var contactMobile = req.body.contactMobile;
-                var contactEmail = req.body.contactEmail;
-                var contactNotes = req.body.contactNotes;
+                var contactFirstName = req.body.contactFirstName.trim();
+                var contactLastName = req.body.contactLastName.trim();
+                var contactPosition = req.body.contactPosition.trim();
+                var contactPhone = req.body.contactPhone.trim();
+                var contactMobile = req.body.contactMobile.trim();
+                var contactEmail = req.body.contactEmail.trim();
+                var contactNotes = req.body.contactNotes.trim();
                 var contactStatus = req.body.contactStatus;
                 var currentDateTime = moment();
                 // Set our collection
@@ -2403,7 +2403,7 @@ router.post('/viewEvent', function(req, res) {
 
                 // Get our form values. These rely on the "name" attributes
                 var eventID = req.body.eventID
-                var clientName = req.body.eventClient;
+                var clientName = req.body.eventClient.trim();
                 var agentAbbrev = req.body.eventAgent;
                 var eventDate = req.body.eventDate;
                 var eventDateTimeIn = moment(eventDate.concat(' ', req.body.eventTimeIn), 'YYYY-MM-DD HH-mm');
@@ -2418,8 +2418,8 @@ router.post('/viewEvent', function(req, res) {
                 if (contact2 == "N/A"){
                     contact2 = "";
                 }
-                var eventBranch = req.body.eventBranch;
-                var eventRemarks = req.body.eventRemarks;
+                var eventBranch = req.body.eventBranch.trim();
+                var eventRemarks = req.body.eventRemarks.trim();
                 var username = req.user.username;
                 var currentDateTime = moment();
 
@@ -2488,24 +2488,24 @@ router.post('/addClient', function(req, res, next) {
                 var db = req.db;
                 // Get our form values. These rely on the "name" attributes
                 var username = req.user.username;
-                var clientName = req.body.clientName;
+                var clientName = req.body.clientName.trim();
                 var agentAbbrev = req.body.agentAbbrev;
-                var clientPhone = req.body.clientPhone;
-                var clientFax = req.body.clientFax;
+                var clientPhone = req.body.clientPhone.trim();
+                var clientFax = req.body.clientFax.trim();
                 var clientAddress1 = new Object();
                 var clientAddress2 = new Object();
                 var clientAddress3 = new Object();
                 var clientAddress4 = new Object();
-                clientAddress1.addr = req.body.clientAddress1;
+                clientAddress1.addr = req.body.clientAddress1.trim();
                 clientAddress1.type = req.body.clientAddress1Type;
-                clientAddress2.addr = req.body.clientAddress2;
+                clientAddress2.addr = req.body.clientAddress2.trim();
                 clientAddress2.type = req.body.clientAddress2Type;
-                clientAddress3.addr = req.body.clientAddress3;
+                clientAddress3.addr = req.body.clientAddress3.trim();
                 clientAddress3.type = req.body.clientAddress3Type;
-                clientAddress4.addr = req.body.clientAddress4;
+                clientAddress4.addr = req.body.clientAddress4.trim();
                 clientAddress4.type = req.body.clientAddress4Type;
-                var clientEmail1 = req.body.clientEmail1;
-                var clientEmail2 = req.body.clientEmail2;
+                var clientEmail1 = req.body.clientEmail1.trim();
+                var clientEmail2 = req.body.clientEmail2.trim();
                 var clientProdOX = req.body.clientProdOX;
                 if (clientProdOX != "true") {
                     clientProdOX = "false";
@@ -2518,7 +2518,7 @@ router.post('/addClient', function(req, res, next) {
                 if (clientProdTP != "true") {
                     clientProdTP = "false";
                 }
-                var clientNotes = req.body.clientNotes;
+                var clientNotes = req.body.clientNotes.trim();
                 var currentDateTime = moment();
                 var defaultStatus = "Enabled";
 
@@ -2590,13 +2590,13 @@ router.post('/addContact', function(req, res) {
                 // Get our form values. These rely on the "name" attributes
                 var clientID = req.body.clientID;
                 var username = req.user.username;
-                var contactFirstName = req.body.contactFirstName;
-                var contactLastName = req.body.contactLastName;
-                var contactPosition = req.body.contactPosition;
-                var contactPhone = req.body.contactPhone;
-                var contactMobile = req.body.contactMobile;
-                var contactEmail = req.body.contactEmail;
-                var contactNotes = req.body.contactNotes;
+                var contactFirstName = req.body.contactFirstName.trim();
+                var contactLastName = req.body.contactLastName.trim();
+                var contactPosition = req.body.contactPosition.trim();
+                var contactPhone = req.body.contactPhone.trim();
+                var contactMobile = req.body.contactMobile.trim();
+                var contactEmail = req.body.contactEmail.trim();
+                var contactNotes = req.body.contactNotes.trim();
                 var currentDateTime = moment();
                 var defaultStatus = "Enabled";
 
@@ -2674,8 +2674,8 @@ router.post('/addEvent', function(req, res) {
                 if (contact2 == "N/A"){
                     contact2 = "";
                 }
-                var eventBranch = req.body.eventBranch;
-                var eventRemarks = req.body.eventRemarks;
+                var eventBranch = req.body.eventBranch.trim();
+                var eventRemarks = req.body.eventRemarks.trim();
                 var username = req.user.username;
                 var currentDateTime = moment();
 
