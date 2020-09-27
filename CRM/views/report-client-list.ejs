@@ -36,11 +36,16 @@
                       <label for="agentSelect">Agent</label>
                       <select class="form-control" name ="agentAbbrev" id="agentAbbrev" required>
                         <%
+                            var sortedAgents = agentList.sort(function(a,b){
+                                if (a.agentAbbrev > b.agentAbbrev) { return 1;}
+                                if (a.agentAbbrev < b.agentAbbrev) {return -1;}
+                                return 0;
+                            });
                             var list = '<option value="" disabled selected>Select</option>';
-                            for (i = 0; i < agentList.length; i++) {
-                              list += '<option>' + agentList[i].agentAbbrev + '</option>';
-                            }
-                        %>
+                          	for (i = 0; i < sortedAgents.length; i++) {
+                          		list += '<option>' + sortedAgents[i].agentAbbrev + '</option>';
+                          	}
+                    		%>
                           <%- list %>
                       </select>
                     </div>

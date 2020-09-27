@@ -1045,7 +1045,7 @@ router.get('/entry-event', function(req, res) {
 
                         collection1.find({},{},function(e,agents){
                             if (e) return callback(err);
-                            locals.agents = agents;
+                            eventEntryAgents = agents;
                             callback();
                         })
                     },
@@ -1055,7 +1055,7 @@ router.get('/entry-event', function(req, res) {
 
                         collection2.find({},{},function(e,clients){
                             if (e) return callback(err);
-                            locals.clients = clients;
+                            eventEntryClients = clients;
                             callback();
                         })
                     },
@@ -1643,7 +1643,7 @@ router.get('/report-contact-history', function(req, res) {
 
                         collection1.find({},{},function(e,clients){
                             if (e) return callback(err);
-                            locals.clients = clients;
+                            reportContactHistoryClients = clients;
                             callback();
                         })
                     },
@@ -2204,7 +2204,7 @@ router.get('/search-event', function(req, res) {
 
                         collection.find({},{},function(e,clients){
                             if (e) return callback(err);
-                            locals.clients = clients;
+                            searchEventClients = clients;
                             callback();
                         })
                     }

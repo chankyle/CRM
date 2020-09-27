@@ -34,9 +34,14 @@
                         <label for="contactSelect">Select User Account</label>
                           <select class="form-control" id="username" name="username" required>
                             <%
+                                var sortedUsers = users.sort(function(a,b){
+                                    if (a.username > b.username) { return 1;}
+                                    if (a.username < b.username) {return -1;}
+                                    return 0;
+                                });
                                 var list = '<option value="" disabled selected>Select</option>';
-                                for (i = 0; i < users.length; i++) {
-                                  list += '<option>' + users[i].username + '</option>';
+                                for (i = 0; i < sortedUsers.length; i++) {
+                                  list += '<option>' + sortedUsers[i].username + '</option>';
                                 }
                             %>
                               <%- list %>

@@ -35,9 +35,14 @@
                       <label for="clientSelect">Select Client</label>
                       <select class="form-control" name="clientName" id="clientName" required>
                       <%
+                          var sortedClients = searchEventClients.sort(function(a,b){
+                              if (a.clientName > b.clientName) { return 1;}
+                              if (a.clientName < b.clientName) {return -1;}
+                              return 0;
+                          });
                           var list = '<option value="" disabled selected>Select</option>';
-                          for (i = 0; i < locals.clients.length; i++) {
-                            list += '<option value="' + locals.clients[i].clientName + '">' + locals.clients[i].clientName + '</option>';
+                          for (i = 0; i < sortedClients.length; i++) {
+                            list += '<option value="' + sortedClients[i].clientName + '">' + sortedClients[i].clientName + '</option>';
                           }
                       %>
                         <%- list %>

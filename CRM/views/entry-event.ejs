@@ -40,9 +40,14 @@
                 <label for="agentID">Agent</label>
                 <select class="form-control" name="agentID" required>
                   <%
+                      var sortedAgents = eventEntryAgents.sort(function(a,b){
+                          if (a.agentAbbrev > b.agentAbbrev) { return 1;}
+                          if (a.agentAbbrev < b.agentAbbrev) {return -1;}
+                          return 0;
+                      });
                       var list = '<option value="" disabled selected>Select</option>';
-                      for (i = 0; i < locals.agents.length; i++) {
-                        list += '<option>' + locals.agents[i].agentAbbrev + '</option>';
+                      for (i = 0; i < sortedAgents.length; i++) {
+                        list += '<option>' + sortedAgents[i].agentAbbrev + '</option>';
                       }
                   %>
                     <%- list %>
@@ -68,9 +73,14 @@
                 <label for="clientID">Client</label>
                 <select class="form-control" name="clientID" onChange="changeAgent(this.value);" required>
               		<%
+                      var sortedClients = eventEntryClients.sort(function(a,b){
+                          if (a.clientName > b.clientName) { return 1;}
+                          if (a.clientName < b.clientName) {return -1;}
+                          return 0;
+                      });
                     	var list = '<option value="" disabled selected>Select</option>';
-                    	for (i = 0; i < locals.clients.length; i++) {
-                    		list += '<option value="' + locals.clients[i].clientName + '">' + locals.clients[i].clientName + '</option>';
+                    	for (i = 0; i < eventEntryClients.length; i++) {
+                    		list += '<option value="' + eventEntryClients[i].clientName + '">' + eventEntryClients[i].clientName + '</option>';
                     	}
               		%>
                   	<%- list %>
