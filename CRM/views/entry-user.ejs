@@ -10,37 +10,37 @@
  <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
  <title>CRM - Agent Entry</title>
 </head>
-<script> 
-  // Function to check Whether both passwords 
-  // is same or not. 
-  function checkPassword(form) { 
-      password1 = form.newPassword.value; 
-      password2 = form.newPasswordRetype.value; 
+<script>
+  // Function to check Whether both passwords
+  // is same or not.
+  function checkPassword(form) {
+      password1 = form.newPassword.value;
+      password2 = form.newPasswordRetype.value;
 
-      // If password not entered 
+      // If password not entered
       if (password1 == '') {
-          alert ("Please enter Password"); 
-          return false; 
+          alert ("Please enter Password");
+          return false;
       }
-            
-      // If confirm password not entered 
-      else if (password2 == '') {
-          alert ("Please enter confirm password"); 
-          return false; 
-      }
-            
-      // If Not same return False.     
-      else if (password1 != password2) { 
-          alert ("\nPassword did not match: Please try again...") 
-          return false; 
-      } 
 
-      // If same return True. 
-      else{ 
-          return true; 
-      } 
-  } 
-</script> 
+      // If confirm password not entered
+      else if (password2 == '') {
+          alert ("Please enter confirm password");
+          return false;
+      }
+
+      // If Not same return False.
+      else if (password1 != password2) {
+          alert ("\nPassword did not match: Please try again...")
+          return false;
+      }
+
+      // If same return True.
+      else{
+          return true;
+      }
+  }
+</script>
 <body class="c-app">
  <div class="c-sidebar c-sidebar-light c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
    <% include partials/sidebar %>
@@ -139,7 +139,7 @@
     </div>
     <footer class="c-footer">
       <!-- Footer content here -->
-      <h1>Footer Content</h1>
+      <% include partials/footer %>
     </footer>
   </div>
 
