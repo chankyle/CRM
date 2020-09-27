@@ -76,6 +76,7 @@ router.get('/home', function(req, res) {
                               var clientVisit30 = [];
                               var tempVisitDue = [];
                               var visitDue = [];
+
                                 function isItemInArray(array, item) {
                                       for (var j = 0; j < array.length; j++) {
                                           // This if statement depends on the format of your array
@@ -162,13 +163,6 @@ router.get('/home', function(req, res) {
                                 visitDue = visitDue.slice(0,12)
 
 
-
-
-                            //  for (i = 0; i < clientVisit30.length; i++){
-                            //    if (clientVisit30[i][0].length > 12){
-                            //      clientVisit30[i][0] = clientVisit30[i][0].split(" ", 3);
-                            //    }
-                            //  }
                               console.log('Total Events (events):' + events.length)
                               console.log('Events Past 30 Days (eventList30):' + eventList30.length);
                               console.log('Events Beyond 30 Days Prior (eventListMore30):' + eventListMore30.length)
@@ -180,6 +174,7 @@ router.get('/home', function(req, res) {
                               result.eventList30 = eventList30;
                               result.frequentClients = clientVisit30;
                               result.visitDue = visitDue;
+
                               callback();
                           });
                       }

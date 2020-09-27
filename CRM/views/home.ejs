@@ -30,6 +30,7 @@
         <hr>
 
 
+
 <!-- Card Portion for Dashboards -->
 
         <div class="card-deck">
@@ -51,14 +52,14 @@
                             data: {
                                 labels: [
                                   <% for(var i = 0; i < result.activeAgents.length; i++) {%>
-                                  "<%= result.activeAgents[i][0] %>",
+                                  "<%- result.activeAgents[i][0] %>",
                                             <% } %>
                                     ],
                                 datasets: [{
                                     label: 'Visits',
                                     data: [
                                       <% for(var i = 0; i < result.activeAgents.length; i++) {%>
-                                      "<%= result.activeAgents[i][1] %>",
+                                      "<%- result.activeAgents[i][1] %>",
                                                 <% } %>
                                     ],
                                     backgroundColor: gradientStroke
@@ -86,7 +87,7 @@
 
           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mx-0 my-2 px-1">
             <div class="card h-100">
-              <div class="card-header"><strong>Most Visited Customers in the Past 30 Days</strong></div>
+              <div class="card-header"><strong>Most Visited Customers (Past 30 Days)</strong></div>
               <div class="card-body">
                 <div class="container">
                   <canvas id="mostVisitedDash" height="300"></canvas>
@@ -97,7 +98,7 @@
                             data: {
                                 labels: [
                                   <% for(var i = 0; i < result.frequentClients.length; i++) {%>
-                                   '<%=result.frequentClients[i][0]%>',
+                                  "<%- result.frequentClients[i][0]%>",
                                             <% } %>
 
                                 ],
@@ -105,7 +106,7 @@
                                     label: 'Visits',
                                     data: [
                                       <% for(var i = 0; i < result.frequentClients.length; i++) {%>
-                                      "<%= result.frequentClients[i][1] %>",
+                                      "<%- result.frequentClients[i][1] %>",
                                                 <% } %>
                                     ],
                                     backgroundColor: gradientStroke
@@ -118,8 +119,17 @@
                                 scales: {
                                   xAxes: [{
                                     ticks: {
-                                      beginAtZero: true,
                                       stepSize: 1,
+                                      beginAtZero: true,
+                                    }
+                                  }],
+                                  yAxes:[{
+                                    ticks: {
+                                      mirror: true,
+                                      z:1,
+                                      padding: -10,
+                                      fontStyle: 'normal',
+
                                     }
                                   }]
                                 }
@@ -134,7 +144,7 @@
 
           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mx-0 my-2 px-1">
             <div class="card h-100">
-              <div class="card-header"><strong>Clients Due for Visit (No Visits in the Past 30 days)</strong></div>
+              <div class="card-header"><strong>Clients Due for Visit</strong></div>
               <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-sm table-borderless table-striped px-2 py-2">
