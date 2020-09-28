@@ -1180,12 +1180,12 @@ router.post('/resultActivityReport', function(req, res) {
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
                 // Set our internal DB variable
-                var dateStartInput = moment(req.body.dateStartInput.concat(' 00:00:00'), 'YYYY-MM-DD HH-mm-ss');
-                var dateEndInput = moment(req.body.dateEndInput.concat(' 23:59:59'), 'YYYY-MM-DD HH-mm-ss');
+                var dateStartInput = moment(req.body.dateStartInput.concat(' 00:00:00'), 'YYYY-MM-DD HH-mm-ss').toDate();
+                var dateEndInput = moment(req.body.dateEndInput.concat(' 23:59:59'), 'YYYY-MM-DD HH-mm-ss').toDate();
                 var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput;
                 var db = req.db;
                 var collection = db.get('Events');
-                var query = { "agentAbbrev": req.body.agentSelect, "eventTimeIn._d": { $lte: new Date(dateEndInput._d)}, "eventTimeIn._d": { $gte: new Date(dateStartInput._d)} };
+                var query = { $and: [{"agentAbbrev": req.body.agentSelect}, {"eventTimeIn._d": { $lte: dateEndInput }}, {"eventTimeIn._d": { $gte: dateStartInput }}]};
                 collection.find(query,{},function(err, result){
                     if (err) throw err;
                     db.close();
@@ -1341,7 +1341,7 @@ router.post('/result-client-history-report', function(req, res) {
                 var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput
                 var db = req.db;
                 var collection = db.get('Events');
-                var query = { "clientName": req.body.clientSelect, "eventTimeIn._d": { $lte: new Date(dateEndInput._d)}, "eventTimeIn._d": { $gte: new Date(dateStartInput._d)} };
+                var query = { $and: [{"clientName": req.body.clientSelect}, {"eventTimeIn._d": { $lte: new Date(dateEndInput._d)}}, {"eventTimeIn._d": { $gte: new Date(dateStartInput._d)}}] };
 
 
                 collection.find(query,{},function(err, result){
@@ -1422,7 +1422,7 @@ router.post('/result-contact-history-report', function(req, res) {
                 var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput
                 var db = req.db;
                 var collection = db.get('Events');
-                var query = { $or: [ { "clientName": req.body.clientSelect, "contact1": req.body.contactID1, "eventTimeIn._d": { $lte: new Date(dateEndInput._d)}, "eventTimeIn._d": { $gte: new Date (dateStartInput._d)} }] };
+                var query = { $and: [ { "clientName": req.body.clientSelect}, { $or: [{"contact1": req.body.contactID1},{"contact2": req.body.contactID1}]}, {"eventTimeIn._d": { $lte: new Date(dateEndInput._d)}}, {"eventTimeIn._d": { $gte: new Date (dateStartInput._d)} }] };
 
                 collection.find(query,{},function(err, result){
                     if (err) throw err;
