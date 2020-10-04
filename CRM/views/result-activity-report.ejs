@@ -55,16 +55,28 @@
           <%
             var list = '';
             var k = 1;
+            var repContact1 = [];
+            var repContact2 = [];
             for (i = 0; i < result.length; i++) {
               list += '<tr>';
               list += '<th scope="row">' + k + '</th>';
               var str = result[i].eventTimeIn._d.toString();
               var str2 = result[i].eventTimeOut._d.toString();
               var eventDate = str.substr(0, 15);
+              if (result[i].contact1 === null){
+                repContact1.push("NA");
+              } else{
+                repContact1.push(result[i].contact1);
+              }
+              if (result[i].contact2 === null){
+                repContact2.push("NA");
+              } else{
+                repContact2.push(result[i].contact2);
+              }
               list += '<td>' + eventDate + '</td>';
               list += '<td>' + result[i].clientName + '</td>';
-              list += '<td>' + result[i].contact1 + '</td>';
-              list += '<td>' + result[i].contact2 + '</td>';
+              list += '<td>' + repContact1[i] + '</td>';
+              list += '<td>' + repContact2[i] + '</td>';
               list += '<td>' + result[i].eventType + '</td>';
               var timeInString = result[i].eventTimeIn._d.toString();
               console.log(timeInString);
