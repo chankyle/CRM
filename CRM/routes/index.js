@@ -2483,7 +2483,7 @@ router.post('/addClient', function(req, res, next) {
                 var db = req.db;
                 // Get our form values. These rely on the "name" attributes
                 var username = req.user.username;
-                var clientName = req.body.clientName.trim();
+                var clientName = req.body.clientName.trim().toUpperCase();
                 var agentAbbrev = req.body.agentAbbrev;
                 var clientPhone = req.body.clientPhone.trim();
                 var clientFax = req.body.clientFax.trim();
