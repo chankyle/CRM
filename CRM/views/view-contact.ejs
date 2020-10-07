@@ -48,21 +48,6 @@
      document.getElementById('editContactLastName').type = 'button';
    }
 
-   document.getElementById('editContactClientID').onclick = function(){
-     if (isEditing == false) {
-       isEditing = true;
-     document.getElementById('contactClientID').disabled = false;
-     document.getElementById('updateContactClientID').type = 'button';
-     document.getElementById('editContactClientID').type = 'hidden';
-   } else {window.alert("Only 1 field can be edited at a time");};
-   }
-   document.getElementById('updateContactClientID').onclick = function(){
-     isEditing = false;
-     document.getElementById('contactClientID').disabled = true;
-     document.getElementById('updateContactClientID').type = 'hidden';
-     document.getElementById('editContactClientID').type = 'button';
-   }
-
    document.getElementById('editContactPosition').onclick = function(){
      if (isEditing == false) {
        isEditing = true;
@@ -192,22 +177,6 @@
      document.getElementById('editContactLastNameMobile').type = 'button';
    }
 
-   document.getElementById('editContactClientIDMobile').onclick = function(){
-     if (isEditing == false) {
-       isEditing = true;
-     document.getElementById('contactClientIDMobile').disabled = false;
-     document.getElementById('updateContactClientIDMobile').type = 'button';
-     document.getElementById('editContactClientIDMobile').type = 'hidden';
-   } else {window.alert("Only 1 field can be edited at a time");};
-   }
-   document.getElementById('updateContactClientIDMobile').onclick = function(){
-     isEditing = false;
-     changedView = 'Mobile';
-     document.getElementById('contactClientIDMobile').disabled = true;
-     document.getElementById('updateContactClientIDMobile').type = 'hidden';
-     document.getElementById('editContactClientIDMobile').type = 'button';
-   }
-
    document.getElementById('editContactPositionMobile').onclick = function(){
      if (isEditing == false) {
        isEditing = true;
@@ -327,6 +296,9 @@
               <h4> Contact Information</h4>
               <form id="formEditContact" name="viewContact" method="post" action="/viewContact" onsubmit="enableFields()">
               <input type="name" class="form-control" id="contactID" name="contactID" value="<%= contactID %>" hidden>
+              <input type="name" class="form-control" id="contactClientID" name="contactClientID" value="<%= result.contact[0].contactClientID %>" hidden>      
+              <input type="name" class="form-control" id="oldContactFirstName" name="oldContactFirstName" value="<%= result.contact[0].contactFirstName %>" hidden>      
+              <input type="name" class="form-control" id="oldContactLastName" name="oldContactLastName" value="<%= result.contact[0].contactLastName %>" hidden>                            
               <input type="name" class="form-control" id="user" name="user" value="<%- user %>" hidden>
               <div class="table d-none d-md-block">
                 <table class="table table-bordered px-2 py-2 bg-white">
@@ -350,28 +322,6 @@
                         <input type="button" id="editContactLastName" value="edit"></input>
                         <input type="hidden" id="updateContactLastName" value="Save"></input>
                       </td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="align-middle">Client:</th>
-                      <td class="align-middle">
-                        <select class="form-control" id="contactClientID" name="contactClientID" disabled required>
-                          <%
-                              var list = '';
-                              for (i = 0; i < result.clients.length; i++) {
-                                if (result.clients[i].clientName == result.contact[0].contactClientID){
-                                  list += '<option selected>' + result.clients[i].clientName + '</option>';
-                                } else {
-                                  list += '<option>' + result.clients[i].clientName + '</option>';
-                                }
-                              }
-                          %>
-                            <%- list %>
-                        </select>
-                    </td>
-                    <td class="align-middle" style="text-align:center">
-                      <input type="button" id="editContactClientID" value="edit"></input>
-                      <input type="hidden" id="updateContactClientID" value="Save"></input>
-                    </td>
                     </tr>
                     <tr>
                       <th scope="row" class="align-middle">Position:</th>
@@ -485,30 +435,6 @@
                             <input type="text" class="form-control" id="contactLastNameMobile" name="contactLastName" value = "<%= result.contact[0].contactLastName %> " required readonly>
                           </td>
                         </tr>
-            <!-- Mobile View Client Name -->
-                        <tr>
-                          <th class="px-3" style="text-align:left">Client Name</th>
-                          <th style="width: 16.66%" class="align-middle">
-                            <input type="button" id="editContactClientIDMobile" value="edit"></input>
-                            <input type="hidden" id="updateContactClientIDMobile" value="Save"></input>
-                          </th>
-                        </tr>
-                        <tr>
-                          <td colspan=2 style="width: 100%" class="align-middle">
-                            <select class="form-control" id="contactClientIDMobile" name="contactClientID" disabled required>
-                              <%
-                                  var list = '';
-                                  for (i = 0; i < result.clients.length; i++) {
-                                    if (result.clients[i].clientName == result.contact[0].contactClientID){
-                                      list += '<option selected>' + result.clients[i].clientName + '</option>';
-                                    } else {
-                                      list += '<option>' + result.clients[i].clientName + '</option>';
-                                    }
-                                  }
-                              %>
-                                <%- list %>
-                            </select>
-                        </tr>
             <!-- Mobile View Contact Position -->
                         <tr>
                           <th style="text-align:left">Position</th>
@@ -561,7 +487,7 @@
                             <input type="email" class="form-control" id="contactEmailMobile" name="contactEmail" value = "<%= result.contact[0].contactEmail %>" readonly>
                         </tr>
 
-              <!-- Mobile View Client Notes-->
+              <!-- Mobile View Notes-->
                         <tr>
                           <th style="text-align:left">Remarks</th>
                           <th style="width: 16.66%" class="align-middle">
@@ -573,7 +499,7 @@
                           <td colspan=2 scope="row">
                             <input type="text" class="form-control" id="contactNotesMobile" name="contactNotes" value = "<%= result.contact[0].contactNotes %>" readonly>
                         </tr>
-              <!-- Mobile View Client Status-->
+              <!-- Mobile View Status-->
                         <tr>
                           <th style="text-align:left">Status</th>
                           <th style="width: 16.66%" class="align-middle">
@@ -612,11 +538,9 @@
           <script>
             function enableFields() {
               // if desktop
-              document.getElementById('contactClientID').disabled = false;
               document.getElementById('contactStatus').disabled = false;
 
               // if mobile
-              document.getElementById('contactClientIDMobile').disabled = false;
               document.getElementById('contactStatusMobile').disabled = false;
            }
           </script>

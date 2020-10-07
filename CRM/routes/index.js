@@ -1843,7 +1843,7 @@ router.post('/search-client', function(req, res) {
 });
 
 /* POST to Edit Clients */
-router.post('/viewClient', function(req, res) {
+router.post('/viewClient', function(req, res, next) {
 
 // Set our internal DB variable
     var db = req.db;
@@ -1862,84 +1862,112 @@ router.post('/viewClient', function(req, res) {
             permissions = results;
             var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).updateAny('Client');
+
             if (permission.granted) {
                 // Perform what is allowed when permission is granted
                 // Set our internal DB variable
+                var result = {};
                 var db = req.db;
-                // Get our form values. These rely on the "name" attributes
-                var username = req.user.username;
                 var newClientName = req.body.newClientName.trim();
-                var origClientName = req.body.origClientName;
-                var agentAbbrev = req.body.agentAbbrev;
-                var clientPhone = req.body.clientPhone.trim();
-                var clientFax = req.body.clientFax.trim();
-                var clientAddress1 = new Object();
-                var clientAddress2 = new Object();
-                var clientAddress3 = new Object();
-                var clientAddress4 = new Object();
-                clientAddress1.addr = req.body.clientAddress1.trim();
-                clientAddress1.type = req.body.clientAddress1type;
-                clientAddress2.addr = req.body.clientAddress2.trim();
-                clientAddress2.type = req.body.clientAddress2type;
-                clientAddress3.addr = req.body.clientAddress3.trim();
-                clientAddress3.type = req.body.clientAddress3type;
-                clientAddress4.addr = req.body.clientAddress4.trim();
-                clientAddress4.type = req.body.clientAddress4type;
-                var clientEmail1 = req.body.clientEmail1.trim();
-                var clientEmail2 = req.body.clientEmail2.trim();
-                var clientProdOX = req.body.clientProdOX;
-                if (clientProdOX != "true") {
-                    clientProdOX = "false";
-                }
-                var clientProdPP = req.body.clientProdPP;
-                if (clientProdPP != "true") {
-                    clientProdPP = "false";
-                }
-                var clientProdTP = req.body.clientProdTP;
-                if (clientProdTP != "true") {
-                    clientProdTP = "false";
-                }
-                var clientNotes = req.body.clientNotes.trim();
-                var currentDateTime = moment();
-                var clientStatus = req.body.clientStatus;
-
-                // Set our collection
-                var collection = db.get('Clients');
 
 
-                // Submit to the DB
-                collection.update(
-                {
-                    "clientName" : req.body.origClientName
-                },
-                {
-                    $set: {
-                        "clientName" : newClientName,
-                        "agentAbbrev" : agentAbbrev,
-                        "clientPhone" : clientPhone,
-                        "clientFax" : clientFax,
-                        "clientAddress1" : clientAddress1,
-                        "clientAddress2" : clientAddress2,
-                        "clientAddress3" : clientAddress3,
-                        "clientAddress4" : clientAddress4,
-                        "clientEmail1" : clientEmail1,
-                        "clientEmail2" : clientEmail2,
-                        "clientProdOX" : clientProdOX,
-                        "clientProdPP" : clientProdPP,
-                        "clientProdTP" : clientProdTP,
-                        "clientNotes" : clientNotes,
-                        "modifiedBy" : username,
-                        "lastModified" : currentDateTime,
-                        "clientActive" : clientStatus
+                var tasks = [
+                    // Load Client
+                    function(callback) {
+                      // Get our form values. These rely on the "name" attributes
+                      var username = req.user.username;
+                      var origClientName = req.body.origClientName;
+                      var agentAbbrev = req.body.agentAbbrev;
+                      var clientPhone = req.body.clientPhone.trim();
+                      var clientFax = req.body.clientFax.trim();
+                      var clientAddress1 = new Object();
+                      var clientAddress2 = new Object();
+                      var clientAddress3 = new Object();
+                      var clientAddress4 = new Object();
+                      clientAddress1.addr = req.body.clientAddress1.trim();
+                      clientAddress1.type = req.body.clientAddress1type;
+                      clientAddress2.addr = req.body.clientAddress2.trim();
+                      clientAddress2.type = req.body.clientAddress2type;
+                      clientAddress3.addr = req.body.clientAddress3.trim();
+                      clientAddress3.type = req.body.clientAddress3type;
+                      clientAddress4.addr = req.body.clientAddress4.trim();
+                      clientAddress4.type = req.body.clientAddress4type;
+                      var clientEmail1 = req.body.clientEmail1.trim();
+                      var clientEmail2 = req.body.clientEmail2.trim();
+                      var clientProdOX = req.body.clientProdOX;
+                      if (clientProdOX != "true") {
+                          clientProdOX = "false";
+                      }
+                      var clientProdPP = req.body.clientProdPP;
+                      if (clientProdPP != "true") {
+                          clientProdPP = "false";
+                      }
+                      var clientProdTP = req.body.clientProdTP;
+                      if (clientProdTP != "true") {
+                          clientProdTP = "false";
+                      }
+                      var clientNotes = req.body.clientNotes.trim();
+                      var currentDateTime = moment();
+                      var clientStatus = req.body.clientStatus;
+
+                      // Set our collection
+                      var collection = db.get('Clients');
+
+
+                      // Submit to the DB
+                      collection.update(
+                      {
+                          "clientName" : req.body.origClientName
+                      },
+                      {
+                          $set: {
+                              "clientName" : newClientName,
+                              "agentAbbrev" : agentAbbrev,
+                              "clientPhone" : clientPhone,
+                              "clientFax" : clientFax,
+                              "clientAddress1" : clientAddress1,
+                              "clientAddress2" : clientAddress2,
+                              "clientAddress3" : clientAddress3,
+                              "clientAddress4" : clientAddress4,
+                              "clientEmail1" : clientEmail1,
+                              "clientEmail2" : clientEmail2,
+                              "clientProdOX" : clientProdOX,
+                              "clientProdPP" : clientProdPP,
+                              "clientProdTP" : clientProdTP,
+                              "clientNotes" : clientNotes,
+                              "modifiedBy" : username,
+                              "lastModified" : currentDateTime,
+                              "clientActive" : clientStatus
+                          }
+                      }, function (e, doc) {
+                        if (e) return callback(err);
+                        callback();                        
+                      })
+                    },
+                    // Load Contact
+                    function(callback) {
+                        var collection2 = db.get('Contacts');
+                        collection2.update({ "contactClientID" : req.body.origClientName },{$set: { "contactClientID" : newClientName }},function(e,contact){
+                            if (e) return callback(err);
+                            callback();
+                        });
+                    },
+                    // Load Events
+                    function(callback) {
+                        var collection3 = db.get('Events');
+                        collection3.update({ "clientName" : req.body.origClientName },{$set: { "clientName" : newClientName }},function(e,events){
+                            if (e) return callback(err);
+                            callback();
+                        });
                     }
-                }, function (err, doc) {
-                    if (err) {
-                        // If it failed, return error
-                        next(err);
-                    } else {
-                        // And forward to success page
-                        res.redirect('/home');
-                    }
+                  ];
+
+                async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+                    if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+                    // Here `locals` will be an object with `users` and `colors` keys
+                    // Example: `locals = {users: [...], colors: [...]}`
+                    db.close();
+                    res.redirect('/home');
                 });
             } else {
                 // resource is forbidden for this user/role
@@ -2094,7 +2122,7 @@ router.post('/search-contact', function(req, res) {
 });
 
 /* POST to Edit Contacts */
-router.post('/viewContact', function(req, res) {
+router.post('/viewContact', function(req, res, next) {
 // Set our internal DB variable
     var db = req.db;
     // Set our collection
@@ -2113,58 +2141,108 @@ router.post('/viewContact', function(req, res) {
             var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).updateAny('Contact');
             if (permission.granted) {
-                // Perform what is allowed when permission is granted
-                // Set our internal DB variable
-                var db = req.db;
-                // Get our form values. These rely on the "name" attributes
-                var username = req.user.username;
-                var contactID = req.body.contactID;
-                var contactClientID = req.body.contactClientID;
-                var contactFirstName = req.body.contactFirstName.trim();
-                var contactLastName = req.body.contactLastName.trim();
-                var contactPosition = req.body.contactPosition.trim();
-                var contactPhone = req.body.contactPhone.trim();
-                var contactMobile = req.body.contactMobile.trim();
-                var contactEmail = req.body.contactEmail.trim();
-                var contactNotes = req.body.contactNotes.trim();
-                var contactStatus = req.body.contactStatus;
-                var currentDateTime = moment();
-                // Set our collection
-                var collection = db.get('Contacts');
-                // Submit to the DB
-                collection.update(
-                {
-                    "_id" : req.body.contactID
-                },
-                {
-                    $set: {
-                        "contactFirstName" : contactFirstName,
-                        "contactLastName" : contactLastName,
-                        "contactClientID" : contactClientID,
-                        "contactPosition" : contactPosition,
-                        "contactPhone" : contactPhone,
-                        "contactMobile" : contactMobile,
-                        "contactEmail" : contactEmail,
-                        "contactNotes" : contactNotes,
-                        "contactActive" : contactStatus,
-                        "modifiedBy" : username,
-                        "lastModified" : currentDateTime
-                    }
-                }, function (err, doc) {
-                    if (err) {
-                        // If it failed, return error
-                        next(err);
-                    } else {
-                        // And forward to success page
-                        res.redirect('/home');
-                    }
-                });
-            } else {
+                    // Perform what is allowed when permission is granted
+                    // Set our internal DB variable
+                    var result = {};
+                    var db = req.db;
+                    var contactFirstName = req.body.contactFirstName.trim();
+                    var contactLastName = req.body.contactLastName.trim();   
+                    var contactOldFirstName = req.body.oldContactFirstName.trim();
+                    var contactOldLastName = req.body.oldContactLastName.trim();                                     
+                    var contactName = contactFirstName + ' ' + contactLastName;
+                    var oldContactName = contactOldFirstName + ' ' + contactOldLastName;
+                    var tasks = [ 
+                        // Load Contact information of contact searched
+                        function(callback) {
+
+                          // Get our form values. These rely on the "name" attributes
+                          var username = req.user.username;
+                          var contactID = req.body.contactID;
+                          var contactPosition = req.body.contactPosition.trim();
+                          var contactPhone = req.body.contactPhone.trim();
+                          var contactMobile = req.body.contactMobile.trim();
+                          var contactEmail = req.body.contactEmail.trim();
+                          var contactNotes = req.body.contactNotes.trim();
+                          var contactStatus = req.body.contactStatus;
+                          var currentDateTime = moment();
+                          // Set our collection
+                          var collection = db.get('Contacts');
+
+                          // Submit to the DB
+                          collection.update(
+                          {
+                              "_id" : req.body.contactID
+                          },
+                          {
+                              $set: {
+                                  "contactFirstName" : contactFirstName,
+                                  "contactLastName" : contactLastName,
+                                  "contactPosition" : contactPosition,
+                                  "contactPhone" : contactPhone,
+                                  "contactMobile" : contactMobile,
+                                  "contactEmail" : contactEmail,
+                                  "contactNotes" : contactNotes,
+                                  "contactActive" : contactStatus,
+                                  "modifiedBy" : username,
+                                  "lastModified" : currentDateTime
+                              }
+                          }, function (err, doc) {
+                              if (e) return callback(err);
+                              callback();
+                              })
+                        }, 
+                        // Load Client associated with Contact searched
+                        function(callback) {
+                          console.log('test');
+                          var collection2 = db.get('Events');
+                          var contactClientID = req.body.contactClientID.trim();
+                          collection2.update(
+                            {$and:[
+                              {"clientName": contactClientID},
+                              {"contact1": oldContactName}]
+                            },
+                            {$set:
+                              {"contact1":contactName}
+                            },
+                            function(err,clients){
+                              console.log('test1');
+                              if (e) return callback(err);
+                              callback();
+                          });
+                        },
+                        // Load Client associated with Contact searched
+                        function(callback) {
+                          console.log('test2');
+                          var collection3 = db.get('Events');
+                          var contactClientID = req.body.contactClientID.trim();
+                          collection3.update(
+                            {$and:[
+                              {"clientName": contactClientID},
+                              {"contact2": oldContactName}]
+                            },
+                            {$set:
+                              {"contact2":contactName}
+                          },
+                          function(e,clients){
+                            console.log('test3');
+                              if (e) return callback(e);
+                              callback();
+                          });
+                        },
+                      ];
+
+                    async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+                        if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+                        db.close();
+                        res.redirect('/home')
+                    });
+               } else {
                 // resource is forbidden for this user/role
                 res.status(403).end();
             }
         });
-    });});
+    });
+});
 
 /* GET Clients for Search Event Page. */
 router.get('/search-event', function(req, res) {
