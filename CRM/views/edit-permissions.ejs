@@ -52,62 +52,65 @@
 
       <!-- Extracted data in Table Form -->
             <form id="formEditPermissions" name="editPermissions" method="post" action="/edit-permissions">
-            <div class="tableWrap table-responsive text-nowrap" style="height: 70vh; overflow-y:auto;">
-              <table class="table table-bordered px-2 py-2 bg-white" style="width: auto;" id="premissionsTable">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col"></th>
-                    <%
-                      var roles = ['Administrator', 'Agent', 'ReadOnly'];
-                      var list = '';
-                      for (i = 0; i < roles.length; i++) {
-                        list += '<th scope="col" id="' + roles[i] + '">' + roles[i] + '</th>';
-                      }
-                    %>
-                    <%- list %>
-                  </tr>
-                </thead>
-                <tbody>
-                  <%
-                      var resources = ['Client', 'Contact', 'Event', 'Import', 'Permissions', 'Roles', 'Account'];
-                      var list = '';
-                      var emptyCells = '';
-                      for (i = 0; i < roles.length; i++) {
-                        emptyCells += '<td />'
-                      }
-                      for (i = 0; i < resources.length; i++) {
-                        list += '<tr id="' + resources[i] + '">' + '<th scope="row">' + resources[i] + '</th>' + emptyCells + '</tr>'
-
-                        list += '<tr id="' + resources[i] + '.Create"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspCreate</td>';
-                          for (k = 0; k < roles.length; k++) {
-                            list += '<td style="text-align:center; vertical-align: middle"><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Create" name="' + roles[k] + '.' + resources[i] + '.Create"></td>';
+              <div class="form-row">
+                <div class="tableWrap table-responsive text-nowrap" style="height: 70vh; overflow-y:auto;">
+                  <table class="table table-bordered px-2 py-2 bg-white" style="width: auto;" id="premissionsTable">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col"></th>
+                        <%
+                          var roles = ['Administrator', 'Agent', 'ReadOnly'];
+                          var list = '';
+                          for (i = 0; i < roles.length; i++) {
+                            list += '<th scope="col" id="' + roles[i] + '">' + roles[i] + '</th>';
                           }
-                        list += '</tr>'
-
-                        list += '<tr id="' + resources[i] + '.Read"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspRead</td>';
-                          for (k = 0; k < roles.length; k++) {
-                            list += '<td style="text-align:center; vertical-align: middle"><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Read" name="' + roles[k] + '.' + resources[i] + '.Read"></td>';
+                        %>
+                        <%- list %>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <%
+                          var resources = ['Client', 'Contact', 'Event', 'Import', 'Permissions', 'Roles', 'Account'];
+                          var list = '';
+                          var emptyCells = '';
+                          for (i = 0; i < roles.length; i++) {
+                            emptyCells += '<td />'
                           }
-                        list += '</tr>'
+                          for (i = 0; i < resources.length; i++) {
+                            list += '<tr id="' + resources[i] + '">' + '<th scope="row">' + resources[i] + '</th>' + emptyCells + '</tr>'
 
-                        list += '<tr id="' + resources[i] + '.Update"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspUpdate</td>';
-                          for (k = 0; k < roles.length; k++) {
-                            list += '<td style="text-align:center; vertical-align: middle"><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Update" name="' + roles[k] + '.' + resources[i] + '.Update"></td>';
+                            list += '<tr id="' + resources[i] + '.Create"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspCreate</td>';
+                              for (k = 0; k < roles.length; k++) {
+                                list += '<td style="text-align:center; vertical-align: middle"><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Create" name="' + roles[k] + '.' + resources[i] + '.Create"></td>';
+                              }
+                            list += '</tr>'
+
+                            list += '<tr id="' + resources[i] + '.Read"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspRead</td>';
+                              for (k = 0; k < roles.length; k++) {
+                                list += '<td style="text-align:center; vertical-align: middle"><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Read" name="' + roles[k] + '.' + resources[i] + '.Read"></td>';
+                              }
+                            list += '</tr>'
+
+                            list += '<tr id="' + resources[i] + '.Update"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspUpdate</td>';
+                              for (k = 0; k < roles.length; k++) {
+                                list += '<td style="text-align:center; vertical-align: middle"><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Update" name="' + roles[k] + '.' + resources[i] + '.Update"></td>';
+                              }
+                            list += '</tr>'
+
+                            list += '<tr id="' + resources[i] + '.Delete"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspDelete</td>';
+                              for (k = 0; k < roles.length; k++) {
+                                list += '<td style="text-align:center; vertical-align: middle"><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Delete" name="' + roles[k] + '.' + resources[i] + '.Delete"></td>';
+                              }
+                            list += '</tr>'
                           }
-                        list += '</tr>'
 
-                        list += '<tr id="' + resources[i] + '.Delete"><td scope="row">&nbsp&nbsp&nbsp&nbsp&nbspDelete</td>';
-                          for (k = 0; k < roles.length; k++) {
-                            list += '<td style="text-align:center; vertical-align: middle"><input type="checkbox" id="' + roles[k] + '.' + resources[i] + '.Delete" name="' + roles[k] + '.' + resources[i] + '.Delete"></td>';
-                          }
-                        list += '</tr>'
-                      }
+                        %>
+                        <%- list %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
 
-                    %>
-                    <%- list %>
-                </tbody>
-              </table>
-            </div>
             <br>
               <div class="row">
                 <div class="col-12 col-md-auto">

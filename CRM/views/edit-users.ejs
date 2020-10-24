@@ -58,6 +58,21 @@
                 <%- roleList %>
               </select>
             </div>
+            <div class="form-group col-12 col-md-auto">
+              <label for="agentAbbrev">Agent Abbreviation</label>
+              <input type="text" class="form-control" id="agentAbbrev" name="agentAbbrev" placeholder="Use All Caps" required disabled>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-12 col-md-auto">
+              <label for="agentName">First Name</label>
+              <input type="text" class="form-control" id="agentFirstName" name="agentFirstName" placeholder="First Name" required>
+            </div>
+            <div class="form-group col-12 col-md-auto">
+              <label for="agentName">Last Name</label>
+              <input type="text" class="form-control" id="agentLastName" name="agentLastName" placeholder="Last Name" required>
+            </div>
           </div>
 
           <div class="form-row">
@@ -67,7 +82,7 @@
             </div>
             <div class="form-group col-12 col-md-auto">
               <label for="newPasswordRetype">Re-Type Password</label>
-              <input type="password" class="form-control" id="newPasswordRetype" name="newPasswordRetype" placeholder="Re-TypePassword" required>
+              <input type="password" class="form-control" id="newPasswordRetype" name="newPasswordRetype" placeholder="Re-Type Password" required>
             </div>
             <div class="form-group col-12 col-md-auto">
               <label>Change Password on Login</label>
@@ -84,6 +99,15 @@
           </div>
           <div class="form-row">
             <div class="form-group col-12 col-md-auto">
+              <label for="agentPosition">Position</label>
+              <select class="form-control" id="agentPosition" name="agentPosition" required>
+              <option value="" disabled selected>Select</option>
+              <option>Sales Executive</option>
+              <option>Office</option>
+              <option>Sales Manager</option>
+            </select>
+            </div>
+            <div class="form-group col-12 col-md-auto">
               <label for="userStatus">Status</label>
               <select type="name" class="form-control" id="userStatus" name="userStatus"  required>
                     <%
@@ -98,55 +122,6 @@
                 %>
                 <%- activeList %>
               </select>
-            </div>
-          </div>
-          <hr>
-          <div class="form-row">
-            <div class="col-12 col-md-6">
-              <div class="card bg-light border-dark" style="width: auto;">
-                <div class="card-header">
-                   Agent Details - if applicable
-                </div>
-                <div class="card-body">
-                  <!-- Agent Name-->
-                      <div class="form-row">
-                        <div class="form-group col-12 col-md-auto">
-                          <label for="agentName">First Name</label>
-                          <input type="text" class="form-control" id="agentFirstName" name="agentFirstName" placeholder="First Name" required disabled>
-                        </div>
-                        <div class="form-group col-12 col-md-auto">
-                          <label for="agentName">Last Name</label>
-                          <input type="text" class="form-control" id="agentLastName" name="agentLastName" placeholder="Last Name" required disabled>
-                        </div>
-                        <div class="form-group col-12 col-md-auto">
-                          <label for="agentAbbrev">Agent Abbreviation</label>
-                          <input type="text" class="form-control" id="agentAbbrev" name="agentAbbrev" placeholder="Use All Caps" required disabled>
-                        </div>
-                      </div>
-
-                  <!-- User Position-->
-                  <div class="form-row">
-                      <div class="form-group col-12 col-md-auto">
-                        <label for="agentPosition">Position</label>
-                        <select class="form-control" id="agentPosition" name="agentPosition" required disabled>
-                        <option value="" disabled selected>Select</option>
-                        <option>Sales Executive</option>
-                        <option>Office</option>
-                        <option>Sales Manager</option>
-                      </select>
-                      </div>
-                  </div>
-
-
-                  <!-- Agent Phone Number-->
-                    <label for="agentAbbrev">Agent Phone Number</label>
-                      <div class="form-row">
-                        <div class="form-group col-12 col-md-auto">
-                          <input type="text" class="form-control" id="agentPhone" name="agentPhone" placeholder="Contact Number" disabled>
-                        </div>
-                    </div>
-                </div>
-              </div>
             </div>
           </div>
           <div class="row">
