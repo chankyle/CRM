@@ -102,6 +102,8 @@ router.get('/home', function(req, res) {
                                   if (countB > countA) return 1;
                                   return comparison;
                                 }
+
+
                               for (i = 0; i < events.length; i++){
                                 //Filter number of visits per Agent
                                 if (moment(events[i].eventTimeIn).isSame(dateToday, 'month') == true){
@@ -119,7 +121,7 @@ router.get('/home', function(req, res) {
                                 }
                                 //Filter number of visits per Client
                                 if (moment(events[i].eventTimeIn).isAfter(dateLess30, 'day') == true){
-                                  eventList30.push(events[i]);
+                                  eventList30.push([events[i].clientName, events[i].eventTimeIn]);
                                   if (isItemInArray(clientVisit30, [events[i].clientName,]) == false){
                                     clientVisit30.push([events[i].clientName,1]);
                                   } else {
@@ -130,28 +132,34 @@ router.get('/home', function(req, res) {
                                     }
                                   }
                                 }
-                                //Filter Clients without visits in past 30 days
-                                if (moment(events[i].eventTimeIn._i).isBefore(dateLess30, 'day') == true){
-                                  eventListMore30.push(events[i]);
-                                  if (isItemInArray(clientVisit30, [events[i].clientName,]) == false ){
-                                    tempVisitDue.push([events[i].clientName,events[i].eventTimeIn]);
+                                //Filter Events beyond 30 days ago
+                                if (moment(events[i].eventTimeIn).isBefore(dateLess30, 'day') == true){
+                                  eventListMore30.push([events[i].clientName, events[i].eventTimeIn]);
+                                }
+                              }
+
+                              for (p = 0; p < eventListMore30.length; p++){
+                                if (isItemInArray(eventList30,[eventListMore30[p][0],]) == false){
+                                  tempVisitDue.push(eventListMore30[p]);
+                                }
+                              }
+
+                              for (i = 0; i < tempVisitDue.length; i++){
+                                if (isItemInArray(visitDue, [tempVisitDue[i][0],]) == false){
+                                  visitDue.push(tempVisitDue[i])
+                                } else {
+                                  for (j = 0; j < visitDue.length; j++){
+                                    if (visitDue[j][0] == tempVisitDue[i][0]){
+                                      visitDue[j][1] = moment.max(moment(visitDue[j][1]),moment(tempVisitDue[i][1]));
+                                    }
                                   }
                                 }
                               }
 
-                              for (var l = 0; l < tempVisitDue.length; l++){
-                                if (isItemInArray(visitDue, [tempVisitDue[l][0],]) == false){
-                                  visitDue.push([tempVisitDue[l][0],tempVisitDue[l][1],dateToday.diff(tempVisitDue[l][1]._i, 'days')]);
+                              for (i = 0; i < visitDue.length; i++){
+                                visitDue[i][2] = dateToday.diff(visitDue[i][1], 'days');
+                              }
 
-                                } else{
-                                  for (var r = 0; r < visitDue.length; r++){
-                                        if (visitDue[r][0] == tempVisitDue[l][0]){
-                                          visitDue[r][1] = moment.max(moment(visitDue[r][1]),moment(tempVisitDue[l][1]));
-                                          visitDue[r][2] = dateToday.diff(visitDue[r][1]._i, 'days');
-                                        }
-                                      }
-                                }
-                                }
 
                                 //Sort arrays in descending order
                                 eventAgentActivity.sort(compareCount);
@@ -160,7 +168,7 @@ router.get('/home', function(req, res) {
 
                                 // Slice arrays to show only top X entries
                                 clientVisit30 = clientVisit30.slice(0,8);
-                                visitDue = visitDue.slice(0,12)
+                                //visitDue = visitDue.slice(0,12)
 
 
                               console.log('Total Events (events):' + events.length)
@@ -168,6 +176,7 @@ router.get('/home', function(req, res) {
                               console.log('Events Beyond 30 Days Prior (eventListMore30):' + eventListMore30.length)
                               console.log('Events w/ Clients not Visited in the Past 30 Days (tempVisitDue):' + tempVisitDue.length)
                               console.log('Number of Customers not Visited Past 30 (visitDue):' + visitDue.length)
+
 
                               result.events = eventListMonth;
                               result.activeAgents = eventAgentActivity;
@@ -1941,7 +1950,7 @@ router.post('/viewClient', function(req, res, next) {
                           }
                       }, function (e, doc) {
                         if (e) return callback(err);
-                        callback();                        
+                        callback();
                       })
                     },
                     // Load Contact
@@ -2146,12 +2155,12 @@ router.post('/viewContact', function(req, res, next) {
                     var result = {};
                     var db = req.db;
                     var contactFirstName = req.body.contactFirstName.trim();
-                    var contactLastName = req.body.contactLastName.trim();   
+                    var contactLastName = req.body.contactLastName.trim();
                     var contactOldFirstName = req.body.oldContactFirstName.trim();
-                    var contactOldLastName = req.body.oldContactLastName.trim();                                     
+                    var contactOldLastName = req.body.oldContactLastName.trim();
                     var contactName = contactFirstName + ' ' + contactLastName;
                     var oldContactName = contactOldFirstName + ' ' + contactOldLastName;
-                    var tasks = [ 
+                    var tasks = [
                         // Load Contact information of contact searched
                         function(callback) {
 
@@ -2190,7 +2199,7 @@ router.post('/viewContact', function(req, res, next) {
                               if (e) return callback(err);
                               callback();
                               })
-                        }, 
+                        },
                         // Load Client associated with Contact searched
                         function(callback) {
                           console.log('test');

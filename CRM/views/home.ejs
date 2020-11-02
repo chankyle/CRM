@@ -29,156 +29,158 @@
         <h1> Welcome to your Dashboard, <%-  user.username.charAt(0).toUpperCase() + user.username.slice(1);%>! </h1>
         <hr>
 
+        <div class="container-fluid">
+          <!-- Card Portion for Dashboards -->
+          <div class="fade-in">
+            <div class="row">
 
 
-<!-- Card Portion for Dashboards -->
+                <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12 mx-0 my-2 px-1">
+                  <div class="card h-100">
+                    <div class="card-header"><strong>Monthly Visit Count - <%- dateToday.format("MMMM YYYY") %></strong></div>
+                    <div class="card-body">
+                      <div class="container">
+                        <canvas id="monthlyVisitCountDash" height="200"></canvas>
 
-        <div class="card-deck">
-          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mx-0 my-2 px-1">
-            <div class="card h-100">
-              <div class="card-header"><strong>Monthly Visit Count - <%- dateToday.format("MMMM YYYY") %></strong></div>
-              <div class="card-body">
-                <div class="container">
-                  <canvas id="monthlyVisitCountDash" height="300"></canvas>
+                        <script>
+                              var ctx = document.getElementById("monthlyVisitCountDash").getContext("2d");
+                              var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
+                              gradientStroke.addColorStop(0, "#321FDB");
+                              gradientStroke.addColorStop(1, "#b1aee8");
 
-                  <script>
-                        var ctx = document.getElementById("monthlyVisitCountDash").getContext("2d");
-                        var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
-                        gradientStroke.addColorStop(0, "#321FDB");
-                        gradientStroke.addColorStop(1, "#b1aee8");
-
-                        var monthlyVisitCountDash = new Chart(ctx, {
-                            type: 'horizontalBar',
-                            data: {
-                                labels: [
-                                  <% for(var i = 0; i < result.activeAgents.length; i++) {%>
-                                  "<%- result.activeAgents[i][0] %>",
-                                            <% } %>
-                                    ],
-                                datasets: [{
-                                    label: 'Visits',
-                                    data: [
-                                      <% for(var i = 0; i < result.activeAgents.length; i++) {%>
-                                      "<%- result.activeAgents[i][1] %>",
-                                                <% } %>
-                                    ],
-                                    backgroundColor: gradientStroke
-                                }]
-                            },
-                            options: {
-                                legend: {
-                                  display: false,
-                                },
-                                scales: {
-                                  xAxes: [{
-                                    ticks: {
-                                      beginAtZero: true,
-                                      stepSize: 1,
+                              var monthlyVisitCountDash = new Chart(ctx, {
+                                  type: 'horizontalBar',
+                                  data: {
+                                      labels: [
+                                        <% for(var i = 0; i < result.activeAgents.length; i++) {%>
+                                        "<%- result.activeAgents[i][0] %>",
+                                                  <% } %>
+                                          ],
+                                      datasets: [{
+                                          label: 'Visits',
+                                          data: [
+                                            <% for(var i = 0; i < result.activeAgents.length; i++) {%>
+                                            "<%- result.activeAgents[i][1] %>",
+                                                      <% } %>
+                                          ],
+                                          backgroundColor: gradientStroke
+                                      }]
+                                  },
+                                  options: {
+                                      legend: {
+                                        display: false,
+                                      },
+                                      scales: {
+                                        xAxes: [{
+                                          ticks: {
+                                            beginAtZero: true,
+                                            stepSize: 1,
+                                          }
+                                        }]
+                                      }
                                     }
-                                  }]
-                                }
-                              }
-                        });
-                  </script>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mx-0 my-2 px-1">
-            <div class="card h-100">
-              <div class="card-header"><strong>Most Visited Customers (Past 30 Days)</strong></div>
-              <div class="card-body">
-                <div class="container">
-                  <canvas id="mostVisitedDash" height="300"></canvas>
-                  <script>
-                        var ctx = document.getElementById("mostVisitedDash");
-                        var mostVisitedDash = new Chart(ctx, {
-                            type: 'horizontalBar',
-                            data: {
-                                labels: [
-                                  <% for(var i = 0; i < result.frequentClients.length; i++) {%>
-                                  "<%- result.frequentClients[i][0]%>",
-                                            <% } %>
-
-                                ],
-                                datasets: [{
-                                    label: 'Visits',
-                                    data: [
-                                      <% for(var i = 0; i < result.frequentClients.length; i++) {%>
-                                      "<%- result.frequentClients[i][1] %>",
-                                                <% } %>
-                                    ],
-                                    backgroundColor: gradientStroke
-                                }]
-                            },
-                            options: {
-                                legend: {
-                                  display: false,
-                                },
-                                scales: {
-                                  xAxes: [{
-                                    ticks: {
-                                      stepSize: 1,
-                                      beginAtZero: true,
-                                    }
-                                  }],
-                                  yAxes:[{
-                                    ticks: {
-                                      mirror: true,
-                                      z:1,
-                                      padding: -10,
-                                      fontStyle: 'normal',
-
-                                    }
-                                  }]
-                                }
-                              }
-
-                        });
-                  </script>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mx-0 my-2 px-1">
-            <div class="card h-100">
-              <div class="card-header"><strong>Clients Due for Visit</strong></div>
-              <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-sm table-borderless table-striped px-2 py-2">
-                      <thead>
-                        <tr>
-                          <th scope="col" class="align-middle">Client</th>
-                          <th scope="col" class="align-middle">Last Visit</th>
-                          <th scope="col" class="align-middle">Days since Last Visit</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                          <%
-                              var list = '';
-                              var k = 1;
-                              for (i = 0; i < result.visitDue.length; i++) {
-                                list += '<tr>';
-                                list += '<td>' + result.visitDue[i][0] + '</td>';
-                                list += '<td style="text-align: center; vertical-align: middle;">' + result.visitDue[i][1]._i.substring(0,10) + '</td>';
-                                list += '<td style="text-align: center; vertical-align: middle;">' + result.visitDue[i][2] + '</td>';
-                                list += '</tr>';
-                                k++;
-                            }
-                            %>
-                          <%- list %>
-
-                      </tbody>
-                    </table>
+                              });
+                        </script>
+                      </div>
+                    </div>
                   </div>
-              </div>
+                </div>
+
+                <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12 mx-0 my-2 px-1">
+                  <div class="card h-100">
+                    <div class="card-header"><strong>Most Visited Customers (Past 30 Days)</strong></div>
+                    <div class="card-body">
+                      <div class="container">
+                        <canvas id="mostVisitedDash" height="200"></canvas>
+                        <script>
+                              var ctx = document.getElementById("mostVisitedDash");
+                              var mostVisitedDash = new Chart(ctx, {
+                                  type: 'horizontalBar',
+                                  data: {
+                                      labels: [
+                                        <% for(var i = 0; i < result.frequentClients.length; i++) {%>
+                                        "<%- result.frequentClients[i][0]%>",
+                                                  <% } %>
+
+                                      ],
+                                      datasets: [{
+                                          label: 'Visits',
+                                          data: [
+                                            <% for(var i = 0; i < result.frequentClients.length; i++) {%>
+                                            "<%- result.frequentClients[i][1] %>",
+                                                      <% } %>
+                                          ],
+                                          backgroundColor: gradientStroke
+                                      }]
+                                  },
+                                  options: {
+                                      legend: {
+                                        display: false,
+                                      },
+                                      scales: {
+                                        xAxes: [{
+                                          ticks: {
+                                            stepSize: 1,
+                                            beginAtZero: true,
+                                          }
+                                        }],
+                                        yAxes:[{
+                                          ticks: {
+                                            mirror: true,
+                                            z:1,
+                                            padding: -10,
+                                            fontStyle: 'normal',
+
+                                          }
+                                        }]
+                                      }
+                                    }
+
+                              });
+                        </script>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-12 col-md-4 col-sm-12 col-xs-12 mx-0 my-2 px-1">
+                  <div class="card h-100">
+                    <div class="card-header"><strong>Clients Due for Visit</strong></div>
+                    <div class="card-body">
+                      <div class="table">
+                          <table class="table table-hover table-borderless table-striped px-2 py-2">
+                            <thead class="thead-light">
+                              <tr>
+                                <th class="align-middle" style="width: 50%">Client</th>
+                                <th class="align-middle" style="text-align: center; vertical-align: middle; width: 25%">Last Visit</th>
+                                <th class="align-middle" style="text-align: center; vertical-align: middle; width: 25%">Days since Last Visit</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <%
+                                    var list = '';
+                                    var k = 1;
+                                    for (i = 0; i < result.visitDue.length; i++) {
+                                      list += '<tr>';
+                                      list += '<td class=>' + result.visitDue[i][0] + '</td>';
+                                      list += '<td style="text-align: center; vertical-align: middle;">' + result.visitDue[i][1]._i.substring(0,10) + '</td>';
+                                      list += '<td style="text-align: center; vertical-align: middle;">' + result.visitDue[i][2] + '</td>';
+                                      list += '</tr>';
+                                      k++;
+                                  }
+                                  %>
+                                <%- list %>
+
+                            </tbody>
+                          </table>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
             </div>
           </div>
-
         </div>
-
     </div>
     <footer class="c-footer">
       <!-- Footer content here -->
