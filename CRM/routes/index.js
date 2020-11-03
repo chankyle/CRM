@@ -2980,16 +2980,42 @@ router.post('/view-users', function(req, res) {
             var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).readAny('Account');
             if (permission.granted) {
-                // Perform what is allowed when permission is granted
-                // Set our internal DB variable
                 var db = req.db;
-                var collection = db.get('accounts');
-                collection.find({"username":req.body.username},{},function(e,docs){
+
+                var tasks = [
+                    // Load agents
+                    function(callback) {
+                        var collection1 = db.get('accounts');
+
+                        collection1.find({"username":req.body.username},{},function(e,accounts){
+                            if (e) return callback(err);
+                            locals.accounts = accounts;
+                            callback();
+                        })
+                    },
+                    // Load clients
+                    /*function(callback) {
+                        var collection2 = db.get('Agents');
+
+                        collection2.find({},{},function(e,contacts){
+                            if (e) return callback(err);
+                            locals.contacts = contacts;
+                            callback();
+                        })
+                    }*/
+                    ];
+
+                async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+                    if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+                    // Here `locals` will be an object with `users` and `colors` keys
+                    // Example: `locals = {users: [...], colors: [...]}`
+                    db.close();
                     res.render('edit-users', {
-                        "results" : docs,
+                        locals,
                         user : req.user, permissions : results
                     });
                 });
+
             } else {
                 // resource is forbidden for this user/role
                 res.status(403).end();
@@ -3022,42 +3048,99 @@ router.post('/edit-user', function(req, res) {
                 // Perform what is allowed when permission is granted
                 // Set our internal DB variable
                 var db = req.db;
-                var collection = db.get('accounts');
-                var changePW;
-                if (req.body.changePW == "on"){
-                    changePW = true;
-                } else {
-                    changePW = false;
-                }
+                var result = {};
 
-
-                var userStatus;
-                if (req.body.userStatus == 'Enabled'){
-                    userStatus = true;
-                } else if (req.body.userStatus = 'Disabled') {
-                    userStatus = false;
-                }
-
-
-                collection.update({
-                    "_id" : req.body.userID
-                },
-                {
-                    $set: {
-                        "username": req.body.userName,
-                        "usertype": req.body.userRole,
-                        "active": userStatus,
-                        "changePwOnLogin": changePW
-                    }
-                }, function (err, doc) {
-                    if (err) {
-                        // If it failed, return error
-                        next(err);
+                var tasks = [
+                  // Load Client
+                  function(callback) {
+                    var collection = db.get('accounts');
+                    var changePW;
+                    if (req.body.changePW == "on"){
+                        changePW = true;
                     } else {
-                        // And forward to success page
-                        res.redirect('/home');
+                        changePW = false;
                     }
-                });
+
+
+                    var userStatus;
+                    if (req.body.userStatus == 'Enabled'){
+                        userStatus = true;
+                    } else if (req.body.userStatus = 'Disabled') {
+                        userStatus = false;
+                    }
+
+
+                    collection.update({
+                        "_id" : req.body.userID
+                    },
+                    {
+                        $set: {
+                            "username": req.body.userName,
+                            "usertype": req.body.userRole,
+                            "active": userStatus,
+                            "changePwOnLogin": changePW
+                        }
+                    }, function (e, doc) {
+                        if (e) return callback(err);
+                        callback();                        
+                      })
+                  },
+                  // Update Agent info
+                  function(callback) {
+                    var collection2 = db.get('Agents');
+
+                    var userStatus;
+                    if (req.body.userStatus == 'Enabled'){
+                        userStatus = true;
+                    } else if (req.body.userStatus = 'Disabled') {
+                        userStatus = false;
+                    }
+
+                    collection2.update({
+                        "agentAbbrev" : req.body.origAgentAbbrev
+                    },
+                    {
+                        $set: {
+                            "agentAbbrev": req.body.newAgentAbbrev,
+                            "agentFirstName": req.body.agentFirstName,
+                            "agentLastName": req.body.agentLastName,
+                            "agentPosition": req.body.agentPosition,
+                            "agentPhone" : req.body.agentPhone,
+                            "agentActive" : userStatus
+                        }
+                    }, function (e, doc) {
+                        if (e) return callback(err);
+                        callback();                        
+                      })
+
+
+                  },
+                  // Update Clients assigned to Agent
+                  function(callback) {
+                    var collection3 = db.get('Clients');
+                    collection3.update({ "agentAbbrev" : req.body.origAgentAbbrev },{$set: { "agentAbbrev" : newAgentAbbrev }},function(e,contact){
+                        if (e) return callback(err);
+                        callback();
+                    });
+                  },
+                  // Update Events assigned to Agent
+                  function(callback) {
+                    var collection4 = db.get('Events');
+                    collection4.update({ "agentAbbrev" : req.body.origAgentAbbrev },{$set: { "agentAbbrev" : newAgentAbbrev }},function(e,events){
+                        if (e) return callback(err);
+                        callback();
+                    });
+                  }
+                ];
+                
+
+              async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+                if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+                // Here `locals` will be an object with `users` and `colors` keys
+                // Example: `locals = {users: [...], colors: [...]}`
+                db.close();
+                res.redirect('/home');
+              });
             } else {
                 // resource is forbidden for this user/role
                 res.status(403).end();
