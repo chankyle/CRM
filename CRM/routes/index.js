@@ -1226,7 +1226,13 @@ router.post('/resultActivityReport', function(req, res) {
                 var dateRange = req.body.dateStartInput + " - " + req.body.dateEndInput;
                 var db = req.db;
                 var collection = db.get('Events');
-                var query = { $and: [{"agentAbbrev": req.body.agentSelect}, {"eventTimeIn._d": { $lte: dateEndInput }}, {"eventTimeIn._d": { $gte: dateStartInput }}]};
+                var query;
+
+                if (req.body.activityTypeSelect == "") {
+                  query = { $and: [{"agentAbbrev": req.body.agentSelect}, {"eventTimeIn._d": { $lte: dateEndInput }}, {"eventTimeIn._d": { $gte: dateStartInput }}]};
+                } else {
+                  query = { $and: [{"agentAbbrev": req.body.agentSelect}, {"eventType": req.body.activityTypeSelect}, {"eventTimeIn._d": { $lte: dateEndInput }}, {"eventTimeIn._d": { $gte: dateStartInput }}]};
+                }
                 collection.find(query,{},function(err, result){
                     if (err) throw err;
                     db.close();
