@@ -227,7 +227,6 @@ router.post('/login', function(req, res, next) {
     failureRedirect: '/login'}, function(err, user, info) {
     if(err) {
       //res.status(403).end();
-      console.log('')
       return res.render('login', {title: 'Login', error: err.message});
     }
     return req.logIn(user, function(err) {
@@ -243,7 +242,7 @@ router.post('/login', function(req, res, next) {
   })(req, res, next);
 });
 
-/* POST to Add Agents */
+/* POST to Add Account */
 router.post('/changePW', function(req, res) {
   Account.findOne({ username : req.user.username}, function(err, user) {
     if (!user) {
@@ -335,6 +334,12 @@ router.post('/import-agent', upload.single('agentCSV'), function(req, res) {
             var ac = new AccessControl(permissions);
             const permission = ac.can(req.user.usertype).createAny('Import');
             if (permission.granted) {
+                var defaultPassword = req.body.password;
+                var defaultchangePWOnLogin = req.body.changePWOnLogin;
+                var defaultusertype = req.body.usertype;
+                var defaultactive = req.body.active;
+
+
                 // Perform what is allowed when permission is granted
                 function getData(){
                     return new Promise(function(resolve,reject) {
@@ -353,7 +358,12 @@ router.post('/import-agent', upload.single('agentCSV'), function(req, res) {
                 getData().then(function(csvData){
                     var data = JSON.stringify(csvData);
                     res.render('review-agent-upload', {
-                        user : req.user, permissions : results,
+                        "password" : defaultPassword,
+                        "changePWOnLogin" : defaultchangePWOnLogin,
+                        "usertype" : defaultusertype,
+                        "active" : defaultactive,
+                        user : req.user, 
+                        permissions : results,
                         "agents" : csvData,
                         "JSONAgents" : data
                     });
@@ -394,7 +404,7 @@ router.post('/upload-agents', function(req, res, next) {
                  var db = req.db;
 
                 // Set our collection
-                var collection = db.get('Agents');
+                var collection = db.get('accounts');
 
 
                 // Get our form values. These rely on the "name" attributes
@@ -404,25 +414,47 @@ router.post('/upload-agents', function(req, res, next) {
 
 
                 for (i in csvData) {
-                    collection.insert({
-                        "agentAbbrev" : csvData[i].agentAbbrev,
-                        "agentFirstName" : csvData[i].agentFirstName,
-                        "agentLastName" : csvData[i].agentLastName,
-                        "agentPosition" : csvData[i].agentPosition,
-                        "agentPhone" : csvData[i].agentPhone,
-                        "createdBy" : username,
-                        "createDate" : currentDateTime,
-                        "agentActive" : defaultStatus
-                    }, function (err, doc) {
-                        if (err) {
-                            // If it failed, return error
-                            next(err);
-                        } else {
-                            // And forward to success page
-                            res.redirect('/home');
-                        }
-                    });
+                  var str0 = "usertype[";
+                  var usertype = str0.concat(i, "]");
+
+                  var str1 = "active[";
+                  var strActive = str1.concat(i, "]");
+                  var status;
+                  if (req.body[strActive] == "Enabled"){
+                    status = true;
+                  } else {
+                    status = false;
+                  }
+
+                  var str2 = "ChangePWOnLogin[";
+                  var strChangePW = str2.concat(i, "]");
+                  var changePWOnLogin;
+                  if (req.body[strChangePW] == "true"){
+                    changePWOnLogin = true;
+                  } else {
+                    changePWOnLogin = false;
+                  }
+
+                  {
+                  Account.register(new Account({ 
+                    username : csvData[i].username, 
+                    usertype : req.body[usertype], 
+                    active : status, 
+                    changePwOnLogin : changePWOnLogin, 
+                    agentAbbrev : csvData[i].agentAbbrev,
+                    agentFirstName : csvData[i].agentFirstName,
+                    agentLastName : csvData[i].agentLastName,
+                    agentPosition : csvData[i].agentPosition,
+                    agentPhone : csvData[i].agentPhone,
+                    createdBy : username,
+                    createDate : currentDateTime}), req.body.defaultPW, function(err, account) {
+                    if (err) {
+                          next(err);
+                      }
+                  });
+                  res.redirect('/home');
                 }
+              }
             } else {
                 // resource is forbidden for this user/role
                 res.status(403).end();
@@ -456,9 +488,9 @@ router.get('/import-client', function(req, res) {
                 var db = req.db;
 
                 // Set our collection
-                var collection = db.get('Agents');
+                var collection = db.get('accounts');
 
-                collection.find({},{},function(e,docs){
+                collection.find({"usertype" : "Agent"},{ agentAbbrev: 1 },function(e,docs){
                     res.render('import-client', {
                         "agentList" : docs,
                         user : req.user,
@@ -524,10 +556,10 @@ router.post('/import-client', upload.single('clientCSV'), function(req, res) {
                     var db = req.db;
 
                     // Set our collection
-                    var collection = db.get('Agents');
+                    var collection = db.get('accounts');
 
 
-                    collection.find({},{},function(e,docs){
+                    collection.find({"usertype" : "Agent"},{ agentAbbrev: 1 },function(e,docs){
                         res.render('review-client-upload', {
                             "defaultAgent" : defaultAgent,
                             "defaultAddress1Type" : defaultAddress1Type,
@@ -878,9 +910,9 @@ router.get('/entry-client', function(req, res) {
                 var db = req.db;
 
                 // Set our collection
-                var collection = db.get('Agents');
+                var collection = db.get('accounts');
 
-                collection.find({},{},function(e,docs){
+                collection.find({"usertype" : "Agent"},{ agentAbbrev: 1 },function(e,docs){
                     res.render('entry-client', {
                         "agentList" : docs,
                         user : req.user, permissions : results,
@@ -919,9 +951,9 @@ router.get('/view-client', function(req, res) {
                  var db = req.db;
 
                 // Set our collection
-                var collection = db.get('Agents');
+                var collection = db.get('accounts');
 
-                collection.find({},{},function(e,docs){
+                collection.find({"usertype" : "Agent"},{ agentAbbrev: 1 },function(e,docs){
                     res.render('view-client', {
                         "agentList" : docs,
                         user : req.user
@@ -1003,7 +1035,7 @@ router.get('/view-contact', function(req, res) {
                     collection.find({},{},function(e,docs){
                         res.render('view-contact', {
                             "clientList" : docs,
-                            user : req.user, permissions : results,
+                            user : req.user,
                             permissions : results
                         });
                     });
@@ -1045,9 +1077,9 @@ router.get('/entry-event', function(req, res) {
                 var tasks = [
                     // Load agents
                     function(callback) {
-                        var collection1 = db.get('Agents');
+                        var collection1 = db.get('accounts');
 
-                        collection1.find({},{},function(e,agents){
+                        collection1.find({"usertype" : "Agent"},{ agentAbbrev: 1 },function(e,agents){
                             if (e) return callback(err);
                             eventEntryAgents = agents;
                             callback();
@@ -1119,9 +1151,9 @@ router.get('/report-activity', function(req, res) {
                 var db = req.db;
 
                 // Set our collection
-                var collection = db.get('Agents');
+                var collection = db.get('accounts');
 
-                collection.find({},{},function(e,docs){
+                collection.find({"usertype" : "Agent"},{ agentAbbrev: 1 },function(e,docs){
                     res.render('report-activity', {
                         "agentList" : docs,
                         user : req.user, permissions : results
@@ -1557,9 +1589,9 @@ router.get('/report-visit-count', function(req, res) {
                 var db = req.db;
 
                 // Set our collection
-                var collection = db.get('Agents');
+                var collection = db.get('accounts');
 
-                collection.find({},{},function(e,docs){
+                collection.find({"usertype" : "Agent"},{ agentAbbrev: 1 },function(e,docs){
                     res.render('report-visit-count', {
                         "agentList" : docs,
                         user : req.user, permissions : results
@@ -1598,9 +1630,9 @@ router.get('/report-client-list', function(req, res) {
                 var db = req.db;
 
                 // Set our collection
-                var collection = db.get('Agents');
+                var collection = db.get('accounts');
 
-                collection.find({},{},function(e,docs){
+                collection.find({"usertype" : "Agent"},{ agentAbbrev: 1 },function(e,docs){
                     res.render('report-client-list', {
                         "agentList" : docs,
                         user : req.user, permissions : results
@@ -1823,8 +1855,8 @@ router.post('/search-client', function(req, res) {
                     },
                     // Load Agents
                     function(callback) {
-                        var collection4 = db.get('Agents');
-                        collection4.find({},{ agentAbbrev : 1},function(e,agents){
+                        var collection4 = db.get('accounts');
+                        collection4.find({"usertype" : "Agent"},{ agentAbbrev : 1},function(e,agents){
                             if (e) return callback(err);
                             result.agents = agents;
                             callback();
@@ -1956,7 +1988,7 @@ router.post('/viewClient', function(req, res, next) {
                     // Load Contact
                     function(callback) {
                         var collection2 = db.get('Contacts');
-                        collection2.update({ "contactClientID" : req.body.origClientName },{$set: { "contactClientID" : newClientName }},function(e,contact){
+                        collection2.update({ "contactClientID" : req.body.origClientName },{$set: { "contactClientID" : newClientName }}, { multi: true },function(e,contact){
                             if (e) return callback(err);
                             callback();
                         });
@@ -1964,7 +1996,7 @@ router.post('/viewClient', function(req, res, next) {
                     // Load Events
                     function(callback) {
                         var collection3 = db.get('Events');
-                        collection3.update({ "clientName" : req.body.origClientName },{$set: { "clientName" : newClientName }},function(e,events){
+                        collection3.update({ "clientName" : req.body.origClientName },{$set: { "clientName" : newClientName }}, { multi: true },function(e,events){
                             if (e) return callback(err);
                             callback();
                         });
@@ -2202,7 +2234,6 @@ router.post('/viewContact', function(req, res, next) {
                         },
                         // Load Client associated with Contact searched
                         function(callback) {
-                          console.log('test');
                           var collection2 = db.get('Events');
                           var contactClientID = req.body.contactClientID.trim();
                           collection2.update(
@@ -2212,16 +2243,15 @@ router.post('/viewContact', function(req, res, next) {
                             },
                             {$set:
                               {"contact1":contactName}
-                            },
+                            }, { multi: true }
+                            ,
                             function(err,clients){
-                              console.log('test1');
                               if (e) return callback(err);
                               callback();
                           });
                         },
                         // Load Client associated with Contact searched
                         function(callback) {
-                          console.log('test2');
                           var collection3 = db.get('Events');
                           var contactClientID = req.body.contactClientID.trim();
                           collection3.update(
@@ -2231,9 +2261,9 @@ router.post('/viewContact', function(req, res, next) {
                             },
                             {$set:
                               {"contact2":contactName}
-                          },
+                          }, { multi: true }
+                          ,
                           function(e,clients){
-                            console.log('test3');
                               if (e) return callback(e);
                               callback();
                           });
@@ -2403,8 +2433,8 @@ router.post('/list-event', function(req, res) {
                 var tasks = [
                     // Load agents
                     function(callback) {
-                        var collection1 = db.get('Agents');
-                        collection1.find({},{},function(e,agents){
+                        var collection1 = db.get('accounts');
+                        collection1.find({"usertype" : "Agent"},{ agentAbbrev: 1 },function(e,agents){
                             if (e) return callback(err);
                             result.agents = agents;
                             callback();
@@ -2981,6 +3011,7 @@ router.post('/view-users', function(req, res) {
             const permission = ac.can(req.user.usertype).readAny('Account');
             if (permission.granted) {
                 var db = req.db;
+                var locals = {};
 
                 var tasks = [
                     // Load agents
@@ -2993,16 +3024,6 @@ router.post('/view-users', function(req, res) {
                             callback();
                         })
                     },
-                    // Load clients
-                    /*function(callback) {
-                        var collection2 = db.get('Agents');
-
-                        collection2.find({},{},function(e,contacts){
-                            if (e) return callback(err);
-                            locals.contacts = contacts;
-                            callback();
-                        })
-                    }*/
                     ];
 
                 async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
@@ -3012,7 +3033,8 @@ router.post('/view-users', function(req, res) {
                     db.close();
                     res.render('edit-users', {
                         locals,
-                        user : req.user, permissions : results
+                        user : req.user, 
+                        permissions : results
                     });
                 });
 
@@ -3069,7 +3091,6 @@ router.post('/edit-user', function(req, res) {
                         userStatus = false;
                     }
 
-
                     collection.update({
                         "_id" : req.body.userID
                     },
@@ -3078,30 +3099,8 @@ router.post('/edit-user', function(req, res) {
                             "username": req.body.userName,
                             "usertype": req.body.userRole,
                             "active": userStatus,
-                            "changePwOnLogin": changePW
-                        }
-                    }, function (e, doc) {
-                        if (e) return callback(err);
-                        callback();                        
-                      })
-                  },
-                  // Update Agent info
-                  function(callback) {
-                    var collection2 = db.get('Agents');
-
-                    var userStatus;
-                    if (req.body.userStatus == 'Enabled'){
-                        userStatus = true;
-                    } else if (req.body.userStatus = 'Disabled') {
-                        userStatus = false;
-                    }
-
-                    collection2.update({
-                        "agentAbbrev" : req.body.origAgentAbbrev
-                    },
-                    {
-                        $set: {
-                            "agentAbbrev": req.body.newAgentAbbrev,
+                            "changePwOnLogin": changePW,
+                            "agentAbbrev": req.body.agentAbbrev,
                             "agentFirstName": req.body.agentFirstName,
                             "agentLastName": req.body.agentLastName,
                             "agentPosition": req.body.agentPosition,
@@ -3109,25 +3108,23 @@ router.post('/edit-user', function(req, res) {
                             "agentActive" : userStatus
                         }
                     }, function (e, doc) {
-                        if (e) return callback(err);
+                        if (e) return callback(e);
                         callback();                        
                       })
-
-
                   },
                   // Update Clients assigned to Agent
                   function(callback) {
                     var collection3 = db.get('Clients');
-                    collection3.update({ "agentAbbrev" : req.body.origAgentAbbrev },{$set: { "agentAbbrev" : newAgentAbbrev }},function(e,contact){
-                        if (e) return callback(err);
+                    collection3.update({ "agentAbbrev" : req.body.origAgentAbbrev },{$set: { "agentAbbrev" : req.body.agentAbbrev }}, { multi: true },function(e,contact){
+                        if (e) return callback(e);
                         callback();
                     });
                   },
                   // Update Events assigned to Agent
                   function(callback) {
                     var collection4 = db.get('Events');
-                    collection4.update({ "agentAbbrev" : req.body.origAgentAbbrev },{$set: { "agentAbbrev" : newAgentAbbrev }},function(e,events){
-                        if (e) return callback(err);
+                    collection4.update({ "agentAbbrev" : req.body.origAgentAbbrev },{$set: { "agentAbbrev" : req.body.agentAbbrev }}, { multi: true },function(e,events){
+                        if (e) return callback(e);
                         callback();
                     });
                   }
@@ -3412,7 +3409,8 @@ router.post('/addUser', function(req, res) {
                 var agentLastName = req.body.agentLastName;
                 var agentPosition = req.body.agentPosition;
                 var agentPhone = req.body.agentPhone;
-                var currentDateTime = moment();
+                var currentDateTime = {};
+                currentDateTime = moment();
                 var defaultStatus = "Enabled";
                 var newPassword = req.body.newPassword;
                 var changePW
@@ -3424,61 +3422,38 @@ router.post('/addUser', function(req, res) {
                 }
 
                 if (newUserType == 'Administrator'){
-                    Account.register(new Account({ username : newUserName, usertype : 'Administrator' , active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
-                        if (err) {
-                            console.log(err);
-                            res.redirect('/home');
-                        }
-                    });
+                  Account.register(new Account({ username : newUserName, usertype : 'Administrator' , active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
+                      if (err) {
+                          next(err);
+                      }
+                  });
+                  res.redirect('/home');
 
                 } else if (newUserType == 'Read-Only') {
-                    Account.register(new Account({ username : newUserName, usertype : 'ReadOnly', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
-                        if (err) {
-                            console.log(err);
-                            res.redirect('/home');
-                        }
-                    });
+                  Account.register(new Account({ username : newUserName, usertype : 'ReadOnly', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
+                      if (err) {
+                          next(err);
+                      }
+                  });
+                  res.redirect('/home');
 
                 } else if (newUserType == 'Agent'){
-
-                    var tasks = [
-                    // Create Agent object
-                    function(callback) {
-                        var collection1 = db.get('Agents');
-
-                        collection1.insert({
-                            "agentAbbrev" : agentAbbrev,
-                            "agentFirstName" : agentFirstName,
-                            "agentLastName" : agentLastName,
-                            "agentPosition" : agentPosition,
-                            "agentPhone" : agentPhone,
-                            "createdBy" : username,
-                            "createDate" : currentDateTime,
-                            "agentActive" : defaultStatus
-                        },{},function(e,doc){
-                            if (e) console.log(e);
-                            callback();
-                        })
-                    },
-                    // Create Account
-                    function(callback) {
-                        Account.register(new Account({ username : newUserName, usertype : 'Agent', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
-                            if (err) {
-                                console.log(err);
-                                callback();
-                            }
-                        });
-                    }
-                    ];
-
-                    async.parallel(tasks, function(err) { //This function gets called after the three tasks have called their "task callbacks"
-                        if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
-                        // Here `locals` will be an object with `users` and `colors` keys
-                        // Example: `locals = {users: [...], colors: [...]}`
-                        db.close();
-                        res.redirect('/home');
-                    });
-
+                  Account.register(new Account({ username : newUserName, 
+                    usertype : 'Agent', 
+                    active : true, 
+                    changePwOnLogin : changePW, 
+                    agentAbbrev : agentAbbrev,
+                    agentFirstName : agentFirstName,
+                    agentLastName : agentLastName,
+                    agentPosition : agentPosition,
+                    agentPhone : agentPhone,
+                    createdBy : username,
+                    createDate : currentDateTime}), newPassword, function(err, account) {
+                    if (err) {
+                          next(err);
+                      }
+                  });
+                  res.redirect('/home');
                 }
             } else {
                 // resource is forbidden for this user/role

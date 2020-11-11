@@ -41,6 +41,8 @@
       }
   }
 </script>
+
+
 <body class="c-app">
  <div class="c-sidebar c-sidebar-light c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
    <% include partials/sidebar %>
@@ -68,9 +70,9 @@
                   <label for="newUserType">User Type</label>
                   <select class="form-control" id="newUserType" name="newUserType" onchange = "EnableDisableBox(this)" required>
                     <option value="" disabled selected>Select</option>
-                    <option value="1">Administrator</option>
-                    <option value="2">Agent</option>
-                    <option value="3">Read-Only</option>
+                    <option value="Administrator">Administrator</option>
+                    <option value="Agent">Agent</option>
+                    <option value="Read-Only">Read-Only</option>
                   </select>
                 </div>
                 <div class="form-group col-12 col-md-auto">
@@ -144,7 +146,7 @@
       var selectedValue = newUserType.options[newUserType.selectedIndex].value;
 
       var agentAB = document.getElementById("agentAbbrev");
-      agentAB.disabled = selectedValue == 2 ? false : true;
+      agentAB.disabled = selectedValue == "Agent" ? false : true;
       if (!agentAB.disabled) {
           agentAB.blur();
       }

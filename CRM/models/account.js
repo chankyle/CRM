@@ -7,7 +7,14 @@ var Account = new Schema({
     password: String,
     usertype: String,
     active: Boolean,
-    changePwOnLogin: Boolean
+    changePwOnLogin: Boolean,
+    agentAbbrev : String,
+    agentFirstName : String,
+    agentLastName : String,
+    agentPosition : String,
+    agentPhone : String,
+    createdBy : String,
+    createDate : Object
 });
 
 Account.plugin(passportLocalMongoose);

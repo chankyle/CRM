@@ -11,6 +11,38 @@
 
  <title>CRM - Import Agent</title>
  </head>
+
+ <script>
+  // Function to check Whether both passwords
+  // is same or not.
+  function checkPassword(form) {
+      password1 = form.password.value;
+      password2 = form.password2.value;
+
+      // If password not entered
+      if (password1 == '') {
+          alert ("Please enter Password");
+          return false;
+      }
+
+      // If confirm password not entered
+      else if (password2 == '') {
+          alert ("Please enter confirm password");
+          return false;
+      }
+
+      // If Not same return False.
+      else if (password1 != password2) {
+          alert ("\nPassword did not match: Please try again...")
+          return false;
+      }
+
+      // If same return True.
+      else{
+          return true;
+      }
+  }
+</script>
  <body class="c-app">
 
    <div class="c-sidebar c-sidebar-light c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
@@ -43,6 +75,7 @@
               <table class="table table-bordered px-2 py-2 bg-white">
               <thead class="thead-dark">
                 <tr>
+                  <th style="width: 10%" scope="col" class="align-middle">Username: </th>
                   <th style="width: 10%" scope="col" class="align-middle">Agent Abbreviation:</th>
                   <th style="width: 10%" scope="col" class="align-middle">Agent First Name: </th>
                   <th style="width: 10%" scope="col" class="align-middle">Agent Last Name: </th>
@@ -52,6 +85,7 @@
               </thead>
               <tbody>
                 <tr>
+                  <td>JSmith</td>
                   <td>JS</td>
                   <td>John</td>
                   <td>Smith</td>
@@ -62,11 +96,64 @@
             </table>
             <h4> Upload File: </h4>
 
-             <form action="/import-agent" method="post" enctype="multipart/form-data">
+
+             <form action="/import-agent" method="post" enctype="multipart/form-data" onSubmit="return checkPassword(this)">
+              <h4> Default Values: </h4>
+
+              <div class="form-row">
+                <div class="form-group col-12 col-md-auto">
+                  <label>Default Password</label>
+                  <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-12 col-md-auto">
+                  <label>ReType Password</label>
+                  <input type="password" class="form-control" id="password2" name="password2" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-12 col-md-auto">
+                  <label>Change PW On Login</label>
+                  <div class="custom-control custom-checkbox">
+                    <input class="form-check-input" type="checkbox" name="changePWOnLogin" id="ChangePWOnLogin" value="true">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-12 col-md-auto">
+                  <label>User Type</label>
+                  <select class="form-control" id="usertype" name="usertype" required>
+                    <option></option>
+                    <option>Administrator</option>
+                    <option>Agent</option>
+                    <option>Read-Only</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-12 col-md-auto">
+                  <label>Status</label>
+                  <select class="form-control" id="active" name="active" required>
+                    <option selected>Enabled</option>
+                    <option>Disabled</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-12 col-md-auto">
+                  <label>File for Upload</label>
                <input type="file" class="form-control-file" name="agentCSV" required>
-               <br/>
-               <input class="btn btn-primary" type="submit" value="Submit">
-             </form>
+                </div>
+              </div>
+
+              <input class="btn btn-primary" type="submit" value="Submit">
+           </form>
        </div>
      </div>
        </main>

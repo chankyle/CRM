@@ -29,9 +29,14 @@
         <main class="main mt-2 mx-3">
          <form action="/upload-agents" method="post">
            <input type="text" class="form-control" id="csvData" name="csvData" value="<%= JSONAgents %>" hidden>
+            <input type="text" class="form-control" id="defaultPW" name="defaultPW" value="<%= password %>" hidden>
            <table class="table table-bordered">
              <thead class="thead-dark">
                <tr>
+                 <th style="width: 5%" scope="col">Username:</th>
+                 <th style="width: 5%" scope="col">Change PW On Login:</th>
+                 <th style="width: 5%" scope="col">Usertype:</th>
+                 <th style="width: 5%" scope="col">Status:</th>                 
                  <th style="width: 5%" scope="col">Agent Abbreviation:</th>
                  <th style="width: 20%" scope="col">Agent First Name: </th>
                  <th style="width: 20%" scope="col">Agent Last Name: </th>
@@ -44,6 +49,51 @@
                  var list = '';
                  for (i = 0; i < agents.length; i++) {
                    list += '<tr>';
+                   list += '<td>' + agents[i].username + '</td>';  
+
+                   if (changePWOnLogin == 'true') {
+                    list += '<td style="text-align:center; vertical-align: middle"><div class="custom-control custom-checkbox"><input class="form-check-input" type="checkbox" name="ChangePWOnLogin[' + i + ']" value="true" checked/></div></td>';
+                   } else {
+                    list += '<td style="text-align:center; vertical-align: middle"><div class="custom-control custom-checkbox"><input class="form-check-input" type="checkbox" name="ChangePWOnLogin[' + i + ']" value="true"/></div></td>';
+                   }
+
+                   list += '<td style="vertical-align: middle"><select class="form-control" id="usertype[' + i + ']" name="usertype[' + i + ']" required>';
+                   // Select default value
+                   if (usertype == 'Administrator'){
+                     list += '<option selected>Administrator</option>';
+                     list += '<option>Agent</option>';
+                     list += '<option>Read-Only</option>';                     
+                   } else if (usertype == 'Agent'){
+                     list += '<option>Administrator</option>';
+                     list += '<option selected>Agent</option>';
+                     list += '<option>Read-Only</option>';                     
+                   } else if (usertype == 'Read-Only'){
+                     list += '<option>Administrator</option>';
+                     list += '<option>Agent</option>';
+                     list += '<option selected>Read-Only</option>';                     
+                   } else {
+                     list += '<option>Administrator</option>';
+                     list += '<option>Agent</option>';
+                     list += '<option>Read-Only</option>';                     
+                   }
+                   list += '</select> </td>';
+
+
+
+                   //status    
+                   list += '<td style="vertical-align: middle"><select class="form-control" id="active[' + i + ']" name="active[' + i + ']" required>';
+                   // Select default value
+                   if (active == 'Enabled'){
+                     list += '<option selected>Enabled</option>';
+                     list += '<option>Disabled</option>';
+                   } else {
+                     list += '<option>Enabled</option>';
+                     list += '<option selected>Disabled</option>';                 
+                   }
+                   list += '</select> </td>';
+
+
+
                    list += '<td>' + agents[i].agentAbbrev + '</td>';
                    list += '<td>' + agents[i].agentFirstName + '</td>';
                    list += '<td>' + agents[i].agentLastName + '</td>';
