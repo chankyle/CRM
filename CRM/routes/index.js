@@ -62,20 +62,20 @@ router.get('/home', function(req, res) {
                   var db = req.db;
                   var dateToday = moment();
                   var dateLess30 = moment().subtract(30, 'days');
-
+                  var eventListMonth = [];
+                  var eventAgentActivity = [];
+                  var eventList30 = [];
+                  var eventListMore30 = [];
+                  var clientVisit30 = [];
+                  var tempVisitDue = [];
+                  var visitDue = [];
                   var tasks = [
                       // Load Events
                       function(callback) {
                           var collection1 = db.get('Events');
                           collection1.find( {},{},function(e,events){
                               if (e) return callback(err);
-                              var eventListMonth = [];
-                              var eventAgentActivity = [];
-                              var eventList30 = [];
-                              var eventListMore30 = [];
-                              var clientVisit30 = [];
-                              var tempVisitDue = [];
-                              var visitDue = [];
+
 
                                 function isItemInArray(array, item) {
                                       for (var j = 0; j < array.length; j++) {
@@ -182,10 +182,30 @@ router.get('/home', function(req, res) {
                               result.activeAgents = eventAgentActivity;
                               result.eventList30 = eventList30;
                               result.frequentClients = clientVisit30;
-                              result.visitDue = visitDue;
 
                               callback();
                           });
+                      },
+                      function(callback) {
+                          var collection2 = db.get('Clients');
+                          collection2.find({},{},function(e,clients){
+                              if (e) return callback(err);
+                              var filteredVisitDue = [];
+                              if (req.user.usertype == "Agent"){
+                                for (i = 0; i < visitDue.length; i++){
+                                  for (j = 0; j < clients.length; j++){
+                                    if (visitDue[i][0] == clients[j].clientName && req.user.agentAbbrev == clients[j].agentAbbrev){
+                                      filteredVisitDue.push(visitDue[i]);
+                                    }
+                                  }
+                                }
+                              } else {
+                                filteredVisitDue = visitDue;
+                              }
+                              console.log('Number of Customers not Visited Past 30 for this Agent (visitDue):' + filteredVisitDue.length)
+                              result.visitDue = filteredVisitDue;
+                              callback();
+                          })
                       }
                       ];
 
@@ -362,7 +382,7 @@ router.post('/import-agent', upload.single('agentCSV'), function(req, res) {
                         "changePWOnLogin" : defaultchangePWOnLogin,
                         "usertype" : defaultusertype,
                         "active" : defaultactive,
-                        user : req.user, 
+                        user : req.user,
                         permissions : results,
                         "agents" : csvData,
                         "JSONAgents" : data
@@ -436,11 +456,11 @@ router.post('/upload-agents', function(req, res, next) {
                   }
 
                   {
-                  Account.register(new Account({ 
-                    username : csvData[i].username, 
-                    usertype : req.body[usertype], 
-                    active : status, 
-                    changePwOnLogin : changePWOnLogin, 
+                  Account.register(new Account({
+                    username : csvData[i].username,
+                    usertype : req.body[usertype],
+                    active : status,
+                    changePwOnLogin : changePWOnLogin,
                     agentAbbrev : csvData[i].agentAbbrev,
                     agentFirstName : csvData[i].agentFirstName,
                     agentLastName : csvData[i].agentLastName,
@@ -3039,7 +3059,7 @@ router.post('/view-users', function(req, res) {
                     db.close();
                     res.render('edit-users', {
                         locals,
-                        user : req.user, 
+                        user : req.user,
                         permissions : results
                     });
                 });
@@ -3115,7 +3135,7 @@ router.post('/edit-user', function(req, res) {
                         }
                     }, function (e, doc) {
                         if (e) return callback(e);
-                        callback();                        
+                        callback();
                       })
                   },
                   // Update Clients assigned to Agent
@@ -3135,7 +3155,7 @@ router.post('/edit-user', function(req, res) {
                     });
                   }
                 ];
-                
+
 
               async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
                 if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
@@ -3444,10 +3464,10 @@ router.post('/addUser', function(req, res) {
                   res.redirect('/home');
 
                 } else if (newUserType == 'Agent'){
-                  Account.register(new Account({ username : newUserName, 
-                    usertype : 'Agent', 
-                    active : true, 
-                    changePwOnLogin : changePW, 
+                  Account.register(new Account({ username : newUserName,
+                    usertype : 'Agent',
+                    active : true,
+                    changePwOnLogin : changePW,
                     agentAbbrev : agentAbbrev,
                     agentFirstName : agentFirstName,
                     agentLastName : agentLastName,
