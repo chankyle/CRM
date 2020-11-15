@@ -5,6 +5,9 @@
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+ <!-- Bootstrap Table CSS -->
+ <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.css">
  <!-- CoreUI CSS -->
  <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/css/coreui.min.css" crossorigin="anonymous">
  <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
@@ -148,12 +151,12 @@
                     <div class="card-header"><strong>Clients Due for Visit</strong></div>
                     <div class="card-body">
                       <div class="table">
-                          <table class="table table-hover table-borderless table-striped px-2 py-2">
+                          <table data-toggle="table" data-pagination="true" data-pagination-successively-size="2" class="table table-hover table-bordered table-striped px-2 py-2">
                             <thead class="thead-light">
                               <tr>
-                                <th class="align-middle" style="width: 50%">Client</th>
-                                <th class="align-middle" style="text-align: center; vertical-align: middle; width: 25%">Last Visit</th>
-                                <th class="align-middle" style="text-align: center; vertical-align: middle; width: 25%">Days since Last Visit</th>
+                                <th data-halign="center" data-align="left" data-width="70" data-width-unit="%">Client</th>
+                                <th data-halign="center" data-align="left" data-width="15" data-width-unit="%">Last Visit</th>
+                                <th data-halign="center" data-align="left" data-width="15" data-width-unit="%">Days since Last Visit</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -194,5 +197,6 @@
  <script src="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/js/coreui.min.js"></script>
 
  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+ <script src="https://unpkg.com/bootstrap-table@1.18.0/dist/bootstrap-table.min.js"></script>
  </body>
 </html>
