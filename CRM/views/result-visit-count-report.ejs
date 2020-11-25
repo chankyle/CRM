@@ -38,11 +38,11 @@
       <table class="table table-bordered px-2 py-2 bg-white">
         <thead class="thead-dark">
           <tr>
-            <th scope="col"></th>
-            <th scope="col">CLIENT</th>
-            <th scope="col">NUMBER OF VISITS</th>
-            <th scope="col">DATE/S OF VISIT/S</th>
-            <th scope="col">AVERAGE DURATION</th>
+            <th scope="col" style="text-align: center; vertical-align: middle; width: 3%"></th>
+            <th scope="col" style="text-align: center; vertical-align: middle; width: 20%">CLIENT</th>
+            <th scope="col" style="text-align: center; vertical-align: middle; width: 10%">NUMBER OF VISITS</th>
+            <th scope="col" style="text-align: center; vertical-align: middle; width: 20%">DATE/S OF VISIT/S</th>
+            <th scope="col" style="text-align: center; vertical-align: middle; width: 20%">AVERAGE DURATION</th>
           </tr>
         </thead>
         <tbody>
@@ -52,9 +52,9 @@
               var k = 1;
               for (i = 0; i < result.length; i++) {
                 list += '<tr>';
-                list += '<th scope="row">' + k + '</th>';
-                list += '<td>' + result[i]._id + '</td>';
-                list += '<td>' + result[i].visitCount + '</td>';
+                list += '<th scope="row" style="text-align: center; vertical-align: middle; width: 3%">' + k + '</th>';
+                list += '<td style="text-align: center; vertical-align: middle; width: 20%">' + result[i]._id + '</td>';
+                list += '<td style="text-align: center; vertical-align: middle; width: 10%">' + result[i].visitCount + '</td>';
                 var eventsDateList = '';
                 for (x = 0; x < result[i].eventDates.length; x++) {
                   var str = result[i].eventDates[x].toString();
@@ -62,11 +62,11 @@
                   eventsDateList += str;
                   eventsDateList += '<br>';
                 }
-                list += '<td>' + eventsDateList + '</td>';
+                list += '<td style="text-align: center; vertical-align: middle; width: 20%">' + eventsDateList + '</td>';
                 var hours = Math.floor(result[i].totalDuration / 60);
                 var minutes = result[i].totalDuration % 60;
                 minutes = Math.round(minutes * 100) / 100;
-                list += '<td>' + hours + ' hours ' + minutes + ' minutes' + '</td>';
+                list += '<td style="text-align: center; vertical-align: middle; width: 20%">' + hours + ' hours ' + minutes + ' minutes' + '</td>';
                 list += '</tr>';
                 k++;
             }

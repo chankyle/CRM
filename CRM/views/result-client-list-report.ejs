@@ -37,8 +37,8 @@
       <table class="table table-bordered px-2 py-2 bg-white">
         <thead class="thead-dark">
           <tr>
-            <th scope="col"></th>
-            <th scope="col">CLIENT</th>
+            <th scope="col" style="text-align: center; vertical-align: middle; width: 3%"></th>
+            <th scope="col" style="text-align: left; vertical-align: middle; width: 97%">CLIENT</th>
           </tr>
         </thead>
         <tbody>
@@ -47,8 +47,8 @@
               var k = 1;
               for (i = 0; i < result.length; i++) {
                 list += '<tr>';
-                list += '<th scope="row">' + k + '</th>';
-                list += '<td>' + result[i].clientName + '</td>';
+                list += '<th scope="row" style="text-align: center; vertical-align: middle; width: 3%">' + k + '</th>';
+                list += '<td style="text-align: left; vertical-align: middle; width: 97%">' + result[i].clientName + '</td>';
                 list += '</tr>';
                 k++;
             }
