@@ -3161,8 +3161,29 @@ router.post('/edit-user', function(req, res) {
                         if (e) return callback(e);
                         callback();
                     });
+                  },
+
+                  function(callback) {
+                    //passport-local-mongoose
+                    Account.findOne({ username : req.body.userName}, function(err, user) {
+                      if (!user) {
+                        req.flash('error', 'Password reset token is invalid or has expired.');
+                        return callback(err);
+                      }
+                      user.setPassword(req.body.newPassword, function(err) {
+                        if (err) {
+                            return next(err)
+                        }
+                        else {
+                          user.save();
+                          callback();
+                          }
+                      });
+                    });
                   }
-                ];
+                    
+
+                 ];
 
 
               async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
