@@ -195,12 +195,20 @@ router.get('/home', function(req, res) {
                                 for (i = 0; i < visitDue.length; i++){
                                   for (j = 0; j < clients.length; j++){
                                     if (visitDue[i][0] == clients[j].clientName && req.user.agentAbbrev == clients[j].agentAbbrev){
+                                      visitDue[i][3] = clients[j].agentAbbrev;
                                       filteredVisitDue.push(visitDue[i]);
                                     }
                                   }
                                 }
                               } else {
-                                filteredVisitDue = visitDue;
+                                for (i = 0; i < visitDue.length; i++){
+                                  for (j = 0; j < clients.length; j++){
+                                    if (visitDue[i][0] == clients[j].clientName){
+                                      visitDue[i][3] = clients[j].agentAbbrev;
+                                      filteredVisitDue.push(visitDue[i]);
+                                    }
+                                  }
+                                }
                               }
                               console.log('Number of Customers not Visited Past 30 for this Agent (visitDue):' + filteredVisitDue.length)
                               result.visitDue = filteredVisitDue;

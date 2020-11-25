@@ -160,7 +160,8 @@
                           class="table table-hover table-borderless table-striped px-2 py-2">
                             <thead class="thead-light">
                               <tr>
-                                <th data-halign="center" data-align="left" data-width="70" data-width-unit="%">Client</th>
+                                <th data-halign="center" data-align="left" data-width="55" data-width-unit="%">Client</th>
+                                <th data-halign="center" data-align="left" data-width="15" data-width-unit="%">Agent</th>
                                 <th data-halign="center" data-align="left" data-width="15" data-width-unit="%">Last Visit</th>
                                 <th data-halign="center" data-align="left" data-width="15" data-width-unit="%">Days since Last Visit</th>
                               </tr>
@@ -172,6 +173,7 @@
                                     for (i = 0; i < result.visitDue.length; i++) {
                                       list += '<tr>';
                                       list += '<td class=>' + result.visitDue[i][0] + '</td>';
+                                      list += '<td style="text-align: center; vertical-align: middle;">' + result.visitDue[i][3] + '</td>';
                                       list += '<td style="text-align: center; vertical-align: middle;">' + result.visitDue[i][1]._i.substring(0,10) + '</td>';
                                       list += '<td style="text-align: center; vertical-align: middle;">' + result.visitDue[i][2] + '</td>';
                                       list += '</tr>';
