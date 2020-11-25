@@ -217,7 +217,7 @@ router.get('/home', function(req, res) {
                       }
                       ];
 
-                  async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+                  async.waterfall(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
                       if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
                       // Here `locals` will be an object with `users` and `colors` keys
                       // Example: `locals = {users: [...], colors: [...]}`
@@ -1632,6 +1632,210 @@ router.get('/report-visit-count', function(req, res) {
                     });
                 });
             } else {
+                // resource is forbidden for this user/role
+                res.status(403).end();
+            }
+        });
+    });
+});
+
+/* Permissions for Visit Due Report Form. */
+router.get('/report-visit-due', function(req, res) {
+// Set our internal DB variable
+    var db = req.db;
+    // Set our collection
+    var userType = ''
+    var permissions = {};
+
+    var collectionAccounts = db.get('accounts');
+    var collectionPermissions = db.get('Permissions');
+
+    collectionAccounts.find({"_id" : req.user._id},{fields : "usertype -_id"},function(e,usertype){
+        if (e) return callback(err);
+        userType = usertype[0].usertype;
+        collectionPermissions.find({"role" : userType},{},function(e,results){
+            if (e) return callback(err);
+            permissions = results;
+            var ac = new AccessControl(permissions);
+            const permission = ac.can(req.user.usertype).readAny('Event');
+            if (permission.granted) {
+                // Perform what is allowed when permission is granted
+                // Set our internal DB variable
+                var result = {};
+                var db = req.db;
+                var dateToday = moment();
+                var dateLess30 = moment().subtract(30, 'days');
+                var eventListMonth = [];
+                var eventAgentActivity = [];
+                var eventList30 = [];
+                var eventListMore30 = [];
+                var clientVisit30 = [];
+                var tempVisitDue = [];
+                var visitDue = [];
+                var tasks = [
+                    // Load Events
+                    function(callback) {
+                        var collection1 = db.get('Events');
+                        collection1.find( {},{},function(e,events){
+                            if (e) return callback(err);
+
+
+                              function isItemInArray(array, item) {
+                                    for (var j = 0; j < array.length; j++) {
+                                        // This if statement depends on the format of your array
+                                        if (array[j][0] == item[0]) {
+                                            return true;   // Found it
+                                        }
+                                    }
+                                            return false;   // Not found
+                                }
+                              function compareCount(a, b) {
+                                var countA = a[1];
+                                var countB = b[1];
+                                let comparison = 0;
+                                if (countA > countB) return -1;
+                                if (countB > countA) return 1;
+                                return comparison;
+                              }
+                              function compareCount2(a, b) {
+                                var countA = a[2];
+                                var countB = b[2];
+                                let comparison = 0;
+                                if (countA > countB) return -1;
+                                if (countB > countA) return 1;
+                                return comparison;
+                              }
+
+
+                            for (i = 0; i < events.length; i++){
+                              //Filter number of visits per Agent
+                              if (moment(events[i].eventTimeIn).isSame(dateToday, 'month') == true){
+                                eventListMonth.push(events[i]);
+                                if (isItemInArray(eventAgentActivity, [events[i].agentAbbrev,]) == false){
+                                  eventAgentActivity.push([events[i].agentAbbrev,1]);
+                                } else {
+                                  //Add count for visits > 1
+                                  for (var l = 0; l < eventAgentActivity.length; l++){
+                                    if (eventAgentActivity[l][0] == events[i].agentAbbrev){
+                                      eventAgentActivity[l][1] = eventAgentActivity[l][1] + 1;
+                                    }
+                                  }
+                                }
+                              }
+                              //Filter number of visits per Client
+                              if (moment(events[i].eventTimeIn).isAfter(dateLess30, 'day') == true){
+                                eventList30.push([events[i].clientName, events[i].eventTimeIn]);
+                                if (isItemInArray(clientVisit30, [events[i].clientName,]) == false){
+                                  clientVisit30.push([events[i].clientName,1]);
+                                } else {
+                                  for (var l = 0; l < clientVisit30.length; l++){
+                                    if (clientVisit30[l][0] == events[i].clientName){
+                                      clientVisit30[l][1] = clientVisit30[l][1] + 1;
+                                    }
+                                  }
+                                }
+                              }
+                              //Filter Events beyond 30 days ago
+                              if (moment(events[i].eventTimeIn).isBefore(dateLess30, 'day') == true){
+                                eventListMore30.push([events[i].clientName, events[i].eventTimeIn]);
+                              }
+                            }
+
+                            for (p = 0; p < eventListMore30.length; p++){
+                              if (isItemInArray(eventList30,[eventListMore30[p][0],]) == false){
+                                tempVisitDue.push(eventListMore30[p]);
+                              }
+                            }
+
+                            for (i = 0; i < tempVisitDue.length; i++){
+                              if (isItemInArray(visitDue, [tempVisitDue[i][0],]) == false){
+                                visitDue.push(tempVisitDue[i])
+                              } else {
+                                for (j = 0; j < visitDue.length; j++){
+                                  if (visitDue[j][0] == tempVisitDue[i][0]){
+                                    visitDue[j][1] = moment.max(moment(visitDue[j][1]),moment(tempVisitDue[i][1]));
+                                  }
+                                }
+                              }
+                            }
+
+                            for (i = 0; i < visitDue.length; i++){
+                              visitDue[i][2] = dateToday.diff(visitDue[i][1], 'days');
+                            }
+
+
+                              //Sort arrays in descending order
+                              eventAgentActivity.sort(compareCount);
+                              clientVisit30.sort(compareCount);
+                              visitDue.sort(compareCount2);
+
+                              // Slice arrays to show only top X entries
+                              clientVisit30 = clientVisit30.slice(0,8);
+                              //visitDue = visitDue.slice(0,12)
+
+
+                            console.log('Total Events (events):' + events.length)
+                            console.log('Events Past 30 Days (eventList30):' + eventList30.length);
+                            console.log('Events Beyond 30 Days Prior (eventListMore30):' + eventListMore30.length)
+                            console.log('Events w/ Clients not Visited in the Past 30 Days (tempVisitDue):' + tempVisitDue.length)
+                            console.log('Number of Customers not Visited Past 30 (visitDue):' + visitDue.length)
+
+
+                            result.events = eventListMonth;
+                            result.activeAgents = eventAgentActivity;
+                            result.eventList30 = eventList30;
+                            result.frequentClients = clientVisit30;
+
+                            callback();
+                        });
+                    },
+                    function(callback) {
+                        var collection2 = db.get('Clients');
+                        collection2.find({},{},function(e,clients){
+                            if (e) return callback(err);
+                            var filteredVisitDue = [];
+                            if (req.user.usertype == "Agent"){
+                              for (i = 0; i < visitDue.length; i++){
+                                for (j = 0; j < clients.length; j++){
+                                  if (visitDue[i][0] == clients[j].clientName && req.user.agentAbbrev == clients[j].agentAbbrev){
+                                    visitDue[i][3] = clients[j].agentAbbrev;
+                                    filteredVisitDue.push(visitDue[i]);
+                                  }
+                                }
+                              }
+                            } else {
+                              for (i = 0; i < visitDue.length; i++){
+                                for (j = 0; j < clients.length; j++){
+                                  if (visitDue[i][0] == clients[j].clientName){
+                                    visitDue[i][3] = clients[j].agentAbbrev;
+                                    filteredVisitDue.push(visitDue[i]);
+                                  }
+                                }
+                              }
+                            }
+                            console.log('Number of Customers not Visited Past 30 for this Agent (visitDue):' + filteredVisitDue.length)
+                            result.visitDue = filteredVisitDue;
+                            callback();
+                        })
+                    }
+                    ];
+
+                async.waterfall(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
+                    if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
+                    // Here `locals` will be an object with `users` and `colors` keys
+                    // Example: `locals = {users: [...], colors: [...]}`
+                    db.close();
+
+                // Set our collection
+                var collection1 = db.get('Events');
+                      res.render('report-visit-due', {
+                        "result": result,
+                        dateToday : dateToday,
+                        user : req.user, permissions : results
+                    });
+                });
+
+              } else {
                 // resource is forbidden for this user/role
                 res.status(403).end();
             }

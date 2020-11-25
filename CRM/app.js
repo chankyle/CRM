@@ -52,6 +52,7 @@ var reportVisitCountRouter = require('./routes/report-visit-count');
 var reportClientListRouter = require('./routes/report-client-list');
 var reportContactHistoryRouter = require('./routes/report-contact-history');
 var reportClientHistoryRouter = require('./routes/report-client-history');
+var reportVisitDueRouter = require('./routes/report-visit-due');
 
 var resultActivityReportRouter = require('./routes/result-activity-report');
 var resultVisitCountReportRouter = require('./routes/result-visit-count-report');
@@ -134,6 +135,7 @@ app.use('/report-visit-count', reportVisitCountRouter);
 app.use('/report-client-list', reportClientListRouter);
 app.use('/report-client-history', reportClientHistoryRouter);
 app.use('/report-contact-history', reportContactHistoryRouter);
+app.use('/report-visit-due', reportVisitDueRouter);
 
 app.use('/result-activity-report', resultActivityReportRouter);
 app.use('/result-visit-count-report', resultVisitCountReportRouter);
