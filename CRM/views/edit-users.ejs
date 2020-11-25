@@ -61,7 +61,7 @@
         <h2>Edit User Accounts</h2>
         <hr>
         <form id="formEditContact" name="viewContact" method="post" action="/edit-user" onSubmit="return checkPassword(this)">
-          
+
           <input type="name" class="form-control" id="userID" name="userID" value="<%= locals.accounts[0]._id %>" hidden>
           <input type="name" class="form-control" id="origAgentAbbrev" name="origAgentAbbrev" value="<%= locals.accounts[0].agentAbbrev %>" hidden>
 
@@ -157,7 +157,7 @@
                       positionList += '<option>Sales Manager</option>';
                     }
                 %>
-                <%- positionList %>         
+                <%- positionList %>
               </select>
             </div>
             <div class="form-group col-12 col-md-auto">
@@ -177,55 +177,7 @@
               </select>
             </div>
           </div>
-          <hr>
-          <div class="form-row">
-            <div class="col-12 col-md-6">
-              <div class="card bg-light border-dark" style="width: auto;">
-                <div class="card-header">
-                   Agent Details - if applicable
-                </div>
-                <div class="card-body">
-                  <!-- Agent Name-->
-                      <div class="form-row">
-                        <div class="form-group col-12 col-md-auto">
-                          <label for="agentName">First Name</label>
-                          <input type="text" class="form-control" id="agentFirstName" name="agentFirstName" placeholder="First Name" required disabled>
-                        </div>
-                        <div class="form-group col-12 col-md-auto">
-                          <label for="agentName">Last Name</label>
-                          <input type="text" class="form-control" id="agentLastName" name="agentLastName" placeholder="Last Name" required disabled>
-                        </div>
-                        <div class="form-group col-12 col-md-auto">
-                          <label for="newAgentAbbrev">Agent Abbreviation</label>
-                          <input type="text" class="form-control" id="newAgentAbbrev" name="newAgentAbbrev" placeholder="Use All Caps" required disabled>
-                        </div>
-                      </div>
 
-                  <!-- User Position-->
-                  <div class="form-row">
-                      <div class="form-group col-12 col-md-auto">
-                        <label for="agentPosition">Position</label>
-                        <select class="form-control" id="agentPosition" name="agentPosition" required disabled>
-                        <option value="" disabled selected>Select</option>
-                        <option>Sales Executive</option>
-                        <option>Office</option>
-                        <option>Sales Manager</option>
-                      </select>
-                      </div>
-                  </div>
-
-
-                  <!-- Agent Phone Number-->
-                    <label for="agentPhopne">Agent Phone Number</label>
-                      <div class="form-row">
-                        <div class="form-group col-12 col-md-auto">
-                          <input type="text" class="form-control" id="agentPhone" name="agentPhone" placeholder="Contact Number" disabled>
-                        </div>
-                    </div>
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="row">
             <div class="col-12 col-md-auto">
               <button type="submit" class="btn-block btn-primary btn-lg">Submit</button>

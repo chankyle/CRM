@@ -39,16 +39,16 @@
     <table class="table table-bordered px-2 py-2 bg-white">
       <thead class="thead-dark">
         <tr>
-          <th scope="col" class="align-middle"></th>
-          <th scope="col" class="align-middle">DATE</th>
-          <th scope="col" class="align-middle">CLIENT</th>
-          <th scope="col" class="align-middle">CONTACT 1</th>
-          <th scope="col" class="align-middle">CONTACT 2</th>
-          <th scope="col" class="align-middle">VISIT TYPE</th>
-          <th scope="col" class="align-middle">TIME IN</th>
-          <th scope="col" class="align-middle">TIME OUT</th>
-          <th scope="col" class="align-middle">DURATION</th>
-          <th scope="col" class="align-middle">REMARKS</th>
+          <th scope="col" style="text-align: center; vertical-align: middle; width: 3%"></th>
+          <th scope="col" style="text-align: center; vertical-align: middle; width: 10%">DATE</th>
+          <th scope="col" style="text-align: center; vertical-align: middle; width: 15%">CLIENT</th>
+          <th scope="col" style="text-align: center; vertical-align: middle; width: 8%">CONTACT 1</th>
+          <th scope="col" style="text-align: center; vertical-align: middle; width: 8%">CONTACT 2</th>
+          <th scope="col" style="text-align: center; vertical-align: middle; width: 8%">VISIT TYPE</th>
+          <th scope="col" style="text-align: center; vertical-align: middle; width: 6%">TIME IN</th>
+          <th scope="col" style="text-align: center; vertical-align: middle; width: 6%">TIME OUT</th>
+          <th scope="col" style="text-align: center; vertical-align: middle; width: 10%">DURATION</th>
+          <th scope="col" style="text-align: center; vertical-align: middle; width: 26%">REMARKS</th>
         </tr>
       </thead>
       <tbody>
@@ -59,7 +59,7 @@
             var repContact2 = [];
             for (i = 0; i < result.length; i++) {
               list += '<tr>';
-              list += '<th scope="row">' + k + '</th>';
+              list += '<th scope="row" style="text-align: center; vertical-align: middle; width: 3%">' + k + '</th>';
               var str = result[i].eventTimeIn._d.toString();
               var str2 = result[i].eventTimeOut._d.toString();
               var eventDate = str.substr(0, 15);
@@ -73,22 +73,22 @@
               } else{
                 repContact2.push(result[i].contact2);
               }
-              list += '<td>' + eventDate + '</td>';
-              list += '<td>' + result[i].clientName + '</td>';
-              list += '<td>' + repContact1[i] + '</td>';
-              list += '<td>' + repContact2[i] + '</td>';
-              list += '<td>' + result[i].eventType + '</td>';
+              list += '<td style="text-align: center; vertical-align: middle; width: 10%">' + eventDate + '</td>';
+              list += '<td style="text-align: center; vertical-align: middle; width: 15%">' + result[i].clientName + '</td>';
+              list += '<td style="text-align: center; vertical-align: middle; width: 8%">' + repContact1[i] + '</td>';
+              list += '<td style="text-align: center; vertical-align: middle; width: 8%">' + repContact2[i] + '</td>';
+              list += '<td style="text-align: center; vertical-align: middle; width: 8%">' + result[i].eventType + '</td>';
               var timeInString = result[i].eventTimeIn._d.toString();
               console.log(timeInString);
               var eventTimeIn = str.substr(16, 8);
-              list += '<td>' + eventTimeIn + '</td>';
+              list += '<td style="text-align: center; vertical-align: middle; width: 6%">' + eventTimeIn + '</td>';
               var timeOutString = result[i].eventTimeOut._d.toString();
               var eventTimeOut = str2.substr(16, 8);
-              list += '<td>' + eventTimeOut + '</td>';
+              list += '<td style="text-align: center; vertical-align: middle; width: 6%">' + eventTimeOut + '</td>';
               var hours = Math.floor(result[i].eventDuration / 60);
               var minutes = result[i].eventDuration % 60;
-              list += '<td>' + hours + ' hours ' + minutes + ' minutes' + '</td>';
-              list += '<td>' + result[i].eventRemarks + '</td>';
+              list += '<td style="text-align: center; vertical-align: middle; width: 10%">' + hours + ' hours ' + minutes + ' minutes' + '</td>';
+              list += '<td style="text-align: left; vertical-align: middle; width: 26%">' + result[i].eventRemarks + '</td>';
               list += '</tr>';
               k++;
           }

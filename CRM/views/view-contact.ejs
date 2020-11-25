@@ -304,6 +304,10 @@
                 <table class="table table-bordered px-2 py-2 bg-white">
                   <tbody>
                     <tr>
+                      <th style="width: 15%" scope="col" class="align-middle">Client:</th>
+                      <td class="align-middle"><%= result.contact[0].contactClientID %></td>
+                    </tr>
+                    <tr>
                       <th style="width: 15%" scope="col" class="align-middle">First Name:</th>
                       <td class="align-middle">
                         <input type="text" class="form-control" id="contactFirstName" name="contactFirstName" value = "<%= result.contact[0].contactFirstName %>" required readonly>
