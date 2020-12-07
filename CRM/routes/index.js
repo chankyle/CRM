@@ -1201,13 +1201,22 @@ router.get('/report-activity', function(req, res) {
 
                 // Set our collection
                 var collection = db.get('accounts');
+                if (req.user.usertype == "Agent"){
+                  collection.find({"agentAbbrev" : req.user.agentAbbrev},function(e,docs){
+                      res.render('report-activity', {
+                          "agentList" : docs,
+                          user : req.user, permissions : results
+                      });
+                  });
+                } else {
+                  collection.find({"usertype" : "Agent"},{ agentAbbrev: 1 },function(e,docs){
+                      res.render('report-activity', {
+                          "agentList" : docs,
+                          user : req.user, permissions : results
+                      });
+                  });
+                }
 
-                collection.find({"usertype" : "Agent"},{ agentAbbrev: 1 },function(e,docs){
-                    res.render('report-activity', {
-                        "agentList" : docs,
-                        user : req.user, permissions : results
-                    });
-                });
             } else {
                 // resource is forbidden for this user/role
                 res.status(403).end();
@@ -1645,13 +1654,22 @@ router.get('/report-visit-count', function(req, res) {
 
                 // Set our collection
                 var collection = db.get('accounts');
+                if (req.user.usertype == "Agent"){
+                  collection.find({"agentAbbrev" : req.user.agentAbbrev},function(e,docs){
+                      res.render('report-visit-count', {
+                          "agentList" : docs,
+                          user : req.user, permissions : results
+                      });
+                  });
+                } else {
+                  collection.find({"usertype" : "Agent"},{ agentAbbrev: 1 },function(e,docs){
+                      res.render('report-visit-count', {
+                          "agentList" : docs,
+                          user : req.user, permissions : results
+                      });
+                  });
+                }
 
-                collection.find({"usertype" : "Agent"},{ agentAbbrev: 1 },function(e,docs){
-                    res.render('report-visit-count', {
-                        "agentList" : docs,
-                        user : req.user, permissions : results
-                    });
-                });
             } else {
                 // resource is forbidden for this user/role
                 res.status(403).end();
@@ -1890,13 +1908,22 @@ router.get('/report-client-list', function(req, res) {
 
                 // Set our collection
                 var collection = db.get('accounts');
+                if (req.user.usertype == "Agent"){
+                  collection.find({"agentAbbrev" : req.user.agentAbbrev},function(e,docs){
+                      res.render('report-client-list', {
+                          "agentList" : docs,
+                          user : req.user, permissions : results
+                      });
+                  });
+                } else {
+                  collection.find({"usertype" : "Agent"},{ agentAbbrev: 1 },function(e,docs){
+                      res.render('report-client-list', {
+                          "agentList" : docs,
+                          user : req.user, permissions : results
+                      });
+                  });
+                }
 
-                collection.find({"usertype" : "Agent"},{ agentAbbrev: 1 },function(e,docs){
-                    res.render('report-client-list', {
-                        "agentList" : docs,
-                        user : req.user, permissions : results
-                    });
-                });
             } else {
                 // resource is forbidden for this user/role
                 res.status(403).end();
