@@ -69,6 +69,7 @@ router.get('/home', function(req, res) {
                   var clientVisit30 = [];
                   var tempVisitDue = [];
                   var visitDue = [];
+                  var monthlyVisitTotal = [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0],[9,0],[10,0],[11,0]];
                   var tasks = [
                       // Load Events
                       function(callback) {
@@ -105,6 +106,9 @@ router.get('/home', function(req, res) {
 
 
                               for (i = 0; i < events.length; i++){
+                                if (moment(events[i].eventTimeIn).isSame(dateToday, 'year') == true){
+                                  monthlyVisitTotal[moment(events[i].eventTimeIn).month()][1]++;
+                                }
                                 //Filter number of visits per Agent
                                 if (moment(events[i].eventTimeIn).isSame(dateToday, 'month') == true){
                                   eventListMonth.push(events[i]);
@@ -167,7 +171,7 @@ router.get('/home', function(req, res) {
                                 visitDue.sort(compareCount2);
 
                                 // Slice arrays to show only top X entries
-                                clientVisit30 = clientVisit30.slice(0,8);
+                                clientVisit30 = clientVisit30.slice(0,12);
                                 //visitDue = visitDue.slice(0,12)
 
 
@@ -182,6 +186,7 @@ router.get('/home', function(req, res) {
                               result.activeAgents = eventAgentActivity;
                               result.eventList30 = eventList30;
                               result.frequentClients = clientVisit30;
+                              result.monthlyVisitTotal = monthlyVisitTotal;
 
                               callback();
                           });
@@ -191,7 +196,19 @@ router.get('/home', function(req, res) {
                           collection2.find({},{},function(e,clients){
                               if (e) return callback(err);
                               var filteredVisitDue = [];
+                              var yourClients = 0;
+                              var yourVisitsThisMonth = [];
                               if (req.user.usertype == "Agent"){
+                                for (k = 0; k < clients.length; k++){
+                                  if (req.user.agentAbbrev == clients[k].agentAbbrev){
+                                    yourClients++;
+                                  }
+                                }
+                                for (l = 0; l < eventAgentActivity.length; l++){
+                                  if (req.user.agentAbbrev == eventAgentActivity[l][0]){
+                                    yourVisitsThisMonth = eventAgentActivity[l][1];
+                                  }
+                                }
                                 for (i = 0; i < visitDue.length; i++){
                                   for (j = 0; j < clients.length; j++){
                                     if (visitDue[i][0] == clients[j].clientName && req.user.agentAbbrev == clients[j].agentAbbrev){
@@ -201,6 +218,8 @@ router.get('/home', function(req, res) {
                                   }
                                 }
                               } else {
+                                yourClients = clients.length;
+                                yourVisitsThisMonth = eventListMonth.length;
                                 for (i = 0; i < visitDue.length; i++){
                                   for (j = 0; j < clients.length; j++){
                                     if (visitDue[i][0] == clients[j].clientName){
@@ -212,6 +231,8 @@ router.get('/home', function(req, res) {
                               }
                               console.log('Number of Customers not Visited Past 30 for this Agent (visitDue):' + filteredVisitDue.length)
                               result.visitDue = filteredVisitDue;
+                              result.yourClients = yourClients;
+                              result.yourVisitsThisMonth = yourVisitsThisMonth;
                               callback();
                           })
                       }
@@ -3385,7 +3406,7 @@ router.post('/edit-user', function(req, res) {
                       });
                     });
                   }
-                    
+
 
                  ];
 

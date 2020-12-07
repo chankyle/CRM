@@ -29,22 +29,62 @@
 
       <main class="c-main mx-4 my-0">
         <!-- Main content here -->
-        <h1> Welcome to your Dashboard, <%-  user.username.charAt(0).toUpperCase() + user.username.slice(1);%>! </h1>
+        <h2> Welcome to your Dashboard, <%-  user.username.charAt(0).toUpperCase() + user.username.slice(1);%>! </h2>
         <hr>
 
         <div class="container-fluid">
           <!-- Card Portion for Dashboards -->
           <div class="fade-in">
-            <div class="row">
-
-
-                <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12 mx-0 my-2 px-1">
+              <div class="row">
+                <div class="col-lg-3 col-md-6 col-xs-12 mx-0 my-2 px-1">
                   <div class="card h-100">
-                    <div class="card-header"><strong>Monthly Visit Count - <%- dateToday.format("MMMM YYYY") %></strong></div>
                     <div class="card-body">
-                      <div class="container">
-                        <canvas id="monthlyVisitCountDash" height="200"></canvas>
+                      <div class="c-callout c-callout-primary">
+                        <small class="text-muted">Your Visits</small><br>
+                        <strong class="h4"><%- result.yourVisitsThisMonth %></strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
+                <div class="col-lg-3 col-md-6 col-xs-12 mx-0 my-2 px-1">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <div class="c-callout c-callout-primary">
+                        <small class="text-muted">Your Total Clients</small><br>
+                        <strong class="h4"><%- result.yourClients %></strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-xs-12 mx-0 my-2 px-1">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <div class="c-callout c-callout-primary">
+                        <small class="text-muted">Your Visits</small><br>
+                        <strong class="h4"><%- result.yourVisitsThisMonth %></strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-xs-12 mx-0 my-2 px-1">
+                  <div class="card h-100">
+                    <div class="card-body">
+                      <div class="c-callout c-callout-primary">
+                        <small class="text-muted">Your Visits</small><br>
+                        <strong class="h4"><%- result.yourVisitsThisMonth %></strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Desktop Dashboard Element - Monthly Visit Count Per Agent -->
+              <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 mx-0 my-2 px-1">
+                  <div class="card h-100">
+                    <div class="card-header"><strong>Visit Count - <%- dateToday.format("MMMM YYYY") %></strong></div>
+                    <div class="card-body">
+                        <canvas id="monthlyVisitCountDash"></canvas>
                         <script>
                               var ctx = document.getElementById("monthlyVisitCountDash").getContext("2d");
                               var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
@@ -52,6 +92,8 @@
                               gradientStroke.addColorStop(1, "#b1aee8");
 
                               var monthlyVisitCountDash = new Chart(ctx, {
+                                  responsive: true,
+                                  maintainAspectRatio: false,
                                   type: 'horizontalBar',
                                   data: {
                                       labels: [
@@ -84,112 +126,179 @@
                                     }
                               });
                         </script>
-                      </div>
+
                     </div>
                   </div>
                 </div>
 
-                <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12 mx-0 my-2 px-1">
+              <!-- Desktop Dashboard Element - Total Visits Per Month -->
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 mx-0 my-2 px-1">
                   <div class="card h-100">
-                    <div class="card-header"><strong>Most Visited Customers (Past 30 Days)</strong></div>
+                    <div class="card-header"><strong>Total Team Visits Per Month</strong></div>
                     <div class="card-body">
-                      <div class="container">
-                        <canvas id="mostVisitedDash" height="200"></canvas>
-                        <script>
-                              var ctx = document.getElementById("mostVisitedDash");
-                              var mostVisitedDash = new Chart(ctx, {
-                                  type: 'horizontalBar',
-                                  data: {
-                                      labels: [
-                                        <% for(var i = 0; i < result.frequentClients.length; i++) {%>
-                                        "<%- result.frequentClients[i][0]%>",
+                      <canvas id="teamVisitsDash"></canvas>
+                      <script>
+                            var ctx = document.getElementById("teamVisitsDash");
+                            var teamVisitsDash = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+                                    datasets: [{
+                                        label: 'Visits',
+                                        data: [
+                                          <% for(var i = 0; i < result.monthlyVisitTotal.length; i++) {%>
+                                          "<%- result.monthlyVisitTotal[i][1] %>",
+                                                    <% } %>
+                                        ],
+                                        backgroundColor: gradientStroke
+                                    },{
+                                      label: 'Visits - Line',
+                                      data: [
+                                        <% for(var i = 0; i < result.monthlyVisitTotal.length; i++) {%>
+                                        "<%- result.monthlyVisitTotal[i][1] %>",
                                                   <% } %>
-
                                       ],
-                                      datasets: [{
-                                          label: 'Visits',
-                                          data: [
-                                            <% for(var i = 0; i < result.frequentClients.length; i++) {%>
-                                            "<%- result.frequentClients[i][1] %>",
-                                                      <% } %>
-                                          ],
-                                          backgroundColor: gradientStroke
+                                      type: 'line'
+                                    }]
+                                },
+                                options: {
+                                    legend: {
+                                      display: false,
+                                    },
+                                    scales: {
+                                      xAxes: [{
+                                        ticks: {
+                                          stepSize: 1,
+                                          beginAtZero: true,
+                                        }
+                                      }],
+                                      yAxes:[{
+                                        ticks: {
+
+                                          beginAtZero: true,
+                                          padding: 10,
+                                          fontStyle: 'normal',
+
+                                        }
                                       }]
-                                  },
-                                  options: {
-                                      legend: {
-                                        display: false,
-                                      },
-                                      scales: {
-                                        xAxes: [{
-                                          ticks: {
-                                            stepSize: 1,
-                                            beginAtZero: true,
-                                          }
-                                        }],
-                                        yAxes:[{
-                                          ticks: {
-                                            mirror: true,
-                                            z:1,
-                                            padding: -10,
-                                            fontStyle: 'normal',
-
-                                          }
-                                        }]
-                                      }
                                     }
+                                  }
 
-                              });
-                        </script>
+                            });
+                      </script>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+                <!-- Desktop Dashboard Element - Clients Due for Visit -->
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mx-0 my-2 px-1">
+                    <div class="card h-100">
+                      <div class="card-header"><strong>Clients Due for Visit</strong></div>
+                      <div class="card-body">
+                        <div class="table">
+                            <table
+                            data-toggle="table"
+                            data-pagination="true"
+                            data-page-size="8"
+                            data-pagination-successively-size="1"
+                            data-pagination-pages-by-side="0"
+                            data-pagination-parts="['pageInfoShort', 'pageSize', 'pageList']"
+                            class="table table-hover table-borderless table-striped px-2 py-2">
+                              <thead class="thead-light">
+                                <tr>
+                                  <th class="d-none d-md-table-cell" data-halign="center" data-align="left" data-width="5" data-width-unit="%"></th>
+                                  <th data-halign="center" data-align="left" data-width="50" data-width-unit="%">Client</th>
+                                  <th class="d-none d-md-table-cell" data-halign="center" data-align="left" data-width="15" data-width-unit="%">Agent</th>
+                                  <th data-halign="center" data-align="left" data-width="15" data-width-unit="%">Last Visit</th>
+                                  <th class="d-none d-md-table-cell" data-halign="center" data-align="left" data-width="15" data-width-unit="%">Days since Last Visit</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                  <%
+                                      var list = '';
+                                      var k = 1;
+                                      for (i = 0; i < result.visitDue.length; i++) {
+                                        list += '<tr>';
+                                        list += '<td class="">' + k + '</td>';
+                                        list += '<td class="">' + result.visitDue[i][0] + '</td>';
+                                        list += '<td style="text-align: center; vertical-align: middle;"><span class="text-nowrap">' + result.visitDue[i][3] + '</span></td>';
+                                        list += '<td style="text-align: center; vertical-align: middle;"><span class="text-nowrap">' + result.visitDue[i][1]._i.substring(0,10) + '</span></td>';
+                                        list += '<td style="text-align: center; vertical-align: middle;">' + result.visitDue[i][2] + '</td>';
+                                        list += '</tr>';
+                                        k++;
+                                    }
+                                    %>
+                                  <%- list %>
+
+                              </tbody>
+                            </table>
+                          </div>
                       </div>
                     </div>
                   </div>
                 </div>
+<!-- Desktop Dashboard Element - Most Visited Customers (Past 30 Days) -->
+                <div class="row">
+                      <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-xs-12 mx-0 my-2 px-1">
+                        <div class="card h-100">
+                          <div class="card-header"><strong>Most Visited Customers (Past 30 Days)</strong></div>
+                          <div class="card-body">
+                            <div class="container px-0 py-0 h-100">
+                              <canvas id="mostVisitedDash"></canvas>
+                              <script>
+                                    var ctx = document.getElementById("mostVisitedDash");
+                                    var mostVisitedDash = new Chart(ctx, {
+                                        type: 'horizontalBar',
+                                        data: {
+                                            labels: [
+                                              <% for(var i = 0; i < result.frequentClients.length; i++) {%>
+                                              "<%- result.frequentClients[i][0]%>",
+                                                        <% } %>
 
-                <div class="col-lg-12 col-md-4 col-sm-12 col-xs-12 mx-0 my-2 px-1">
-                  <div class="card h-100">
-                    <div class="card-header"><strong>Clients Due for Visit</strong></div>
-                    <div class="card-body">
-                      <div class="table">
-                          <table
-                          data-toggle="table"
-                          data-pagination="true"
-                          data-pagination-successively-size="1"
-                          data-pagination-pages-by-side="1"
-                          data-pagination-parts="['pageInfoShort', 'pageSize', 'pageList']"
-                          class="table table-hover table-borderless table-striped px-2 py-2">
-                            <thead class="thead-light">
-                              <tr>
-                                <th data-halign="center" data-align="left" data-width="55" data-width-unit="%">Client</th>
-                                <th data-halign="center" data-align="left" data-width="15" data-width-unit="%">Agent</th>
-                                <th data-halign="center" data-align="left" data-width="15" data-width-unit="%">Last Visit</th>
-                                <th data-halign="center" data-align="left" data-width="15" data-width-unit="%">Days since Last Visit</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    var list = '';
-                                    var k = 1;
-                                    for (i = 0; i < result.visitDue.length; i++) {
-                                      list += '<tr>';
-                                      list += '<td class=>' + result.visitDue[i][0] + '</td>';
-                                      list += '<td style="text-align: center; vertical-align: middle;">' + result.visitDue[i][3] + '</td>';
-                                      list += '<td style="text-align: center; vertical-align: middle;">' + result.visitDue[i][1]._i.substring(0,10) + '</td>';
-                                      list += '<td style="text-align: center; vertical-align: middle;">' + result.visitDue[i][2] + '</td>';
-                                      list += '</tr>';
-                                      k++;
-                                  }
-                                  %>
-                                <%- list %>
+                                            ],
+                                            datasets: [{
+                                                label: 'Visits',
+                                                data: [
+                                                  <% for(var i = 0; i < result.frequentClients.length; i++) {%>
+                                                  "<%- result.frequentClients[i][1] %>",
+                                                            <% } %>
+                                                ],
+                                                backgroundColor: gradientStroke
+                                            }]
+                                        },
+                                        options: {
+                                            legend: {
+                                              display: false,
+                                            },
+                                            scales: {
+                                              xAxes: [{
+                                                ticks: {
+                                                  stepSize: 1,
+                                                  beginAtZero: true,
+                                                }
+                                              }],
+                                              yAxes:[{
+                                                ticks: {
+                                                  mirror: true,
+                                                  z:1,
+                                                  padding: -10,
+                                                  fontStyle: 'normal',
 
-                            </tbody>
-                          </table>
+                                                }
+                                              }]
+                                            }
+                                          }
+
+                                    });
+                              </script>
+                            </div>
+                          </div>
                         </div>
-                    </div>
-                  </div>
+                      </div>
                 </div>
-
-            </div>
           </div>
         </div>
     </div>
