@@ -1291,7 +1291,7 @@ router.post('/resultActivityReport', function(req, res) {
                 } else {
                   query = { $and: [{"agentAbbrev": req.body.agentSelect}, {"eventType": req.body.activityTypeSelect}, {"eventTimeIn._d": { $lte: dateEndInput }}, {"eventTimeIn._d": { $gte: dateStartInput }}]};
                 }
-                collection.find(query,{},function(err, result){
+                collection.find(query,{sort: {'eventTimeIn._d' :-1} },function(err, result){
                     if (err) throw err;
                     db.close();
                     res.render('result-activity-report', {
@@ -2886,7 +2886,7 @@ router.post('/addClient', function(req, res, next) {
                 var db = req.db;
                 // Get our form values. These rely on the "name" attributes
                 var username = req.user.username;
-                var clientName = req.body.clientName.trim().toUpperCase();
+                var clientName = req.body.clientName.trim().toUpperCase().replace(/\s\s+/g, ' ');
                 var agentAbbrev = req.body.agentAbbrev;
                 var clientPhone = req.body.clientPhone.trim();
                 var clientFax = req.body.clientFax.trim();
@@ -2894,13 +2894,13 @@ router.post('/addClient', function(req, res, next) {
                 var clientAddress2 = new Object();
                 var clientAddress3 = new Object();
                 var clientAddress4 = new Object();
-                clientAddress1.addr = req.body.clientAddress1.trim();
+                clientAddress1.addr = req.body.clientAddress1.trim().replace(/\s\s+/g, ' ');
                 clientAddress1.type = req.body.clientAddress1Type;
-                clientAddress2.addr = req.body.clientAddress2.trim();
+                clientAddress2.addr = req.body.clientAddress2.trim().replace(/\s\s+/g, ' ');
                 clientAddress2.type = req.body.clientAddress2Type;
-                clientAddress3.addr = req.body.clientAddress3.trim();
+                clientAddress3.addr = req.body.clientAddress3.trim().replace(/\s\s+/g, ' ');
                 clientAddress3.type = req.body.clientAddress3Type;
-                clientAddress4.addr = req.body.clientAddress4.trim();
+                clientAddress4.addr = req.body.clientAddress4.trim().replace(/\s\s+/g, ' ');
                 clientAddress4.type = req.body.clientAddress4Type;
                 var clientEmail1 = req.body.clientEmail1.trim();
                 var clientEmail2 = req.body.clientEmail2.trim();
@@ -2988,9 +2988,9 @@ router.post('/addContact', function(req, res) {
                 // Get our form values. These rely on the "name" attributes
                 var clientID = req.body.clientID;
                 var username = req.user.username;
-                var contactFirstName = req.body.contactFirstName.trim();
-                var contactLastName = req.body.contactLastName.trim();
-                var contactPosition = req.body.contactPosition.trim();
+                var contactFirstName = req.body.contactFirstName.trim().replace(/\s\s+/g, ' ');
+                var contactLastName = req.body.contactLastName.trim().replace(/\s\s+/g, ' ');
+                var contactPosition = req.body.contactPosition.trim().replace(/\s\s+/g, ' ');
                 var contactPhone = req.body.contactPhone.trim();
                 var contactMobile = req.body.contactMobile.trim();
                 var contactEmail = req.body.contactEmail.trim();
@@ -3712,8 +3712,8 @@ router.post('/addUser', function(req, res) {
                 var newUserName = req.body.newUserName;
                 var newUserType = req.body.newUserType;
                 var username = req.user.username;
-                var agentFirstName = req.body.agentFirstName;
-                var agentLastName = req.body.agentLastName;
+                var agentFirstName = req.body.agentFirstName.trim().replace(/\s\s+/g, ' ');
+                var agentLastName = req.body.agentLastName.trim().replace(/\s\s+/g, ' ');
                 var agentPosition = req.body.agentPosition;
                 var agentPhone = req.body.agentPhone;
                 var currentDateTime = {};
