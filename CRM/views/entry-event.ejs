@@ -34,7 +34,7 @@
           <div class="form-row">
               <div class="form-group col-12 col-md-auto">
                 <label for="eventDate">Date</label>
-                <input type="date" class="form-control" id="eventDate" name="eventDate" required>
+                <input type="date" class="form-control" id="eventDate" name="eventDate" onblur="valDate();" min="2020-09-15" max="2030-01-01" required>
               </div>
               <div class="form-group col-12 col-md-auto">
                 <label for="agentID">Agent</label>
@@ -63,10 +63,48 @@
               </div>
               <div class="form-group col-12 col-md-auto">
                 <label for="eventTimeOut">Time Out</label>
-                <input type="time" class="form-control" id="eventTimeOut" name="eventTimeOut" required>
+                <input type="time" class="form-control" id="eventTimeOut" name="eventTimeOut" onchange="valTime();" required>
               </div>
           </div>
 
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+          <script>
+          function valTime(){
+            var valEventDate = moment(document.getElementById("eventDate").value).format().substr(0,11);
+            var valTimeIn = moment(valEventDate.concat(document.getElementById("eventTimeIn").value));
+            var valTimeOut = moment(valEventDate.concat(document.getElementById("eventTimeOut").value));
+            var valTimeOutSub = document.getElementById("eventTimeOut");
+            var msgText = ("Time Out should be after " + moment(valEventDate.concat(document.getElementById("eventTimeIn").value)).format("h:mm a") + ". Please adjust Time Out");
+            if (valTimeOut.isBefore(valTimeIn)) {
+              valTimeOutSub.setCustomValidity("Time Out should be after " + moment(valEventDate.concat(document.getElementById("eventTimeIn").value)).format("h:mm a") + ". Please adjust Time Out");
+          } else{
+              valTimeOutSub.setCustomValidity("");
+          }
+          }
+
+          function valDate(){
+            var valEventDate = moment(document.getElementById("eventDate").value);
+            var valTodayDate = moment();
+            if (Math.abs(valTodayDate.diff(valEventDate, 'days')) > 30 && Math.abs(valTodayDate.diff(valEventDate, 'days')) < 60) {
+              alert("Event Date is over 30 days ago or away. Kindly double check inputted date.");
+          }
+            if (Math.abs(valTodayDate.diff(valEventDate, 'days')) > 60 && Math.abs(valTodayDate.diff(valEventDate, 'days')) < 90) {
+              alert("Event Date is over 60 days ago or away. Kindly double check inputted date.");
+          }
+            if (Math.abs(valTodayDate.diff(valEventDate, 'days')) > 90 && Math.abs(valTodayDate.diff(valEventDate, 'days')) < 365) {
+              alert("Event Date is over 90 days ago or away. Kindly double check inputted date.");
+          }
+            if (Math.abs(valTodayDate.diff(valEventDate, 'days')) > 365) {
+              alert("Event Date is over 1 year ago or away. Kindly double check inputted date.");
+          }
+          }
+          </script>
+
+          <script>
+          function formVal(){
+            var valTimeOutSub = document.getElementById("eventTimeOut");
+          }
+          </script>
           <!-- Client Visited-->
           <div class="form-row">
               <div class="form-group col-12 col-md-auto">
@@ -152,7 +190,7 @@
 
             <div class="row">
               <div class="col-12 col-md-auto">
-                <input class="btn-block btn-primary btn-lg" type="submit" value="Submit">
+                <input class="btn-block btn-primary btn-lg" type="submit" value="Submit" onclick="formVal()">
               </div>
             </div>
           </form>
