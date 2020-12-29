@@ -61,7 +61,7 @@ router.get('/home', function(req, res) {
                   var result = {};
                   var db = req.db;
                   var dateToday = moment();
-                  var dateLess30 = dateToday.subtract(30, 'days');
+                  var dateLess30 = dateToday.clone().subtract(30, 'days');
                   var eventListMonth = [];
                   var eventAgentActivity = [];
                   var eventList30 = [];
