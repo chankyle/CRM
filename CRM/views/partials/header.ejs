@@ -133,7 +133,12 @@ TESTING
         <a class="dropdown-item" href="/edit-permissions"> Permissions</a>
       <% } %>
         <a class="dropdown-item" href="#"> Settings</a>
-        <a class="dropdown-item" href="/logout"> Log Out</a>
+        <a class="dropdown-item"  id="logOutButton" onclick="" href="/logout"> Log Out</a>
     </div>
+    <script>
+      document.getElementById("logOutButton").addEventListener("click", function() {
+        sessionStorage.clear();
+      });
+    </script>
   </li>
 </ul>

@@ -61,7 +61,7 @@ router.get('/home', function(req, res) {
                   var result = {};
                   var db = req.db;
                   var dateToday = moment();
-                  var dateLess30 = moment().subtract(30, 'days');
+                  var dateLess30 = dateToday.subtract(30, 'days');
                   var eventListMonth = [];
                   var eventAgentActivity = [];
                   var eventList30 = [];
@@ -70,6 +70,8 @@ router.get('/home', function(req, res) {
                   var tempVisitDue = [];
                   var visitDue = [];
                   var monthlyVisitTotal = [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0],[9,0],[10,0],[11,0]];
+                  console.log(req.query.dash1);
+                  console.log(req.query.dash2);
                   var tasks = [
                       // Load Events
                       function(callback) {
@@ -106,23 +108,51 @@ router.get('/home', function(req, res) {
 
 
                               for (i = 0; i < events.length; i++){
-                                if (moment(events[i].eventTimeIn).isSame(dateToday, 'year') == true){
-                                  monthlyVisitTotal[moment(events[i].eventTimeIn).month()][1]++;
-                                }
+
+                              // Dashboard 1 - Monthly Visit Count
                                 //Filter number of visits per Agent
-                                if (moment(events[i].eventTimeIn).isSame(dateToday, 'month') == true){
-                                  eventListMonth.push(events[i]);
-                                  if (isItemInArray(eventAgentActivity, [events[i].agentAbbrev,]) == false){
-                                    eventAgentActivity.push([events[i].agentAbbrev,1]);
-                                  } else {
-                                    //Add count for visits > 1
-                                    for (var l = 0; l < eventAgentActivity.length; l++){
-                                      if (eventAgentActivity[l][0] == events[i].agentAbbrev){
-                                        eventAgentActivity[l][1] = eventAgentActivity[l][1] + 1;
+                                if (!req.query.dash1){
+                                  if (moment(events[i].eventTimeIn).isSame(dateToday, 'month') == true){
+                                    eventListMonth.push(events[i]);
+                                    if (isItemInArray(eventAgentActivity, [events[i].agentAbbrev,]) == false){
+                                      eventAgentActivity.push([events[i].agentAbbrev,1]);
+                                    } else {
+                                      //Add count for visits > 1
+                                      for (var l = 0; l < eventAgentActivity.length; l++){
+                                        if (eventAgentActivity[l][0] == events[i].agentAbbrev){
+                                          eventAgentActivity[l][1] = eventAgentActivity[l][1] + 1;
+                                        }
+                                      }
+                                    }
+                                  }
+                                } else {
+                                  if (moment(events[i].eventTimeIn).isSame(moment(req.query.dash1, "MM-YYYY"), 'month')){
+                                    eventListMonth.push(events[i]);
+                                    if (isItemInArray(eventAgentActivity, [events[i].agentAbbrev,]) == false){
+                                      eventAgentActivity.push([events[i].agentAbbrev,1]);
+                                    } else {
+                                      //Add count for visits > 1
+                                      for (var l = 0; l < eventAgentActivity.length; l++){
+                                        if (eventAgentActivity[l][0] == events[i].agentAbbrev){
+                                          eventAgentActivity[l][1] = eventAgentActivity[l][1] + 1;
+                                        }
                                       }
                                     }
                                   }
                                 }
+
+                                //  Dashboard 2 - Total Team Visits Per Month
+                                  if (!req.query.dash2){
+                                    if (moment(events[i].eventTimeIn).isSame(dateToday, 'year') == true){
+                                      monthlyVisitTotal[moment(events[i].eventTimeIn).month()][1]++;
+                                    }
+                                  } else {
+                                    if (moment(events[i].eventTimeIn).isSame(req.query.dash2, 'year') == true){
+                                      monthlyVisitTotal[moment(events[i].eventTimeIn).month()][1]++;
+                                  }
+                                }
+
+                                //  Dashboard 4 - Most Visited Customers in the Past 30 days
                                 //Filter number of visits per Client
                                 if (moment(events[i].eventTimeIn).isAfter(dateLess30, 'day') == true){
                                   eventList30.push([events[i].clientName, events[i].eventTimeIn]);
@@ -136,6 +166,8 @@ router.get('/home', function(req, res) {
                                     }
                                   }
                                 }
+
+                                //  Dashboard 3 - Clients Due for Visit (No visits in the past 30 days)
                                 //Filter Events beyond 30 days ago
                                 if (moment(events[i].eventTimeIn).isBefore(dateLess30, 'day') == true){
                                   eventListMore30.push([events[i].clientName, events[i].eventTimeIn]);
@@ -171,7 +203,7 @@ router.get('/home', function(req, res) {
                                 visitDue.sort(compareCount2);
 
                                 // Slice arrays to show only top X entries
-                                clientVisit30 = clientVisit30.slice(0,12);
+                                clientVisit30 = clientVisit30.slice(0,8);
                                 //visitDue = visitDue.slice(0,12)
 
 
@@ -180,7 +212,6 @@ router.get('/home', function(req, res) {
                               console.log('Events Beyond 30 Days Prior (eventListMore30):' + eventListMore30.length)
                               console.log('Events w/ Clients not Visited in the Past 30 Days (tempVisitDue):' + tempVisitDue.length)
                               console.log('Number of Customers not Visited Past 30 (visitDue):' + visitDue.length)
-
 
                               result.events = eventListMonth;
                               result.activeAgents = eventAgentActivity;
