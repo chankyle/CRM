@@ -11,6 +11,11 @@
  <!-- CoreUI CSS -->
  <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui@3.0.0-rc.0/dist/css/coreui.min.css" crossorigin="anonymous">
  <link rel="stylesheet" href="https://unpkg.com/@coreui/icons@1.0.0/css/all.min.css">
+ <!-- Mapbox CSS -->
+ <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.0/mapbox-gl.js'></script>
+ <link href='https://api.mapbox.com/mapbox-gl-js/v2.1.0/mapbox-gl.css' rel='stylesheet' />
+
+
 
  <title>RECORD - Home</title>
  </head>
@@ -277,8 +282,9 @@
                     </div>
                   </div>
                 </div>
-<!-- Desktop Dashboard Element - Most Visited Customers (Past 30 Days) -->
+
                 <div class="row">
+<!-- Desktop Dashboard Element - Most Visited Customers (Past 30 Days) -->
                       <div class="col-md-6">
                         <div class="card">
                           <div class="card-header"><strong>Most Visited Customers (Past 30 Days)</strong></div>
@@ -335,8 +341,34 @@
                           </div>
                         </div>
                       </div>
+<!-- Desktop Dashboard Element - Customer Maps -->
+                      <div class="col-md-6">
+                        <div class="card">
+                          <div class="card-header"><strong>Customer Location Map</strong></div>
+                          <div class="card-body">
+                            <div id='map' style=' width: 100%; height: 300px;'></div>
+                            <script>
+                            // TO MAKE THE MAP APPEAR YOU MUST
+                            // ADD YOUR ACCESS TOKEN FROM
+                            // https://account.mapbox.com
+                            mapboxgl.accessToken = 'pk.eyJ1Ijoicm95Y2Vjb2xsaW4iLCJhIjoiY2trdGJvOGdqM3lxbTJ2bndhcWVyZGd5NiJ9.ifhFxew5J9IIJZzcwAQyvQ';
+                            var map = new mapboxgl.Map({
+                                container: 'map',
+                                style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+                                center: [121.0, 14.6], // starting position [lng, lat]
+                                zoom: 9 // starting zoom
+                            });
+                            var marker = new mapboxgl.Marker()
+                              .setLngLat([121.07710432241544, 14.595326833690097])
+                              .addTo(map);
+                            </script>
+                          </div>
+                        </div>
+                      </div>
+
                 </div>
           </div>
+
           <script>
           var dash1Param = "dash1";
           var dash1ChangeMonth = document.getElementById('dash1SelectMonth').value;
