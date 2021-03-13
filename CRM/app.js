@@ -7,12 +7,17 @@ var LocalStrategy = require('passport-local').Strategy;
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var monk = require('monk');
+var session = require('express-session');
+const MongoStore = require('connect-mongo').default;
 var passport = require('passport');
 var path = require('path');
 
 
+
 //Set database
 var db = monk('localhost:27017/CRM');
+
+
 
 
 
@@ -82,10 +87,16 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(require('express-session')({
-    secret: 'keyboard cat',
+app.use(session({
+    secret: 'how about salmon',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: 'mongodb://localhost:27017/CRM', collection: 'sessions'
+    }),
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 // Equals 1 day
+    }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -163,7 +174,7 @@ passport.deserializeUser(Account.deserializeUser());
 mongoose.connect("mongodb://localhost:27017/CRM", { useNewUrlParser: true });
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 
 
@@ -179,7 +190,6 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
 
   // render the error page
   res.status(err.status || 500);

@@ -13,6 +13,7 @@ var ObjectID = require('MongoDB').ObjectID;
 var urlencoderParser = bodyParser.urlencoded({ extended: false });
 const AccessControl = require('accesscontrol');
 var grantsList = [];
+const { newClientValidator, newContactValidator, newUserValidator, newEventValidator, changePasswordValidator, validate } = require('./validator.js')
 
 // Set temporary csv upload location
 var upload = multer({ dest: 'tmp/csv/' });
@@ -20,6 +21,7 @@ var upload = multer({ dest: 'tmp/csv/' });
 
 /* GET home page. */
 router.get('/', function (req, res) {
+    console.log(req.session);
     res.render('index', { user : req.user, permissions: req.permissions});
 });
 
@@ -323,7 +325,7 @@ router.post('/login', function(req, res, next) {
 });
 
 /* POST to Add Account */
-router.post('/changePW', function(req, res) {
+router.post('/changePW',changePasswordValidator(), validate, function(req, res) {
   Account.findOne({ username : req.user.username}, function(err, user) {
     if (!user) {
       req.flash('error', 'Password reset token is invalid or has expired.');
@@ -2893,7 +2895,7 @@ router.post('/viewEvent', function(req, res) {
 });
 
 /* POST to Add Clients */
-router.post('/addClient', function(req, res, next) {
+router.post('/addClient', newClientValidator(), validate, function(req, res, next) {
 // Set our internal DB variable
     var db = req.db;
     // Set our collection
@@ -2993,7 +2995,7 @@ router.post('/addClient', function(req, res, next) {
 });
 
 /* POST to Add Contacts */
-router.post('/addContact', function(req, res) {
+router.post('/addContact', newContactValidator(), validate, function(req, res) {
 // Set our internal DB variable
     var db = req.db;
     // Set our collection
@@ -3064,7 +3066,7 @@ router.post('/addContact', function(req, res) {
 
 
 /* POST to Add Event */
-router.post('/addEvent', function(req, res) {
+router.post('/addEvent',newEventValidator(), validate,  function(req, res) {
 // Set our internal DB variable
     var db = req.db;
     // Set our collection
@@ -3712,7 +3714,7 @@ router.get('/entry-user', function(req, res) {
 });
 
 /* POST to Add Agents */
-router.post('/addUser', function(req, res) {
+router.post('/addUser', newUserValidator(), validate, function(req, res) {
 // Set our internal DB variable
     var db = req.db;
     // Set our collection
@@ -3734,6 +3736,8 @@ router.post('/addUser', function(req, res) {
             // TODO: Figure out why there is 2 /adduser posts
             const permission = ac.can(req.user.usertype).readAny('Event');
             if (permission.granted) {
+
+
                 // Perform what is allowed when permission is granted
                 // Set our internal DB variable
                 var db = req.db;
@@ -3748,10 +3752,13 @@ router.post('/addUser', function(req, res) {
                 var agentPosition = req.body.agentPosition;
                 var agentPhone = req.body.agentPhone;
                 var currentDateTime = {};
-                currentDateTime = moment();
+                var currentDateTime = moment();
                 var defaultStatus = "Enabled";
                 var newPassword = req.body.newPassword;
-                var changePW
+                var changePW;
+
+
+
 
                 if (req.body.changePW == "on"){
                     changePW = true;
