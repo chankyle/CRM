@@ -120,11 +120,15 @@
                   </div>
               </div>
 
-
+              <script>
+              function submissionStatus(){
+                alert(submissionStatusMessage);
+              }
+              </script>
 
             <div class="row">
               <div class="col-12 col-md-auto">
-                <input class="btn-block btn-primary btn-lg" type="submit" value="Submit">
+                <input class="btn-block btn-primary btn-lg" type="submit" value="Submit" onsubmit="submissionStatus();">
               </div>
             </div>
           </form>

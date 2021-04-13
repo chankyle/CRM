@@ -295,22 +295,22 @@
               <hr>
               <h4> Contact Information</h4>
               <form id="formEditContact" name="viewContact" method="post" action="/viewContact" onsubmit="enableFields()">
-              <input type="name" class="form-control" id="contactID" name="contactID" value="<%= contactID %>" hidden>
-              <input type="name" class="form-control" id="contactClientID" name="contactClientID" value="<%= result.contact[0].contactClientID %>" hidden>
-              <input type="name" class="form-control" id="oldContactFirstName" name="oldContactFirstName" value="<%= result.contact[0].contactFirstName %>" hidden>
-              <input type="name" class="form-control" id="oldContactLastName" name="oldContactLastName" value="<%= result.contact[0].contactLastName %>" hidden>
+              <input type="name" class="form-control" id="contactID" name="contactID" value="<%- contactID %>" hidden>
+              <input type="name" class="form-control" id="contactClientID" name="contactClientID" value="<%- result.contact[0].contactClientID %>" hidden>
+              <input type="name" class="form-control" id="oldContactFirstName" name="oldContactFirstName" value="<%- result.contact[0].contactFirstName %>" hidden>
+              <input type="name" class="form-control" id="oldContactLastName" name="oldContactLastName" value="<%- result.contact[0].contactLastName %>" hidden>
               <input type="name" class="form-control" id="user" name="user" value="<%- user %>" hidden>
               <div class="table d-none d-md-block">
                 <table class="table table-bordered px-2 py-2 bg-white">
                   <tbody>
                     <tr>
                       <th style="width: 15%" scope="col" class="align-middle">Client:</th>
-                      <td class="align-middle"><%= result.contact[0].contactClientID %></td>
+                      <td class="align-middle"><%- result.contact[0].contactClientID %></td>
                     </tr>
                     <tr>
                       <th style="width: 15%" scope="col" class="align-middle">First Name:</th>
                       <td class="align-middle">
-                        <input type="text" class="form-control" id="contactFirstName" name="contactFirstName" value = "<%= result.contact[0].contactFirstName %>" required readonly>
+                        <input type="text" class="form-control" id="contactFirstName" name="contactFirstName" value = "<%- result.contact[0].contactFirstName %>" required readonly>
                       </td>
                       <td class="align-middle" style="text-align:center; width:5%">
                         <input type="button" id="editContactFirstName" value="edit"></input>
@@ -320,7 +320,7 @@
                     <tr>
                       <th style="width: 15%" scope="col" class="align-middle">Last Name:</th>
                       <td class="align-middle">
-                        <input type="text" class="form-control" id="contactLastName" name="contactLastName" value = "<%= result.contact[0].contactLastName %>" required readonly>
+                        <input type="text" class="form-control" id="contactLastName" name="contactLastName" value = "<%- result.contact[0].contactLastName %>" required readonly>
                       </td>
                       <td class="align-middle" style="text-align:center">
                         <input type="button" id="editContactLastName" value="edit"></input>
@@ -330,7 +330,7 @@
                     <tr>
                       <th scope="row" class="align-middle">Position:</th>
                       <td class="align-middle">
-                        <input type="text" class="form-control" id="contactPosition" name="contactPosition" value = "<%= result.contact[0].contactPosition %>" required readonly>
+                        <input type="text" class="form-control" id="contactPosition" name="contactPosition" value = "<%- result.contact[0].contactPosition %>" required readonly>
                       </td>
                       <td class="align-middle" style="text-align:center">
                         <input type="button" id="editContactPosition" value="edit"></input>
@@ -340,7 +340,7 @@
                     <tr>
                       <th scope="row" class="align-middle">Contact Phone Number:</th>
                       <td class="align-middle">
-                        <input type="text" class="form-control" id="contactPhone" name="contactPhone" value = "<%= result.contact[0].contactPhone %>" readonly>
+                        <input type="text" class="form-control" id="contactPhone" name="contactPhone" value = "<%- result.contact[0].contactPhone %>" readonly>
                       </td>
                       <td class="align-middle" style="text-align:center">
                         <input type="button" id="editContactPhone" value="edit"></input>
@@ -350,7 +350,7 @@
                     <tr>
                       <th scope="row" class="align-middle">Contact Mobile Number:</th>
                       <td class="align-middle">
-                        <input type="text" class="form-control" id="contactMobile" name="contactMobile" value = "<%= result.contact[0].contactMobile %>" readonly>
+                        <input type="text" class="form-control" id="contactMobile" name="contactMobile" value = "<%- result.contact[0].contactMobile %>" readonly>
                       </td>
                       <td class="align-middle" style="text-align:center">
                         <input type="button" id="editContactMobile" value="edit"></input>
@@ -360,7 +360,7 @@
                     <tr>
                       <th scope="row" class="align-middle">Email Address:</th>
                       <td class="align-middle">
-                        <input type="email" class="form-control" id="contactEmail" name="contactEmail" value = "<%= result.contact[0].contactEmail %>" readonly>
+                        <input type="email" class="form-control" id="contactEmail" name="contactEmail" value = "<%- result.contact[0].contactEmail %>" readonly>
                       </td>
                       <td class="align-middle" style="text-align:center">
                         <input type="button" id="editContactEmail" value="edit"></input>
@@ -370,7 +370,7 @@
                     <tr>
                       <th scope="row" class="align-middle">Notes:</th>
                       <td class="align-middle">
-                        <input type="text" class="form-control" id="contactNotes" name="contactNotes" value = "<%= result.contact[0].contactNotes %>" readonly>
+                        <input type="text" class="form-control" id="contactNotes" name="contactNotes" value = "<%- result.contact[0].contactNotes %>" readonly>
                       </td>
                       <td class="align-middle" style="text-align:center">
                         <input type="button" id="editContactNotes" value="edit"></input>
@@ -409,7 +409,7 @@
         <!-- Mobile View of Data -->
                   <div class="table d-block d-sm-none">
                     <form id="formEditContact" name="viewContact" method="post" action="/viewContact" onsubmit="enableFields()">
-                    <input type="name" class="form-control" id="contactID" name="contactID" value="<%= contactID %>" hidden>
+                    <input type="name" class="form-control" id="contactID" name="contactID" value="<%- contactID %>" hidden>
                     <input type="name" class="form-control" id="user" name="user" value="<%- user %>" hidden>
                     <table class="table bg-white">
                       <tbody>
@@ -423,7 +423,7 @@
                         </tr>
                         <tr>
                           <td colspan=2 scope="row">
-                            <input type="text" class="form-control" id="contactFirstNameMobile" name="contactFirstName" value = "<%= result.contact[0].contactFirstName %> " required readonly>
+                            <input type="text" class="form-control" id="contactFirstNameMobile" name="contactFirstName" value = "<%- result.contact[0].contactFirstName %> " required readonly>
                           </td>
                         </tr>
                   <!-- Mobile View Contact Last Name -->
@@ -436,7 +436,7 @@
                         </tr>
                         <tr>
                           <td colspan=2 scope="row">
-                            <input type="text" class="form-control" id="contactLastNameMobile" name="contactLastName" value = "<%= result.contact[0].contactLastName %> " required readonly>
+                            <input type="text" class="form-control" id="contactLastNameMobile" name="contactLastName" value = "<%- result.contact[0].contactLastName %> " required readonly>
                           </td>
                         </tr>
             <!-- Mobile View Contact Position -->
@@ -449,7 +449,7 @@
                         </tr>
                         <tr>
                           <td colspan=2 scope="row">
-                            <input type="text" class="form-control" id="contactPositionMobile" name="contactPosition" value = "<%= result.contact[0].contactPosition %>" required readonly>
+                            <input type="text" class="form-control" id="contactPositionMobile" name="contactPosition" value = "<%- result.contact[0].contactPosition %>" required readonly>
                           </td>
                         </tr>
               <!-- Mobile View Contact Phone Numbers -->
@@ -462,7 +462,7 @@
                         </tr>
                         <tr>
                           <td colspan=2 scope="row">
-                            <input type="text" class="form-control" id="contactPhoneMobile" name="contactPhone" value = "<%= result.contact[0].contactPhone %>" readonly>
+                            <input type="text" class="form-control" id="contactPhoneMobile" name="contactPhone" value = "<%- result.contact[0].contactPhone %>" readonly>
                           </td>
                         </tr>
               <!-- Mobile View Contact Mobile Numbers -->
@@ -475,7 +475,7 @@
                         </tr>
                         <tr>
                           <td colspan=2 scope="row">
-                            <input type="text" class="form-control" id="contactMobileMobile" name="contactMobile" value = "<%= result.contact[0].contactMobile %>" readonly>
+                            <input type="text" class="form-control" id="contactMobileMobile" name="contactMobile" value = "<%- result.contact[0].contactMobile %>" readonly>
                           </td>
                         </tr>
               <!-- Mobile View Email Address-->
@@ -488,7 +488,7 @@
                         </tr>
                         <tr>
                           <td colspan=2 scope="row">
-                            <input type="email" class="form-control" id="contactEmailMobile" name="contactEmail" value = "<%= result.contact[0].contactEmail %>" readonly>
+                            <input type="email" class="form-control" id="contactEmailMobile" name="contactEmail" value = "<%- result.contact[0].contactEmail %>" readonly>
                         </tr>
 
               <!-- Mobile View Notes-->
@@ -501,7 +501,7 @@
                         </tr>
                         <tr>
                           <td colspan=2 scope="row">
-                            <input type="text" class="form-control" id="contactNotesMobile" name="contactNotes" value = "<%= result.contact[0].contactNotes %>" readonly>
+                            <input type="text" class="form-control" id="contactNotesMobile" name="contactNotes" value = "<%- result.contact[0].contactNotes %>" readonly>
                         </tr>
               <!-- Mobile View Status-->
                         <tr>

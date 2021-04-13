@@ -8,7 +8,8 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 var monk = require('monk');
 var session = require('express-session');
-const MongoStore = require('connect-mongo').default;
+const rateLimiter = require("express-rate-limit");
+const MongoStore = require('connect-mongo');
 var passport = require('passport');
 var path = require('path');
 
@@ -73,10 +74,12 @@ var viewClientRouter = require('./routes/view-client');
 var viewContactRouter = require('./routes/view-contact');
 var viewEventRouter = require('./routes/view-event');
 
+const rateLimit = rateLimiter({
+    max: 200, // the rate limit in reqs
+    windowMs: 1 * 60 * 1000, // time where limit applies
+});
+
 var app = express();
-
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -98,6 +101,7 @@ app.use(session({
       maxAge: 1000 * 60 * 60 * 24 // Equals 1 day
     }
 }));
+app.use(rateLimit);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));

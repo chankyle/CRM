@@ -13,7 +13,8 @@ var ObjectID = require('MongoDB').ObjectID;
 var urlencoderParser = bodyParser.urlencoded({ extended: false });
 const AccessControl = require('accesscontrol');
 var grantsList = [];
-const { newClientValidator, newContactValidator, newUserValidator, newEventValidator, changePasswordValidator, validate } = require('./validator.js')
+const { newClientValidator, newContactValidator, newUserValidator, newEventValidator, changePasswordValidator, validate } = require('../config/validator.js')
+const { rateLimiterUsingThirdParty } = require('../config/validator.js')
 
 // Set temporary csv upload location
 var upload = multer({ dest: 'tmp/csv/' });
@@ -1050,6 +1051,7 @@ router.get('/view-client', function(req, res) {
 
 
 });
+
 
 /* GET Clients for Contact Entry Form. */
 router.get('/entry-contact', function(req, res) {
@@ -3756,50 +3758,55 @@ router.post('/addUser', newUserValidator(), validate, function(req, res) {
                 var defaultStatus = "Enabled";
                 var newPassword = req.body.newPassword;
                 var changePW;
+                var submissionStatusMessage;
 
+                if (collectionAccounts.findOne({username:req.body.newUserName}) == null){
+                  if (req.body.changePW == "on"){
+                      changePW = true;
+                  } else {
+                      changePW = false;
+                  }
 
+                  if (newUserType == 'Administrator'){
+                    Account.register(new Account({ username : newUserName, usertype : 'Administrator' , active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
+                        if (err) {
+                            next(err);
+                        }
+                    });
+                    res.redirect('/home');
 
+                  } else if (newUserType == 'Read-Only') {
+                    Account.register(new Account({ username : newUserName, usertype : 'ReadOnly', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
+                        if (err) {
+                            next(err);
+                        }
+                    });
+                    res.redirect('/home');
 
-                if (req.body.changePW == "on"){
-                    changePW = true;
+                  } else if (newUserType == 'Agent'){
+                    Account.register(new Account({ username : newUserName,
+                      usertype : 'Agent',
+                      active : true,
+                      changePwOnLogin : changePW,
+                      agentAbbrev : agentAbbrev,
+                      agentFirstName : agentFirstName,
+                      agentLastName : agentLastName,
+                      agentPosition : agentPosition,
+                      agentPhone : agentPhone,
+                      createdBy : username,
+                      createDate : currentDateTime}), newPassword, function(err, account) {
+                      if (err) {
+                            next(err);
+                        }
+                    });
+                    submissionStatusMessage = "User successfully added!";
+                    res.redirect('/entry-user');
+                  }
                 } else {
-                    changePW = false;
+                  submissionStatusMessage = "Username already exists!";
+                  res.redirect('/entry-user');
                 }
 
-                if (newUserType == 'Administrator'){
-                  Account.register(new Account({ username : newUserName, usertype : 'Administrator' , active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
-                      if (err) {
-                          next(err);
-                      }
-                  });
-                  res.redirect('/home');
-
-                } else if (newUserType == 'Read-Only') {
-                  Account.register(new Account({ username : newUserName, usertype : 'ReadOnly', active : true, changePwOnLogin : changePW}), newPassword, function(err, account) {
-                      if (err) {
-                          next(err);
-                      }
-                  });
-                  res.redirect('/home');
-
-                } else if (newUserType == 'Agent'){
-                  Account.register(new Account({ username : newUserName,
-                    usertype : 'Agent',
-                    active : true,
-                    changePwOnLogin : changePW,
-                    agentAbbrev : agentAbbrev,
-                    agentFirstName : agentFirstName,
-                    agentLastName : agentLastName,
-                    agentPosition : agentPosition,
-                    agentPhone : agentPhone,
-                    createdBy : username,
-                    createDate : currentDateTime}), newPassword, function(err, account) {
-                    if (err) {
-                          next(err);
-                      }
-                  });
-                  res.redirect('/home');
-                }
             } else {
                 // resource is forbidden for this user/role
                 res.status(403).end();

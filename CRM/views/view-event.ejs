@@ -341,7 +341,7 @@
               <hr>
                 <h4> Event Information</h4>
           <form id="formEditEvent" name="viewEvent" method="post" action="/viewEvent" onsubmit="enableFields()">
-          <input type="name" class="form-control" id="eventID" name="eventID" value="<%= eventID %>" hidden>
+          <input type="name" class="form-control" id="eventID" name="eventID" value="<%- eventID %>" hidden>
           <div class="table d-none d-md-block">
             <table class="table table-bordered px-2 py-2 bg-white">
             <tbody>
@@ -352,7 +352,7 @@
                     var str = result.events[0].eventTimeIn._i.toString();
                     var eventDate = str.substr(0,10);
                   %>
-                  <input type="date" class="form-control" id="eventDate" name="eventDate" value = "<%= eventDate %>" disabled required>
+                  <input type="date" class="form-control" id="eventDate" name="eventDate" value = "<%- eventDate %>" disabled required>
                 </td>
                 <td style="width: 5%; text-align:center" class="align-middle">
                   <input type="button" id="editEventDate" value="edit"></input>
@@ -427,7 +427,7 @@
                   </select>
 
                   <span id='variableJSON' hidden>
-                    <%= JSON.stringify(result.contacts); %>
+                    <%- JSON.stringify(result.contacts); %>
                   </span>
                 </td>
                 <td style="width: 5%; text-align:center" class="align-middle">
@@ -520,7 +520,7 @@
               <tr>
                 <th style="width: 15%" scope="col" class="align-middle">Branch Location:</th>
                 <td>
-                  <input type="text" class="form-control" id="eventBranch" name="eventBranch" value = "<%= result.events[0].eventBranch %>" readonly>
+                  <input type="text" class="form-control" id="eventBranch" name="eventBranch" value = "<%- result.events[0].eventBranch %>" readonly>
                 </td>
                 <td style="width: 5%; text-align:center" class="align-middle">
                   <input type="button" id="editEventBranch" value="edit"></input>
@@ -530,7 +530,7 @@
               <tr>
                 <th style="width: 15%" scope="col" class="align-middle">Remarks:</th>
                 <td>
-                  <input type="text" class="form-control" id="eventRemarks" name="eventRemarks" value = "<%= result.events[0].eventRemarks %>" required readonly>
+                  <input type="text" class="form-control" id="eventRemarks" name="eventRemarks" value = "<%- result.events[0].eventRemarks %>" required readonly>
                 </td>
                 <td style="width: 5%; text-align:center" class="align-middle">
                   <input type="button" id="editEventRemarks" value="edit"></input>
@@ -546,7 +546,7 @@
           <!-- Mobile View of Data -->
                     <div class="table d-block d-sm-none">
                       <form id="formEditEvent" name="viewEvent" method="post" action="/viewEvent" onsubmit="enableFields()">
-                      <input type="name" class="form-control" id="eventID" name="eventID" value="<%= eventID %>" hidden>
+                      <input type="name" class="form-control" id="eventID" name="eventID" value="<%- eventID %>" hidden>
                       <table class="table bg-white">
                         <tbody>
           <!-- Mobile View Event Date -->
@@ -563,7 +563,7 @@
                                 var str = result.events[0].eventTimeIn._i.toString();
                                 var eventDate = str.substr(0,10);
                               %>
-                              <input type="date" class="form-control" id="eventDateMobile" name="eventDate" value = "<%= eventDate %>" disabled required>
+                              <input type="date" class="form-control" id="eventDateMobile" name="eventDate" value = "<%- eventDate %>" disabled required>
                             </td>
                           </tr>
                     <!-- Mobile View Event Agent -->
@@ -649,7 +649,7 @@
                               </select>
 
                               <span id='variableJSON' hidden>
-                                <%= JSON.stringify(result.contacts); %>
+                                <%- JSON.stringify(result.contacts); %>
                               </span>
                             </td>
                           </tr>
@@ -753,7 +753,7 @@
                           </tr>
                           <tr>
                             <td colspan=2 scope="row">
-                              <input type="text" class="form-control" id="eventBranchMobile" name="eventBranch" value = "<%= result.events[0].eventBranch %>" readonly>
+                              <input type="text" class="form-control" id="eventBranchMobile" name="eventBranch" value = "<%- result.events[0].eventBranch %>" readonly>
                           </tr>
                 <!-- Mobile View Visit Remarks-->
                           <tr>
@@ -765,7 +765,7 @@
                           </tr>
                           <tr>
                             <td colspan=2 scope="row">
-                              <textarea class="form-control" id="eventRemarksMobile" name="eventRemarks" required readonly><%= result.events[0].eventRemarks %></textarea>
+                              <textarea class="form-control" id="eventRemarksMobile" name="eventRemarks" required readonly><%- result.events[0].eventRemarks %></textarea>
                           </tr>
                         </tbody>
                       </table>
