@@ -2329,7 +2329,8 @@ router.post('/viewClient', function(req, res, next) {
                     // Here `locals` will be an object with `users` and `colors` keys
                     // Example: `locals = {users: [...], colors: [...]}`
                     db.close();
-                    res.redirect('/home');
+                    res.redirect('/search-client');
+
                 });
             } else {
                 // resource is forbidden for this user/role
@@ -2594,7 +2595,7 @@ router.post('/viewContact', function(req, res, next) {
                     async.parallel(tasks, function(err) { //This function gets called after the two tasks have called their "task callbacks"
                         if (err) return next(err); //If an error occurred, let express handle it by calling the `next` function
                         db.close();
-                        res.redirect('/home')
+                        res.redirect('/search-contact')
                     });
                } else {
                 // resource is forbidden for this user/role

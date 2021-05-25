@@ -175,7 +175,9 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-mongoose.connect("mongodb://localhost:27017/CRM", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost:27017/CRM", { useNewUrlParser: true, useUnifiedTopology: true }).then(()=>{
+  console.log('MongoDB Atlas connected');
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
