@@ -981,8 +981,6 @@
                                 }
                                 %>
                                 <%- eventsList %>
-                              <tbody>
-                              </tbody>
                             </table>
                           </div>
                         </div>
@@ -997,13 +995,13 @@
 
 
                 <!-- Mobile View of Data -->
-                          <div class="table d-block d-sm-none">
+                        <div class="table d-block d-sm-none">
                           <form id="formEditClient" name="viewClient" method="post" action="/viewClient" onsubmit="enableFields()">
                           <input type="name" class="form-control" id="origClientName" name="origClientName" value="<%- clientName %>" hidden>
                           <input type="name" class="form-control" id="user" name="user" value="<%- user %>" hidden>
 
                           <div class="d-block d-sm-none">
-                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
                               <li class="nav-item">
                                 <a class="nav-link active" id="pills-profile-mobile-tab" data-toggle="pill" href="#pills-profile-mobile" role="tab" aria-controls="pills-profile-mobile" aria-selected="true">Profile</a>
                               </li>
@@ -1417,7 +1415,7 @@
                                     eventsList += '<h5 class="mb-1">' + str + '</h5>';
                                     eventsList += '<small>' + result.events[i].eventType + ' / ' + result.events[i].agentAbbrev + '</small>';
                                     eventsList += '</div>';
-                                    eventsList += '<p class="mb-1">' + repContact1[i] + ' , ' + repContact2[i] + '</p>';
+                                    eventsList += '<p class="mb-1">' + repContact1[i] + ', ' + repContact2[i] + '</p>';
                                     eventsList += '<p class="mb-1">' + result.events[i].eventRemarks + '</p>';
                                     eventsList += '</a>';
                                     eventsList += '</div>';
@@ -1475,8 +1473,6 @@
                 </script>
 
 <hr>
-    <!-- Contact History Snapshot - thinking maybe last 5 entries -->
-
         </main>
       </main>
     </div>

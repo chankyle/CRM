@@ -293,116 +293,198 @@
         <main class="main mt-0 mx-3">
               <h2>View/Edit Contact</h2>
               <hr>
-              <h4> Contact Information</h4>
               <form id="formEditContact" name="viewContact" method="post" action="/viewContact" onsubmit="enableFields()">
               <input type="name" class="form-control" id="contactID" name="contactID" value="<%- contactID %>" hidden>
               <input type="name" class="form-control" id="contactClientID" name="contactClientID" value="<%- result.contact[0].contactClientID %>" hidden>
               <input type="name" class="form-control" id="oldContactFirstName" name="oldContactFirstName" value="<%- result.contact[0].contactFirstName %>" hidden>
               <input type="name" class="form-control" id="oldContactLastName" name="oldContactLastName" value="<%- result.contact[0].contactLastName %>" hidden>
               <input type="name" class="form-control" id="user" name="user" value="<%- user %>" hidden>
-              <div class="table d-none d-md-block">
-                <table class="table table-bordered px-2 py-2 bg-white">
-                  <tbody>
-                    <tr>
-                      <th style="width: 15%" scope="col" class="align-middle">Client:</th>
-                      <td class="align-middle"><%- result.contact[0].contactClientID %></td>
-                    </tr>
-                    <tr>
-                      <th style="width: 15%" scope="col" class="align-middle">First Name:</th>
-                      <td class="align-middle">
-                        <input type="text" class="form-control" id="contactFirstName" name="contactFirstName" value = "<%- result.contact[0].contactFirstName %>" required readonly>
-                      </td>
-                      <td class="align-middle" style="text-align:center; width:5%">
-                        <input type="button" id="editContactFirstName" value="edit"></input>
-                        <input type="hidden" id="updateContactFirstName" value="Save"></input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th style="width: 15%" scope="col" class="align-middle">Last Name:</th>
-                      <td class="align-middle">
-                        <input type="text" class="form-control" id="contactLastName" name="contactLastName" value = "<%- result.contact[0].contactLastName %>" required readonly>
-                      </td>
-                      <td class="align-middle" style="text-align:center">
-                        <input type="button" id="editContactLastName" value="edit"></input>
-                        <input type="hidden" id="updateContactLastName" value="Save"></input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="align-middle">Position:</th>
-                      <td class="align-middle">
-                        <input type="text" class="form-control" id="contactPosition" name="contactPosition" value = "<%- result.contact[0].contactPosition %>" required readonly>
-                      </td>
-                      <td class="align-middle" style="text-align:center">
-                        <input type="button" id="editContactPosition" value="edit"></input>
-                        <input type="hidden" id="updateContactPosition" value="Save"></input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="align-middle">Contact Phone Number:</th>
-                      <td class="align-middle">
-                        <input type="text" class="form-control" id="contactPhone" name="contactPhone" value = "<%- result.contact[0].contactPhone %>" readonly>
-                      </td>
-                      <td class="align-middle" style="text-align:center">
-                        <input type="button" id="editContactPhone" value="edit"></input>
-                        <input type="hidden" id="updateContactPhone" value="Save"></input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="align-middle">Contact Mobile Number:</th>
-                      <td class="align-middle">
-                        <input type="text" class="form-control" id="contactMobile" name="contactMobile" value = "<%- result.contact[0].contactMobile %>" readonly>
-                      </td>
-                      <td class="align-middle" style="text-align:center">
-                        <input type="button" id="editContactMobile" value="edit"></input>
-                        <input type="hidden" id="updateContactMobile" value="Save"></input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="align-middle">Email Address:</th>
-                      <td class="align-middle">
-                        <input type="email" class="form-control" id="contactEmail" name="contactEmail" value = "<%- result.contact[0].contactEmail %>" readonly>
-                      </td>
-                      <td class="align-middle" style="text-align:center">
-                        <input type="button" id="editContactEmail" value="edit"></input>
-                        <input type="hidden" id="updateContactEmail" value="Save"></input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="align-middle">Notes:</th>
-                      <td class="align-middle">
-                        <input type="text" class="form-control" id="contactNotes" name="contactNotes" value = "<%- result.contact[0].contactNotes %>" readonly>
-                      </td>
-                      <td class="align-middle" style="text-align:center">
-                        <input type="button" id="editContactNotes" value="edit"></input>
-                        <input type="hidden" id="updateContactNotes" value="Save"></input>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="align-middle">Status:</th>
-                      <td class="align-middle">
-                        <select class="form-control" id="contactStatus" name="contactStatus" disabled required>
-                          <%
-                          var statusList = '';
-                            if(result.contact[0].contactActive == "Enabled"){
-                              statusList += '<option selected>Enabled</option>';
-                              statusList += '<option>Disabled</option>';
-                          } else {
-                              statusList += '<option>Enabled</option>';
-                              statusList += '<option selected>Disabled</option>';
-                          }
-                          %>
-                          <%- statusList %>
-                        </select>
-                      </td>
-                      <td class="align-middle" style="text-align:center">
-                      <input type="button" id="editContactStatus" value="edit"></input>
-                      <input type="hidden" id="updateContactStatus" value="Save"></input>
-                    </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <button type="submit" class="btn btn-primary btn-lg" id="submit">Submit</button>
-                <input style="visibility: hidden" id="isEditing" name ="isEditing" value="false">
+
+              <div class="container-fluid d-none d-lg-block">
+                <div class="row">
+                  <div class="col-2">
+                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                      <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">Profile</a>
+                      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-contactInfo" role="tab" aria-controls="v-pills-contactInfo" aria-selected="false">Contact Information</a>
+                      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-commHistory" role="tab" aria-controls="v-pills-commHistory" aria-selected="false">Communication History</a>
+                      <div class="py-5"style="text-align:left;">
+                        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%" id="submit" name="submit">Save Changes</button>
+                        <input style="visibility: hidden" id="isEditing" name ="isEditing" value="false">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-10">
+                    <div class="tab-content" id="v-pills-tabContent">
+                      <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <div class="table d-none d-md-block">
+                          <div class="table d-none d-md-block">
+                            <table class="table table-bordered px-2 py-2 bg-white">
+                              <tbody>
+                                <tr>
+                                  <th style="width: 15%" scope="col" class="align-middle">Client:</th>
+                                  <td class="align-middle"><%- result.contact[0].contactClientID %></td>
+                                </tr>
+                                <tr>
+                                  <th style="width: 15%" scope="col" class="align-middle">First Name:</th>
+                                  <td class="align-middle">
+                                    <input type="text" class="form-control" id="contactFirstName" name="contactFirstName" value = "<%- result.contact[0].contactFirstName %>" required readonly>
+                                  </td>
+                                  <td class="align-middle" style="text-align:center; width:5%">
+                                    <input type="button" id="editContactFirstName" value="edit"></input>
+                                    <input type="hidden" id="updateContactFirstName" value="Save"></input>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th style="width: 15%" scope="col" class="align-middle">Last Name:</th>
+                                  <td class="align-middle">
+                                    <input type="text" class="form-control" id="contactLastName" name="contactLastName" value = "<%- result.contact[0].contactLastName %>" required readonly>
+                                  </td>
+                                  <td class="align-middle" style="text-align:center">
+                                    <input type="button" id="editContactLastName" value="edit"></input>
+                                    <input type="hidden" id="updateContactLastName" value="Save"></input>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row" class="align-middle">Position:</th>
+                                  <td class="align-middle">
+                                    <input type="text" class="form-control" id="contactPosition" name="contactPosition" value = "<%- result.contact[0].contactPosition %>" required readonly>
+                                  </td>
+                                  <td class="align-middle" style="text-align:center">
+                                    <input type="button" id="editContactPosition" value="edit"></input>
+                                    <input type="hidden" id="updateContactPosition" value="Save"></input>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row" class="align-middle">Notes:</th>
+                                  <td class="align-middle">
+                                    <input type="text" class="form-control" id="contactNotes" name="contactNotes" value = "<%- result.contact[0].contactNotes %>" readonly>
+                                  </td>
+                                  <td class="align-middle" style="text-align:center">
+                                    <input type="button" id="editContactNotes" value="edit"></input>
+                                    <input type="hidden" id="updateContactNotes" value="Save"></input>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row" class="align-middle">Status:</th>
+                                  <td class="align-middle">
+                                    <select class="form-control" id="contactStatus" name="contactStatus" disabled required>
+                                      <%
+                                      var statusList = '';
+                                        if(result.contact[0].contactActive == "Enabled"){
+                                          statusList += '<option selected>Enabled</option>';
+                                          statusList += '<option>Disabled</option>';
+                                      } else {
+                                          statusList += '<option>Enabled</option>';
+                                          statusList += '<option selected>Disabled</option>';
+                                      }
+                                      %>
+                                      <%- statusList %>
+                                    </select>
+                                  </td>
+                                  <td class="align-middle" style="text-align:center">
+                                  <input type="button" id="editContactStatus" value="edit"></input>
+                                  <input type="hidden" id="updateContactStatus" value="Save"></input>
+                                </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="v-pills-contactInfo" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                        <div class="table d-none d-md-block">
+                          <div class="table d-none d-md-block">
+                            <table class="table table-bordered px-2 py-2 bg-white">
+                              <tbody>
+                                <tr>
+                                  <th scope="row" class="align-middle">Contact Phone Number:</th>
+                                  <td class="align-middle">
+                                    <input type="text" class="form-control" id="contactPhone" name="contactPhone" value = "<%- result.contact[0].contactPhone %>" readonly>
+                                  </td>
+                                  <td class="align-middle" style="text-align:center">
+                                    <input type="button" id="editContactPhone" value="edit"></input>
+                                    <input type="hidden" id="updateContactPhone" value="Save"></input>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row" class="align-middle">Contact Mobile Number:</th>
+                                  <td class="align-middle">
+                                    <input type="text" class="form-control" id="contactMobile" name="contactMobile" value = "<%- result.contact[0].contactMobile %>" readonly>
+                                  </td>
+                                  <td class="align-middle" style="text-align:center">
+                                    <input type="button" id="editContactMobile" value="edit"></input>
+                                    <input type="hidden" id="updateContactMobile" value="Save"></input>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th scope="row" class="align-middle">Email Address:</th>
+                                  <td class="align-middle">
+                                    <input type="email" class="form-control" id="contactEmail" name="contactEmail" value = "<%- result.contact[0].contactEmail %>" readonly>
+                                  </td>
+                                  <td class="align-middle" style="text-align:center">
+                                    <input type="button" id="editContactEmail" value="edit"></input>
+                                    <input type="hidden" id="updateContactEmail" value="Save"></input>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="v-pills-commHistory" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                        <div class="d-none d-md-block table-responsive">
+                          <div class="table-responsive">
+                            <table class="table table-bordered px-2 py-2 bg-white">
+                              <thead class="thead-light">
+                                <tr>
+                                  <th scope="col" style="text-align: center; vertical-align: middle; width: 5%"></th>
+                                  <th scope="col" style="text-align: center; vertical-align: middle; width: 10%">DATE</th>
+                                  <th scope="col" style="text-align: center; vertical-align: middle; width: 10%">AGENT</th>
+                                  <th scope="col" style="text-align: center; vertical-align: middle; width: 10%">CONTACT 1</th>
+                                  <th scope="col" style="text-align: center; vertical-align: middle; width: 10%">CONTACT 2</th>
+                                  <th scope="col" style="text-align: center; vertical-align: middle; width: 10%">VISIT TYPE</th>
+                                  <th scope="col" style="width: 45%">REMARKS</th>
+                                </tr>
+                              </thead>
+                              <tr>
+                                <%
+                                  var eventsList ='';
+                                  var k = 1;
+                                  var repContact1 = [];
+                                  var repContact2 = [];
+                                  for (i = 0; i < result.events.length; i++) {
+                                    k = i + 1;
+                                    if (result.events[i].contact1 === null){
+                                      repContact1.push("NA");
+                                    } else{
+                                      repContact1.push(result.events[i].contact1);
+                                    }
+                                    if (result.events[i].contact2 === null){
+                                      repContact2.push("NA");
+                                    } else{
+                                      repContact2.push(result.events[i].contact2);
+                                    }
+                                    eventsList += '<th scope="row" style="text-align: center; vertical-align: middle; width: 5%">' + k + '</th>';
+                                    var date = result.events[i].eventTimeIn._i;
+                                    var str = date.toString();
+                                    str = str.substr(0,10);
+                                    eventsList += '<td style="text-align: center; vertical-align: middle; width: 10%">' + str + '</td>';
+                                    eventsList += '<td style="text-align: center; vertical-align: middle; width: 10%">' + result.events[i].agentAbbrev + '</td>';
+                                    eventsList += '<td style="text-align: center; vertical-align: middle; width: 10%">' + repContact1[i] + '</td>';
+                                    eventsList += '<td style="text-align: center; vertical-align: middle; width: 10%">' + repContact2[i] + '</td>';
+                                    eventsList += '<td style="text-align: center; vertical-align: middle; width: 10%">' + result.events[i].eventType + '</td>';
+                                    eventsList += '<td style="text-align: left; vertical-align: middle">' + result.events[i].eventRemarks + '</td>';
+                                    eventsList += '</tr>';
+                                }
+                                %>
+                                <%- eventsList %>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </form>
 
@@ -411,133 +493,193 @@
                     <form id="formEditContact" name="viewContact" method="post" action="/viewContact" onsubmit="enableFields()">
                     <input type="name" class="form-control" id="contactID" name="contactID" value="<%- contactID %>" hidden>
                     <input type="name" class="form-control" id="user" name="user" value="<%- user %>" hidden>
-                    <table class="table bg-white">
-                      <tbody>
-        <!-- Mobile View Contact First Name -->
-                        <tr>
-                          <th style="text-align:left">Contact First Name</th>
-                          <th style="width: 16.66%" class="align-middle">
-                            <input type="button" id="editContactFirstNameMobile" value="edit"></input>
-                            <input type="hidden" id="updateContactFirstNameMobile" value="Save"></input>
-                          </th>
-                        </tr>
-                        <tr>
-                          <td colspan=2 scope="row">
-                            <input type="text" class="form-control" id="contactFirstNameMobile" name="contactFirstName" value = "<%- result.contact[0].contactFirstName %> " required readonly>
-                          </td>
-                        </tr>
-                  <!-- Mobile View Contact Last Name -->
-                        <tr>
-                          <th style="text-align:left">Contact Last Name</th>
-                          <th style="width: 16.66%" class="align-middle">
-                            <input type="button" id="editContactLastNameMobile" value="edit"></input>
-                            <input type="hidden" id="updateContactLastNameMobile" value="Save"></input>
-                          </th>
-                        </tr>
-                        <tr>
-                          <td colspan=2 scope="row">
-                            <input type="text" class="form-control" id="contactLastNameMobile" name="contactLastName" value = "<%- result.contact[0].contactLastName %> " required readonly>
-                          </td>
-                        </tr>
-            <!-- Mobile View Contact Position -->
-                        <tr>
-                          <th style="text-align:left">Position</th>
-                          <th style="width: 16.66%" class="align-middle">
-                            <input type="button" id="editContactPositionMobile" value="edit"></input>
-                            <input type="hidden" id="updateContactPositionMobile" value="Save"></input>
-                          </th>
-                        </tr>
-                        <tr>
-                          <td colspan=2 scope="row">
-                            <input type="text" class="form-control" id="contactPositionMobile" name="contactPosition" value = "<%- result.contact[0].contactPosition %>" required readonly>
-                          </td>
-                        </tr>
-              <!-- Mobile View Contact Phone Numbers -->
-                        <tr>
-                          <th style="text-align:left">Phone Number/s</th>
-                          <th style="width: 16.66%" class="align-middle">
-                            <input type="button" id="editContactPhoneMobile" value="edit"></input>
-                            <input type="hidden" id="updateContactPhoneMobile" value="Save"></input>
-                          </th>
-                        </tr>
-                        <tr>
-                          <td colspan=2 scope="row">
-                            <input type="text" class="form-control" id="contactPhoneMobile" name="contactPhone" value = "<%- result.contact[0].contactPhone %>" readonly>
-                          </td>
-                        </tr>
-              <!-- Mobile View Contact Mobile Numbers -->
-                        <tr>
-                          <th style="text-align:left">Mobile Number/s</th>
-                          <th style="width: 16.66%" class="align-middle">
-                            <input type="button" id="editContactMobileMobile" value="edit"></input>
-                            <input type="hidden" id="updateContactMobileMobile" value="Save"></input>
-                          </th>
-                        </tr>
-                        <tr>
-                          <td colspan=2 scope="row">
-                            <input type="text" class="form-control" id="contactMobileMobile" name="contactMobile" value = "<%- result.contact[0].contactMobile %>" readonly>
-                          </td>
-                        </tr>
-              <!-- Mobile View Email Address-->
-                        <tr>
-                          <th style="text-align:left">Email Address</th>
-                          <th style="width: 16.66%" class="align-middle">
-                            <input type="button" id="editContactEmailMobile" value="edit"></input>
-                            <input type="hidden" id="updateContactEmailMobile" value="Save"></input>
-                          </th>
-                        </tr>
-                        <tr>
-                          <td colspan=2 scope="row">
-                            <input type="email" class="form-control" id="contactEmailMobile" name="contactEmail" value = "<%- result.contact[0].contactEmail %>" readonly>
-                        </tr>
 
-              <!-- Mobile View Notes-->
-                        <tr>
-                          <th style="text-align:left">Remarks</th>
-                          <th style="width: 16.66%" class="align-middle">
-                            <input type="button" id="editContactNotesMobile" value="edit"></input>
-                            <input type="hidden" id="updateContactNotesMobile" value="Save"></input>
-                          </th>
-                        </tr>
-                        <tr>
-                          <td colspan=2 scope="row">
-                            <input type="text" class="form-control" id="contactNotesMobile" name="contactNotes" value = "<%- result.contact[0].contactNotes %>" readonly>
-                        </tr>
-              <!-- Mobile View Status-->
-                        <tr>
-                          <th style="text-align:left">Status</th>
-                          <th style="width: 16.66%" class="align-middle">
-                            <input type="button" id="editContactStatusMobile" value="edit"></input>
-                            <input type="hidden" id="updateContactStatusMobile" value="Save"></input>
-                          </th>
-                        </tr>
-                        <tr>
-                          <td colspan=2 scope="row">
-                            <select class="form-control" id="contactStatusMobile" name="contactStatus" disabled required>
-                              <%
-                              var statusList = '';
-                                if(result.contact[0].contactActive == "Enabled"){
-                                  statusList += '<option selected>Enabled</option>';
-                                  statusList += '<option>Disabled</option>';
-                              } else {
-                                  statusList += '<option>Enabled</option>';
-                                  statusList += '<option selected>Disabled</option>';
-                              }
-                              %>
-                              <%- statusList %>
-                            </select>
-                        </tr>
-                      </tbody>
-                    </table>
+                  <div class="d-block d-sm-none">
+                    <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="pills-profile-mobile-tab" data-toggle="pill" href="#pills-profile-mobile" role="tab" aria-controls="pills-profile-mobile" aria-selected="true">Profile</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="pills-contactInfo-mobile-tab" data-toggle="pill" href="#pills-contactInfo-mobile" role="tab" aria-controls="pills-contactInfo-mobile" aria-selected="false">Contact Info</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="pills-commHistory-mobile-tab" data-toggle="pill" href="#pills-commHistory-mobile" role="tab" aria-controls="pills-commHistory-mobile" aria-selected="false">History</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                      <div class="tab-pane fade show active" id="pills-profile-mobile" role="tabpanel" aria-labelledby="pills-profile-mobile-tab">
+                        <table class="table bg-white">
+                          <tbody>
+                  <!-- Mobile View Contact First Name -->
+                            <tr>
+                              <th style="text-align:left">Contact First Name</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editContactFirstNameMobile" value="edit"></input>
+                                <input type="hidden" id="updateContactFirstNameMobile" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <input type="text" class="form-control" id="contactFirstNameMobile" name="contactFirstName" value = "<%- result.contact[0].contactFirstName %> " required readonly>
+                              </td>
+                            </tr>
+                  <!-- Mobile View Contact Last Name -->
+                            <tr>
+                              <th style="text-align:left">Contact Last Name</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editContactLastNameMobile" value="edit"></input>
+                                <input type="hidden" id="updateContactLastNameMobile" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <input type="text" class="form-control" id="contactLastNameMobile" name="contactLastName" value = "<%- result.contact[0].contactLastName %> " required readonly>
+                              </td>
+                            </tr>
+                  <!-- Mobile View Contact Position -->
+                            <tr>
+                              <th style="text-align:left">Position</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editContactPositionMobile" value="edit"></input>
+                                <input type="hidden" id="updateContactPositionMobile" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <input type="text" class="form-control" id="contactPositionMobile" name="contactPosition" value = "<%- result.contact[0].contactPosition %>" required readonly>
+                              </td>
+                            </tr>
+                  <!-- Mobile View Notes-->
+                            <tr>
+                              <th style="text-align:left">Remarks</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editContactNotesMobile" value="edit"></input>
+                                <input type="hidden" id="updateContactNotesMobile" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <input type="text" class="form-control" id="contactNotesMobile" name="contactNotes" value = "<%- result.contact[0].contactNotes %>" readonly>
+                            </tr>
+                 <!-- Mobile View Status-->
+                            <tr>
+                              <th style="text-align:left">Status</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editContactStatusMobile" value="edit"></input>
+                                <input type="hidden" id="updateContactStatusMobile" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <select class="form-control" id="contactStatusMobile" name="contactStatus" disabled required>
+                                  <%
+                                  var statusList = '';
+                                    if(result.contact[0].contactActive == "Enabled"){
+                                      statusList += '<option selected>Enabled</option>';
+                                      statusList += '<option>Disabled</option>';
+                                  } else {
+                                      statusList += '<option>Enabled</option>';
+                                      statusList += '<option selected>Disabled</option>';
+                                  }
+                                  %>
+                                  <%- statusList %>
+                                </select>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <div class="tab-pane fade" id="pills-contactInfo-mobile" role="tabpanel" aria-labelledby="pills-contactInfo-mobile-tab">
+                        <table class="table bg-white">
+                          <tbody>
+                  <!-- Mobile View Contact Phone Numbers -->
+                            <tr>
+                              <th style="text-align:left">Phone Number/s</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editContactPhoneMobile" value="edit"></input>
+                                <input type="hidden" id="updateContactPhoneMobile" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <input type="text" class="form-control" id="contactPhoneMobile" name="contactPhone" value = "<%- result.contact[0].contactPhone %>" readonly>
+                              </td>
+                            </tr>
+                  <!-- Mobile View Contact Mobile Numbers -->
+                            <tr>
+                              <th style="text-align:left">Mobile Number/s</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editContactMobileMobile" value="edit"></input>
+                                <input type="hidden" id="updateContactMobileMobile" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <input type="text" class="form-control" id="contactMobileMobile" name="contactMobile" value = "<%- result.contact[0].contactMobile %>" readonly>
+                              </td>
+                            </tr>
+                  <!-- Mobile View Email Address-->
+                            <tr>
+                              <th style="text-align:left">Email Address</th>
+                              <th style="width: 16.66%" class="align-middle">
+                                <input type="button" id="editContactEmailMobile" value="edit"></input>
+                                <input type="hidden" id="updateContactEmailMobile" value="Save"></input>
+                              </th>
+                            </tr>
+                            <tr>
+                              <td colspan=2 scope="row">
+                                <input type="email" class="form-control" id="contactEmailMobile" name="contactEmail" value = "<%- result.contact[0].contactEmail %>" readonly>
+                            </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="tab-pane fade" id="pills-commHistory-mobile" role="tabpanel" aria-labelledby="pills-commHistory-mobile-tab">
+                      <%
+                        var eventsList ='';
+                        var k = 1;
+                        var repContact1 = [];
+                        var repContact2 = [];
+                        for (i = 0; i < result.events.length; i++) {
+                        k = i + 1;
+                        if (result.events[i].contact1 === null){
+                          repContact1.push("NA");
+                        } else{
+                          repContact1.push(result.events[i].contact1);
+                        }
+                        if (result.events[i].contact2 === null){
+                          repContact2.push("NA");
+                        } else{
+                          repContact2.push(result.events[i].contact2);
+                        }
+                          var str = result.events[i].eventTimeIn._i.toString();
+                          var str = str.substr(0,10);
+                          eventsList += '<div class="list-group">';
+                          eventsList += '<a href="#" class="list-group-item list-group-item-light flex-column align-items-start">';
+                          eventsList += '<div class="d-flex w-100 justify-content-between">';
+                          eventsList += '<h5 class="mb-1">' + str + '</h5>';
+                          eventsList += '<small>' + result.events[i].eventType + ' / ' + result.events[i].agentAbbrev + '</small>';
+                          eventsList += '</div>';
+                          eventsList += '<p class="mb-1">' + repContact1[i] + ', ' + repContact2[i] + '</p>';
+                          eventsList += '<p class="mb-1">' + result.events[i].eventRemarks + '</p>';
+                          eventsList += '</a>';
+                          eventsList += '</div>';
+                          eventsList += '<br>';
+                      }
+                      %>
+                      <%- eventsList %>
+                    </div>
+                  </div>
+                </div>
 
                     <div class="row">
                       <div class="col-12 col-md-auto">
-                        <button type="submit" class="btn-block btn-primary btn-lg" id="submit" name="submit">Submit</button>
+                        <button type="submit" class="btn-block btn-primary btn-lg" id="submit" name="submit">Save Changes</button>
                         <input style="visibility: hidden" id="isEditing" name ="isEditing" value="false">
                       </div>
                     </div>
-                  </div>
+
           </form>
+        </div>
           <!--All drop down fields need to be set at enabled before they will be sent as part of the payload to mongo -->
           <script>
             function enableFields() {
@@ -549,59 +691,6 @@
            }
           </script>
 <hr>
-    <!-- Contact History Snapshot - thinking maybe last 5 entries -->
-
-                <h4> Communication History</h4>
-                <div class="table-responsive">
-                  <table class="table table-bordered px-2 py-2 bg-white">
-                    <thead class="thead-light">
-                      <tr>
-                        <th scope="col" style="text-align: center; vertical-align: middle; width: 5%"></th>
-                        <th scope="col" style="text-align: center; vertical-align: middle; width: 10%">DATE</th>
-                        <th scope="col" style="text-align: center; vertical-align: middle; width: 10%">AGENT</th>
-                        <th scope="col" style="text-align: center; vertical-align: middle; width: 10%">CONTACT 1</th>
-                        <th scope="col" style="text-align: center; vertical-align: middle; width: 10%">CONTACT 2</th>
-                        <th scope="col" style="text-align: center; vertical-align: middle; width: 10%">VISIT TYPE</th>
-                        <th scope="col" style="width: 45%">REMARKS</th>
-                      </tr>
-                    </thead>
-                    <tr>
-                      <%
-                        var eventsList ='';
-                        var k = 1;
-                        var repContact1 = [];
-                        var repContact2 = [];
-                        for (i = 0; i < result.events.length; i++) {
-                          k = i + 1;
-                          if (result.events[i].contact1 === null){
-                            repContact1.push("NA");
-                          } else{
-                            repContact1.push(result.events[i].contact1);
-                          }
-                          if (result.events[i].contact2 === null){
-                            repContact2.push("NA");
-                          } else{
-                            repContact2.push(result.events[i].contact2);
-                          }
-                          eventsList += '<th scope="row" style="text-align: center; vertical-align: middle; width: 5%">' + k + '</th>';
-                          var date = result.events[i].eventTimeIn._i;
-                          var str = date.toString();
-                          str = str.substr(0,10);
-                          eventsList += '<td style="text-align: center; vertical-align: middle; width: 10%">' + str + '</td>';
-                          eventsList += '<td style="text-align: center; vertical-align: middle; width: 10%">' + result.events[i].agentAbbrev + '</td>';
-                          eventsList += '<td style="text-align: center; vertical-align: middle; width: 10%">' + repContact1[i] + '</td>';
-                          eventsList += '<td style="text-align: center; vertical-align: middle; width: 10%">' + repContact2[i] + '</td>';
-                          eventsList += '<td style="text-align: center; vertical-align: middle; width: 10%">' + result.events[i].eventType + '</td>';
-                          eventsList += '<td style="text-align: left; vertical-align: middle">' + result.events[i].eventRemarks + '</td>';
-                          eventsList += '</tr>';
-                      }
-                      %>
-                      <%- eventsList %>
-                    <tbody>
-                    </tbody>
-                  </table>
-                </div>
-
         </main>
       </main>
     </div>
